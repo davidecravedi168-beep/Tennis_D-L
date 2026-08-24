@@ -1,0 +1,51 @@
+TENNIS EDGE PRO — ZERO COST QUANT 3.0
+
+COSTO
+€0. Nessuna carta. Nessun database a pagamento.
+
+FONTI
+1) Odds-API.io free tier:
+   - match futuri tennis
+   - 2 bookmaker ricreativi selezionabili
+   - quote pre-match
+   - stato/esito evento
+   - historical odds per singolo evento per CLV
+2) Jeff Sackmann / Tennis Abstract:
+   - ATP/WTA storico, ranking al match, superficie e statistiche
+   - licenza CC BY-NC-SA 4.0: attribuzione obbligatoria, uso non commerciale
+3) GitHub Pages + GitHub Actions su repository pubblico.
+
+FILE DA CARICARE
+- index.html
+- quant-engine.mjs
+- data/quant-board.json
+- .github/workflows/tennis-zero-cost.yml
+
+UNICA CONFIGURAZIONE
+A) Crea una API key FREE su https://odds-api.io/
+B) Nel dashboard Odds-API.io seleziona 2 bookmaker del piano gratuito.
+C) GitHub repository → Settings → Secrets and variables → Actions → New repository secret
+   Name: ODDS_API_KEY
+   Secret: la chiave gratuita (NON incollarla dentro index.html)
+D) GitHub → Actions → Tennis Zero Cost Quant → Run workflow
+
+AUTOMAZIONE
+Il workflow gira ogni 2 ore.
+Budget Guard: massimo 420 richieste/giorno, sotto il limite free di 500/giorno.
+
+LOGICA
+- Radar: scopre match nei prossimi 7 giorni
+- Lock gate: crea una previsione solo 1–36 ore prima del match
+- Elo Engine: Elo generale + Elo superficie + ranking + serve/return
+- Form Engine: forma recente + superficie + H2H + workload + serve/return
+- Doppio consenso: se i due motori non concordano, NO BET / confidence ridotta
+- Prediction Lock: la previsione non viene riscritta dopo la creazione
+- Settlement: salva automaticamente il vincitore
+- CLV: confronta la quota presa al lock con la quota storica di chiusura quando disponibile
+- Calibration: dopo 40 match chiusi corregge l'over/under-confidence
+- Drift Monitor: se il Brier recente peggiora, abbassa automaticamente confidence
+- Backtest: hit rate, Brier, log loss, paper ROI, CLV
+- Nessun dato umano/social inventato: resta manuale e a peso ridotto nella parte analyst.
+
+NOTA
+Il sistema è quantitativo e sperimentale: non garantisce profitti. La modalità paper-test è quella corretta per validarlo.
