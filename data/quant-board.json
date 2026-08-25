@@ -1,9 +1,9 @@
 {
   "meta": {
-    "updated_at": "2026-08-25T14:31:16.088Z",
+    "updated_at": "2026-08-25T14:58:22.133Z",
     "status": "READY",
     "source": "Odds-API.io Free + Sackmann archival mirror",
-    "model_version": "TENNIS-EDGE-QUANT-5.3",
+    "model_version": "TENNIS-EDGE-QUANT-5.4",
     "bookmakers": [
       "Bet365",
       "Eurobet IT"
@@ -20,14 +20,46 @@
     "calibration_active": false,
     "model_health": "COLD",
     "operating_mode": "PAPER VALIDATION",
-    "api_usage_today": 91,
+    "api_usage_today": 97,
     "api_daily_guard": 380,
-    "api_hourly_remaining": 84,
+    "api_hourly_remaining": 79,
     "rate_limit_reset_at": "2026-08-25T15:09:54.000Z",
-    "rate_limit_minutes": 39,
+    "rate_limit_minutes": 12,
     "run_calls": 6,
     "pending_prediction_batch": 0,
     "processed_this_run": 39,
+    "positive_ev": 46,
+    "robust_positive_ev": 29,
+    "confidence_ok": 0,
+    "quality_ok": 53,
+    "watch_count": 0,
+    "value_count": 0,
+    "top_rejection_reasons": [
+      [
+        "MODELLO_COLD",
+        54
+      ],
+      [
+        "ROBUST_EV_NON_POSITIVO",
+        25
+      ],
+      [
+        "QUOTA_NON_FRESCA",
+        23
+      ],
+      [
+        "EDGE_NON_RESISTE_INCERTEZZA",
+        20
+      ],
+      [
+        "SCOSTAMENTO_ESTREMO",
+        20
+      ],
+      [
+        "MODELLI_IN_DISACCORDO",
+        13
+      ]
+    ],
     "priority_policy": "Resolvable ATP/WTA first; Grand Slam > 1000/Finals > 500 > 250 > Challenger > ITF; then Top 10/25/50/100 + Elo + ranking points",
     "benchmark": {
       "version": "2026-08",
@@ -91,12 +123,61 @@
     ],
     "history_sources_failed": [],
     "resolution_diagnostics": {
-      "player_a_unresolved": 0,
-      "player_b_unresolved": 0,
+      "player_a_unresolved": 157,
+      "player_b_unresolved": 42,
       "tour_ambiguous": 0,
-      "unresolved_examples": []
+      "unresolved_examples": [
+        {
+          "a": "Burrage, Jodie",
+          "b": "Maristany Zuleta de Reales, Guiomar",
+          "t": "WTA - US Open, New York, USA, Qualifying",
+          "reason": "PLAYER_B_UNRESOLVED"
+        },
+        {
+          "a": "Hazelitt, Jordyn",
+          "b": "Dart, Harriet",
+          "t": "WTA - US Open, New York, USA, Qualifying",
+          "reason": "PLAYER_A_UNRESOLVED"
+        },
+        {
+          "a": "Mandlik, Elizabeth",
+          "b": "Penickova, Kristina",
+          "t": "WTA - US Open, New York, USA, Qualifying",
+          "reason": "PLAYER_B_UNRESOLVED"
+        },
+        {
+          "a": "Antonius, Michael",
+          "b": "Searle, Henry",
+          "t": "ATP - US Open, New York, USA, Qualifying",
+          "reason": "PLAYER_A_UNRESOLVED"
+        },
+        {
+          "a": "Shick, Braden",
+          "b": "Tabur, Clement",
+          "t": "ATP - US Open, New York, USA, Qualifying",
+          "reason": "PLAYER_A_UNRESOLVED"
+        },
+        {
+          "a": "Mochizuki, Shintaro",
+          "b": "Milavsky, Daniel",
+          "t": "ATP - US Open, New York, USA, Qualifying",
+          "reason": "PLAYER_B_UNRESOLVED"
+        },
+        {
+          "a": "Kwon, Soonwoo",
+          "b": "Lajovic, Dusan",
+          "t": "ATP - US Open, New York, USA, Qualifying",
+          "reason": "PLAYER_A_UNRESOLVED"
+        },
+        {
+          "a": "Squire, Henri",
+          "b": "Jorda Sanchis, David",
+          "t": "ATP - US Open, New York, USA, Qualifying",
+          "reason": "PLAYER_B_UNRESOLVED"
+        }
+      ]
     },
-    "note": "NO BET first. Fail-soft radar: unresolved matches are isolated and never block analyzable ATP/WTA matches. Market calls are reserved for pre-analyzed high-priority candidates. Missing data is never invented."
+    "note": "NO BET first. Decision Funnel attivo: ogni market check registra perché passa o viene scartato. Near VALUE è solo ricerca e non è mai una giocata. Missing data is never invented."
   },
   "radar": [
     {
@@ -110,29 +191,29 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5018628839489485,
-      "model_p_b": 0.4981371160510515,
+      "model_p_a": 0.5018634972432253,
+      "model_p_b": 0.4981365027567747,
       "favorite_side": "A",
       "favorite_name": "Alexandrova, Ekaterina",
-      "favorite_prob": 0.5018628839489485,
+      "favorite_prob": 0.5018634972432253,
       "robust_prob": 0.5,
-      "uncertainty": 0.06626597250795246,
-      "confidence": 46.06715022108416,
+      "uncertainty": 0.06626541835360111,
+      "confidence": 46.06729865528541,
       "data_quality": 85,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5401149308906771,
-      "model_b_p": 0.5035470788590962,
-      "model_c_p": 0.45434360050513256,
-      "model_disagreement": 0.08577133038554452,
+      "model_b_p": 0.5035470360332955,
+      "model_c_p": 0.45434557962781597,
+      "model_disagreement": 0.08576935126286112,
       "reason_codes": [
         "FORM -",
         "SERVE/RETURN -"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "799CE8EBCB66",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "57482AA2F708",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -155,21 +236,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.4343451073017461,
-      "model_p_b": 0.5656548926982539,
+      "model_p_a": 0.4343473328128157,
+      "model_p_b": 0.5656526671871843,
       "favorite_side": "B",
       "favorite_name": "Nishikori, Kei",
-      "favorite_prob": 0.5656548926982539,
+      "favorite_prob": 0.5656526671871843,
       "robust_prob": 0.5,
-      "uncertainty": 0.08559733929696041,
-      "confidence": 41.08106983117132,
+      "uncertainty": 0.08559843400715467,
+      "confidence": 41.08077660522643,
       "data_quality": 86,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.40215760688467567,
-      "model_b_p": 0.37297058259907717,
-      "model_c_p": 0.5318896515167929,
-      "model_disagreement": 0.15891906891771573,
+      "model_b_p": 0.37297217593362547,
+      "model_c_p": 0.5318951545306064,
+      "model_disagreement": 0.15892297859698096,
       "reason_codes": [
         "ELO +",
         "SURFACE ++",
@@ -181,8 +262,8 @@
         "MODELLI_IN_DISACCORDO"
       ],
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "028B68E317E2",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "9FD138B09A75",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -203,21 +284,21 @@
       "pre_status": "DATA CAUTION",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.6866901130513003,
-      "model_p_b": 0.31330988694869966,
+      "model_p_a": 0.6866882095338843,
+      "model_p_b": 0.3133117904661157,
       "favorite_side": "A",
       "favorite_name": "Zheng, Qinwen",
-      "favorite_prob": 0.6866901130513003,
-      "robust_prob": 0.5823172069256337,
-      "uncertainty": 0.1043729061256666,
-      "confidence": 45.85993585919645,
+      "favorite_prob": 0.6866882095338843,
+      "robust_prob": 0.5823137978909911,
+      "uncertainty": 0.10437441164289321,
+      "confidence": 45.859532595653604,
       "data_quality": 85,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.7969750297907285,
-      "model_b_p": 0.665065847479049,
-      "model_c_p": 0.5751075079133479,
-      "model_disagreement": 0.22186752187738068,
+      "model_b_p": 0.6650651826167605,
+      "model_c_p": 0.57510213106611,
+      "model_disagreement": 0.22187289872461857,
       "reason_codes": [
         "ELO ++",
         "SURFACE ++",
@@ -228,8 +309,8 @@
         "MODELLI_IN_DISACCORDO"
       ],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "C9D485716708",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "51DD8AC9CB15",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -252,21 +333,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.729176988759564,
-      "model_p_b": 0.27082301124043595,
+      "model_p_a": 0.7291747410766074,
+      "model_p_b": 0.2708252589233926,
       "favorite_side": "A",
       "favorite_name": "Medvedev, Daniil",
-      "favorite_prob": 0.729176988759564,
-      "robust_prob": 0.6298756070725823,
-      "uncertainty": 0.09930138168698177,
-      "confidence": 46.04914289228573,
+      "favorite_prob": 0.7291747410766074,
+      "robust_prob": 0.6298716852086629,
+      "uncertainty": 0.09930305586794455,
+      "confidence": 46.048694450956404,
       "data_quality": 78.9090909090909,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.8003582310189894,
-      "model_b_p": 0.7535960709574252,
-      "model_c_p": 0.6216195301888597,
-      "model_disagreement": 0.17873870083012966,
+      "model_b_p": 0.7535949640633134,
+      "model_c_p": 0.6216135509711355,
+      "model_disagreement": 0.17874468004785393,
       "reason_codes": [
         "ELO ++",
         "SURFACE ++",
@@ -277,8 +358,8 @@
         "MODELLI_IN_DISACCORDO"
       ],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "3F0BB40604B4",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "BB100AE77CD6",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -296,26 +377,26 @@
       "player_a": "Bellucci, Mattia",
       "player_b": "Darderi, Luciano",
       "tournament": "ATP - Winston Salem, USA",
-      "priority": 140,
+      "priority": 141,
       "market_priority": 143,
       "pre_status": "DATA CAUTION",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.3574344915795841,
-      "model_p_b": 0.6425655084204158,
+      "model_p_a": 0.3574361087332436,
+      "model_p_b": 0.6425638912667564,
       "favorite_side": "B",
       "favorite_name": "Darderi, Luciano",
-      "favorite_prob": 0.6425655084204158,
-      "robust_prob": 0.5286387623433507,
-      "uncertainty": 0.1139267460770651,
-      "confidence": 33.49283587221471,
+      "favorite_prob": 0.6425638912667564,
+      "robust_prob": 0.5286385363825616,
+      "uncertainty": 0.11392535488419474,
+      "confidence": 33.49320851316212,
       "data_quality": 86,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.28030962475183363,
-      "model_b_p": 0.537355594588311,
-      "model_c_p": 0.27726007288450705,
-      "model_disagreement": 0.2600955217038039,
+      "model_b_p": 0.5373556668636162,
+      "model_c_p": 0.2772651137057779,
+      "model_disagreement": 0.26009055315783836,
       "reason_codes": [
         "ELO ++",
         "SURFACE -",
@@ -327,8 +408,8 @@
         "MODELLI_IN_DISACCORDO"
       ],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "FF8CD32A0AF6",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "55F869B4B7CA",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -351,21 +432,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5752085269109799,
-      "model_p_b": 0.4247914730890201,
+      "model_p_a": 0.5752060251732298,
+      "model_p_b": 0.42479397482677017,
       "favorite_side": "A",
       "favorite_name": "Samson, Laura",
-      "favorite_prob": 0.5752085269109799,
+      "favorite_prob": 0.5752060251732298,
       "robust_prob": 0.5,
-      "uncertainty": 0.09486360679103661,
-      "confidence": 44.74229688227104,
+      "uncertainty": 0.09486150698293985,
+      "confidence": 44.742859330868384,
       "data_quality": 65.9090909090909,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.5710508882002612,
-      "model_b_p": 0.5104311625447839,
-      "model_c_p": 0.6199278101751095,
-      "model_disagreement": 0.10949664763032552,
+      "model_b_p": 0.5104314483458754,
+      "model_c_p": 0.6199205966615696,
+      "model_disagreement": 0.10948914831569423,
       "reason_codes": [
         "ELO ++",
         "FORM +",
@@ -373,8 +454,8 @@
       ],
       "warnings": [],
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "CD07CFFDC2E6",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "2709F0C7CC4F",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -391,25 +472,25 @@
       "player_b": "Hibino, Nao",
       "tournament": "WTA - US Open, New York, USA, Qualifying",
       "priority": 138,
-      "market_priority": 140,
+      "market_priority": 141,
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5930875691366069,
-      "model_p_b": 0.4069124308633931,
+      "model_p_a": 0.5930855166491804,
+      "model_p_b": 0.4069144833508196,
       "favorite_side": "A",
       "favorite_name": "Preston, Janae",
-      "favorite_prob": 0.5930875691366069,
-      "robust_prob": 0.5292163092805493,
-      "uncertainty": 0.06387125985605757,
-      "confidence": 54.552109199038384,
+      "favorite_prob": 0.5930855166491804,
+      "robust_prob": 0.5292128664712968,
+      "uncertainty": 0.0638726501778836,
+      "confidence": 54.55173679140641,
       "data_quality": 73.76623376623377,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.6043108126164598,
-      "model_b_p": 0.6001342236940005,
-      "model_c_p": 0.5732307101620798,
-      "model_disagreement": 0.031080102454379976,
+      "model_b_p": 0.6001326674890242,
+      "model_c_p": 0.5732257447269868,
+      "model_disagreement": 0.03108506788947296,
       "reason_codes": [
         "ELO ++",
         "SURFACE ++",
@@ -418,8 +499,8 @@
       ],
       "warnings": [],
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "A4502BF6BE1F",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "BB2F6A426F2C",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -440,29 +521,29 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.494353890602053,
-      "model_p_b": 0.505646109397947,
+      "model_p_a": 0.49435474564324294,
+      "model_p_b": 0.5056452543567571,
       "favorite_side": "B",
       "favorite_name": "Jones, Emerson",
-      "favorite_prob": 0.505646109397947,
+      "favorite_prob": 0.5056452543567571,
       "robust_prob": 0.5,
-      "uncertainty": 0.06870118317056549,
-      "confidence": 43.34812927597329,
+      "uncertainty": 0.0687011683524565,
+      "confidence": 43.348133245109636,
       "data_quality": 74.23376623376623,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5148997261635164,
-      "model_b_p": 0.46464967495138554,
-      "model_c_p": 0.4934622604488309,
-      "model_disagreement": 0.050250051212130886,
+      "model_b_p": 0.46464972787320336,
+      "model_c_p": 0.49346478323494636,
+      "model_disagreement": 0.05024999829031307,
       "reason_codes": [
         "SURFACE +",
         "SERVE/RETURN -"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "8837F74782ED",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "5F0A8377FE03",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -498,7 +579,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997474",
@@ -511,29 +592,29 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5024642265872331,
-      "model_p_b": 0.4975357734127669,
+      "model_p_a": 0.5024645137781782,
+      "model_p_b": 0.49753548622182175,
       "favorite_side": "A",
       "favorite_name": "Jones, Francesca",
-      "favorite_prob": 0.5024642265872331,
+      "favorite_prob": 0.5024645137781782,
       "robust_prob": 0.5,
-      "uncertainty": 0.09351598901245856,
-      "confidence": 35.093293759417996,
+      "uncertainty": 0.09351578729841004,
+      "confidence": 35.09334778996671,
       "data_quality": 65.85714285714286,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5531323652011259,
-      "model_b_p": 0.44866199627908004,
-      "model_c_p": 0.47179170922312796,
-      "model_disagreement": 0.10447036892204581,
+      "model_b_p": 0.4486627166863962,
+      "model_c_p": 0.4717920984420389,
+      "model_disagreement": 0.10446964851472967,
       "reason_codes": [
         "SURFACE -",
         "FORM -"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "26772CAAAD8E",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "22CF8CE9EF0B",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -556,21 +637,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5644595586714839,
-      "model_p_b": 0.4355404413285161,
+      "model_p_a": 0.5644575194306808,
+      "model_p_b": 0.4355424805693192,
       "favorite_side": "A",
       "favorite_name": "Yuan, Yue",
-      "favorite_prob": 0.5644595586714839,
-      "robust_prob": 0.5084963435469352,
-      "uncertainty": 0.05596321512454868,
-      "confidence": 57.30855439034005,
+      "favorite_prob": 0.5644575194306808,
+      "robust_prob": 0.5084941239610379,
+      "uncertainty": 0.055963395469642956,
+      "confidence": 57.30850608361837,
       "data_quality": 77.0909090909091,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.5737544044633783,
-      "model_b_p": 0.557262402395185,
-      "model_c_p": 0.5590634687422498,
-      "model_disagreement": 0.016492002068193345,
+      "model_b_p": 0.5572617583055626,
+      "model_c_p": 0.5590578662915382,
+      "model_disagreement": 0.01649264615781576,
       "reason_codes": [
         "ELO +",
         "SURFACE +",
@@ -579,8 +660,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "E4D466B77014",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "2F3AAFD03863",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -603,21 +684,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.5614209120669972,
-      "model_p_b": 0.4385790879330028,
+      "model_p_a": 0.5614206542233596,
+      "model_p_b": 0.4385793457766404,
       "favorite_side": "A",
       "favorite_name": "Echargui, Moez",
-      "favorite_prob": 0.5614209120669972,
+      "favorite_prob": 0.5614206542233596,
       "robust_prob": 0.5,
-      "uncertainty": 0.08343348081340604,
-      "confidence": 48.065707249655844,
+      "uncertainty": 0.08343363391708289,
+      "confidence": 48.06566623974241,
       "data_quality": 67.27272727272728,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.5970952179075025,
-      "model_b_p": 0.5546092738049871,
-      "model_c_p": 0.5228197994180653,
-      "model_disagreement": 0.0742754184894372,
+      "model_b_p": 0.5546089808990041,
+      "model_c_p": 0.5228192526192195,
+      "model_disagreement": 0.07427596528828306,
       "reason_codes": [
         "ELO ++",
         "SURFACE +",
@@ -625,8 +706,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "24A92BF627CB",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "3DDAD50D7D1B",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -649,21 +730,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.42776247495762654,
-      "model_p_b": 0.5722375250423735,
+      "model_p_a": 0.4277648935272099,
+      "model_p_b": 0.5722351064727901,
       "favorite_side": "B",
       "favorite_name": "Pellegrino, Andrea",
-      "favorite_prob": 0.5722375250423735,
+      "favorite_prob": 0.5722351064727901,
       "robust_prob": 0.5,
-      "uncertainty": 0.07606535133147882,
-      "confidence": 48.86259721988449,
+      "uncertainty": 0.07606567620463958,
+      "confidence": 48.86251020028787,
       "data_quality": 61.142857142857146,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.4225407991446373,
-      "model_b_p": 0.44532521716522494,
-      "model_c_p": 0.4234540425309598,
-      "model_disagreement": 0.022784418020587616,
+      "model_b_p": 0.4453263774265134,
+      "model_c_p": 0.42345977873710966,
+      "model_disagreement": 0.02278557828187605,
       "reason_codes": [
         "ELO +",
         "SURFACE +",
@@ -672,8 +753,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "0C4693CCA2A7",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "7CD74F7B474C",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -696,21 +777,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.4120823610061326,
-      "model_p_b": 0.5879176389938674,
+      "model_p_a": 0.4120825025667289,
+      "model_p_b": 0.587917497433271,
       "favorite_side": "B",
       "favorite_name": "Sasnovich, Aliaksandra",
-      "favorite_prob": 0.5879176389938674,
-      "robust_prob": 0.5186809909292258,
-      "uncertainty": 0.06923664806464158,
-      "confidence": 55.46339783982815,
+      "favorite_prob": 0.587917497433271,
+      "robust_prob": 0.5186806820385542,
+      "uncertainty": 0.06923681539471686,
+      "confidence": 55.46335301927226,
       "data_quality": 86,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.4666191601939899,
-      "model_b_p": 0.39177722620301314,
-      "model_c_p": 0.36613113139169856,
-      "model_disagreement": 0.10048802880229135,
+      "model_b_p": 0.3917783146810298,
+      "model_c_p": 0.36613053378428684,
+      "model_disagreement": 0.10048862640970307,
       "reason_codes": [
         "ELO +",
         "SURFACE ++",
@@ -718,8 +799,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "F9A224807138",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "C20C00AC73CD",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -742,29 +823,29 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.47251812918070063,
-      "model_p_b": 0.5274818708192994,
+      "model_p_a": 0.4725168866817013,
+      "model_p_b": 0.5274831133182987,
       "favorite_side": "B",
       "favorite_name": "Draxl, Liam",
-      "favorite_prob": 0.5274818708192994,
+      "favorite_prob": 0.5274831133182987,
       "robust_prob": 0.5,
-      "uncertainty": 0.10523861243851156,
-      "confidence": 31.59929328235603,
+      "uncertainty": 0.10523692502152882,
+      "confidence": 31.59974526904783,
       "data_quality": 64.01298701298701,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.46026179857945665,
-      "model_b_p": 0.40234853353790323,
-      "model_c_p": 0.5411112031930697,
-      "model_disagreement": 0.13876266965516648,
+      "model_b_p": 0.4023498760592701,
+      "model_c_p": 0.5411065192252125,
+      "model_disagreement": 0.13875664316594238,
       "reason_codes": [
         "SURFACE ++",
         "FORM -"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "04C3583B6E71",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "94EAE72A22F5",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -800,7 +881,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997456",
@@ -813,21 +894,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.502620149413007,
-      "model_p_b": 0.49737985058699297,
+      "model_p_a": 0.5026209484658352,
+      "model_p_b": 0.49737905153416484,
       "favorite_side": "A",
       "favorite_name": "Hruncakova, Viktoria",
-      "favorite_prob": 0.502620149413007,
+      "favorite_prob": 0.5026209484658352,
       "robust_prob": 0.5,
-      "uncertainty": 0.09729384173217634,
-      "confidence": 35.36029981431733,
+      "uncertainty": 0.0972944751312214,
+      "confidence": 35.360130153858826,
       "data_quality": 72.51948051948052,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.4425096389599928,
-      "model_b_p": 0.48626671240174746,
-      "model_c_p": 0.5878355115656319,
-      "model_disagreement": 0.14532587260563906,
+      "model_b_p": 0.48626688117554456,
+      "model_c_p": 0.5878377737050785,
+      "model_disagreement": 0.1453281347450857,
       "reason_codes": [
         "ELO -",
         "H2H ++"
@@ -836,8 +917,8 @@
         "MODELLI_IN_DISACCORDO"
       ],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "764277F9DEC7",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "6CB37C0F5950",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -873,7 +954,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997504",
@@ -899,7 +980,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997506",
@@ -912,26 +993,26 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.5109078603524532,
-      "model_p_b": 0.48909213964754683,
+      "model_p_a": 0.5109084648296781,
+      "model_p_b": 0.4890915351703219,
       "favorite_side": "A",
       "favorite_name": "Rocha, Henrique",
-      "favorite_prob": 0.5109078603524532,
+      "favorite_prob": 0.5109084648296781,
       "robust_prob": 0.5,
-      "uncertainty": 0.08404721588694637,
-      "confidence": 37.8090713475364,
+      "uncertainty": 0.0840466673753143,
+      "confidence": 37.80921827029499,
       "data_quality": 66.79220779220779,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5515644929103268,
-      "model_b_p": 0.48754719736325197,
-      "model_c_p": 0.47707072559609354,
-      "model_disagreement": 0.0744937673142333,
+      "model_b_p": 0.4875468188401335,
+      "model_c_p": 0.47707268456620805,
+      "model_disagreement": 0.07449180834411878,
       "reason_codes": [],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "4931A10CED9D",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "7FED022A86B3",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -967,7 +1048,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997612",
@@ -980,28 +1061,28 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.4768601961040247,
-      "model_p_b": 0.5231398038959754,
+      "model_p_a": 0.47685951088611744,
+      "model_p_b": 0.5231404891138826,
       "favorite_side": "B",
       "favorite_name": "Basavareddy, Nishesh",
-      "favorite_prob": 0.5231398038959754,
+      "favorite_prob": 0.5231404891138826,
       "robust_prob": 0.5,
-      "uncertainty": 0.08370898537557671,
-      "confidence": 37.62543411206144,
+      "uncertainty": 0.083708378546773,
+      "confidence": 37.625596655490995,
       "data_quality": 65.36363636363637,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.4439506523373193,
-      "model_b_p": 0.48824009619221687,
-      "model_c_p": 0.5113691066007426,
-      "model_disagreement": 0.06741845426342336,
+      "model_b_p": 0.488240287481305,
+      "model_c_p": 0.5113669393550151,
+      "model_disagreement": 0.06741628701769581,
       "reason_codes": [
         "SERVE/RETURN +"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "2ED310521B58",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "3281A3A17667",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1037,7 +1118,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997618",
@@ -1050,21 +1131,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.5945098105833244,
-      "model_p_b": 0.4054901894166756,
+      "model_p_a": 0.5945091865785085,
+      "model_p_b": 0.4054908134214915,
       "favorite_side": "A",
       "favorite_name": "Gea, Arthur",
-      "favorite_prob": 0.5945098105833244,
-      "robust_prob": 0.5099753402549629,
-      "uncertainty": 0.08453447032836146,
-      "confidence": 47.66609155165642,
+      "favorite_prob": 0.5945091865785085,
+      "robust_prob": 0.5099744642660617,
+      "uncertainty": 0.08453472231244676,
+      "confidence": 47.666024055919294,
       "data_quality": 66.72727272727272,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.6277687646233565,
-      "model_b_p": 0.5983953179050767,
-      "model_c_p": 0.5518015004636241,
-      "model_disagreement": 0.07596726415973243,
+      "model_b_p": 0.5983940371399371,
+      "model_c_p": 0.5518006005204623,
+      "model_disagreement": 0.0759681641028942,
       "reason_codes": [
         "ELO +",
         "SURFACE ++",
@@ -1072,8 +1153,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "D0B0ADFE997D",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "819E8AB4C4DB",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1096,21 +1177,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5115882296115746,
-      "model_p_b": 0.4884117703884254,
+      "model_p_a": 0.5115868532808107,
+      "model_p_b": 0.48841314671918934,
       "favorite_side": "A",
       "favorite_name": "Papamichail, Despina",
-      "favorite_prob": 0.5115882296115746,
+      "favorite_prob": 0.5115868532808107,
       "robust_prob": 0.5,
-      "uncertainty": 0.09677209640294006,
-      "confidence": 33.480688463498204,
+      "uncertainty": 0.09677089578356257,
+      "confidence": 33.481010057974316,
       "data_quality": 62,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.48554602293501264,
-      "model_b_p": 0.4726030272139447,
-      "model_c_p": 0.572860514367302,
-      "model_disagreement": 0.1002574871533573,
+      "model_b_p": 0.472603108729144,
+      "model_c_p": 0.5728563079561532,
+      "model_disagreement": 0.10025319922700915,
       "reason_codes": [
         "SURFACE -",
         "FORM +",
@@ -1118,8 +1199,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "423DB9FCF9FD",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "330D6DB2FB91",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1142,29 +1223,29 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.4711040807754659,
-      "model_p_b": 0.5288959192245342,
+      "model_p_a": 0.47110351300023234,
+      "model_p_b": 0.5288964869997677,
       "favorite_side": "B",
       "favorite_name": "Garin, Cristian",
-      "favorite_prob": 0.5288959192245342,
+      "favorite_prob": 0.5288964869997677,
       "robust_prob": 0.5,
-      "uncertainty": 0.07372326208947318,
-      "confidence": 43.68573336889111,
+      "uncertainty": 0.07372273932045695,
+      "confidence": 43.68587339630618,
       "data_quality": 83,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.41756816115102907,
-      "model_b_p": 0.48525908226051034,
-      "model_c_p": 0.5217583828991476,
-      "model_disagreement": 0.10419022174811848,
+      "model_b_p": 0.4852591581589089,
+      "model_c_p": 0.5217565158669467,
+      "model_disagreement": 0.10418835471591764,
       "reason_codes": [
         "ELO +",
         "FORM -"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "B2C06CD4C316",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "5FAD229349B8",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1187,21 +1268,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.4032781337736482,
-      "model_p_b": 0.5967218662263518,
+      "model_p_a": 0.4032817059688835,
+      "model_p_b": 0.5967182940311164,
       "favorite_side": "B",
       "favorite_name": "Iatcenko, Polina",
-      "favorite_prob": 0.5967218662263518,
-      "robust_prob": 0.5101103422312476,
-      "uncertainty": 0.08661152399510413,
-      "confidence": 48.83741646235036,
+      "favorite_prob": 0.5967182940311164,
+      "robust_prob": 0.5101094787431979,
+      "uncertainty": 0.08660881528791858,
+      "confidence": 48.83814200891791,
       "data_quality": 75.72727272727273,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.4457501607520188,
-      "model_b_p": 0.43921253892456324,
-      "model_c_p": 0.32540056206820533,
-      "model_disagreement": 0.12034959868381345,
+      "model_b_p": 0.4392137031087851,
+      "model_c_p": 0.3254102360224394,
+      "model_disagreement": 0.12033992472957938,
       "reason_codes": [
         "ELO +",
         "SURFACE +",
@@ -1210,8 +1291,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "CC13FB45DF86",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "CEFE17D15A53",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1247,7 +1328,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74034576",
@@ -1273,7 +1354,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74029838",
@@ -1286,29 +1367,29 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.5305592956217458,
-      "model_p_b": 0.46944070437825425,
+      "model_p_a": 0.5305592785577261,
+      "model_p_b": 0.4694407214422739,
       "favorite_side": "A",
       "favorite_name": "Gaubas, Vilius",
-      "favorite_prob": 0.5305592956217458,
+      "favorite_prob": 0.5305592785577261,
       "robust_prob": 0.5,
-      "uncertainty": 0.06718255113518694,
-      "confidence": 52.33137834852947,
+      "uncertainty": 0.06718239514967013,
+      "confidence": 52.331420130364336,
       "data_quality": 66.81818181818181,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.5356417249938795,
-      "model_b_p": 0.5353415299049331,
-      "model_c_p": 0.5212722241863937,
-      "model_disagreement": 0.01436950080748578,
+      "model_b_p": 0.5353406208929512,
+      "model_c_p": 0.5212727812775252,
+      "model_disagreement": 0.014368943716354332,
       "reason_codes": [
         "ELO +",
         "SERVE/RETURN +"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "5FB13F31CFDA",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "89145434E879",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1331,29 +1412,29 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.45382123770780364,
-      "model_p_b": 0.5461787622921963,
+      "model_p_a": 0.4538205503176323,
+      "model_p_b": 0.5461794496823678,
       "favorite_side": "B",
       "favorite_name": "Muller, Alexandre",
-      "favorite_prob": 0.5461787622921963,
+      "favorite_prob": 0.5461794496823678,
       "robust_prob": 0.5,
-      "uncertainty": 0.06493472071955632,
-      "confidence": 54.92292383323573,
+      "uncertainty": 0.06493564108845214,
+      "confidence": 54.922677305852915,
       "data_quality": 77.18181818181819,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.4615434566653612,
-      "model_b_p": 0.4765157839024081,
-      "model_c_p": 0.4276093138000966,
-      "model_disagreement": 0.04890647010231153,
+      "model_b_p": 0.47651650614786567,
+      "model_c_p": 0.42760674901378337,
+      "model_disagreement": 0.0489097571340823,
       "reason_codes": [
         "FORM -",
         "H2H ++"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "6BB336C06270",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "E27540E686F4",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1376,28 +1457,28 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5216773735796224,
-      "model_p_b": 0.4783226264203776,
+      "model_p_a": 0.521675497158682,
+      "model_p_b": 0.478324502841318,
       "favorite_side": "A",
       "favorite_name": "Brengle, Madison",
-      "favorite_prob": 0.5216773735796224,
+      "favorite_prob": 0.521675497158682,
       "robust_prob": 0.5,
-      "uncertainty": 0.06875401556589256,
-      "confidence": 42.86029963390402,
+      "uncertainty": 0.06875260055647167,
+      "confidence": 42.86067865428461,
       "data_quality": 71.76623376623377,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5311540407358666,
-      "model_b_p": 0.4945744554448333,
-      "model_c_p": 0.5348786854343383,
-      "model_disagreement": 0.04030422998950495,
+      "model_b_p": 0.4945740485518365,
+      "model_c_p": 0.5348732249362669,
+      "model_disagreement": 0.04029917638443037,
       "reason_codes": [
         "FORM +"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "C5A916EB5A56",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "EC42C9186A2B",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1433,7 +1514,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997472",
@@ -1459,7 +1540,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997528",
@@ -1485,7 +1566,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997534",
@@ -1498,28 +1579,28 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.5241907933678003,
-      "model_p_b": 0.4758092066321997,
+      "model_p_a": 0.524190097631921,
+      "model_p_b": 0.47580990236807896,
       "favorite_side": "A",
       "favorite_name": "Nardi, Luca",
-      "favorite_prob": 0.5241907933678003,
+      "favorite_prob": 0.524190097631921,
       "robust_prob": 0.5,
-      "uncertainty": 0.07480769861423761,
-      "confidence": 40.6404471476242,
+      "uncertainty": 0.07480710057334862,
+      "confidence": 40.64060733714804,
       "data_quality": 68.64935064935065,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5332638536096773,
-      "model_b_p": 0.4875988941904015,
-      "model_c_p": 0.5367219365510831,
-      "model_disagreement": 0.04912304236068166,
+      "model_b_p": 0.48759899173334087,
+      "model_c_p": 0.5367198982337047,
+      "model_disagreement": 0.049120906500363826,
       "reason_codes": [
         "SERVE/RETURN +"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "70B036EF6B6D",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "F910CE875FB0",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1555,7 +1636,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997462",
@@ -1568,21 +1649,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.41612540074614346,
-      "model_p_b": 0.5838745992538565,
+      "model_p_a": 0.41612557839503844,
+      "model_p_b": 0.5838744216049616,
       "favorite_side": "B",
       "favorite_name": "Sharma, Astra",
-      "favorite_prob": 0.5838745992538565,
+      "favorite_prob": 0.5838744216049616,
       "robust_prob": 0.5,
-      "uncertainty": 0.08794798593740819,
-      "confidence": 45.79941471296233,
+      "uncertainty": 0.08794804133427946,
+      "confidence": 45.79939987451466,
       "data_quality": 61.76623376623376,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.3913850059078254,
-      "model_b_p": 0.4591677015098861,
-      "model_c_p": 0.4157307551197087,
-      "model_disagreement": 0.06778269560206074,
+      "model_b_p": 0.45916789935585495,
+      "model_c_p": 0.4157311359499573,
+      "model_disagreement": 0.06778289344802957,
       "reason_codes": [
         "ELO +",
         "SURFACE +",
@@ -1590,8 +1671,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "127B46087EC2",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "626E8A045BBD",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1614,21 +1695,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5229159148928153,
-      "model_p_b": 0.4770840851071847,
+      "model_p_a": 0.5229156754609464,
+      "model_p_b": 0.4770843245390536,
       "favorite_side": "A",
       "favorite_name": "Hunter, Storm",
-      "favorite_prob": 0.5229159148928153,
+      "favorite_prob": 0.5229156754609464,
       "robust_prob": 0.5,
-      "uncertainty": 0.07352219840815533,
-      "confidence": 50.99724277332574,
+      "uncertainty": 0.07352205263323958,
+      "confidence": 50.99728182017817,
       "data_quality": 68.71428571428572,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.5005002981127088,
-      "model_b_p": 0.545298965896937,
-      "model_c_p": 0.5304155766150243,
-      "model_disagreement": 0.04479866778422825,
+      "model_b_p": 0.5452984452722379,
+      "model_c_p": 0.5304152930085532,
+      "model_disagreement": 0.04479814715952912,
       "reason_codes": [
         "ELO +",
         "SURFACE +",
@@ -1636,8 +1717,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "061EC38E4FC3",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "73732A79C271",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1673,7 +1754,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997432",
@@ -1681,10 +1762,10 @@
       "player_a": "Costoulas, Sofia",
       "player_b": "Ruggeri, Jennifer",
       "tournament": "WTA - US Open, New York, USA, Qualifying",
-      "priority": 132,
+      "priority": 133,
       "premium": true,
       "pre_status": "DATA CAUTION",
-      "market_priority": 132,
+      "market_priority": 133,
       "data_quality": 25,
       "confidence": 25,
       "reason_codes": [],
@@ -1699,7 +1780,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997434",
@@ -1707,33 +1788,33 @@
       "player_a": "Kalieva, Elvina",
       "player_b": "Mladenovic, Kristina",
       "tournament": "WTA - US Open, New York, USA, Qualifying",
-      "priority": 132,
-      "market_priority": 132,
+      "priority": 133,
+      "market_priority": 133,
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.4896658331591352,
-      "model_p_b": 0.5103341668408647,
+      "model_p_a": 0.4896683405728776,
+      "model_p_b": 0.5103316594271223,
       "favorite_side": "B",
       "favorite_name": "Mladenovic, Kristina",
-      "favorite_prob": 0.5103341668408647,
+      "favorite_prob": 0.5103316594271223,
       "robust_prob": 0.5,
-      "uncertainty": 0.09392791066585594,
-      "confidence": 34.230058715430516,
+      "uncertainty": 0.09392601640181449,
+      "confidence": 34.23056610758447,
       "data_quality": 61.935064935064936,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5305311144422376,
-      "model_b_p": 0.4974764245364523,
-      "model_c_p": 0.4406981310808782,
-      "model_disagreement": 0.08983298336135936,
+      "model_b_p": 0.4974765532467014,
+      "model_c_p": 0.4407048963095977,
+      "model_disagreement": 0.08982621813263986,
       "reason_codes": [
         "FORM +"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "5946B7B5461A",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "4BC296C4B565",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1751,34 +1832,34 @@
       "player_a": "Daniel, Taro",
       "player_b": "Johnson, Andrew",
       "tournament": "ATP - US Open, New York, USA, Qualifying",
-      "priority": 132,
-      "market_priority": 132,
+      "priority": 133,
+      "market_priority": 133,
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.488745041169324,
-      "model_p_b": 0.5112549588306761,
+      "model_p_a": 0.4887453781578688,
+      "model_p_b": 0.5112546218421312,
       "favorite_side": "B",
       "favorite_name": "Johnson, Andrew",
-      "favorite_prob": 0.5112549588306761,
+      "favorite_prob": 0.5112546218421312,
       "robust_prob": 0.5,
-      "uncertainty": 0.06999717640569371,
-      "confidence": 42.34531800821516,
+      "uncertainty": 0.06999716106468355,
+      "confidence": 42.34532211741431,
       "data_quality": 70.81818181818181,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.48364416158954976,
-      "model_b_p": 0.4679074912597553,
-      "model_c_p": 0.5087577966047653,
-      "model_disagreement": 0.040850305345009996,
+      "model_b_p": 0.4679081037536456,
+      "model_c_p": 0.5087583543093336,
+      "model_disagreement": 0.04085025055568797,
       "reason_codes": [
         "ELO +",
         "SERVE/RETURN -"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "113F2ED3D301",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "C6645221F236",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1801,28 +1882,28 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.49743891157565684,
-      "model_p_b": 0.5025610884243432,
+      "model_p_a": 0.49743992641861035,
+      "model_p_b": 0.5025600735813897,
       "favorite_side": "B",
       "favorite_name": "Shymanovich, Iryna",
-      "favorite_prob": 0.5025610884243432,
+      "favorite_prob": 0.5025600735813897,
       "robust_prob": 0.5,
-      "uncertainty": 0.07258306176113764,
-      "confidence": 39.82776290952829,
+      "uncertainty": 0.07258375839576778,
+      "confidence": 39.82757631096665,
       "data_quality": 61.31168831168831,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.4913625903656889,
-      "model_b_p": 0.5000552607377153,
-      "model_c_p": 0.5024036736499004,
-      "model_disagreement": 0.01104108328421144,
+      "model_b_p": 0.5000556368752138,
+      "model_c_p": 0.5024061616307223,
+      "model_disagreement": 0.011043571265033358,
       "reason_codes": [
         "SERVE/RETURN -"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "11EB0CF85B25",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "2588A923692B",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1845,29 +1926,29 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.5284793590261159,
-      "model_p_b": 0.47152064097388413,
+      "model_p_a": 0.5284788489118537,
+      "model_p_b": 0.4715211510881463,
       "favorite_side": "A",
       "favorite_name": "Svrcina, Dalibor",
-      "favorite_prob": 0.5284793590261159,
+      "favorite_prob": 0.5284788489118537,
       "robust_prob": 0.5,
-      "uncertainty": 0.09273670598671843,
-      "confidence": 35.28707202814013,
+      "uncertainty": 0.09273689407437212,
+      "confidence": 35.28702164751861,
       "data_quality": 65.77922077922078,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.566899490722618,
-      "model_b_p": 0.554564660536024,
-      "model_c_p": 0.46553231256968114,
-      "model_disagreement": 0.10136717815293689,
+      "model_b_p": 0.5545636250340202,
+      "model_c_p": 0.46553164082806087,
+      "model_disagreement": 0.10136784989455716,
       "reason_codes": [
         "SURFACE +",
         "SERVE/RETURN --"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "DDB9FCBD9CE0",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "E3397117E591",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1903,7 +1984,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74030064",
@@ -1916,21 +1997,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.5292591598245933,
-      "model_p_b": 0.47074084017540674,
+      "model_p_a": 0.5292605330526664,
+      "model_p_b": 0.4707394669473336,
       "favorite_side": "A",
       "favorite_name": "Jacquet, Kyrian",
-      "favorite_prob": 0.5292591598245933,
+      "favorite_prob": 0.5292605330526664,
       "robust_prob": 0.5,
-      "uncertainty": 0.089006415400033,
-      "confidence": 35.695405893544034,
+      "uncertainty": 0.08900520450855146,
+      "confidence": 35.69573023947659,
       "data_quality": 62.701298701298704,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5595977421027383,
-      "model_b_p": 0.5467652159240094,
-      "model_c_p": 0.48419449600800074,
-      "model_disagreement": 0.07540324609473753,
+      "model_b_p": 0.5467645279738618,
+      "model_c_p": 0.48419882062043484,
+      "model_disagreement": 0.07539892148230343,
       "reason_codes": [
         "ELO +",
         "SURFACE +",
@@ -1939,8 +2020,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "E52CF91B8F79",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "7AEB622D43F3",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -1963,21 +2044,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.5355150274565229,
-      "model_p_b": 0.4644849725434771,
+      "model_p_a": 0.5355164842347256,
+      "model_p_b": 0.46448351576527436,
       "favorite_side": "A",
       "favorite_name": "Wong, Coleman",
-      "favorite_prob": 0.5355150274565229,
+      "favorite_prob": 0.5355164842347256,
       "robust_prob": 0.5,
-      "uncertainty": 0.08208939505201682,
-      "confidence": 38.168946826280276,
+      "uncertainty": 0.08208815768144598,
+      "confidence": 38.16927826482603,
       "data_quality": 65.93506493506493,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5602830062071581,
-      "model_b_p": 0.5429931666065815,
-      "model_c_p": 0.49630186432379564,
-      "model_disagreement": 0.06398114188336246,
+      "model_b_p": 0.542993281540604,
+      "model_c_p": 0.49630628350440575,
+      "model_disagreement": 0.06397672270275234,
       "reason_codes": [
         "SURFACE +",
         "FORM -",
@@ -1985,8 +2066,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "5FDA3D615D43",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "BEFED7BB53C6",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2022,7 +2103,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74034604",
@@ -2035,29 +2116,29 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.45640528493161264,
-      "model_p_b": 0.5435947150683873,
+      "model_p_a": 0.45640520451735317,
+      "model_p_b": 0.5435947954826468,
       "favorite_side": "B",
       "favorite_name": "Sakatsume, Himeno",
-      "favorite_prob": 0.5435947150683873,
+      "favorite_prob": 0.5435947954826468,
       "robust_prob": 0.5,
-      "uncertainty": 0.089783080928975,
-      "confidence": 45.193191448755535,
+      "uncertainty": 0.08978299356331952,
+      "confidence": 45.193214850270394,
       "data_quality": 61.16883116883117,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.41971186134705635,
-      "model_b_p": 0.4633870308120629,
-      "model_c_p": 0.4915948498225236,
-      "model_disagreement": 0.07188298847546726,
+      "model_b_p": 0.4633871918447329,
+      "model_c_p": 0.4915945378023255,
+      "model_disagreement": 0.07188267645526913,
       "reason_codes": [
         "ELO +",
         "SURFACE +"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "149C122F27B8",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "D450E9FFB6B3",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2080,29 +2161,29 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.4527738504165085,
-      "model_p_b": 0.5472261495834915,
+      "model_p_a": 0.45277735183946494,
+      "model_p_b": 0.5472226481605351,
       "favorite_side": "B",
       "favorite_name": "Podrez, Veronika",
-      "favorite_prob": 0.5472261495834915,
+      "favorite_prob": 0.5472226481605351,
       "robust_prob": 0.5,
-      "uncertainty": 0.09214855594129395,
-      "confidence": 36.2000041483779,
+      "uncertainty": 0.09214608984724779,
+      "confidence": 36.20066470928312,
       "data_quality": 69.71428571428572,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5173604328009632,
-      "model_b_p": 0.40395267616883074,
-      "model_c_p": 0.40193191668409706,
-      "model_disagreement": 0.11542851611686616,
+      "model_b_p": 0.40395433187603386,
+      "model_c_p": 0.40194072416283333,
+      "model_disagreement": 0.11541970863812989,
       "reason_codes": [
         "SURFACE +",
         "FORM ++"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "E67AFADDFB16",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "4E1BC8F5A89C",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2125,21 +2206,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5170708799735156,
-      "model_p_b": 0.48292912002648436,
+      "model_p_a": 0.5170721400742226,
+      "model_p_b": 0.48292785992577736,
       "favorite_side": "A",
       "favorite_name": "Pridankina, Elena",
-      "favorite_prob": 0.5170708799735156,
+      "favorite_prob": 0.5170721400742226,
       "robust_prob": 0.5,
-      "uncertainty": 0.09520326910426594,
-      "confidence": 35.027765348926906,
+      "uncertainty": 0.09520200183040317,
+      "confidence": 35.02810479728301,
       "data_quality": 67.87012987012987,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5143409758518848,
-      "model_b_p": 0.5880242982454909,
-      "model_c_p": 0.4692603037636506,
-      "model_disagreement": 0.11876399448184027,
+      "model_b_p": 0.5880238061036206,
+      "model_c_p": 0.4692643375998616,
+      "model_disagreement": 0.11875946850375901,
       "reason_codes": [
         "ELO +",
         "SURFACE ++",
@@ -2147,8 +2228,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "A14931394188",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "DA2123324355",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2184,7 +2265,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862990",
@@ -2192,26 +2273,26 @@
       "player_a": "Bartunkova, Nikola",
       "player_b": "Potapova, Anastasia",
       "tournament": "WTA - Monterrey, Mexico",
-      "priority": 125,
+      "priority": 126,
       "market_priority": 129,
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.3760308937601448,
-      "model_p_b": 0.6239691062398551,
+      "model_p_a": 0.3760324784429117,
+      "model_p_b": 0.6239675215570883,
       "favorite_side": "B",
       "favorite_name": "Potapova, Anastasia",
-      "favorite_prob": 0.6239691062398551,
-      "robust_prob": 0.5335889329142129,
-      "uncertainty": 0.09038017332564219,
-      "confidence": 48.70052175530688,
+      "favorite_prob": 0.6239675215570883,
+      "robust_prob": 0.5335874318872653,
+      "uncertainty": 0.09038008966982305,
+      "confidence": 48.70054416311558,
       "data_quality": 80.27272727272727,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.3144596691943536,
-      "model_b_p": 0.46693756094177696,
-      "model_c_p": 0.3626459627447275,
-      "model_disagreement": 0.15247789174742338,
+      "model_b_p": 0.4669372621709943,
+      "model_c_p": 0.36265125716222213,
+      "model_disagreement": 0.1524775929766407,
       "reason_codes": [
         "ELO ++",
         "SURFACE +",
@@ -2222,8 +2303,8 @@
         "MODELLI_IN_DISACCORDO"
       ],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "50A307AFA1AC",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "B030259D02C2",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2259,7 +2340,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997550",
@@ -2285,7 +2366,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997502",
@@ -2311,7 +2392,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997390",
@@ -2337,7 +2418,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997392",
@@ -2363,7 +2444,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853052",
@@ -2371,26 +2452,26 @@
       "player_a": "Walton, Adam",
       "player_b": "Buse, Ignacio",
       "tournament": "ATP - Winston Salem, USA",
-      "priority": 121,
-      "market_priority": 123,
+      "priority": 122,
+      "market_priority": 124,
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.37857785029533475,
-      "model_p_b": 0.6214221497046652,
+      "model_p_a": 0.3785797643260961,
+      "model_p_b": 0.6214202356739039,
       "favorite_side": "B",
       "favorite_name": "Buse, Ignacio",
-      "favorite_prob": 0.6214221497046652,
-      "robust_prob": 0.520656458946021,
-      "uncertainty": 0.10076569075864424,
-      "confidence": 44.73947754493644,
+      "favorite_prob": 0.6214202356739039,
+      "robust_prob": 0.5206546467275991,
+      "uncertainty": 0.10076558894630482,
+      "confidence": 44.73950481609879,
       "data_quality": 74.12987012987013,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.31623846862409033,
-      "model_b_p": 0.48057790222407204,
-      "model_c_p": 0.38266507229690355,
-      "model_disagreement": 0.1643394335999817,
+      "model_b_p": 0.4805775386085741,
+      "model_c_p": 0.38267086233265146,
+      "model_disagreement": 0.16433906998448378,
       "reason_codes": [
         "ELO ++",
         "FORM ++",
@@ -2400,8 +2481,8 @@
         "MODELLI_IN_DISACCORDO"
       ],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "A3BB13992D1A",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "44BDD42308E1",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2419,26 +2500,26 @@
       "player_a": "Duckworth, James",
       "player_b": "Navone, Mariano",
       "tournament": "ATP - Winston Salem, USA",
-      "priority": 120,
-      "market_priority": 122,
+      "priority": 121,
+      "market_priority": 123,
       "pre_status": "DATA CAUTION",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.3765098064693139,
-      "model_p_b": 0.623490193530686,
+      "model_p_a": 0.3765127896595564,
+      "model_p_b": 0.6234872103404436,
       "favorite_side": "B",
       "favorite_name": "Navone, Mariano",
-      "favorite_prob": 0.623490193530686,
-      "robust_prob": 0.5203723935053493,
-      "uncertainty": 0.10311780002533676,
-      "confidence": 36.196124993213374,
+      "favorite_prob": 0.6234872103404436,
+      "robust_prob": 0.5203722587630059,
+      "uncertainty": 0.10311495157743779,
+      "confidence": 36.19688797032916,
       "data_quality": 85,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.3179639260075243,
-      "model_b_p": 0.5232649374104547,
-      "model_c_p": 0.30587993731996627,
-      "model_disagreement": 0.2173850000904884,
+      "model_b_p": 0.5232645567231873,
+      "model_c_p": 0.3058897296609095,
+      "model_disagreement": 0.2173748270622778,
       "reason_codes": [
         "ELO ++",
         "FORM ++",
@@ -2448,8 +2529,8 @@
         "MODELLI_IN_DISACCORDO"
       ],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "8B8369D188FC",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "8A31CD2CBC99",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2472,21 +2553,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5649889602133201,
-      "model_p_b": 0.4350110397866799,
+      "model_p_a": 0.5649903662705531,
+      "model_p_b": 0.4350096337294469,
       "favorite_side": "A",
       "favorite_name": "Bucsa, Cristina",
-      "favorite_prob": 0.5649889602133201,
+      "favorite_prob": 0.5649903662705531,
       "robust_prob": 0.5,
-      "uncertainty": 0.07264702511195806,
-      "confidence": 54.549903987868376,
+      "uncertainty": 0.07264682917610761,
+      "confidence": 54.54995647068546,
       "data_quality": 86,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.5265732482759605,
-      "model_b_p": 0.6392411951043822,
-      "model_c_p": 0.5398056690427323,
-      "model_disagreement": 0.11266794682842163,
+      "model_b_p": 0.6392404953334877,
+      "model_c_p": 0.5398107839636475,
+      "model_disagreement": 0.11266724705752718,
       "reason_codes": [
         "SURFACE ++",
         "FORM --",
@@ -2494,8 +2575,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "08AFE9F5C3A5",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "0E272FFE8E7B",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2518,21 +2599,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.4918056272407051,
-      "model_p_b": 0.5081943727592949,
+      "model_p_a": 0.4918068994100458,
+      "model_p_b": 0.5081931005899543,
       "favorite_side": "B",
       "favorite_name": "Sonego, Lorenzo",
-      "favorite_prob": 0.5081943727592949,
+      "favorite_prob": 0.5081931005899543,
       "robust_prob": 0.5,
-      "uncertainty": 0.05935171451484661,
-      "confidence": 48.303112183523226,
+      "uncertainty": 0.05935267514748516,
+      "confidence": 48.302854871209334,
       "data_quality": 87,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.4894885587109174,
-      "model_b_p": 0.4578712622829101,
-      "model_c_p": 0.5271630998359337,
-      "model_disagreement": 0.0692918375530236,
+      "model_b_p": 0.45787156290753483,
+      "model_c_p": 0.5271668312914104,
+      "model_disagreement": 0.06929526838387556,
       "reason_codes": [
         "ELO +",
         "SURFACE +",
@@ -2542,60 +2623,14 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "DF47879B37CF",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "6A69DA2999AF",
       "premium": true,
       "resolution": {
         "ok": true,
         "tour": "atp",
         "a": "adrian mannarino",
         "b": "lorenzo sonego",
-        "reason": null
-      },
-      "market_status": "NO BET",
-      "market_checked_at": "2026-08-25T14:09:54.103Z"
-    },
-    {
-      "event_id": "74033810",
-      "start_at": "2026-08-26T15:00:00Z",
-      "player_a": "Jorge, Francisca",
-      "player_b": "Ristic, Mia",
-      "tournament": "WTA - US Open, New York, USA, Qualifying",
-      "priority": 120,
-      "market_priority": 120,
-      "pre_status": "PRE-ANALISI",
-      "surface": "Hard",
-      "tour": "wta",
-      "model_p_a": 0.5785908333849907,
-      "model_p_b": 0.42140916661500927,
-      "favorite_side": "A",
-      "favorite_name": "Jorge, Francisca",
-      "favorite_prob": 0.5785908333849907,
-      "robust_prob": 0.5,
-      "uncertainty": 0.08610177342153102,
-      "confidence": 46.17925595967803,
-      "data_quality": 61.16883116883117,
-      "engine_votes": "3/3",
-      "engine_unanimous": true,
-      "model_a_p": 0.5813657520129385,
-      "model_b_p": 0.5417423469901285,
-      "model_c_p": 0.6004778086532958,
-      "model_disagreement": 0.05873546166316734,
-      "reason_codes": [
-        "ELO +",
-        "SURFACE +",
-        "SERVE/RETURN ++"
-      ],
-      "warnings": [],
-      "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "2BE0274D321A",
-      "premium": true,
-      "resolution": {
-        "ok": true,
-        "tour": "wta",
-        "a": "francisca jorge",
-        "b": "mia ristic",
         "reason": null
       },
       "market_status": "NO BET",
@@ -2612,21 +2647,21 @@
       "pre_status": "DATA CAUTION",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.4972086060830319,
-      "model_p_b": 0.5027913939169681,
+      "model_p_a": 0.4972103022314951,
+      "model_p_b": 0.5027896977685049,
       "favorite_side": "B",
       "favorite_name": "Starodubtseva, Yuliia",
-      "favorite_prob": 0.5027913939169681,
+      "favorite_prob": 0.5027896977685049,
       "robust_prob": 0.5,
-      "uncertainty": 0.10975801202786115,
-      "confidence": 34.11583861498618,
+      "uncertainty": 0.10975595529832352,
+      "confidence": 34.11638952468376,
       "data_quality": 83.42857142857143,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.509700980651941,
-      "model_b_p": 0.6092775406959416,
-      "model_c_p": 0.37463157937194774,
-      "model_disagreement": 0.2346459613239939,
+      "model_b_p": 0.6092765276176301,
+      "model_c_p": 0.3746379117562706,
+      "model_disagreement": 0.23463861586135948,
       "reason_codes": [
         "SURFACE --",
         "FORM ++",
@@ -2636,8 +2671,8 @@
         "MODELLI_IN_DISACCORDO"
       ],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "29C1D73D2E84",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "451A52FD6181",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2650,38 +2685,84 @@
       "market_checked_at": "2026-08-25T14:09:54.103Z"
     },
     {
+      "event_id": "74033810",
+      "start_at": "2026-08-26T15:00:00Z",
+      "player_a": "Jorge, Francisca",
+      "player_b": "Ristic, Mia",
+      "tournament": "WTA - US Open, New York, USA, Qualifying",
+      "priority": 120,
+      "market_priority": 120,
+      "pre_status": "PRE-ANALISI",
+      "surface": "Hard",
+      "tour": "wta",
+      "model_p_a": 0.5785904340491413,
+      "model_p_b": 0.42140956595085866,
+      "favorite_side": "A",
+      "favorite_name": "Jorge, Francisca",
+      "favorite_prob": 0.5785904340491413,
+      "robust_prob": 0.5,
+      "uncertainty": 0.08610174509050039,
+      "confidence": 46.17926354834695,
+      "data_quality": 61.16883116883117,
+      "engine_votes": "3/3",
+      "engine_unanimous": true,
+      "model_a_p": 0.5813657520129385,
+      "model_b_p": 0.5417417177393449,
+      "model_c_p": 0.60047707822026,
+      "model_disagreement": 0.0587353604809151,
+      "reason_codes": [
+        "ELO +",
+        "SURFACE +",
+        "SERVE/RETURN ++"
+      ],
+      "warnings": [],
+      "market_checked": true,
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "03A865234A34",
+      "premium": true,
+      "resolution": {
+        "ok": true,
+        "tour": "wta",
+        "a": "francisca jorge",
+        "b": "mia ristic",
+        "reason": null
+      },
+      "market_status": "NO BET",
+      "market_checked_at": "2026-08-25T14:09:54.103Z"
+    },
+    {
       "event_id": "73853032",
       "start_at": "2026-08-25T23:40:00Z",
       "player_a": "Kecmanovic, Miomir",
       "player_b": "Marozsan, Fabian",
       "tournament": "ATP - Winston Salem, USA",
-      "priority": 119,
-      "market_priority": 119,
+      "priority": 120,
+      "market_priority": 120,
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.502997117709982,
-      "model_p_b": 0.497002882290018,
+      "model_p_a": 0.5029968521553693,
+      "model_p_b": 0.49700314784463073,
       "favorite_side": "A",
       "favorite_name": "Kecmanovic, Miomir",
-      "favorite_prob": 0.502997117709982,
+      "favorite_prob": 0.5029968521553693,
       "robust_prob": 0.5,
-      "uncertainty": 0.06262195870655476,
-      "confidence": 47.427153917887125,
+      "uncertainty": 0.06262164059423228,
+      "confidence": 47.42723912654492,
       "data_quality": 87,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.4901782798202945,
-      "model_b_p": 0.4695335076960977,
-      "model_c_p": 0.5505047887909361,
-      "model_disagreement": 0.08097128109483842,
+      "model_b_p": 0.4695336592077616,
+      "model_c_p": 0.5505038041871626,
+      "model_disagreement": 0.08097014497940103,
       "reason_codes": [
         "SERVE/RETURN +"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "7AE7C1ABDA0B",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "655920CAB505",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2704,21 +2785,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5227797755545256,
-      "model_p_b": 0.4772202244454744,
+      "model_p_a": 0.5227769249721511,
+      "model_p_b": 0.4772230750278489,
       "favorite_side": "A",
       "favorite_name": "Kalinina, Anhelina",
-      "favorite_prob": 0.5227797755545256,
+      "favorite_prob": 0.5227769249721511,
       "robust_prob": 0.5,
-      "uncertainty": 0.09708553739257587,
-      "confidence": 37.81190962698861,
+      "uncertainty": 0.09708275057132026,
+      "confidence": 37.812656096967785,
       "data_quality": 85,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.4804637680693373,
-      "model_b_p": 0.4487685531100055,
-      "model_c_p": 0.6446097580834907,
-      "model_disagreement": 0.19584120497348523,
+      "model_b_p": 0.4487690353001853,
+      "model_c_p": 0.6446002873406148,
+      "model_disagreement": 0.1958312520404295,
       "reason_codes": [
         "SURFACE -",
         "FORM ++",
@@ -2728,8 +2809,8 @@
         "MODELLI_IN_DISACCORDO"
       ],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "11DB0A672777",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "DC8ACDB27A04",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2748,25 +2829,25 @@
       "player_b": "Collins, Kylie",
       "tournament": "WTA 125K - Philadelphia, USA",
       "priority": 108,
-      "market_priority": 109,
+      "market_priority": 110,
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.4212303752057784,
-      "model_p_b": 0.5787696247942216,
+      "model_p_a": 0.42123129394065867,
+      "model_p_b": 0.5787687060593414,
       "favorite_side": "B",
       "favorite_name": "Collins, Kylie",
-      "favorite_prob": 0.5787696247942216,
-      "robust_prob": 0.5174038387950448,
-      "uncertainty": 0.0613657859991768,
-      "confidence": 57.37970017879192,
+      "favorite_prob": 0.5787687060593414,
+      "robust_prob": 0.5174029325925978,
+      "uncertainty": 0.061365773466743545,
+      "confidence": 57.37970353569369,
       "data_quality": 85,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.37977016606725034,
-      "model_b_p": 0.4480408303500246,
-      "model_c_p": 0.44524458923353566,
-      "model_disagreement": 0.06827066428277428,
+      "model_b_p": 0.4480407855913344,
+      "model_c_p": 0.4452475354041,
+      "model_disagreement": 0.06827061952408409,
       "reason_codes": [
         "ELO ++",
         "SURFACE +",
@@ -2774,8 +2855,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "07EA0BB4A859",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "B8B9E1FD29FA",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2793,26 +2874,26 @@
       "player_a": "Bonzi, Benjamin",
       "player_b": "Halys, Quentin",
       "tournament": "ATP - Winston Salem, USA",
-      "priority": 107,
-      "market_priority": 107,
+      "priority": 108,
+      "market_priority": 108,
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.5103189884688557,
-      "model_p_b": 0.4896810115311443,
+      "model_p_a": 0.5103199135425334,
+      "model_p_b": 0.48968008645746663,
       "favorite_side": "A",
       "favorite_name": "Bonzi, Benjamin",
-      "favorite_prob": 0.5103189884688557,
+      "favorite_prob": 0.5103199135425334,
       "robust_prob": 0.5,
-      "uncertainty": 0.05535192200271857,
-      "confidence": 49.56644946355753,
+      "uncertainty": 0.055350872708425404,
+      "confidence": 49.56673052452891,
       "data_quality": 88,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5049050474804002,
-      "model_b_p": 0.5437938539477909,
-      "model_c_p": 0.4846798467952246,
-      "model_disagreement": 0.05911400715256632,
+      "model_b_p": 0.5437934334137108,
+      "model_c_p": 0.4846831737407629,
+      "model_disagreement": 0.05911025967294786,
       "reason_codes": [
         "SURFACE +",
         "FORM -",
@@ -2821,8 +2902,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "88116CB25543",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "D11B0560344B",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2845,21 +2926,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.5910675760751665,
-      "model_p_b": 0.40893242392483353,
+      "model_p_a": 0.5910655856137894,
+      "model_p_b": 0.4089344143862106,
       "favorite_side": "A",
       "favorite_name": "Collignon, Raphael",
-      "favorite_prob": 0.5910675760751665,
-      "robust_prob": 0.5293388982703432,
-      "uncertainty": 0.061728677804823245,
-      "confidence": 57.16033792565612,
+      "favorite_prob": 0.5910655856137894,
+      "robust_prob": 0.5293368044751596,
+      "uncertainty": 0.06172878113862973,
+      "confidence": 57.16031024695795,
       "data_quality": 84.36363636363636,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.6169529911625685,
-      "model_b_p": 0.5499999210804076,
-      "model_c_p": 0.5994300267652526,
-      "model_disagreement": 0.06695307008216089,
+      "model_b_p": 0.5499995520310987,
+      "model_c_p": 0.5994240911946378,
+      "model_disagreement": 0.06695343913146978,
       "reason_codes": [
         "ELO ++",
         "SURFACE +",
@@ -2868,8 +2949,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "D4CFC95974B0",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "0BA076A88EBE",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2892,21 +2973,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5254981047349471,
-      "model_p_b": 0.47450189526505293,
+      "model_p_a": 0.5254951727285245,
+      "model_p_b": 0.47450482727147547,
       "favorite_side": "A",
       "favorite_name": "Udvardy, Panna",
-      "favorite_prob": 0.5254981047349471,
+      "favorite_prob": 0.5254951727285245,
       "robust_prob": 0.5,
-      "uncertainty": 0.09909478560407513,
-      "confidence": 36.10448112877857,
+      "uncertainty": 0.09909212901072512,
+      "confidence": 36.10519271628304,
       "data_quality": 78.9090909090909,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.4768075383947012,
-      "model_b_p": 0.4627854239297391,
-      "model_c_p": 0.6407862816066308,
-      "model_disagreement": 0.17800085767689167,
+      "model_b_p": 0.46278562274098384,
+      "model_c_p": 0.6407769925844826,
+      "model_disagreement": 0.17799136984349878,
       "reason_codes": [
         "SURFACE -",
         "FORM ++",
@@ -2916,8 +2997,8 @@
         "MODELLI_IN_DISACCORDO"
       ],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "796E411FBA4A",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "AECFC63A55AC",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2940,26 +3021,26 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.492220658936542,
-      "model_p_b": 0.507779341063458,
+      "model_p_a": 0.4922209816040408,
+      "model_p_b": 0.5077790183959592,
       "favorite_side": "B",
       "favorite_name": "Parry, Diane",
-      "favorite_prob": 0.507779341063458,
+      "favorite_prob": 0.5077790183959592,
       "robust_prob": 0.5,
-      "uncertainty": 0.061114060699678154,
-      "confidence": 45.57983763726152,
+      "uncertainty": 0.06111378786646605,
+      "confidence": 45.5799107175862,
       "data_quality": 75.27272727272727,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5080960986792236,
-      "model_b_p": 0.4813952443511507,
-      "model_c_p": 0.4806757520245289,
-      "model_disagreement": 0.02742034665469467,
+      "model_b_p": 0.48139518547658466,
+      "model_c_p": 0.48067672642885784,
+      "model_disagreement": 0.027419372250365726,
       "reason_codes": [],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "3608678D6472",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "40F221F2C75F",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -2995,7 +3076,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863130",
@@ -3021,7 +3102,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853048",
@@ -3034,21 +3115,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.42842891077365525,
-      "model_p_b": 0.5715710892263448,
+      "model_p_a": 0.4284286965370156,
+      "model_p_b": 0.5715713034629843,
       "favorite_side": "B",
       "favorite_name": "Baez, Sebastian",
-      "favorite_prob": 0.5715710892263448,
+      "favorite_prob": 0.5715713034629843,
       "robust_prob": 0.5,
-      "uncertainty": 0.09451595907202254,
-      "confidence": 37.0691830407732,
+      "uncertainty": 0.09451560824598934,
+      "confidence": 37.06927701203209,
       "data_quality": 77.54545454545455,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.35134318339743326,
-      "model_b_p": 0.44480956859821214,
-      "model_c_p": 0.5073904398234877,
-      "model_disagreement": 0.1560472564260545,
+      "model_b_p": 0.44481029988114285,
+      "model_c_p": 0.5073891868733692,
+      "model_disagreement": 0.15604600347593595,
       "reason_codes": [
         "ELO +",
         "SURFACE +",
@@ -3059,8 +3140,8 @@
         "MODELLI_IN_DISACCORDO"
       ],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "492764A5569A",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "21BA34B54721",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -3079,25 +3160,25 @@
       "player_b": "Birrell, Kimberly",
       "tournament": "WTA - Monterrey, Mexico",
       "priority": 89,
-      "market_priority": 91,
+      "market_priority": 92,
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.40974690089784654,
-      "model_p_b": 0.5902530991021535,
+      "model_p_a": 0.4097495808833993,
+      "model_p_b": 0.5902504191166007,
       "favorite_side": "B",
       "favorite_name": "Birrell, Kimberly",
-      "favorite_prob": 0.5902530991021535,
-      "robust_prob": 0.5219154357361984,
-      "uncertainty": 0.0683376633659552,
-      "confidence": 53.42555631083529,
+      "favorite_prob": 0.5902504191166007,
+      "robust_prob": 0.5219113515310903,
+      "uncertainty": 0.06833906758551044,
+      "confidence": 53.42518018059728,
       "data_quality": 74.12987012987013,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.4101671027956937,
-      "model_b_p": 0.3807925944025236,
-      "model_c_p": 0.42931764445718734,
-      "model_disagreement": 0.04852505005466373,
+      "model_b_p": 0.3807942119350191,
+      "model_c_p": 0.429324277059523,
+      "model_disagreement": 0.04853006512450386,
       "reason_codes": [
         "ELO +",
         "SURFACE ++",
@@ -3106,8 +3187,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "7D6881953F47",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "804D71AD43D2",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -3130,26 +3211,26 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5476073022172141,
-      "model_p_b": 0.4523926977827859,
+      "model_p_a": 0.5476062064684213,
+      "model_p_b": 0.4523937935315787,
       "favorite_side": "A",
       "favorite_name": "Zhang, Shuai",
-      "favorite_prob": 0.5476073022172141,
+      "favorite_prob": 0.5476062064684213,
       "robust_prob": 0.5,
-      "uncertainty": 0.07919349711378287,
-      "confidence": 41.0637200448935,
+      "uncertainty": 0.07919421695032548,
+      "confidence": 41.06352723153387,
       "data_quality": 76.97402597402598,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5976867951496383,
-      "model_b_p": 0.5340617636409154,
-      "model_c_p": 0.4987095559213785,
-      "model_disagreement": 0.0989772392282598,
+      "model_b_p": 0.534060861679362,
+      "model_c_p": 0.49870698507658345,
+      "model_disagreement": 0.09897981007305484,
       "reason_codes": [],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "AC8D89DCE37A",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "4C0ECF78EF8E",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -3172,29 +3253,29 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5551295851847047,
-      "model_p_b": 0.4448704148152953,
+      "model_p_a": 0.5551261516023627,
+      "model_p_b": 0.44487384839763733,
       "favorite_side": "A",
       "favorite_name": "Chwalinska, Maja",
-      "favorite_prob": 0.5551295851847047,
+      "favorite_prob": 0.5551261516023627,
       "robust_prob": 0.5,
-      "uncertainty": 0.07835182836894086,
-      "confidence": 51.13709142715058,
+      "uncertainty": 0.07834937639102962,
+      "confidence": 51.13774820694823,
       "data_quality": 76.18181818181819,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.5279347278951974,
-      "model_b_p": 0.5207304973396448,
-      "model_c_p": 0.6134480661897583,
-      "model_disagreement": 0.09271756885011351,
+      "model_b_p": 0.5207297183938439,
+      "model_c_p": 0.6134385301799886,
+      "model_disagreement": 0.09270881178614476,
       "reason_codes": [
         "ELO +",
         "FORM ++"
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "27E2D4C1E86E",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "B377DE823D1C",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -3230,7 +3311,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863148",
@@ -3243,21 +3324,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.4025719567500273,
-      "model_p_b": 0.5974280432499727,
+      "model_p_a": 0.4025729654211391,
+      "model_p_b": 0.5974270345788609,
       "favorite_side": "B",
       "favorite_name": "Krueger, Ashlyn",
-      "favorite_prob": 0.5974280432499727,
-      "robust_prob": 0.5307582811269161,
-      "uncertainty": 0.0666697621230565,
-      "confidence": 55.83683319755792,
+      "favorite_prob": 0.5974270345788609,
+      "robust_prob": 0.5307570143847629,
+      "uncertainty": 0.06667002019409803,
+      "confidence": 55.836764071386085,
       "data_quality": 84.36363636363636,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.41505438997600835,
-      "model_b_p": 0.3517664875350712,
-      "model_c_p": 0.43636628732520805,
-      "model_disagreement": 0.08459979979013682,
+      "model_b_p": 0.3517676435138579,
+      "model_c_p": 0.4363683649862859,
+      "model_disagreement": 0.08460072147242798,
       "reason_codes": [
         "ELO ++",
         "SURFACE ++",
@@ -3265,8 +3346,8 @@
       ],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "37F2F390FD07",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "41C2089CF51B",
       "premium": true,
       "resolution": {
         "ok": true,
@@ -3302,7 +3383,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "13563262911",
@@ -3315,21 +3396,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.6138437224942977,
-      "model_p_b": 0.38615627750570225,
+      "model_p_a": 0.6138431227459173,
+      "model_p_b": 0.38615687725408265,
       "favorite_side": "A",
       "favorite_name": "Zongyu Li",
-      "favorite_prob": 0.6138437224942977,
-      "robust_prob": 0.5162003649447666,
-      "uncertainty": 0.09764335754953113,
-      "confidence": 45.96971753949248,
+      "favorite_prob": 0.6138431227459173,
+      "robust_prob": 0.516199677794155,
+      "uncertainty": 0.09764344495176236,
+      "confidence": 45.969694128180535,
       "data_quality": 76.18181818181819,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.7044343274849819,
-      "model_b_p": 0.5428184401327604,
-      "model_c_p": 0.5574148219954398,
-      "model_disagreement": 0.16161588735222154,
+      "model_b_p": 0.5428181279819345,
+      "model_c_p": 0.5574132751819612,
+      "model_disagreement": 0.1616161995030474,
       "reason_codes": [
         "ELO ++",
         "SURFACE +",
@@ -3339,8 +3420,8 @@
         "MODELLI_IN_DISACCORDO"
       ],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "3EBF16F995F1",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "FF840CA06040",
       "premium": false,
       "resolution": {
         "ok": true,
@@ -3376,11 +3457,11 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74024876",
-      "start_at": "2026-08-25T15:30:00Z",
+      "start_at": "2026-08-25T15:50:00Z",
       "player_a": "Krutykh, Oleksii",
       "player_b": "Soto, Matias",
       "tournament": "Challenger - Augsburg, Germany",
@@ -3402,7 +3483,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862814",
@@ -3428,11 +3509,11 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73851370",
-      "start_at": "2026-08-26T09:30:00Z",
+      "start_at": "2026-08-26T10:00:00Z",
       "player_a": "Ivanov, Ivan",
       "player_b": "Loffhagen, George",
       "tournament": "Challenger - Roehampton 2, Great Britain",
@@ -3454,7 +3535,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73933492",
@@ -3480,7 +3561,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "12760215512",
@@ -3506,7 +3587,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "13082527327",
@@ -3532,7 +3613,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "12098306851",
@@ -3558,7 +3639,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "14987646998",
@@ -3584,7 +3665,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "14360572055",
@@ -3610,7 +3691,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "15680823153",
@@ -3636,7 +3717,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "14164146083",
@@ -3662,7 +3743,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "14310174722",
@@ -3688,7 +3769,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "15696097621",
@@ -3714,7 +3795,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "15972719105",
@@ -3745,8 +3826,8 @@
       "reason_codes": [],
       "warnings": [],
       "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-5.3",
-      "preview_id": "0102CD200749",
+      "model_version": "TENNIS-EDGE-QUANT-5.4",
+      "preview_id": "71343CC8F083",
       "premium": false,
       "resolution": {
         "ok": true,
@@ -3782,7 +3863,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "13217216775",
@@ -3808,7 +3889,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "14325060468",
@@ -3834,7 +3915,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "15089671733",
@@ -3860,7 +3941,7 @@
         "reason": null
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997416",
@@ -3886,7 +3967,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997444",
@@ -3912,7 +3993,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997446",
@@ -3938,7 +4019,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997496",
@@ -3964,7 +4045,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997576",
@@ -3990,7 +4071,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997578",
@@ -4016,7 +4097,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997604",
@@ -4042,7 +4123,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997606",
@@ -4068,7 +4149,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997476",
@@ -4094,7 +4175,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997500",
@@ -4120,7 +4201,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997614",
@@ -4146,7 +4227,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997468",
@@ -4172,7 +4253,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997526",
@@ -4198,7 +4279,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997530",
@@ -4224,7 +4305,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997364",
@@ -4250,7 +4331,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997366",
@@ -4276,7 +4357,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997368",
@@ -4302,7 +4383,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997370",
@@ -4328,7 +4409,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997524",
@@ -4354,7 +4435,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997600",
@@ -4380,7 +4461,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997602",
@@ -4406,7 +4487,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997464",
@@ -4432,7 +4513,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997466",
@@ -4458,7 +4539,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997536",
@@ -4484,7 +4565,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997538",
@@ -4510,7 +4591,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997430",
@@ -4518,10 +4599,10 @@
       "player_a": "Valdmannova, Vendula",
       "player_b": "Carle, Maria",
       "tournament": "WTA - US Open, New York, USA, Qualifying",
-      "priority": 122,
+      "priority": 123,
       "premium": true,
       "pre_status": "UNRESOLVED",
-      "market_priority": 122,
+      "market_priority": 123,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -4536,7 +4617,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997516",
@@ -4544,10 +4625,10 @@
       "player_a": "Hong, Seongchan",
       "player_b": "Basilashvili, Nikoloz",
       "tournament": "ATP - US Open, New York, USA, Qualifying",
-      "priority": 122,
+      "priority": 123,
       "premium": true,
       "pre_status": "UNRESOLVED",
-      "market_priority": 122,
+      "market_priority": 123,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -4562,7 +4643,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73997518",
@@ -4570,10 +4651,10 @@
       "player_a": "Secord, Jack",
       "player_b": "Schoolkate, Tristan",
       "tournament": "ATP - US Open, New York, USA, Qualifying",
-      "priority": 122,
+      "priority": 123,
       "premium": true,
       "pre_status": "UNRESOLVED",
-      "market_priority": 122,
+      "market_priority": 123,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -4588,7 +4669,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74034806",
@@ -4614,7 +4695,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74034850",
@@ -4640,7 +4721,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74032784",
@@ -4666,7 +4747,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74034482",
@@ -4692,7 +4773,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74034552",
@@ -4718,7 +4799,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74034578",
@@ -4744,7 +4825,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74029864",
@@ -4770,7 +4851,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74036590",
@@ -4796,7 +4877,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74036892",
@@ -4822,7 +4903,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74029540",
@@ -4848,7 +4929,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74029544",
@@ -4874,7 +4955,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74028478",
@@ -4900,7 +4981,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863136",
@@ -4926,7 +5007,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853042",
@@ -4952,7 +5033,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853026",
@@ -4960,10 +5041,10 @@
       "player_a": "Van Assche, Luca",
       "player_b": "Kovacevic, Aleksandar",
       "tournament": "ATP - Winston Salem, USA",
-      "priority": 62,
+      "priority": 63,
       "premium": true,
       "pre_status": "UNRESOLVED",
-      "market_priority": 62,
+      "market_priority": 63,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -4978,7 +5059,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853038",
@@ -5004,7 +5085,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863124",
@@ -5030,7 +5111,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863146",
@@ -5056,7 +5137,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863134",
@@ -5082,7 +5163,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862988",
@@ -5108,7 +5189,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862994",
@@ -5134,7 +5215,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863002",
@@ -5160,7 +5241,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853046",
@@ -5186,7 +5267,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853056",
@@ -5212,7 +5293,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853058",
@@ -5238,7 +5319,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853060",
@@ -5264,7 +5345,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853064",
@@ -5290,7 +5371,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853066",
@@ -5316,7 +5397,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853068",
@@ -5342,7 +5423,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853070",
@@ -5368,7 +5449,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863138",
@@ -5394,7 +5475,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863140",
@@ -5420,7 +5501,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863150",
@@ -5446,7 +5527,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863152",
@@ -5472,7 +5553,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863010",
@@ -5498,7 +5579,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863012",
@@ -5524,7 +5605,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863014",
@@ -5550,7 +5631,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863016",
@@ -5576,7 +5657,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853062",
@@ -5602,7 +5683,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853078",
@@ -5628,7 +5709,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853080",
@@ -5654,7 +5735,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853082",
@@ -5680,7 +5761,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863142",
@@ -5706,7 +5787,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863144",
@@ -5732,7 +5813,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863004",
@@ -5758,7 +5839,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863006",
@@ -5784,7 +5865,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853072",
@@ -5810,7 +5891,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853084",
@@ -5836,7 +5917,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863132",
@@ -5862,7 +5943,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73863008",
@@ -5888,7 +5969,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73853074",
@@ -5914,7 +5995,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74032758",
@@ -5940,7 +6021,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73966156",
@@ -5966,7 +6047,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73961886",
@@ -5992,7 +6073,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74024872",
@@ -6018,7 +6099,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74032752",
@@ -6044,7 +6125,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74032760",
@@ -6070,7 +6151,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73966146",
@@ -6096,7 +6177,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74032754",
@@ -6122,7 +6203,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74032762",
@@ -6148,7 +6229,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73966148",
@@ -6174,7 +6255,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74032756",
@@ -6200,7 +6281,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73966142",
@@ -6226,7 +6307,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862802",
@@ -6252,7 +6333,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862804",
@@ -6278,7 +6359,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862806",
@@ -6304,7 +6385,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862808",
@@ -6330,7 +6411,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862810",
@@ -6356,7 +6437,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862812",
@@ -6382,7 +6463,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862816",
@@ -6408,7 +6489,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73851364",
@@ -6434,7 +6515,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73851368",
@@ -6460,7 +6541,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73851376",
@@ -6486,7 +6567,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73851356",
@@ -6512,7 +6593,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73851358",
@@ -6538,7 +6619,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73851366",
@@ -6564,7 +6645,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73851374",
@@ -6590,7 +6671,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862658",
@@ -6616,7 +6697,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862660",
@@ -6642,7 +6723,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862666",
@@ -6668,7 +6749,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862668",
@@ -6694,7 +6775,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862670",
@@ -6720,7 +6801,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862672",
@@ -6746,7 +6827,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862676",
@@ -6772,7 +6853,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862678",
@@ -6798,7 +6879,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862794",
@@ -6824,7 +6905,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862796",
@@ -6850,7 +6931,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862798",
@@ -6876,7 +6957,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862800",
@@ -6902,7 +6983,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73851360",
@@ -6928,7 +7009,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73851362",
@@ -6954,7 +7035,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73851378",
@@ -6980,7 +7061,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73851380",
@@ -7006,7 +7087,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862578",
@@ -7032,7 +7113,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862580",
@@ -7058,7 +7139,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862662",
@@ -7084,7 +7165,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862664",
@@ -7110,7 +7191,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862818",
@@ -7136,7 +7217,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862820",
@@ -7162,7 +7243,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73851382",
@@ -7188,7 +7269,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73851384",
@@ -7214,7 +7295,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862582",
@@ -7240,7 +7321,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862656",
@@ -7266,7 +7347,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862822",
@@ -7292,7 +7373,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73851372",
@@ -7318,7 +7399,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73862674",
@@ -7344,33 +7425,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
-    },
-    {
-      "event_id": "73932370",
-      "start_at": "2026-08-25T14:45:00Z",
-      "player_a": "Yardley, Summer",
-      "player_b": "Ngounoue, Malkia",
-      "tournament": "UTR Women - UTR PTT Glasgow Women 01, Group B",
-      "priority": 26,
-      "premium": false,
-      "pre_status": "UNRESOLVED",
-      "market_priority": 26,
-      "data_quality": 0,
-      "confidence": 0,
-      "reason_codes": [],
-      "warnings": [
-        "PLAYER_A_UNRESOLVED"
-      ],
-      "resolution": {
-        "ok": false,
-        "tour": null,
-        "a": null,
-        "b": null,
-        "reason": "PLAYER_A_UNRESOLVED"
-      },
-      "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73932990",
@@ -7396,7 +7451,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73933002",
@@ -7422,7 +7477,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73933012",
@@ -7448,7 +7503,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73933040",
@@ -7474,7 +7529,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73933048",
@@ -7500,7 +7555,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73990410",
@@ -7526,7 +7581,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73990414",
@@ -7552,7 +7607,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73990420",
@@ -7578,7 +7633,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73990436",
@@ -7604,7 +7659,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73990456",
@@ -7630,7 +7685,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73990458",
@@ -7656,7 +7711,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73990468",
@@ -7682,7 +7737,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73990478",
@@ -7708,7 +7763,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73990480",
@@ -7734,7 +7789,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73998322",
@@ -7760,7 +7815,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73935858",
@@ -7786,7 +7841,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73935870",
@@ -7812,7 +7867,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73935894",
@@ -7838,7 +7893,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73935896",
@@ -7864,7 +7919,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73935908",
@@ -7890,7 +7945,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73935920",
@@ -7916,7 +7971,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73935928",
@@ -7942,7 +7997,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73932896",
@@ -7968,7 +8023,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73932962",
@@ -7994,7 +8049,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73990470",
@@ -8020,7 +8075,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73932994",
@@ -8046,7 +8101,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73933044",
@@ -8072,7 +8127,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73990412",
@@ -8098,7 +8153,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73935860",
@@ -8124,7 +8179,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73939360",
@@ -8150,7 +8205,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73935930",
@@ -8176,7 +8231,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73932926",
@@ -8202,7 +8257,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73932930",
@@ -8228,7 +8283,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74036984",
@@ -8254,7 +8309,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73933524",
@@ -8280,7 +8335,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73933540",
@@ -8306,7 +8361,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73933752",
@@ -8332,7 +8387,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73990472",
@@ -8358,7 +8413,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73933000",
@@ -8384,7 +8439,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73933052",
@@ -8410,7 +8465,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74027042",
@@ -8436,7 +8491,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73935912",
@@ -8462,7 +8517,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73935916",
@@ -8488,7 +8543,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73932912",
@@ -8514,7 +8569,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73932892",
@@ -8540,7 +8595,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73932986",
@@ -8566,7 +8621,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73933030",
@@ -8592,7 +8647,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73990432",
@@ -8618,7 +8673,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74026858",
@@ -8626,10 +8681,10 @@
       "player_a": "Smith, Kiana",
       "player_b": "Marakhtanova, Polina",
       "tournament": "UTR Women - UTR PTT Newport Beach Women 20, Group C",
-      "priority": 24,
+      "priority": 25,
       "premium": false,
       "pre_status": "UNRESOLVED",
-      "market_priority": 24,
+      "market_priority": 25,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -8644,7 +8699,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "74026886",
@@ -8652,10 +8707,10 @@
       "player_a": "Huh, Juny",
       "player_b": "Pandey, Tanvi",
       "tournament": "UTR Women - UTR PTT Newport Beach Women 20, Group B",
-      "priority": 24,
+      "priority": 25,
       "premium": false,
       "pre_status": "UNRESOLVED",
-      "market_priority": 24,
+      "market_priority": 25,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -8670,7 +8725,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73933512",
@@ -8678,10 +8733,10 @@
       "player_a": "Underwood, Charlie",
       "player_b": "Wang, Cayden",
       "tournament": "UTR Men - UTR PTT Newport Beach Men 20, Group D",
-      "priority": 24,
+      "priority": 25,
       "premium": false,
       "pre_status": "UNRESOLVED",
-      "market_priority": 24,
+      "market_priority": 25,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -8696,7 +8751,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73933532",
@@ -8704,10 +8759,10 @@
       "player_a": "Chinlund, Cassius",
       "player_b": "Taheri, Kaveh Brian",
       "tournament": "UTR Men - UTR PTT Newport Beach Men 20, Group A",
-      "priority": 24,
+      "priority": 25,
       "premium": false,
       "pre_status": "UNRESOLVED",
-      "market_priority": 24,
+      "market_priority": 25,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -8722,7 +8777,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73932904",
@@ -8748,7 +8803,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73932916",
@@ -8774,7 +8829,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73966284",
@@ -8800,7 +8855,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73920338",
@@ -8826,7 +8881,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73920340",
@@ -8852,7 +8907,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73920364",
@@ -8878,7 +8933,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73920890",
@@ -8904,7 +8959,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73964092",
@@ -8930,7 +8985,7 @@
         "reason": "PLAYER_B_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73920352",
@@ -8956,7 +9011,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73920370",
@@ -8982,7 +9037,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73920380",
@@ -9008,7 +9063,7 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     },
     {
       "event_id": "73920870",
@@ -9034,7 +9089,33 @@
         "reason": "PLAYER_A_UNRESOLVED"
       },
       "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-5.3"
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
+    },
+    {
+      "event_id": "73920874",
+      "start_at": "2026-08-26T00:10:00Z",
+      "player_a": "Braund, Alec",
+      "player_b": "Pham, Derek",
+      "tournament": "UTR Men - UTR PTT Gold Coast Men 06, Group A",
+      "priority": 23,
+      "premium": false,
+      "pre_status": "UNRESOLVED",
+      "market_priority": 23,
+      "data_quality": 0,
+      "confidence": 0,
+      "reason_codes": [],
+      "warnings": [
+        "PLAYER_A_UNRESOLVED"
+      ],
+      "resolution": {
+        "ok": false,
+        "tour": null,
+        "a": null,
+        "b": null,
+        "reason": "PLAYER_A_UNRESOLVED"
+      },
+      "market_checked": false,
+      "model_version": "TENNIS-EDGE-QUANT-5.4"
     }
   ],
   "upcoming": [
@@ -14623,7 +14704,7 @@
           "slope": 1
         }
       },
-      "updated_at": "2026-08-25T14:31:16.088Z"
+      "updated_at": "2026-08-25T14:58:22.133Z"
     },
     "drift": {
       "health": "COLD",
@@ -14640,7 +14721,7 @@
   },
   "usage": {
     "day": "2026-08-25",
-    "calls": 91
+    "calls": 97
   },
   "stats": {
     "closed_matches": 0,
@@ -14661,9 +14742,422 @@
     "prediction_offset": 35
   },
   "rate_limit": {
-    "remaining": 84,
+    "remaining": 79,
     "reset_at": "2026-08-25T15:09:54.000Z",
     "last_status": 200,
-    "last_checked_at": "2026-08-25T14:31:16.088Z"
-  }
+    "last_checked_at": "2026-08-25T14:58:22.133Z"
+  },
+  "decision_funnel": {
+    "radar": 300,
+    "analyzable": 101,
+    "unresolved": 199,
+    "market_checked": 54,
+    "positive_ev": 46,
+    "robust_positive_ev": 29,
+    "confidence_ok": 0,
+    "quality_ok": 53,
+    "consensus_ok": 54,
+    "freshness_ok": 31,
+    "watch": 0,
+    "value": 0
+  },
+  "rejection_summary": {
+    "MODELLO_COLD": 54,
+    "ROBUST_EV_NON_POSITIVO": 25,
+    "QUOTA_NON_FRESCA": 23,
+    "EDGE_NON_RESISTE_INCERTEZZA": 20,
+    "SCOSTAMENTO_ESTREMO": 20,
+    "MODELLI_IN_DISACCORDO": 13,
+    "EV_NON_POSITIVO": 8,
+    "EDGE_TROPPO_BASSO": 5
+  },
+  "near_value": [
+    {
+      "event_id": "73863128",
+      "player_a": "Zakharova, Anastasia",
+      "player_b": "Collins, Kylie",
+      "tournament": "WTA 125K - Philadelphia, USA",
+      "start_at": "2026-08-25T17:20:00Z",
+      "candidate_name": "Collins, Kylie",
+      "candidate_odds": 7.5,
+      "candidate_book": "Bet365",
+      "candidate_prob": 0.5787703491078239,
+      "candidate_ev": 3.340777618308679,
+      "candidate_edge": 0.4489132524840015,
+      "robust_ev": 2.8805341491927416,
+      "robust_edge": 0.3875474566018765,
+      "confidence": 58.712636962671944,
+      "data_quality": 92,
+      "engine_votes": "3/3",
+      "engine_unanimous": true,
+      "market_age_minutes": 13.426783333333333,
+      "no_bet_reasons": [
+        "SCOSTAMENTO_ESTREMO",
+        "MODELLO_COLD"
+      ],
+      "reason_codes": [
+        "ELO ++",
+        "SURFACE +",
+        "FORM +",
+        "EV ++"
+      ],
+      "research_score": 100,
+      "model_health": "COLD",
+      "verdict": "NO BET"
+    },
+    {
+      "event_id": "73863148",
+      "player_a": "Grabher, Julia",
+      "player_b": "Krueger, Ashlyn",
+      "tournament": "WTA 125K - Philadelphia, USA",
+      "start_at": "2026-08-25T22:00:00Z",
+      "candidate_name": "Grabher, Julia",
+      "candidate_odds": 5,
+      "candidate_book": "Bet365",
+      "candidate_prob": 0.40257116147457395,
+      "candidate_ev": 1.01285580737287,
+      "candidate_edge": 0.20973728525307558,
+      "robust_ev": 0.6795080141684444,
+      "robust_edge": 0.1430677266121905,
+      "confidence": 56.881404531244094,
+      "data_quality": 91.36363636363636,
+      "engine_votes": "3/3",
+      "engine_unanimous": true,
+      "market_age_minutes": 3.2019333333333333,
+      "no_bet_reasons": [
+        "SCOSTAMENTO_ESTREMO",
+        "MODELLO_COLD"
+      ],
+      "reason_codes": [
+        "ELO --",
+        "SURFACE --",
+        "SERVE/RETURN --",
+        "EV ++"
+      ],
+      "research_score": 98,
+      "model_health": "COLD",
+      "verdict": "NO BET"
+    },
+    {
+      "event_id": "74036618",
+      "player_a": "Sakamoto, Rei",
+      "player_b": "Muller, Alexandre",
+      "tournament": "ATP - US Open, New York, USA, Qualifying",
+      "start_at": "2026-08-26T15:00:00Z",
+      "candidate_name": "Muller, Alexandre",
+      "candidate_odds": 2.75,
+      "candidate_book": "Bet365",
+      "candidate_prob": 0.5461782204332964,
+      "candidate_ev": 0.5019901061915653,
+      "candidate_edge": 0.20803236779196188,
+      "robust_ev": 0.32342161953652626,
+      "robust_edge": 0.14309837264467495,
+      "confidence": 56.81692417615432,
+      "data_quality": 84.18181818181819,
+      "engine_votes": "3/3",
+      "engine_unanimous": true,
+      "market_age_minutes": 6.177066666666667,
+      "no_bet_reasons": [
+        "SCOSTAMENTO_ESTREMO",
+        "MODELLO_COLD"
+      ],
+      "reason_codes": [
+        "FORM -",
+        "H2H ++",
+        "EV ++"
+      ],
+      "research_score": 98,
+      "model_health": "COLD",
+      "verdict": "NO BET"
+    },
+    {
+      "event_id": "74029838",
+      "player_a": "Gaubas, Vilius",
+      "player_b": "Cecchinato, Marco",
+      "tournament": "ATP - US Open, New York, USA, Qualifying",
+      "start_at": "2026-08-26T15:00:00Z",
+      "candidate_name": "Cecchinato, Marco",
+      "candidate_odds": 3.75,
+      "candidate_book": "Bet365",
+      "candidate_prob": 0.4694406909239174,
+      "candidate_ev": 0.7604025909646901,
+      "candidate_edge": 0.21817806466129108,
+      "robust_ev": 0.5084675630176392,
+      "robust_edge": 0.1509953905420775,
+      "confidence": 54.16299523802932,
+      "data_quality": 73.81818181818181,
+      "engine_votes": "3/3",
+      "engine_unanimous": true,
+      "market_age_minutes": 0.47425,
+      "no_bet_reasons": [
+        "SCOSTAMENTO_ESTREMO",
+        "MODELLO_COLD"
+      ],
+      "reason_codes": [
+        "ELO -",
+        "SERVE/RETURN -",
+        "EV ++"
+      ],
+      "research_score": 95,
+      "model_health": "COLD",
+      "verdict": "NO BET"
+    },
+    {
+      "event_id": "73853040",
+      "player_a": "Bonzi, Benjamin",
+      "player_b": "Halys, Quentin",
+      "tournament": "ATP - Winston Salem, USA",
+      "start_at": "2026-08-25T18:00:00Z",
+      "candidate_name": "Bonzi, Benjamin",
+      "candidate_odds": 2.5,
+      "candidate_book": "Bet365",
+      "candidate_prob": 0.5103182591029316,
+      "candidate_ev": 0.2757956477573291,
+      "candidate_edge": 0.13221265462776716,
+      "robust_ev": 0.137413774512265,
+      "robust_edge": 0.07685990532974152,
+      "confidence": 51.35996106874792,
+      "data_quality": 95,
+      "engine_votes": "2/3",
+      "engine_unanimous": false,
+      "market_age_minutes": 1.2237166666666666,
+      "no_bet_reasons": [
+        "MODELLO_COLD"
+      ],
+      "reason_codes": [
+        "SURFACE +",
+        "FORM -",
+        "H2H +",
+        "SERVE/RETURN -",
+        "EV ++"
+      ],
+      "research_score": 94,
+      "model_health": "COLD",
+      "verdict": "NO BET"
+    },
+    {
+      "event_id": "15972719105",
+      "player_a": "Iiro Vasa",
+      "player_b": "Eero Vasa",
+      "tournament": "Tennis - ITF Men Oldenzaal - R1",
+      "start_at": "2026-08-26T08:00:00Z",
+      "candidate_name": "Iiro Vasa",
+      "candidate_odds": 2.62,
+      "candidate_book": "Bet365",
+      "candidate_prob": 0.5,
+      "candidate_ev": 0.31000000000000005,
+      "candidate_edge": 0.14532019704433496,
+      "robust_ev": 0.13168858441558462,
+      "robust_edge": 0.07726240483654279,
+      "confidence": 51.27922077922078,
+      "data_quality": 66.55844155844156,
+      "engine_votes": "3/3",
+      "engine_unanimous": true,
+      "market_age_minutes": 3.714916666666667,
+      "no_bet_reasons": [
+        "MODELLO_COLD"
+      ],
+      "reason_codes": [
+        "EV ++"
+      ],
+      "research_score": 92,
+      "model_health": "COLD",
+      "verdict": "NO BET"
+    },
+    {
+      "event_id": "73997618",
+      "player_a": "Gea, Arthur",
+      "player_b": "Nagal, Sumit",
+      "tournament": "ATP - US Open, New York, USA, Qualifying",
+      "start_at": "2026-08-25T16:10:00Z",
+      "candidate_name": "Nagal, Sumit",
+      "candidate_odds": 6.5,
+      "candidate_book": "Bet365",
+      "candidate_prob": 0.40548969737452245,
+      "candidate_ev": 1.6356830329343959,
+      "candidate_edge": 0.25663594996534267,
+      "robust_ev": 1.086210267479172,
+      "robust_edge": 0.1721016783568467,
+      "confidence": 49.26707307132004,
+      "data_quality": 73.72727272727272,
+      "engine_votes": "3/3",
+      "engine_unanimous": true,
+      "market_age_minutes": 3.4591166666666666,
+      "no_bet_reasons": [
+        "SCOSTAMENTO_ESTREMO",
+        "MODELLO_COLD"
+      ],
+      "reason_codes": [
+        "ELO -",
+        "SURFACE --",
+        "SERVE/RETURN --",
+        "EV ++"
+      ],
+      "research_score": 89,
+      "model_health": "COLD",
+      "verdict": "NO BET"
+    },
+    {
+      "event_id": "73999532",
+      "player_a": "Vidmanova, Darja",
+      "player_b": "Birrell, Kimberly",
+      "tournament": "WTA - Monterrey, Mexico",
+      "start_at": "2026-08-25T21:30:00Z",
+      "candidate_name": "Birrell, Kimberly",
+      "candidate_odds": 2.12,
+      "candidate_book": "Eurobet IT",
+      "candidate_prob": 0.5902552122115539,
+      "candidate_ev": 0.25134104988849426,
+      "candidate_edge": 0.1426112331539623,
+      "robust_ev": 0.10646755089331084,
+      "robust_edge": 0.0742746770241588,
+      "confidence": 55.07681275233129,
+      "data_quality": 81.12987012987013,
+      "engine_votes": "3/3",
+      "engine_unanimous": true,
+      "market_age_minutes": 269.8797,
+      "no_bet_reasons": [
+        "QUOTA_NON_FRESCA",
+        "MODELLO_COLD"
+      ],
+      "reason_codes": [
+        "ELO +",
+        "SURFACE ++",
+        "FORM +",
+        "SERVE/RETURN +",
+        "EV ++"
+      ],
+      "research_score": 89,
+      "model_health": "COLD",
+      "verdict": "NO BET"
+    },
+    {
+      "event_id": "73862998",
+      "player_a": "Oliynykova, Oleksandra",
+      "player_b": "Parry, Diane",
+      "tournament": "WTA - Monterrey, Mexico",
+      "start_at": "2026-08-26T01:30:00Z",
+      "candidate_name": "Oliynykova, Oleksandra",
+      "candidate_odds": 3.2,
+      "candidate_book": "Bet365",
+      "candidate_prob": 0.49222040453817467,
+      "candidate_ev": 0.5751052945221591,
+      "candidate_edge": 0.19309759752063083,
+      "robust_ev": 0.37953961193248453,
+      "robust_edge": 0.13198332171135752,
+      "confidence": 47.46282095429247,
+      "data_quality": 82.27272727272727,
+      "engine_votes": "2/3",
+      "engine_unanimous": false,
+      "market_age_minutes": 11.946916666666667,
+      "no_bet_reasons": [
+        "SCOSTAMENTO_ESTREMO",
+        "MODELLO_COLD"
+      ],
+      "reason_codes": [
+        "EV ++"
+      ],
+      "research_score": 89,
+      "model_health": "COLD",
+      "verdict": "NO BET"
+    },
+    {
+      "event_id": "74029538",
+      "player_a": "Brengle, Madison",
+      "player_b": "Stefanini, Lucrezia",
+      "tournament": "WTA - US Open, New York, USA, Qualifying",
+      "start_at": "2026-08-26T15:00:00Z",
+      "candidate_name": "Brengle, Madison",
+      "candidate_odds": 3.5,
+      "candidate_book": "Bet365",
+      "candidate_prob": 0.5216788530998557,
+      "candidate_ev": 0.8258759858494951,
+      "candidate_edge": 0.2464832918846474,
+      "robust_ev": 0.585233026350235,
+      "robust_edge": 0.17772816059914454,
+      "confidence": 43.871582855508215,
+      "data_quality": 78.76623376623377,
+      "engine_votes": "2/3",
+      "engine_unanimous": false,
+      "market_age_minutes": 2.45265,
+      "no_bet_reasons": [
+        "SCOSTAMENTO_ESTREMO",
+        "MODELLO_COLD"
+      ],
+      "reason_codes": [
+        "FORM +",
+        "EV ++"
+      ],
+      "research_score": 86,
+      "model_health": "COLD",
+      "verdict": "NO BET"
+    },
+    {
+      "event_id": "73997654",
+      "player_a": "Smith, Colton",
+      "player_b": "Pellegrino, Andrea",
+      "tournament": "ATP - US Open, New York, USA, Qualifying",
+      "start_at": "2026-08-25T18:30:00Z",
+      "candidate_name": "Pellegrino, Andrea",
+      "candidate_odds": 2.8,
+      "candidate_book": "Eurobet IT",
+      "candidate_prob": 0.5722394320167626,
+      "candidate_ev": 0.6022704096469353,
+      "candidate_edge": 0.23453400036106176,
+      "robust_ev": 0.38928814311650606,
+      "robust_edge": 0.15846890517162276,
+      "confidence": 50.81519462064754,
+      "data_quality": 68.14285714285714,
+      "engine_votes": "3/3",
+      "engine_unanimous": true,
+      "market_age_minutes": 454.19365,
+      "no_bet_reasons": [
+        "QUOTA_NON_FRESCA",
+        "SCOSTAMENTO_ESTREMO",
+        "MODELLO_COLD"
+      ],
+      "reason_codes": [
+        "ELO +",
+        "SURFACE +",
+        "FORM +",
+        "SERVE/RETURN +",
+        "EV ++"
+      ],
+      "research_score": 85,
+      "model_health": "COLD",
+      "verdict": "NO BET"
+    },
+    {
+      "event_id": "73997520",
+      "player_a": "Daniel, Taro",
+      "player_b": "Johnson, Andrew",
+      "tournament": "ATP - US Open, New York, USA, Qualifying",
+      "start_at": "2026-08-25T19:40:00Z",
+      "candidate_name": "Johnson, Andrew",
+      "candidate_odds": 6.5,
+      "candidate_book": "Bet365",
+      "candidate_prob": 0.5112552245270494,
+      "candidate_ev": 2.3231589594258213,
+      "candidate_edge": 0.3596731843374703,
+      "robust_ev": 1.8681772342142593,
+      "robust_edge": 0.2896759958433839,
+      "confidence": 43.58247069066111,
+      "data_quality": 77.81818181818181,
+      "engine_votes": "2/3",
+      "engine_unanimous": false,
+      "market_age_minutes": 4.962766666666667,
+      "no_bet_reasons": [
+        "SCOSTAMENTO_ESTREMO",
+        "MODELLO_COLD"
+      ],
+      "reason_codes": [
+        "ELO +",
+        "SERVE/RETURN -",
+        "EV ++"
+      ],
+      "research_score": 85,
+      "model_health": "COLD",
+      "verdict": "NO BET"
+    }
+  ]
 }
