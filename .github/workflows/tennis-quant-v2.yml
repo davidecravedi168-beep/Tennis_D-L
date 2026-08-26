@@ -1,4 +1,4 @@
-name: Tennis Quant V2
+name: Tennis Zero Cost Quant
 
 on:
   workflow_dispatch:
@@ -9,75 +9,38 @@ permissions:
   contents: write
 
 concurrency:
-  group: tennis-quant-v2
+  group: tennis-zero-cost-quant
   cancel-in-progress: false
 
 jobs:
-  update:
+  quant:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-
+    timeout-minutes: 12
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node 22
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+
+      - name: Engine self-test
+        run: node quant-engine.mjs --self-test
 
       - name: Run Zero Cost Quant
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: node quant-engine.mjs
 
-      - name: Validate published board
+      - name: Commit state
         run: |
-          test -s data/quant-board.json
-          test -s data/quant-board.js
-          node -e "JSON.parse(require('fs').readFileSync('data/quant-board.json','utf8')); console.log('quant-board.json OK')"
-          grep -q "window.__TEP_BOARD__=" data/quant-board.js
-          grep -q "TENNIS-EDGE-QUANT-6.1" data/quant-board.js
-          echo "Static board bridge OK"
-
-      - name: Save Quant Board safely
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          mkdir -p /tmp/tep-data
-          cp data/quant-board.json /tmp/tep-data/quant-board.json
-          cp data/quant-board.js /tmp/tep-data/quant-board.js
-
-          git config user.name "tennis-quant-bot"
+          if git diff --quiet -- data/quant-board.json; then
+            echo "No quant changes"
+            exit 0
+          fi
+          git config user.name "tennis-zero-cost-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          for attempt in 1 2 3; do
-            echo "Push attempt $attempt"
-
-            git fetch origin main
-            git reset --hard origin/main
-
-            mkdir -p data
-            cp /tmp/tep-data/quant-board.json data/quant-board.json
-            cp /tmp/tep-data/quant-board.js data/quant-board.js
-
-            git add data/quant-board.json data/quant-board.js
-
-            if git diff --cached --quiet; then
-              echo "No board changes to commit"
-              exit 0
-            fi
-
-            git commit -m "quant: update v6.1 board bridge"
-
-            if git push origin HEAD:main; then
-              echo "Board published successfully"
-              exit 0
-            fi
-
-            sleep 5
-          done
-
-          echo "Unable to publish board after 3 attempts"
-          exit 1
+          git add data/quant-board.json
+          git commit -m "quant: autonomous zero-cost update"
+          git push
