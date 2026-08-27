@@ -9,4 +9,5 @@ if(missing.length)throw new Error(`app contract missing: ${missing.join(", ")}`)
 const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(x=>x[1]);
 const duplicates=[...new Set(ids.filter((x,i)=>ids.indexOf(x)!==i))];
 if(duplicates.length)throw new Error(`duplicate ids: ${duplicates.join(", ")}`);
+if(!/<main\b[^>]*id=["']mainContent["']/.test(html))throw new Error("main landmark missing");
 console.log(JSON.stringify({ok:true,version:"TEP-12.5-AUTOPILOT",ids:ids.length,inline_script_bytes:inline.length}));

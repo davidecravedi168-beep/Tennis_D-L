@@ -9,6 +9,8 @@ function read(file){try{return JSON.parse(fs.readFileSync(file,"utf8"))}catch(e)
 function validatePercent(v,label){if(v!=null&&(!finite(v)||Number(v)<0||Number(v)>1))fail(`${label}: invalid percentage`)}
 
 function validateQuant(){
+  const bytes=fs.statSync("data/quant-board.json").size;
+  if(bytes>650000)fail(`quant: public board too large for reliable mobile loading (${bytes} bytes)`);
   const q=read("data/quant-board.json");
   if(!q.meta||!String(q.meta.model_version||"").includes("12.5"))fail("quant: V12.5 model not active");
   if(!validDate(q.meta.updated_at))fail("quant: updated_at invalid");
@@ -33,7 +35,7 @@ function validateQuant(){
       if(value&&(!(prob>0&&prob<1)||!(odds>1)||!Number.isFinite(ev)))fail(`quant: VALUE contract invalid ${id}`);
     }
   }
-  console.log(JSON.stringify({ok:true,type:"quant",model:q.meta.model_version,status:q.meta.status,upcoming:q.upcoming.length,radar:q.radar.length,history:q.history.length,data_refreshed_at:q.meta.data_refreshed_at||null}));
+  console.log(JSON.stringify({ok:true,type:"quant",model:q.meta.model_version,status:q.meta.status,bytes,upcoming:q.upcoming.length,radar:q.radar.length,history:q.history.length,data_refreshed_at:q.meta.data_refreshed_at||null}));
 }
 
 function validateLive(){

@@ -2,19 +2,29 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const checkedAt=new Date().toISOString();
+const event=process.env.GH_EVENT_NAME||process.env.GITHUB_EVENT_NAME||"local";
+const runId=process.env.GH_RUN_ID||process.env.GITHUB_RUN_ID||null;
+let previous={};
+try{previous=JSON.parse(await fs.readFile("data/automation-health.json","utf8"))}catch{}
+const isSchedule=event==="schedule";
+const lastSchedulerAt=isSchedule?checkedAt:(previous.last_scheduler_at||null);
+const lastSchedulerRunId=isSchedule?runId:(previous.last_scheduler_run_id||null);
+const schedulerAge=lastSchedulerAt?(Date.now()-new Date(lastSchedulerAt).getTime())/60000:Infinity;
 const automation={
   checked_at:checkedAt,
   timezone:"Europe/Rome",
-  event:process.env.GH_EVENT_NAME||process.env.GITHUB_EVENT_NAME||"local",
+  event,
   schedule:process.env.GH_EVENT_SCHEDULE||null,
-  run_id:process.env.GH_RUN_ID||process.env.GITHUB_RUN_ID||null,
+  run_id:runId,
   run_attempt:Number(process.env.GH_RUN_ATTEMPT||process.env.GITHUB_RUN_ATTEMPT||1),
   run_quant:process.env.RUN_QUANT==="true",
   run_live:process.env.RUN_LIVE==="true",
   quant_reason:process.env.QUANT_REASON||null,
   live_reason:process.env.LIVE_REASON||null,
   workflow_version:"TEP-12.5-STABLE-AUTOPILOT",
-  scheduler_verified:(process.env.GH_EVENT_NAME||process.env.GITHUB_EVENT_NAME)==="schedule"
+  last_scheduler_at:lastSchedulerAt,
+  last_scheduler_run_id:lastSchedulerRunId,
+  scheduler_verified:Number.isFinite(schedulerAge)&&schedulerAge<55
 };
 
 async function atomicJson(file,value){

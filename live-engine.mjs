@@ -16,7 +16,7 @@ const SOURCE_LABEL=COMMERCIAL_MODE?"Commercial licensed odds/live configuration"
 const num=v=>{const x=Number(v);return Number.isFinite(x)?x:null};
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 async function readJson(p,fallback){try{return JSON.parse(await fs.readFile(p,"utf8"))}catch{return fallback}}
-async function saveJson(p,x){await fs.mkdir(path.dirname(p),{recursive:true});const tmp=`${p}.tmp-${process.pid}`;await fs.writeFile(tmp,JSON.stringify(x,null,2)+"\n","utf8");await fs.rename(tmp,p)}
+async function saveJson(p,x){await fs.mkdir(path.dirname(p),{recursive:true});const tmp=`${p}.tmp-${process.pid}`;await fs.writeFile(tmp,JSON.stringify(x)+"\n","utf8");await fs.rename(tmp,p)}
 function isSinglesEvent(e){const a=String(e?.home||""),b=String(e?.away||""),league=String(e?.league?.name||"");if(!a||!b)return false;if(/[\/&]/.test(a)||/[\/&]/.test(b))return false;if(/doubles|teams|mixed doubles/i.test(league))return false;return true}
 function matchProbFromSet(q,bestOf){q=clamp(q,.001,.999);return bestOf===5?(10*q**3-15*q**4+6*q**5):(3*q*q-2*q*q*q)}
 function setProbFromMatch(p,bestOf){let lo=.001,hi=.999;for(let i=0;i<42;i++){const m=(lo+hi)/2;if(matchProbFromSet(m,bestOf)<p)lo=m;else hi=m}return(lo+hi)/2}

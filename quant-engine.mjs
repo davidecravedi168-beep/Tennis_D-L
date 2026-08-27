@@ -91,27 +91,55 @@ function csvParse(text){
 const num=v=>{const x=parseFloat(v);return Number.isFinite(x)?x:null};
 
 async function readJson(file){try{return JSON.parse(await fs.readFile(file,"utf8"))}catch{return null}}
-async function atomicJson(file,value){
+async function atomicJson(file,value,{pretty=true}={}){
   await fs.mkdir(path.dirname(file),{recursive:true});
   const tmp=`${file}.tmp-${process.pid}`;
-  await fs.writeFile(tmp,JSON.stringify(value,null,2)+"\n","utf8");
+  await fs.writeFile(tmp,JSON.stringify(value,null,pretty?2:0)+"\n","utf8");
   await fs.rename(tmp,file);
+}
+function roundPublic(value){
+  if(Array.isArray(value))return value.map(roundPublic);
+  if(value&&typeof value==="object")return Object.fromEntries(Object.entries(value).map(([k,v])=>[k,roundPublic(v)]));
+  return typeof value==="number"&&Number.isFinite(value)?Number(value.toFixed(6)):value;
+}
+function publicRadar(x){
+  return{
+    event_id:x.event_id,start_at:x.start_at,player_a:x.player_a,player_b:x.player_b,
+    tournament:x.tournament,priority:x.priority,pre_status:x.pre_status,surface:x.surface,
+    tour:x.tour,favorite_name:x.favorite_name,favorite_prob:x.favorite_prob,
+    confidence:x.confidence,data_quality:x.data_quality,market_checked:x.market_checked,
+    preview_id:x.preview_id
+  };
+}
+function compactRecentMatches(rows){
+  return (rows||[]).slice(0,10).map(m=>({
+    date:m.date,tournament:m.tournament,surface:m.surface,round:m.round,result:m.result,
+    opponent:m.opponent,score:m.score,
+    service:{service_games_won:m.service?.service_games_won??null},
+    return:{return_games_won:m.return?.return_games_won??null}
+  }));
+}
+function publicPrediction(x){
+  const intel=x?.player_intel;
+  if(!intel?.a||!intel?.b)return x;
+  return{...x,player_intel:{...intel,a:{...intel.a,recent_matches:compactRecentMatches(intel.a.recent_matches)},b:{...intel.b,recent_matches:compactRecentMatches(intel.b.recent_matches)}}};
 }
 function publicBoard(s){
   const learning=s.learning||{};
-  return{
+  return roundPublic({
     meta:s.meta||{},stats:s.stats||{},market_stats:s.market_stats||{},risk:s.risk||{},
-    radar:Array.isArray(s.radar)?s.radar:[],upcoming:Array.isArray(s.upcoming)?s.upcoming:[],
+    radar:Array.isArray(s.radar)?s.radar.map(publicRadar):[],upcoming:Array.isArray(s.upcoming)?s.upcoming.map(publicPrediction):[],
     history:Array.isArray(s.history)?s.history.slice(0,300):[],
     learning:{challenger:learning.challenger||null,drift:learning.drift||null,cold_start:learning.cold_start||null}
-  };
+  });
 }
 async function loadState(){
   return await readJson(STATE_OUT)||await readJson(OUT)||{meta:{status:"SETUP"},radar:[],upcoming:[],history:[],observed_results:[],learning:{},usage:{day:dayKey(NOW),calls:0},cache:{}};
 }
 async function saveState(s){
   await atomicJson(STATE_OUT,s);
-  await atomicJson(OUT,publicBoard(s));
+  // Keep the browser payload compact enough for mobile Safari and slow cellular links.
+  await atomicJson(OUT,publicBoard(s),{pretty:false});
 }
 
 let state=await loadState();
@@ -825,13 +853,14 @@ function verificationLinks(tour){
   };
 }
 function publicPlayerIntel(p,name,tour,surface){
+  const recentMatches=compactRecentMatches(p.recent_matches);
   return{
     name,tour:String(tour||'').toUpperCase(),target_surface:surface||null,rank:p.rank??null,
     sample:{matches:p.n??0,stat_matches:p.statN??0,surface_matches:p.surfaceN??0,prop_matches:p.propN??0},
     context:{form:p.form??null,form_long:p.form_long??null,surface_form:p.surface??null,last_surface:p.last_surface??null,rest_days:p.last_match_days??null,matches_7d:p.matches7??0,matches_14d:p.matches14??0,workload_7d_minutes:p.workload7??0,workload_14d_minutes:p.workload14??0},
     service:{first_serve_pct:p.first_serve_pct??null,first_serve_points_won:p.first_serve_points_won??null,second_serve_points_won:p.second_serve_points_won??null,service_points_won:p.service_points_won??null,service_games_won:p.service_games_won??null,break_points_saved:p.break_points_saved??null,aces_per_match:p.aces_pg??null,double_faults_per_match:p.double_faults_pg??null},
     return:{first_return_points_won:p.first_return_points_won??null,second_return_points_won:p.second_return_points_won??null,return_points_won:p.return_points_won??null,return_games_won:p.return_games_won??null,break_points_converted:p.break_points_converted??null,breaks_per_match:p.breaks_pg??null,aces_allowed_per_match:p.aces_allowed_pg??null},
-    recent_matches:p.recent_matches||[],verification:verificationLinks(tour),
+    recent_matches:recentMatches,verification:verificationLinks(tour),
     history_source:USING_CUSTOM_HISTORY?'CUSTOM_LICENSED_HISTORY':'TENNIS_HISTORY_ARCHIVE_RESEARCH',
     verification_note:'Statistiche calcolate dallo storico match del motore; link ufficiali ATP/WTA e SofaScore per controllo esterno. Nessun dato viene inventato se il campione non e disponibile.'
   };

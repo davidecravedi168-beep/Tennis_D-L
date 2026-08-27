@@ -75,6 +75,8 @@ html,body{width:100%;max-width:100%;overflow-x:clip}.app,.topbar,.hero,.heroGrid
 </header>
 <div class="autopilotBar warn" id="autopilotBar"><b id="autopilotState">AUTOPILOT · VERIFICA</b><span id="autopilotDetail">In attesa del primo ciclo automatico certificato.</span></div>
 
+<main id="mainContent">
+
 <section class="hero" id="hero">
   <div class="eyebrow">TODAY'S EDGE · PREZZO PRIMA DEL PRONOSTICO</div>
   <div class="heroGrid">
@@ -100,7 +102,7 @@ html,body{width:100%;max-width:100%;overflow-x:clip}.app,.topbar,.hero,.heroGrid
   </div>
   <div class="card deskSecondary"><div class="cardHead"><div><h2>Bet Thesis</h2><div class="sub">Tesi, prezzo e rischio della giocata in linguaggio da bettor.</div></div><span class="pill">NO HYPE</span></div><div class="grid3" id="whyGrid"><div class="empty">In attesa dei dati.</div></div></div>
   <div class="grid2 deskSecondary">
-    <div class="card"><div class="cardHead"><div><h2>Data Health</h2><div class="sub">Cinque controlli prima di fidarsi di un segnale. Un solo gate rosso sospende l’ingresso.</div></div><span class="pill" id="healthGatePill">WAIT</span></div><div class="dataHealthGrid" id="dataHealthGrid"><div class="empty">Sto verificando le fonti.</div></div></div>
+    <div class="card"><div class="cardHead"><div><h2>Data Health</h2><div class="sub">Sei controlli prima di fidarsi di un segnale. Un solo gate rosso sospende l’ingresso.</div></div><span class="pill" id="healthGatePill">WAIT</span></div><div class="dataHealthGrid" id="dataHealthGrid"><div class="empty">Sto verificando le fonti.</div></div></div>
     <div class="card"><div class="cardHead"><div><h2>Match Similarity</h2><div class="sub">Confronta il match con precedenti realmente forniti dal motore. Se il campione non esiste, non viene ricostruito.</div></div><span class="pill" id="similarityCount">0 ANALOGHI</span></div><div class="similarityList" id="similarityLab"><div class="empty">Nessun campione analogo certificato.</div></div></div>
   </div>
 </section>
@@ -131,6 +133,7 @@ html,body{width:100%;max-width:100%;overflow-x:clip}.app,.topbar,.hero,.heroGrid
 </section>
 
 <div class="footerNote">Tennis Edge Pro è un prodotto di ricerca quantitativa. Le scommesse comportano rischio di perdita; nessun rendimento è garantito. 18+ e solo dove consentito.</div>
+</main>
 </div>
 
 <nav class="bottomNav" aria-label="Navigazione principale">
@@ -150,7 +153,7 @@ const CACHE_KEY='tep12:last-good-board';
 const PREF_KEY='tep12:prefs';
 const ALERT_KEY='tep11:price-alerts';
 const LEDGER_KEY='tep11:bet-ledger';
-const FETCH_TIMEOUT=7000;
+const FETCH_TIMEOUT=20000;
 const BOARD_MAX_AGE=110;
 const PRICE_MAX_AGE=95;
 let board=null,live=null,usingCache=false,lastErr=null,matchFilter='all',matchSearch='',selectedEvent=null,selectedMarketKey=null,focusMode=false,oddsFormat='DEC',matrixFamily='ALL',contract={ok:false,errors:['WAITING_DATA'],warnings:[]},alerted=new Set();
@@ -190,7 +193,8 @@ const rowKey=r=>[rowEventId(r),String(r?.market||''),String(r?.selection||'')].j
 const boardAge=()=>ageMin(board?.meta?.data_refreshed_at||board?.meta?.updated_at);
 const quoteAge=r=>ageMin(r?.current_updated_at||r?.current_odds_updated_at||r?.quote_updated_at||r?.current_odds_at||r?.market_updated_at||board?.meta?.data_refreshed_at);
 const automationAge=()=>ageMin(board?.meta?.automation?.checked_at);
-const schedulerSafe=()=>board?.meta?.automation?.scheduler_verified===true&&String(board?.meta?.automation?.event||'')==='schedule'&&automationAge()<55;
+const schedulerAge=()=>ageMin(board?.meta?.automation?.last_scheduler_at||((board?.meta?.automation?.event==='schedule')?board?.meta?.automation?.checked_at:null));
+const schedulerSafe=()=>board?.meta?.automation?.scheduler_verified===true&&schedulerAge()<55;
 const hoursToStart=r=>{const t=new Date(r?.start_at).getTime();return Number.isFinite(t)?(t-Date.now())/36e5:Infinity};
 
 function readStore(key,fallback=[]){try{const x=JSON.parse(localStorage.getItem(key)||'null');return Array.isArray(x)?x:fallback}catch{return fallback}}
@@ -309,10 +313,10 @@ function renderHero(){
 }
 function renderQuick(){const rows=sortedRows(),liveRows=live?.events||[],h=board?.history||[];$('qBets').textContent=rows.filter(r=>['BET ZONE','TEST VALUE'].includes(currentPriceStatus(r))).length;$('qLive').textContent=liveRows.length;$('qMatches').textContent=board?.radar?.length??0;$('qClosed').textContent=(board?.stats?.closed_picks??h.filter(x=>x.status==='SETTLED'&&x.pick_side).length);$('qHealth').textContent=String(board?.meta?.model_health||'COLD').toUpperCase()}
 function renderAutomation(){
-  const bar=$('autopilotBar'),state=$('autopilotState'),detail=$('autopilotDetail'),a=board?.meta?.automation||{},cycle=automationAge(),data=boardAge(),scheduled=schedulerSafe(),dataOk=finite(data)&&data<BOARD_MAX_AGE,healthy=scheduled&&dataOk;
+  const bar=$('autopilotBar'),state=$('autopilotState'),detail=$('autopilotDetail'),a=board?.meta?.automation||{},cycle=automationAge(),scheduledCycle=schedulerAge(),data=boardAge(),scheduled=schedulerSafe(),dataOk=finite(data)&&data<BOARD_MAX_AGE,healthy=scheduled&&dataOk;
   bar.className=`autopilotBar ${healthy?'ok':scheduled||finite(cycle)?'warn':'bad'}`;
   state.textContent=healthy?'AUTOPILOT · ATTIVO':scheduled?'AUTOPILOT · DATA GUARD':a.event==='workflow_dispatch'?'AUTOPILOT · SOLO MANUALE':'AUTOPILOT · DA VERIFICARE';
-  detail.textContent=scheduled?`Ciclo automatico ${Math.round(cycle)} min fa · ${finite(data)?`dati quant ${Math.round(data)} min fa`:'dati quant non aggiornati'}`:finite(cycle)?`Ultimo controllo ${Math.round(cycle)} min fa (${a.event||'evento sconosciuto'}). Le giocate restano bloccate finché il cron non è certificato.`:'Nessun ciclo automatico certificato: fail-closed attivo.';
+  detail.textContent=scheduled?`Ciclo automatico ${Math.round(scheduledCycle)} min fa · ${finite(data)?`dati quant ${Math.round(data)} min fa`:'dati quant non aggiornati'}`:finite(cycle)?`Ultimo controllo ${Math.round(cycle)} min fa (${a.event||'evento sconosciuto'}). Le giocate restano bloccate finché il cron non è certificato.`:'Nessun ciclo automatico certificato: fail-closed attivo.';
 }
 function renderMarketTape(){const rows=sortedRows().filter(r=>['BET ZONE','TEST VALUE','WATCH PRICE'].includes(currentPriceStatus(r))).slice(0,14);$('marketTape').innerHTML=rows.length?`<div class="tapeItem"><span>MARKET TAPE</span><b>${rows.length} LINEE</b></div>`+rows.map(r=>{const lm=lineMove(r),cls=finite(lm.pct)&&lm.pct>=.01?'up':finite(lm.pct)&&lm.pct<=-.01?'down':'';return `<button class="tapeItem ${cls}" data-tape="${esc(rowKey(r))}" type="button"><span>${esc(marketFamily(r.market))}</span><b>${esc(r.selection)} ${odd(currentOdds(r))}</b></button>`}).join(''):'<div class="tapeItem"><span>MARKET TAPE</span><b>NO BET · NESSUNA LINEA</b></div>';$$('[data-tape]').forEach(b=>b.addEventListener('click',()=>{const r=marketRows().find(x=>rowKey(x)===b.dataset.tape);if(!r)return;selectedEvent=r.event_id;selectedMarketKey=rowKey(r);matrixFamily=marketFamily(r.market);renderMarketMatrix();renderLadder();renderPriceWatch();renderWhy();renderDataHealth();renderSimilarity();toast('Linea selezionata')}))}
 function renderMarketMatrix(){
@@ -415,9 +419,11 @@ function updateSyncStatus(){const ok=operationalSafe(),age=boardAge();$('onlineD
 
 async function fetchJSON(url){const c=new AbortController(),timer=setTimeout(()=>c.abort(),FETCH_TIMEOUT);try{const r=await fetch(url,{cache:'no-cache',signal:c.signal,headers:{Accept:'application/json'}});if(!r.ok)throw new Error(`HTTP ${r.status}`);return await r.json()}finally{clearTimeout(timer)}}
 async function sync(force=false){
-  if(document.hidden&&!force)return;try{const q=await fetchJSON('data/quant-board.json'),check=validateBoard(q);contract=check;if(!check.ok)throw new Error(`Quant Board non valido: ${check.errors.join(',')}`);board=q;usingCache=false;lastErr=null;saveCache(q)}catch(e){lastErr=e.message;if(!board){board=loadCache();usingCache=!!board}contract=validateBoard(board);if(board)usingCache=true}
-  try{const l=await fetchJSON('data/live-board.json');if(!l?.meta||!Array.isArray(l?.events))throw new Error('Live Board non valido');live=l}catch(e){lastErr=lastErr||e.message}
-  renderAll();
+  if(document.hidden&&!force)return;
+  const quantRequest=fetchJSON('data/quant-board.json'),liveRequest=fetchJSON('data/live-board.json');
+  try{const q=await quantRequest,check=validateBoard(q);contract=check;if(!check.ok)throw new Error(`Quant Board non valido: ${check.errors.join(',')}`);board=q;usingCache=false;lastErr=null;saveCache(q)}catch(e){lastErr=e.message;if(!board){board=loadCache();usingCache=!!board}contract=validateBoard(board);if(board)usingCache=true}
+  if(board)renderAll();else{const banner=$('contractBanner');banner.classList.add('show');banner.textContent='Dati non caricati: controlla la connessione e tocca ↻ per riprovare.';$('syncLabel').textContent='RIPROVA';$('onlineDot').classList.add('off')}
+  try{const l=await liveRequest;if(!l?.meta||!Array.isArray(l?.events))throw new Error('Live Board non valido');live=l;if(board){renderLive();renderQuick();updateSyncStatus()}}catch(e){lastErr=lastErr||e.message}
 }
 let navLandingToken=0;
 function landOnSection(id){
