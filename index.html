@@ -195,7 +195,7 @@ const quoteAge=r=>ageMin(r?.current_updated_at||r?.current_odds_updated_at||r?.q
 const automationAge=()=>ageMin(board?.meta?.automation?.checked_at);
 const schedulerAge=()=>ageMin(board?.meta?.automation?.last_scheduler_at||((board?.meta?.automation?.event==='schedule')?board?.meta?.automation?.checked_at:null));
 const schedulerSafe=()=>board?.meta?.automation?.scheduler_verified===true&&schedulerAge()<55;
-const recoverySafe=()=>{const a=board?.meta?.automation||{},event=String(a.event||'').toLowerCase();return event==='push'&&automationAge()<55};
+const recoverySafe=()=>{const a=board?.meta?.automation||{},event=String(a.event||'').toLowerCase();return event==='push'&&automationAge()<80};
 const autopilotSafe=()=>schedulerSafe()||recoverySafe();
 const hoursToStart=r=>{const t=new Date(r?.start_at).getTime();return Number.isFinite(t)?(t-Date.now())/36e5:Infinity};
 
