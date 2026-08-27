@@ -4,8 +4,9 @@ run-name: "TEP 12.5 · watchdog · ${{ github.event_name }}"
 on:
   workflow_dispatch:
   schedule:
-    # Independent scheduler identity. The shared freshness gate prevents duplicate API work.
-    - cron: "7,17,27,37,47,57 * * * *"
+    # Independent scheduler identity, staggered from the primary workflow and away from the top of the hour.
+    # The shared freshness gate prevents duplicate API work.
+    - cron: "18,33,48 * * * *"
 
 permissions:
   contents: write
