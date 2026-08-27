@@ -6,7 +6,7 @@ const BASE="https://api.odds-api.io/v3";
 const OUT="data/live-board.json";
 const QUANT="data/quant-board.json";
 const NOW=new Date();
-const MODEL_VERSION="TENNIS-LIVE-3.0-PRICE-GUARD";
+const MODEL_VERSION="TENNIS-LIVE-12.5-STRUCTURED";
 const FETCH_ODDS_THIS_RUN=(Math.floor(NOW.getUTCMinutes()/15)%2===0); // ~every 30m; score snapshot stays ~15m
 const MAX_LIVE_ODDS_EVENTS=10; // one multi-odds call max, keeps the free daily budget guarded
 const COMMERCIAL_MODE=/^(1|true|yes)$/i.test(String(process.env.COMMERCIAL_MODE||""));
@@ -16,7 +16,7 @@ const SOURCE_LABEL=COMMERCIAL_MODE?"Commercial licensed odds/live configuration"
 const num=v=>{const x=Number(v);return Number.isFinite(x)?x:null};
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 async function readJson(p,fallback){try{return JSON.parse(await fs.readFile(p,"utf8"))}catch{return fallback}}
-async function saveJson(p,x){await fs.mkdir(path.dirname(p),{recursive:true});await fs.writeFile(p,JSON.stringify(x,null,2)+"\n","utf8")}
+async function saveJson(p,x){await fs.mkdir(path.dirname(p),{recursive:true});const tmp=`${p}.tmp-${process.pid}`;await fs.writeFile(tmp,JSON.stringify(x,null,2)+"\n","utf8");await fs.rename(tmp,p)}
 function isSinglesEvent(e){const a=String(e?.home||""),b=String(e?.away||""),league=String(e?.league?.name||"");if(!a||!b)return false;if(/[\/&]/.test(a)||/[\/&]/.test(b))return false;if(/doubles|teams|mixed doubles/i.test(league))return false;return true}
 function matchProbFromSet(q,bestOf){q=clamp(q,.001,.999);return bestOf===5?(10*q**3-15*q**4+6*q**5):(3*q*q-2*q*q*q)}
 function setProbFromMatch(p,bestOf){let lo=.001,hi=.999;for(let i=0;i<42;i++){const m=(lo+hi)/2;if(matchProbFromSet(m,bestOf)<p)lo=m;else hi=m}return(lo+hi)/2}
@@ -107,7 +107,7 @@ try{
     const livePriceGuard={robust_p_a:robA,robust_p_b:robB,robust_ev_a:evA,robust_ev_b:evB,min_odds_a:minA,min_odds_b:minB,target_ev:.02,integrity_required:"STRUCTURED",note:"Research only unless the UI confirms a fresh snapshot, structured score and non-stale live market."};
     return{event_id:String(e.id),player_a:e.home,player_b:e.away,tournament:e.league?.name||"—",league_slug:e.league?.slug||null,start_at:e.date||null,status:e.status||"live",score:sv,live_market:lm,live_price_guard:livePriceGuard,live_market_stale:liveMarketStale,live_divergence_a:divergence,live_research_label:liveResearch,pre_match:locked?{verdict:locked.verdict,confidence:locked.confidence,p_a:locked.p_a,p_b:locked.p_b,candidate_name:locked.candidate_name,candidate_odds:locked.candidate_odds,current_odds:locked.current_odds,market_best:locked.market_best||null,audit_id:locked.audit_id,market_lab:{best_of:locked.market_lab?.best_of,hold_a:locked.market_lab?.hold_a,hold_b:locked.market_lab?.hold_b,tb_a:locked.market_lab?.tb_a,serve_point_a:locked.market_lab?.serve_point_a,serve_point_b:locked.market_lab?.serve_point_b}}:null};
   });
-  await saveJson(OUT,{meta:{updated_at:NOW.toISOString(),status:"LIVE",source:SOURCE_LABEL,model_version:MODEL_VERSION,commercial_mode:COMMERCIAL_MODE,commercial_license_guard:COMMERCIAL_MODE?"CONFIRMED_BY_ENV":"RESEARCH_ONLY",events:events.length,linked_predictions:events.filter(x=>x.pre_match).length,odds_status:oddsStatus,odds_refresh_policy:"Free beta: score snapshots follow the scheduled worker and live ML odds are rate-guarded. Commercial point-by-point operation requires a licensed low-latency feed.",score_contract:"Set/game state is parsed only from unambiguous structured period fields. Point score is never fabricated."},events});
+  await saveJson(OUT,{meta:{updated_at:NOW.toISOString(),data_refreshed_at:NOW.toISOString(),status:"LIVE",source:SOURCE_LABEL,model_version:MODEL_VERSION,state_schema:"TEP-12.5",commercial_mode:COMMERCIAL_MODE,commercial_license_guard:COMMERCIAL_MODE?"CONFIRMED_BY_ENV":"RESEARCH_ONLY",events:events.length,linked_predictions:events.filter(x=>x.pre_match).length,odds_status:oddsStatus,odds_refresh_policy:"Free beta: score snapshots follow the scheduled worker and live ML odds are rate-guarded. Commercial point-by-point operation requires a licensed low-latency feed.",score_contract:"Set/game state is parsed only from unambiguous structured period fields. Point score is never fabricated."},events});
   console.log(JSON.stringify({ok:true,events:events.length,linked:events.filter(x=>x.pre_match).length,oddsStatus}));
 }catch(e){
   const out={...previous,meta:{...(previous.meta||{}),updated_at:NOW.toISOString(),status:"STALE",error:e.message,source:SOURCE_LABEL,model_version:MODEL_VERSION,note:"Last good live board preserved; no score or live edge is fabricated."}};await saveJson(OUT,out);console.error(e.message);process.exitCode=0;

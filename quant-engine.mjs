@@ -4,20 +4,21 @@ import crypto from "node:crypto";
 
 const API_KEY=process.env.ODDS_API_KEY;
 const BASE="https://api.odds-api.io/v3";
+const STATE_OUT="data/quant-state.json";
 const OUT="data/quant-board.json";
-const MODEL_VERSION="TENNIS-EDGE-QUANT-12.1-COLD-START";
+const MODEL_VERSION="TENNIS-EDGE-QUANT-12.5-AUTOPILOT";
 const NOW=new Date();
 const DAILY_CAP=330;          // reserve ~170/day for the independent live-score worker
-const RUN_CAP=14;             // keeps hourly research inside the shared free-tier budget
+const RUN_CAP=10;             // keeps hourly research inside the shared free-tier budget
 const LOCK_MIN_HOURS=1;
 const LOCK_MAX_HOURS=36;
 const RADAR_DAYS=7;
 const MAX_NEW_PREDICTIONS_PER_RUN=120;
 const MAX_SETTLEMENTS_PER_RUN=6;
-const QUOTE_REFRESH_LIMIT=20;  // refresh relevant locked matches without changing Prediction Lock
+const QUOTE_REFRESH_LIMIT=10;  // refresh relevant locked matches without changing Prediction Lock
 const MARKET_QUERY=""; // request all markets exposed by selected books; parser stays fail-closed
 const MARKET_SIM_N=5000;
-const YEARS=[2023,2024,2025,2026];
+const YEARS=Array.from({length:4},(_,i)=>NOW.getUTCFullYear()-3+i);
 const COMMERCIAL_MODE=/^(1|true|yes)$/i.test(String(process.env.COMMERCIAL_MODE||""));
 const COMMERCIAL_ODDS_LICENSE_CONFIRMED=/^(1|true|yes)$/i.test(String(process.env.COMMERCIAL_ODDS_LICENSE_CONFIRMED||""));
 const COMMERCIAL_HISTORY_LICENSE_CONFIRMED=/^(1|true|yes)$/i.test(String(process.env.COMMERCIAL_HISTORY_LICENSE_CONFIRMED||""));
@@ -66,10 +67,12 @@ function minutesUntil(iso){
 }
 
 function rateLimitActive(){
-  const reset=state?.rate_limit?.reset_at;
-  return !!(reset&&new Date(reset)>NOW);
+  const rl=state?.rate_limit||{};
+  const reset=rl.reset_at;
+  const remaining=Number(rl.remaining);
+  const exhausted=rl.last_status===429||(Number.isFinite(remaining)&&remaining<=0);
+  return !!(exhausted&&reset&&new Date(reset)>NOW);
 }
-
 function rateLimitLabel(){
   const m=minutesUntil(state?.rate_limit?.reset_at);
   return m==null?"RATE LIMIT":m>0?`API PAUSA · ${m} MIN`:"API READY";
@@ -87,13 +90,28 @@ function csvParse(text){
 }
 const num=v=>{const x=parseFloat(v);return Number.isFinite(x)?x:null};
 
+async function readJson(file){try{return JSON.parse(await fs.readFile(file,"utf8"))}catch{return null}}
+async function atomicJson(file,value){
+  await fs.mkdir(path.dirname(file),{recursive:true});
+  const tmp=`${file}.tmp-${process.pid}`;
+  await fs.writeFile(tmp,JSON.stringify(value,null,2)+"\n","utf8");
+  await fs.rename(tmp,file);
+}
+function publicBoard(s){
+  const learning=s.learning||{};
+  return{
+    meta:s.meta||{},stats:s.stats||{},market_stats:s.market_stats||{},risk:s.risk||{},
+    radar:Array.isArray(s.radar)?s.radar:[],upcoming:Array.isArray(s.upcoming)?s.upcoming:[],
+    history:Array.isArray(s.history)?s.history.slice(0,300):[],
+    learning:{challenger:learning.challenger||null,drift:learning.drift||null,cold_start:learning.cold_start||null}
+  };
+}
 async function loadState(){
-  try{return JSON.parse(await fs.readFile(OUT,"utf8"))}
-  catch{return {meta:{status:"SETUP"},radar:[],upcoming:[],history:[],observed_results:[],learning:{},usage:{day:dayKey(NOW),calls:0},cache:{}}}
+  return await readJson(STATE_OUT)||await readJson(OUT)||{meta:{status:"SETUP"},radar:[],upcoming:[],history:[],observed_results:[],learning:{},usage:{day:dayKey(NOW),calls:0},cache:{}};
 }
 async function saveState(s){
-  await fs.mkdir(path.dirname(OUT),{recursive:true});
-  await fs.writeFile(OUT,JSON.stringify(s,null,2)+"\n","utf8");
+  await atomicJson(STATE_OUT,s);
+  await atomicJson(OUT,publicBoard(s));
 }
 
 let state=await loadState();
@@ -117,7 +135,7 @@ async function api(endpoint,params={}){
   });
 
   const r=await fetch(u,{
-    headers:{"user-agent":"TennisEdgePro/8.1"}
+    headers:{"user-agent":"TennisEdgePro/12.5"}
   });
 
   state.usage.calls++;
@@ -162,7 +180,7 @@ async function api(endpoint,params={}){
   return r.json();
 }
 async function fetchText(url){
-  const r=await fetch(url,{headers:{"user-agent":"TennisEdgePro/8.1"}});
+  const r=await fetch(url,{headers:{"user-agent":"TennisEdgePro/12.5"}});
   if(!r.ok)throw new Error(`DATA HTTP ${r.status}`);
   return r.text();
 }
@@ -441,12 +459,19 @@ async function multiOdds(ids,bookmakers){
   for(let i=0;i<ids.length;i+=10){
     const batch=ids.slice(i,i+10);
     const params={eventIds:batch.join(","),bookmakers:bookmakers.join(",")};if(MARKET_QUERY)params.markets=MARKET_QUERY;
-    const raw=await api("/odds/multi",params);
-    for(const [k,v] of mapMultiOdds(raw))out.set(k,v);
+    try{
+      const raw=await api("/odds/multi",params);
+      for(const [k,v] of mapMultiOdds(raw))out.set(k,v);
+    }catch(e){
+      if(["RATE_LIMIT_WAIT","RATE_LIMIT_429","RUN_BUDGET_GUARD","DAILY_BUDGET_GUARD"].includes(e.message)){
+        console.warn("multiOdds pause",e.message,"events",out.size);
+        break;
+      }
+      throw e;
+    }
   }
   return out;
 }
-
 function freshOffers(event,p,mkt){
   const out=[];const add=x=>out.push(x);
   add({offer_key:"MATCH_WINNER|A",current_odds:mkt.bestA,current_market_prob:mkt.consensus,current_book:mkt.bestBookA,current_books:mkt.count,current_updated_at:mkt.bestUpdatedA});
@@ -543,20 +568,52 @@ function buildH2HIndex(rows){
   for(const arr of out.values())arr.sort((a,b)=>dateNum(b)-dateNum(a));
   return out;
 }
+function addNameResolver(map,key,name){
+  if(!key)return;
+  if(!map.has(key))map.set(key,[]);
+  const a=map.get(key);
+  if(!a.includes(name))a.push(name);
+}
 function buildNameResolver(names){
   const bySig=new Map();
+  bySig.byTokens=new Map();
+  bySig.bySuffixToken=new Map();
   for(const n of names){
     const p=n.split(" ").filter(Boolean);if(p.length<2)continue;
-    const sig=`${p[p.length-1]}|${p[0][0]||""}`;
-    if(!bySig.has(sig))bySig.set(sig,[]);bySig.get(sig).push(n);
+    addNameResolver(bySig,p[p.length-1]+"|"+(p[0][0]||""),n);
+    addNameResolver(bySig.byTokens,[...p].sort().join("|"),n);
+    for(let len=1;len<=Math.min(4,p.length-1);len++){
+      const surname=p.slice(-len).join(" "),given=p.slice(0,-len);
+      for(const g of given)addNameResolver(bySig.bySuffixToken,surname+"|"+g,n);
+    }
   }
   return bySig;
 }
+function uniqueName(xs){return Array.isArray(xs)&&xs.length===1?xs[0]:null}
 function resolveNameKey(name,tourData){
-  const n=norm(name);if(tourData.names.has(n))return n;
+  const raw=String(name||"").trim(),n=norm(raw);
+  if(tourData.names.has(n))return n;
   const p=n.split(" ").filter(Boolean);if(p.length<2)return null;
-  const sig=`${p[p.length-1]}|${p[0][0]||""}`,c=tourData.nameResolver?.get(sig)||[];
-  return c.length===1?c[0]:null;
+  const r=tourData.nameResolver;
+  let hit=uniqueName(r?.byTokens?.get([...p].sort().join("|")));
+  if(hit)return hit;
+  if(raw.includes(",")){
+    const parts=raw.split(","),surname=norm(parts.shift()),given=norm(parts.join(" "));
+    if(surname&&given){
+      const reversed=norm(given+" "+surname);
+      if(tourData.names.has(reversed))return reversed;
+      const rp=reversed.split(" ").filter(Boolean);
+      hit=uniqueName(r?.byTokens?.get([...rp].sort().join("|")));
+      if(hit)return hit;
+      const candidates=new Set();
+      for(const g of given.split(" ").filter(Boolean)){
+        for(const x of r?.bySuffixToken?.get(surname+"|"+g)||[])candidates.add(x);
+      }
+      if(candidates.size===1)return [...candidates][0];
+    }
+  }
+  const sig=p[p.length-1]+"|"+(p[0][0]||"");
+  return uniqueName(r?.get(sig));
 }
 function tennisDate(v){
   const s=String(v||"");if(!/^\d{8}$/.test(s))return null;
@@ -702,28 +759,105 @@ function h2h(rows,a,b,surface){
   return{n:arr.length,edge:total?(wa-wb)/total:0};
 }
 
+function safeRate(n,d){return Number.isFinite(n)&&Number.isFinite(d)&&d>0?clamp(n/d,0,1):null}
+function historicalMatchIntel(m,key){
+  const w=norm(m.winner_name)===key;
+  const own={
+    sv:num(w?m.w_svpt:m.l_svpt),firstIn:num(w?m.w_1stIn:m.l_1stIn),firstWon:num(w?m.w_1stWon:m.l_1stWon),secondWon:num(w?m.w_2ndWon:m.l_2ndWon),
+    games:num(w?m.w_SvGms:m.l_SvGms),bpFaced:num(w?m.w_bpFaced:m.l_bpFaced),bpSaved:num(w?m.w_bpSaved:m.l_bpSaved),ace:num(w?m.w_ace:m.l_ace),df:num(w?m.w_df:m.l_df)
+  };
+  const opp={
+    sv:num(w?m.l_svpt:m.w_svpt),firstIn:num(w?m.l_1stIn:m.w_1stIn),firstWon:num(w?m.l_1stWon:m.w_1stWon),secondWon:num(w?m.l_2ndWon:m.w_2ndWon),
+    games:num(w?m.l_SvGms:m.w_SvGms),bpFaced:num(w?m.l_bpFaced:m.w_bpFaced),bpSaved:num(w?m.l_bpSaved:m.w_bpSaved),ace:num(w?m.l_ace:m.w_ace),df:num(w?m.l_df:m.w_df)
+  };
+  const ownBreaks=Number.isFinite(own.bpFaced)&&Number.isFinite(own.bpSaved)?Math.max(0,own.bpFaced-own.bpSaved):null;
+  const breaksMade=Number.isFinite(opp.bpFaced)&&Number.isFinite(opp.bpSaved)?Math.max(0,opp.bpFaced-opp.bpSaved):null;
+  const oppSecond=Number.isFinite(opp.sv)&&Number.isFinite(opp.firstIn)?Math.max(0,opp.sv-opp.firstIn):null;
+  return{
+    date:String(m.tourney_date||''),tournament:m.tourney_name||null,surface:m.surface||null,round:m.round||null,result:w?'W':'L',
+    opponent:w?m.loser_name:m.winner_name,score:m.score||null,minutes:num(m.minutes),own_rank:num(w?m.winner_rank:m.loser_rank),opponent_rank:num(w?m.loser_rank:m.winner_rank),
+    service:{first_serve_pct:safeRate(own.firstIn,own.sv),first_serve_points_won:safeRate(own.firstWon,own.firstIn),second_serve_points_won:safeRate(own.secondWon,Number.isFinite(own.sv)&&Number.isFinite(own.firstIn)?own.sv-own.firstIn:null),service_points_won:safeRate((own.firstWon??0)+(own.secondWon??0),own.sv),service_games_won:safeRate(Number.isFinite(own.games)&&Number.isFinite(ownBreaks)?own.games-ownBreaks:null,own.games),break_points_saved:safeRate(own.bpSaved,own.bpFaced),aces:own.ace,double_faults:own.df},
+    return:{first_return_points_won:safeRate(Number.isFinite(opp.firstIn)&&Number.isFinite(opp.firstWon)?opp.firstIn-opp.firstWon:null,opp.firstIn),second_return_points_won:safeRate(Number.isFinite(oppSecond)&&Number.isFinite(opp.secondWon)?oppSecond-opp.secondWon:null,oppSecond),return_points_won:safeRate(Number.isFinite(opp.sv)&&Number.isFinite(opp.firstWon)&&Number.isFinite(opp.secondWon)?opp.sv-opp.firstWon-opp.secondWon:null,opp.sv),return_games_won:safeRate(breaksMade,opp.games),break_points_converted:safeRate(breaksMade,opp.bpFaced)}
+  };
+}
 function metricsFast(tourData,key,surface){
   const all=tourData.byPlayer?.get(key)||[],r20=all.slice(0,20),surf=all.filter(m=>m.surface===surface).slice(0,40),latest=all[0];
-  let ownWon=0,ownPts=0,retWon=0,retPts=0,statN=0,aces=0,acesAllowed=0,breaks=0,breaksConceded=0,propN=0;
-  r20.forEach(m=>{
-    const w=norm(m.winner_name)===key,sv=num(w?m.w_svpt:m.l_svpt),fw=num(w?m.w_1stWon:m.l_1stWon),sw=num(w?m.w_2ndWon:m.l_2ndWon);
-    const osv=num(w?m.l_svpt:m.w_svpt),ofw=num(w?m.l_1stWon:m.w_1stWon),osw=num(w?m.l_2ndWon:m.w_2ndWon);
-    if(sv&&fw!=null&&sw!=null){ownPts+=sv;ownWon+=fw+sw;statN++}
-    if(osv&&ofw!=null&&osw!=null){retPts+=osv;retWon+=osv-ofw-osw}
-    const oa=num(w?m.w_ace:m.l_ace),aa=num(w?m.l_ace:m.w_ace),bpF=num(w?m.w_bpFaced:m.l_bpFaced),bpS=num(w?m.w_bpSaved:m.l_bpSaved),obpF=num(w?m.l_bpFaced:m.w_bpFaced),obpS=num(w?m.l_bpSaved:m.w_bpSaved);
-    if(oa!=null&&aa!=null&&bpF!=null&&bpS!=null&&obpF!=null&&obpS!=null){aces+=oa;acesAllowed+=aa;breaks+=Math.max(0,obpF-obpS);breaksConceded+=Math.max(0,bpF-bpS);propN++}
-  });
+  let ownPts=0,ownWon=0,firstIn=0,firstWon=0,secondAtt=0,secondWon=0,serviceGames=0,serviceGamesWon=0,bpFaced=0,bpSaved=0;
+  let retPts=0,retWon=0,firstRetAtt=0,firstRetWon=0,secondRetAtt=0,secondRetWon=0,returnGames=0,returnGamesWon=0,bpOpp=0,bpConverted=0;
+  let statN=0,aces=0,dfs=0,acesAllowed=0,breaks=0,breaksConceded=0,propN=0;
+  for(const m of r20){
+    const w=norm(m.winner_name)===key;
+    const sv=num(w?m.w_svpt:m.l_svpt),fi=num(w?m.w_1stIn:m.l_1stIn),fw=num(w?m.w_1stWon:m.l_1stWon),sw=num(w?m.w_2ndWon:m.l_2ndWon),sg=num(w?m.w_SvGms:m.l_SvGms);
+    const osv=num(w?m.l_svpt:m.w_svpt),ofi=num(w?m.l_1stIn:m.w_1stIn),ofw=num(w?m.l_1stWon:m.w_1stWon),osw=num(w?m.l_2ndWon:m.w_2ndWon),osg=num(w?m.l_SvGms:m.w_SvGms);
+    const bpf=num(w?m.w_bpFaced:m.l_bpFaced),bps=num(w?m.w_bpSaved:m.l_bpSaved),obpf=num(w?m.l_bpFaced:m.w_bpFaced),obps=num(w?m.l_bpSaved:m.w_bpSaved);
+    const oa=num(w?m.w_ace:m.l_ace),df=num(w?m.w_df:m.l_df),aa=num(w?m.l_ace:m.w_ace);
+    if(sv&&fi!=null&&fw!=null&&sw!=null){
+      const sa=Math.max(0,sv-fi);ownPts+=sv;ownWon+=fw+sw;firstIn+=fi;firstWon+=fw;secondAtt+=sa;secondWon+=sw;statN++;
+    }
+    if(osv&&ofi!=null&&ofw!=null&&osw!=null){
+      const osa=Math.max(0,osv-ofi);retPts+=osv;retWon+=osv-ofw-osw;firstRetAtt+=ofi;firstRetWon+=Math.max(0,ofi-ofw);secondRetAtt+=osa;secondRetWon+=Math.max(0,osa-osw);
+    }
+    if(sg!=null&&bpf!=null&&bps!=null){const bc=Math.max(0,bpf-bps);serviceGames+=sg;serviceGamesWon+=Math.max(0,sg-bc);bpFaced+=bpf;bpSaved+=bps;breaksConceded+=bc}
+    if(osg!=null&&obpf!=null&&obps!=null){const bm=Math.max(0,obpf-obps);returnGames+=osg;returnGamesWon+=bm;bpOpp+=obpf;bpConverted+=bm;breaks+=bm}
+    if(oa!=null||df!=null||aa!=null){aces+=oa||0;dfs+=df||0;acesAllowed+=aa||0;propN++}
+  }
   const isW=latest&&norm(latest.winner_name)===key,recent7=all.filter(m=>daysAgo(m.tourney_date)<=7),recent14=all.filter(m=>daysAgo(m.tourney_date)<=14);
   return{
     n:all.length,rank:latest?num(isW?latest.winner_rank:latest.loser_rank):null,
-    form:weightedWinRate(r20,key,75,4),form_long:weightedWinRate(all.slice(0,35),key,150,7),
-    surfaceN:surf.length,surface:weightedWinRate(surf,key,210,8),serve:ownPts?ownWon/ownPts:null,ret:retPts?retWon/retPts:null,statN,
-    aces_pg:propN?aces/propN:null,aces_allowed_pg:propN?acesAllowed/propN:null,breaks_pg:propN?breaks/propN:null,breaks_conceded_pg:propN?breaksConceded/propN:null,propN,
-    workload7:recent7.reduce((s,m)=>s+(num(m.minutes)||90),0),workload14:recent14.reduce((s,m)=>s+(num(m.minutes)||90),0),
-    matches7:recent7.length,matches14:recent14.length,last_match_days:latest?daysAgo(latest.tourney_date):null,
-    last_surface:latest?.surface||null
+    form:weightedWinRate(r20,key,75,4),form_long:weightedWinRate(all.slice(0,35),key,150,7),surfaceN:surf.length,surface:weightedWinRate(surf,key,210,8),
+    serve:safeRate(ownWon,ownPts),ret:safeRate(retWon,retPts),statN,
+    first_serve_pct:safeRate(firstIn,ownPts),first_serve_points_won:safeRate(firstWon,firstIn),second_serve_points_won:safeRate(secondWon,secondAtt),service_points_won:safeRate(ownWon,ownPts),service_games_won:safeRate(serviceGamesWon,serviceGames),break_points_saved:safeRate(bpSaved,bpFaced),
+    first_return_points_won:safeRate(firstRetWon,firstRetAtt),second_return_points_won:safeRate(secondRetWon,secondRetAtt),return_points_won:safeRate(retWon,retPts),return_games_won:safeRate(returnGamesWon,returnGames),break_points_converted:safeRate(bpConverted,bpOpp),
+    aces_pg:propN?aces/propN:null,double_faults_pg:propN?dfs/propN:null,aces_allowed_pg:propN?acesAllowed/propN:null,breaks_pg:propN?breaks/propN:null,breaks_conceded_pg:propN?breaksConceded/propN:null,propN,
+    workload7:recent7.reduce((s,m)=>s+(num(m.minutes)||90),0),workload14:recent14.reduce((s,m)=>s+(num(m.minutes)||90),0),matches7:recent7.length,matches14:recent14.length,last_match_days:latest?daysAgo(latest.tourney_date):null,last_surface:latest?.surface||null,
+    recent_matches:all.slice(0,12).map(m=>historicalMatchIntel(m,key))
   };
 }
+function verificationLinks(tour){
+  return tour==='atp'?{
+    official_stats:'https://www.atptour.com/en/stats',
+    official_match_stats:'https://www.atptour.com/en/stats/individual-game-stats',
+    sofascore:'https://www.sofascore.com/it/tennis'
+  }:{
+    official_stats:'https://www.wtatennis.com/stats',
+    official_match_stats:'https://www.wtatennis.com/stats',
+    sofascore:'https://www.sofascore.com/it/tennis'
+  };
+}
+function publicPlayerIntel(p,name,tour,surface){
+  return{
+    name,tour:String(tour||'').toUpperCase(),target_surface:surface||null,rank:p.rank??null,
+    sample:{matches:p.n??0,stat_matches:p.statN??0,surface_matches:p.surfaceN??0,prop_matches:p.propN??0},
+    context:{form:p.form??null,form_long:p.form_long??null,surface_form:p.surface??null,last_surface:p.last_surface??null,rest_days:p.last_match_days??null,matches_7d:p.matches7??0,matches_14d:p.matches14??0,workload_7d_minutes:p.workload7??0,workload_14d_minutes:p.workload14??0},
+    service:{first_serve_pct:p.first_serve_pct??null,first_serve_points_won:p.first_serve_points_won??null,second_serve_points_won:p.second_serve_points_won??null,service_points_won:p.service_points_won??null,service_games_won:p.service_games_won??null,break_points_saved:p.break_points_saved??null,aces_per_match:p.aces_pg??null,double_faults_per_match:p.double_faults_pg??null},
+    return:{first_return_points_won:p.first_return_points_won??null,second_return_points_won:p.second_return_points_won??null,return_points_won:p.return_points_won??null,return_games_won:p.return_games_won??null,break_points_converted:p.break_points_converted??null,breaks_per_match:p.breaks_pg??null,aces_allowed_per_match:p.aces_allowed_pg??null},
+    recent_matches:p.recent_matches||[],verification:verificationLinks(tour),
+    history_source:USING_CUSTOM_HISTORY?'CUSTOM_LICENSED_HISTORY':'TENNIS_HISTORY_ARCHIVE_RESEARCH',
+    verification_note:'Statistiche calcolate dallo storico match del motore; link ufficiali ATP/WTA e SofaScore per controllo esterno. Nessun dato viene inventato se il campione non e disponibile.'
+  };
+}
+function refreshPlayerIntel(locked,event,h,calibration,drift){
+  const e=event||{
+    id:locked.event_id,date:locked.start_at,home:locked.player_a,away:locked.player_b,
+    league:{name:locked.tournament||"",slug:locked.league_slug||null}
+  };
+  const c=sportsCore(e,h,calibration,drift);
+  if(!c)return{...locked,player_intel_status:"DATA_GAP"};
+  return{
+    ...locked,
+    player_intel:{
+      candidate_side:locked.candidate_side||locked.pick_side||null,
+      candidate_name:locked.candidate_name||locked.pick_name||null,
+      calculated_at:NOW.toISOString(),
+      a:publicPlayerIntel(c.A,e.home,c.tour,c.surface),
+      b:publicPlayerIntel(c.B,e.away,c.tour,c.surface)
+    },
+    player_intel_status:"READY",
+    player_intel_refreshed_at:NOW.toISOString(),
+    prediction_lock_preserved:true
+  };
+}
+
 function adaptationContext(A,B,targetSurface){
   const one=p=>{
     const recent=Number.isFinite(p?.last_match_days)&&p.last_match_days<=10;
@@ -966,6 +1100,7 @@ function buildPrediction(event,mkt,h,calSet,drift){
     pick_side:official?candidateSide:null,pick_name:official?candidateName:null,pick_prob:official?candidateProb:null,pick_odds:official?candidateOdds:null,pick_book:official?candidateBook:null,pick_ev:official?candidateEV:null,pick_edge:official?candidateEdge:null,
     watch_side:watch?candidateSide:null,watch_name:watch?candidateName:null,verdict,confidence:conf,sports_confidence:c.sportsConf,data_quality:dq,market_depth:mkt.count,market_consensus_a:mkt.consensus,market_sd:mkt.sd,market_margin:mkt.margin,market_updated_at:candidateUpdated,market_age_minutes:Number.isFinite(candidateAge)?candidateAge:null,
     rank_a:c.A.rank,rank_b:c.B.rank,elo_a:c.eloA,elo_b:c.eloB,surface_elo_a:c.sEloA,surface_elo_b:c.sEloB,form_a:c.A.form,form_b:c.B.form,surface_form_a:c.A.surface,surface_form_b:c.B.surface,surface_sample_a:c.A.surfaceN,surface_sample_b:c.B.surfaceN,h2h_n:c.HH.n,h2h_edge:c.HH.edge,serve_return_delta:c.srA-c.srB,workload7_a:c.A.workload7,workload7_b:c.B.workload7,matches7_a:c.A.matches7,matches7_b:c.B.matches7,rest_days_a:c.A.last_match_days,rest_days_b:c.B.last_match_days,last_surface_a:c.A.last_surface,last_surface_b:c.B.last_surface,surface_transition_a:c.adaptation.a.surfaceChange,surface_transition_b:c.adaptation.b.surfaceChange,dense_load_a:c.adaptation.a.denseLoad,dense_load_b:c.adaptation.b.denseLoad,adaptation_risk:c.adaptation.riskMax,
+    player_intel:{candidate_side:candidateSide,candidate_name:candidateName,a:publicPlayerIntel(c.A,event.home,c.tour,c.surface),b:publicPlayerIntel(c.B,event.away,c.tour,c.surface)},
     market_lab:marketLab,market_best:marketLab.best_priced,multi_market_version:"MM-3.0-PRICE-GUARD",
     reason_codes:reasons.slice(0,7),no_bet_reasons:hard,warnings:[...new Set(warnings)],calibration_sample:c.cal.sample,calibration_scope:c.cal.scope,calibration_active:!!c.cal.active,model_health:drift.health,model_version:MODEL_VERSION,predicted_at:NOW.toISOString(),locked:true,status:"LOCKED"
   };
@@ -1003,27 +1138,31 @@ async function closingMarket(eventId,bookmakers){
     return marketFromOdds(raw);
   }catch(e){console.error("closing",eventId,e.message);return null}
 }
-async function settlePredictions(bookmakers){
+async function settlePredictions(bookmakers,events=[]){
   const hist=[...(state.history||[])],remaining=[];
   const due=(state.upcoming||[]).filter(p=>new Date(p.start_at)<NOW).slice(0,MAX_SETTLEMENTS_PER_RUN);
-  const dueIds=new Set(due.map(p=>p.event_id));
+  const dueIds=new Set(due.map(p=>String(p.event_id)));
+  const byId=new Map((events||[]).map(e=>[String(e.id),e]));
+  let closingCalls=0;
   for(const p of state.upcoming||[]){
-    if(!dueIds.has(p.event_id)){remaining.push(p);continue}
-    try{
-      const e=await api("/events/"+p.event_id);
-      const actual=winnerSide(e);
-      if(!actual){remaining.push(p);continue}
-      const won=p.pick_side?p.pick_side===actual:null,profit=p.pick_side?(won?(p.pick_odds-1):-1):0,y=actual==="A"?1:0;
-      let clv=null,closingOdds=null;
-      if(p.pick_side&&bookmakers.length&&runCalls<Math.min(RUN_CAP-4,8)&&state.usage.calls<DAILY_CAP-4){
-        const cm=await closingMarket(p.event_id,bookmakers);
-        if(cm){closingOdds=p.pick_side==="A"?cm.bestA:cm.bestB;if(closingOdds>1)clv=p.pick_odds/closingOdds-1}
-      }
-      const secondary_settled=settleSecondaryMarkets(e,p);
-      hist.unshift({...p,status:"SETTLED",settled_at:NOW.toISOString(),actual_side:actual,actual_winner:actual==="A"?p.player_a:p.player_b,pick_won:won,profit_units:profit,brier:(p.p_a-y)**2,log_loss:-(y*Math.log(clamp(p.p_a,.001,.999))+(1-y)*Math.log(clamp(1-p.p_a,.001,.999))),shadow_brier:Number.isFinite(p.shadow_p_a)?(p.shadow_p_a-y)**2:null,shadow_log_loss:Number.isFinite(p.shadow_p_a)?-(y*Math.log(clamp(p.shadow_p_a,.001,.999))+(1-y)*Math.log(clamp(1-p.shadow_p_a,.001,.999))):null,closing_odds:closingOdds,clv,secondary_settled});
-    }catch(e){console.error("settle",p.event_id,e.message);remaining.push(p)}
+    const id=String(p.event_id);
+    if(!dueIds.has(id)){remaining.push(p);continue}
+    const e=byId.get(id),actual=e?winnerSide(e):null;
+    if(!e||!actual){remaining.push(p);continue}
+    const won=p.pick_side?p.pick_side===actual:null,profit=p.pick_side?(won?(p.pick_odds-1):-1):0,y=actual==="A"?1:0;
+    let clv=null,closingOdds=null;
+    const hourly=Number.isFinite(state.rate_limit?.remaining)?state.rate_limit.remaining:RUN_CAP;
+    if(p.pick_side&&bookmakers.length&&closingCalls<1&&!rateLimitActive()&&hourly>6&&runCalls<RUN_CAP-5&&state.usage.calls<DAILY_CAP-5){
+      closingCalls++;
+      const cm=await closingMarket(p.event_id,bookmakers);
+      if(cm){closingOdds=p.pick_side==="A"?cm.bestA:cm.bestB;if(closingOdds>1)clv=p.pick_odds/closingOdds-1}
+    }
+    const secondary_settled=settleSecondaryMarkets(e,p);
+    // Keep the immutable audit facts, but drop bulky live/player payloads once a match is settled.
+    const {player_intel,market_live,market_lab,quote_tape,...locked}=p;
+    hist.unshift({...locked,status:"SETTLED",settled_at:NOW.toISOString(),actual_side:actual,actual_winner:actual==="A"?p.player_a:p.player_b,pick_won:won,profit_units:profit,brier:(p.p_a-y)**2,log_loss:-(y*Math.log(clamp(p.p_a,.001,.999))+(1-y)*Math.log(clamp(1-p.p_a,.001,.999))),shadow_brier:Number.isFinite(p.shadow_p_a)?(p.shadow_p_a-y)**2:null,shadow_log_loss:Number.isFinite(p.shadow_p_a)?-(y*Math.log(clamp(p.shadow_p_a,.001,.999))+(1-y)*Math.log(clamp(1-p.shadow_p_a,.001,.999))):null,closing_odds:closingOdds,clv,secondary_settled,archive_compacted:true});
   }
-  state.history=hist.slice(0,4000);state.upcoming=remaining;
+  state.history=hist.slice(0,2000);state.upcoming=remaining;
 }
 function stats(history){
   const closed=(history||[]).filter(x=>x.status==="SETTLED"),picks=closed.filter(x=>x.pick_side&&(x.verdict==="VALUE"||x.verdict==="STRONG VALUE")),wins=picks.filter(x=>x.pick_won).length;
@@ -1076,14 +1215,27 @@ async function main(){
   }
   let bookmakers=[];
   try{
-    bookmakers=selectedNames(await api("/bookmakers/selected"));
-    if(bookmakers.length<1)throw new Error("NO_SELECTED_BOOKMAKERS");
+    state.cache=state.cache||{};
+    const cachedNames=selectedNames(state.cache?.bookmakers?.names||state.meta?.bookmakers||[]);
+    const fetchedMs=new Date(state.cache?.bookmakers?.fetched_at||0).getTime();
+    const cacheFresh=cachedNames.length&&Number.isFinite(fetchedMs)&&(NOW.getTime()-fetchedMs<24*3600000);
+    if(cacheFresh){
+      bookmakers=cachedNames;
+    }else if(cachedNames.length&&!state.cache?.bookmakers?.fetched_at){
+      bookmakers=cachedNames;
+      state.cache.bookmakers={names:bookmakers,fetched_at:NOW.toISOString()};
+    }else{
+      bookmakers=selectedNames(await api("/bookmakers/selected"));
+      if(bookmakers.length<1)throw new Error("NO_SELECTED_BOOKMAKERS");
+      state.cache.bookmakers={names:bookmakers,fetched_at:NOW.toISOString()};
+    }
   }catch(e){
     state.meta={...(state.meta||{}),updated_at:NOW.toISOString(),status:"SETUP",source:SOURCE_LABEL,model_version:MODEL_VERSION,error:e.message,api_usage_today:state.usage.calls};
     await saveState(state);return;
   }
-
-  await settlePredictions(bookmakers);
+  let eventsRaw=await api("/events",{sport:"tennis"});
+  const events=(Array.isArray(eventsRaw)?eventsRaw:(eventsRaw?.data||eventsRaw?.events||[])).filter(isSinglesEvent);
+  await settlePredictions(bookmakers,events);
 
   const quant=await loadQuantHistory();
   const forwardCalibration=fitCalibrationSet(state.history,state.learning?.calibration_forward||state.learning?.calibration);
@@ -1092,9 +1244,8 @@ async function main(){
   const calibration=useForward?{...forwardCalibration,origin:"FORWARD_TRACK_RECORD",cold_start:false}:coldStart.approved?coldStart.calibration:{...forwardCalibration,origin:"FORWARD_COLD",cold_start:false};
   const drift=driftStatus(state.history);
   state.learning={calibration,calibration_forward:forwardCalibration,calibration_seed:coldStart.calibration,drift,cold_start:{approved:coldStart.approved,records:coldStart.records,holdout_n:coldStart.holdout_n,holdout_brier:coldStart.holdout_brier,raw_brier:coldStart.raw_brier,log_loss:coldStart.log_loss}};
-
-  let eventsRaw=await api("/events",{sport:"tennis"});
-  const events=(Array.isArray(eventsRaw)?eventsRaw:(eventsRaw?.data||eventsRaw?.events||[])).filter(isSinglesEvent);
+  const eventById=new Map(events.map(e=>[String(e.id),e]));
+  state.upcoming=(state.upcoming||[]).map(p=>refreshPlayerIntel(p,eventById.get(String(p.event_id)),quant,calibration,drift));
 
   const radarEvents=events
     .filter(e=>e.status==="pending"&&hoursUntil(e.date)>0&&hoursUntil(e.date)<=RADAR_DAYS*24)
@@ -1150,7 +1301,7 @@ async function main(){
   const pendingBatch=Math.max(0,unseen.length-newEvents.length);
   const status=state.usage.calls>=DAILY_CAP?"DAILY HOLD":(pendingBatch>0?"READY · BATCHING":"READY");
   state.meta={
-    updated_at:NOW.toISOString(),status,source:SOURCE_LABEL,model_version:MODEL_VERSION,
+    updated_at:NOW.toISOString(),data_refreshed_at:NOW.toISOString(),status,source:SOURCE_LABEL,model_version:MODEL_VERSION,state_schema:"TEP-12.5",
     commercial_mode:COMMERCIAL_MODE,commercial_license_guard:COMMERCIAL_MODE?"CONFIRMED_BY_ENV":"RESEARCH_ONLY",history_source:USING_CUSTOM_HISTORY?"CUSTOM_LICENSED_TEMPLATE":"SACKMANN_ARCHIVE_MIRROR_CC_BY_NC_SA_RESEARCH_ONLY",
     bookmakers,locked_predictions:state.upcoming.length,radar_events:state.radar.length,pre_analyzed:state.radar.filter(x=>x.pre_status!=="DATA GAP").length,early_watch:state.radar.filter(x=>x.pre_status==="EARLY WATCH").length,data_gap:state.radar.filter(x=>x.pre_status==="DATA GAP").length,market_checked:state.radar.filter(x=>x.market_checked).length,calibration_sample:calibration.sample||0,calibration_active:!!calibration.active,calibration_origin:calibration.origin||"FORWARD_COLD",forward_calibration_sample:forwardCalibration.sample||0,historical_seed_records:coldStart.records||0,historical_seed_holdout_n:coldStart.holdout_n||0,historical_seed_holdout_brier:coldStart.holdout_brier??null,cold_start_paper_mode:!!calibration.cold_start,
     model_health:drift.health,operating_mode:(drift.sample||0)<50?"PAPER VALIDATION":"LIVE RESEARCH",api_usage_today:state.usage.calls,api_daily_guard:DAILY_CAP,api_hourly_remaining:state.rate_limit?.remaining??null,rate_limit_reset_at:state.rate_limit?.reset_at??null,rate_limit_minutes:minutesUntil(state.rate_limit?.reset_at),run_calls:runCalls,
@@ -1173,7 +1324,7 @@ function selfTest(){
   if(!(sim.model_match_a>.54&&sim.model_match_a<.74)||!(sim.mean_total_games>15&&sim.mean_total_games<40))throw new Error("SELFTEST_MULTI_MARKET");
   const pg=withPriceGuard({validation_tier:"OFFICIAL_ML",verdict:"VALUE",robust_prob:.55});if(!(pg.min_acceptable_odds>1/.55&&pg.target_robust_ev===.022)||priceZoneFor(pg,pg.min_acceptable_odds+.01,.03)!=="BET_ZONE")throw new Error("SELFTEST_PRICE_GUARD");
   const ps=withPriceGuard({validation_tier:"PAPER_MULTI_MARKET",verdict:"VALUE",robust_prob:.55});if(priceZoneFor(ps,ps.min_acceptable_odds+.01,.03)!=="PAPER_VALUE")throw new Error("SELFTEST_PAPER_GUARD");
-  const n=buildNameResolver(new Set(["jannik sinner","carlos alcaraz"]));if(!n.get("sinner|j")||!n.get("alcaraz|c"))throw new Error("SELFTEST_NAMES");
+  const ns=new Set(["jannik sinner","carlos alcaraz","qinwen zheng","vilius gaubas","tomas barrios vera","christopher o connell"]),n=buildNameResolver(ns),nt={names:ns,nameResolver:n};if(!n.get("sinner|j")||!n.get("alcaraz|c")||resolveNameKey("Zheng, Qinwen",nt)!=="qinwen zheng"||resolveNameKey("Gaubas, Vilius",nt)!=="vilius gaubas"||resolveNameKey("Barrios Vera, Marcelo Tomas",nt)!=="tomas barrios vera"||resolveNameKey("O\'Connell, Christopher",nt)!=="christopher o connell")throw new Error("SELFTEST_NAMES");
   const r=parseResetAt("60");if(!r||minutesUntil(r)<0)throw new Error("SELFTEST_RATE");
   const ad=adaptationContext({last_match_days:3,last_surface:"Clay",matches7:2,workload7:180},{last_match_days:12,last_surface:"Hard",matches7:1,workload7:90},"Hard");
   if(!ad.a.surfaceChange||ad.b.surfaceChange||ad.riskMax!==1)throw new Error("SELFTEST_ADAPTATION");

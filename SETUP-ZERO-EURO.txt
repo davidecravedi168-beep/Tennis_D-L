@@ -1,4 +1,4 @@
-TENNIS EDGE PRO — ZERO COST QUANT 3.0
+TENNIS EDGE PRO 12.5 — STABLE AUTOPILOT
 
 COSTO
 €0. Nessuna carta. Nessun database a pagamento.
@@ -18,8 +18,10 @@ FONTI
 FILE DA CARICARE
 - index.html
 - quant-engine.mjs
+- live-engine.mjs
+- scripts/
 - data/quant-board.json
-- .github/workflows/tennis-zero-cost.yml
+- .github/workflows/tennis-quant-v2.yml
 
 UNICA CONFIGURAZIONE
 A) Crea una API key FREE su https://odds-api.io/
@@ -27,25 +29,30 @@ B) Nel dashboard Odds-API.io seleziona 2 bookmaker del piano gratuito.
 C) GitHub repository → Settings → Secrets and variables → Actions → New repository secret
    Name: ODDS_API_KEY
    Secret: la chiave gratuita (NON incollarla dentro index.html)
-D) GitHub → Actions → Tennis Zero Cost Quant → Run workflow
+D) GitHub → Actions → Tennis Edge Pro 12.5 Stable Autopilot → Run workflow
 
 AUTOMAZIONE
-Il workflow gira ogni 2 ore.
-Budget Guard: massimo 420 richieste/giorno, sotto il limite free di 500/giorno.
+- Un solo workflow stabile prova a partire ai minuti 07, 22, 37 e 52, fuso Europe/Rome.
+- Il freshness gate esegue il Quant circa ogni ora e il Live solo quando è scaduto.
+- Se GitHub ritarda un cron, lo slot successivo recupera senza duplicare le chiamate API.
+- Ogni ciclo registra se è automatico o manuale; l'app resta fail-closed finché un vero evento schedule non è verificato.
+- Budget Guard Quant: massimo 330 richieste/giorno; il Live usa una quota separata prudenziale entro il piano development.
 
 LOGICA
 - Radar: scopre match nei prossimi 7 giorni
 - Lock gate: crea una previsione solo 1–36 ore prima del match
 - Elo Engine: Elo generale + Elo superficie + ranking + serve/return
 - Form Engine: forma recente + superficie + H2H + workload + serve/return
-- Doppio consenso: se i due motori non concordano, NO BET / confidence ridotta
+- Triplo consenso: Strength, Surface e Form/Matchup; se non concordano, NO BET / confidence ridotta
 - Prediction Lock: la previsione non viene riscritta dopo la creazione
+- Player Lab: servizio, risposta, forma, carico, superficie e ultimi match, con link di verifica ATP/WTA e SofaScore
 - Settlement: salva automaticamente il vincitore
 - CLV: confronta la quota presa al lock con la quota storica di chiusura quando disponibile
-- Calibration: dopo 40 match chiusi corregge l'over/under-confidence
+- Calibration: walk-forward storico in paper mode, poi priorità al track record forward quando maturo
 - Drift Monitor: se il Brier recente peggiora, abbassa automaticamente confidence
 - Backtest: hit rate, Brier, log loss, paper ROI, CLV
-- Nessun dato umano/social inventato: resta manuale e a peso ridotto nella parte analyst.
+- Stato interno e board pubblico sono separati per ridurre peso, traffico e crescita del repository.
+- Nessun dato umano/social o di mercato viene inventato.
 
 NOTA
 Il sistema è quantitativo e sperimentale: non garantisce profitti. La modalità paper-test è quella corretta per validarlo.

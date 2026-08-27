@@ -1,0 +1,122 @@
+name: Tennis Edge Pro 12.5 Stable Autopilot
+run-name: "TEP 12.5 · ${{ github.event_name }} · ${{ github.event.schedule || 'manual' }}"
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tennis-quant-v2.yml"
+      - "quant-engine.mjs"
+      - "live-engine.mjs"
+      - "index.html"
+      - "scripts/**"
+  workflow_dispatch:
+  schedule:
+    # Four staggered chances per hour: the freshness gate spends API quota only when due.
+    - cron: "7,22,37,52 * * * *"
+      timezone: "Europe/Rome"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tennis-edge-pro-stable-autopilot
+  cancel-in-progress: false
+
+jobs:
+  autopilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: "24"
+
+      - name: Scheduler freshness gate
+        id: gate
+        env:
+          GH_EVENT_NAME: ${{ github.event_name }}
+          GH_EVENT_SCHEDULE: ${{ github.event.schedule }}
+        run: node scripts/scheduler-gate.mjs
+
+      - name: Source and app contract tests
+        run: |
+          node --check quant-engine.mjs
+          node --check live-engine.mjs
+          node quant-engine.mjs --self-test
+          node live-engine.mjs --self-test
+          node scripts/validate-app.mjs
+
+      - name: Run Quant Engine
+        if: steps.gate.outputs.run_quant == 'true'
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          COMMERCIAL_MODE: ${{ vars.COMMERCIAL_MODE }}
+          COMMERCIAL_ODDS_LICENSE_CONFIRMED: ${{ vars.COMMERCIAL_ODDS_LICENSE_CONFIRMED }}
+          COMMERCIAL_HISTORY_LICENSE_CONFIRMED: ${{ vars.COMMERCIAL_HISTORY_LICENSE_CONFIRMED }}
+          ATP_HISTORY_URL_TEMPLATE: ${{ vars.ATP_HISTORY_URL_TEMPLATE }}
+          WTA_HISTORY_URL_TEMPLATE: ${{ vars.WTA_HISTORY_URL_TEMPLATE }}
+        run: node quant-engine.mjs
+
+      - name: Validate Quant Board
+        if: steps.gate.outputs.run_quant == 'true'
+        run: node scripts/validate-board.mjs quant
+
+      - name: Run Live Engine
+        if: steps.gate.outputs.run_live == 'true'
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          COMMERCIAL_MODE: ${{ vars.COMMERCIAL_MODE }}
+          COMMERCIAL_ODDS_LICENSE_CONFIRMED: ${{ vars.COMMERCIAL_ODDS_LICENSE_CONFIRMED }}
+        run: node live-engine.mjs
+
+      - name: Validate Live Board
+        if: steps.gate.outputs.run_live == 'true'
+        run: node scripts/validate-board.mjs live
+
+      - name: Stamp automation health
+        env:
+          GH_EVENT_NAME: ${{ github.event_name }}
+          GH_EVENT_SCHEDULE: ${{ github.event.schedule }}
+          GH_RUN_ID: ${{ github.run_id }}
+          GH_RUN_ATTEMPT: ${{ github.run_attempt }}
+          RUN_QUANT: ${{ steps.gate.outputs.run_quant }}
+          RUN_LIVE: ${{ steps.gate.outputs.run_live }}
+          QUANT_REASON: ${{ steps.gate.outputs.quant_reason }}
+          LIVE_REASON: ${{ steps.gate.outputs.live_reason }}
+        run: node scripts/stamp-automation.mjs
+
+      - name: Commit validated state
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -A -- data/quant-board.json data/quant-state.json data/live-board.json data/automation-health.json
+          if git diff --cached --quiet; then
+            echo "No validated state changes"
+            exit 0
+          fi
+          git config user.name "tennis-edge-autopilot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "data: TEP 12.5 validated autopilot refresh"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Run summary
+        if: always()
+        shell: bash
+        env:
+          RUN_QUANT: ${{ steps.gate.outputs.run_quant }}
+          RUN_LIVE: ${{ steps.gate.outputs.run_live }}
+          QUANT_REASON: ${{ steps.gate.outputs.quant_reason }}
+          LIVE_REASON: ${{ steps.gate.outputs.live_reason }}
+        run: |
+          echo "### Tennis Edge Pro 12.5 Autopilot" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Quant: ${RUN_QUANT:-unknown} · ${QUANT_REASON:-unknown}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Live: ${RUN_LIVE:-unknown} · ${LIVE_REASON:-unknown}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Scheduler event: ${{ github.event_name }}" >> "$GITHUB_STEP_SUMMARY"
