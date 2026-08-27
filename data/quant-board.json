@@ -1,7 +1,7 @@
 {
   "meta": {
-    "updated_at": "2026-08-27T08:40:13.896Z",
-    "status": "API PAUSA · 40 MIN",
+    "updated_at": "2026-08-27T09:31:32.480Z",
+    "status": "API PAUSA · 61 MIN",
     "source": "Research mode · Odds-API.io development tier + Sackmann archive mirror (CC BY-NC-SA)",
     "model_version": "TENNIS-EDGE-QUANT-12.1-COLD-START",
     "bookmakers": [
@@ -20,12 +20,12 @@
     "calibration_active": false,
     "model_health": "COLD",
     "operating_mode": "PAPER VALIDATION",
-    "api_usage_today": 2,
+    "api_usage_today": 5,
     "api_daily_guard": 330,
-    "api_hourly_remaining": 99,
-    "rate_limit_reset_at": "2026-08-27T09:19:20.000Z",
-    "rate_limit_minutes": 40,
-    "run_calls": 2,
+    "api_hourly_remaining": 98,
+    "rate_limit_reset_at": "2026-08-27T10:31:33.000Z",
+    "rate_limit_minutes": 61,
+    "run_calls": 3,
     "pending_prediction_batch": 0,
     "processed_this_run": 54,
     "positive_ev": 41,
@@ -182,7 +182,7 @@
         }
       ]
     },
-    "note": "Rate-limit backoff attivo: nessuna chiamata API fino al reset.",
+    "note": "Limite orario raggiunto: il motore riparte automaticamente dopo il reset.",
     "error": "RATE_LIMIT_WAIT"
   },
   "radar": [
@@ -15865,6 +15865,85 @@
   "observed_results": [],
   "learning": {
     "calibration": {
+      "active": true,
+      "sample": 3744,
+      "global": {
+        "active": true,
+        "sample": 3744,
+        "intercept": 0.05125254450350206,
+        "slope": 0.9095114383358348,
+        "updated_at": "2026-08-27T09:31:32.480Z"
+      },
+      "tour": {
+        "atp": {
+          "active": true,
+          "sample": 2009,
+          "intercept": 0.036521014579753236,
+          "slope": 0.9168318012838496,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        },
+        "wta": {
+          "active": true,
+          "sample": 1735,
+          "intercept": 0.06829211086937428,
+          "slope": 0.9007232754090904,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        }
+      },
+      "surface": {
+        "atp:Hard": {
+          "active": true,
+          "sample": 1402,
+          "intercept": 0.01628268629070329,
+          "slope": 0.91788450098646,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        },
+        "atp:Clay": {
+          "active": true,
+          "sample": 330,
+          "intercept": 0.20208702568222278,
+          "slope": 0.9025271767611438,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        },
+        "atp:Grass": {
+          "active": true,
+          "sample": 277,
+          "intercept": -0.0600691334426386,
+          "slope": 0.9280193077786877,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        },
+        "wta:Hard": {
+          "active": true,
+          "sample": 1263,
+          "intercept": 0.041800820467587124,
+          "slope": 0.8900185171764584,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        },
+        "wta:Clay": {
+          "active": true,
+          "sample": 195,
+          "intercept": 0.23434525223562486,
+          "slope": 1.077684288523683,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        },
+        "wta:Grass": {
+          "active": true,
+          "sample": 277,
+          "intercept": 0.07521489724724806,
+          "slope": 0.8300311684402848,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        }
+      },
+      "updated_at": "2026-08-27T09:31:32.480Z",
+      "origin": "HISTORICAL_WALK_FORWARD",
+      "cold_start": true,
+      "seed_records": 5200,
+      "holdout_n": 1456,
+      "holdout_brier": 0.2424138232780821,
+      "holdout_raw_brier": 0.24202674598838245,
+      "holdout_log_loss": 0.6777827843077715
+    },
+    "calibration_forward": {
       "active": false,
       "sample": 17,
       "global": {
@@ -15925,7 +16004,86 @@
           "slope": 1
         }
       },
-      "updated_at": "2026-08-27T08:19:19.971Z"
+      "updated_at": "2026-08-27T09:31:32.480Z"
+    },
+    "calibration_seed": {
+      "active": true,
+      "sample": 3744,
+      "global": {
+        "active": true,
+        "sample": 3744,
+        "intercept": 0.05125254450350206,
+        "slope": 0.9095114383358348,
+        "updated_at": "2026-08-27T09:31:32.480Z"
+      },
+      "tour": {
+        "atp": {
+          "active": true,
+          "sample": 2009,
+          "intercept": 0.036521014579753236,
+          "slope": 0.9168318012838496,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        },
+        "wta": {
+          "active": true,
+          "sample": 1735,
+          "intercept": 0.06829211086937428,
+          "slope": 0.9007232754090904,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        }
+      },
+      "surface": {
+        "atp:Hard": {
+          "active": true,
+          "sample": 1402,
+          "intercept": 0.01628268629070329,
+          "slope": 0.91788450098646,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        },
+        "atp:Clay": {
+          "active": true,
+          "sample": 330,
+          "intercept": 0.20208702568222278,
+          "slope": 0.9025271767611438,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        },
+        "atp:Grass": {
+          "active": true,
+          "sample": 277,
+          "intercept": -0.0600691334426386,
+          "slope": 0.9280193077786877,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        },
+        "wta:Hard": {
+          "active": true,
+          "sample": 1263,
+          "intercept": 0.041800820467587124,
+          "slope": 0.8900185171764584,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        },
+        "wta:Clay": {
+          "active": true,
+          "sample": 195,
+          "intercept": 0.23434525223562486,
+          "slope": 1.077684288523683,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        },
+        "wta:Grass": {
+          "active": true,
+          "sample": 277,
+          "intercept": 0.07521489724724806,
+          "slope": 0.8300311684402848,
+          "updated_at": "2026-08-27T09:31:32.480Z"
+        }
+      },
+      "updated_at": "2026-08-27T09:31:32.480Z",
+      "origin": "HISTORICAL_WALK_FORWARD",
+      "cold_start": true,
+      "seed_records": 5200,
+      "holdout_n": 1456,
+      "holdout_brier": 0.2424138232780821,
+      "holdout_raw_brier": 0.24202674598838245,
+      "holdout_log_loss": 0.6777827843077715
     },
     "drift": {
       "health": "COLD",
@@ -15933,18 +16091,26 @@
       "sample": 17,
       "recentBrier": null,
       "allBrier": 0.2556300948627689
+    },
+    "cold_start": {
+      "approved": true,
+      "records": 5200,
+      "holdout_n": 1456,
+      "holdout_brier": 0.2424138232780821,
+      "raw_brier": 0.24202674598838245,
+      "log_loss": 0.6777827843077715
     }
   },
   "usage": {
     "day": "2026-08-27",
-    "calls": 2
+    "calls": 5
   },
   "cache": {},
   "rate_limit": {
-    "remaining": 99,
-    "reset_at": "2026-08-27T09:19:20.000Z",
+    "remaining": 98,
+    "reset_at": "2026-08-27T10:31:33.000Z",
     "last_status": 404,
-    "last_checked_at": "2026-08-27T08:19:19.971Z"
+    "last_checked_at": "2026-08-27T09:31:32.480Z"
   },
   "cursor": {
     "prediction_offset": 0
