@@ -53,9 +53,11 @@ jobs:
           node --check quant-engine.mjs
           node --check live-engine.mjs
           node --check scripts/forward-ledger.mjs
+          node --check scripts/legacy-forward-audit.mjs
           node quant-engine.mjs --self-test
           node live-engine.mjs --self-test
           node scripts/forward-ledger.mjs --self-test
+          node scripts/legacy-forward-audit.mjs --self-test
           node scripts/validate-app.mjs
 
       - name: Run Quant Engine
@@ -107,11 +109,16 @@ jobs:
           node scripts/forward-ledger.mjs
           node scripts/forward-ledger.mjs --validate
 
+      - name: Build forensic legacy forward audit
+        run: |
+          node scripts/legacy-forward-audit.mjs
+          node scripts/legacy-forward-audit.mjs --validate
+
       - name: Commit validated state
         shell: bash
         run: |
           set -euo pipefail
-          git add -A -- data/quant-board.json data/quant-state.json data/live-board.json data/automation-health.json data/forward-ledger.json
+          git add -A -- data/quant-board.json data/quant-state.json data/live-board.json data/automation-health.json data/forward-ledger.json data/legacy-forward-audit.json
           if git diff --cached --quiet; then
             echo "No validated state changes"
             exit 0
@@ -142,5 +149,15 @@ jobs:
           const s=x.stats||{};
           console.log(`- Forward ledger: ${s.total_forecasts??0} forecast · ${s.settled_forecasts??0} settled · ${s.settled_picks??0} pick`);
           console.log(`- Next audit: ${s.next_audit_target??100} · remaining ${s.forecasts_to_next_audit??100}`);
+          NODE
+          fi
+          if [ -f data/legacy-forward-audit.json ]; then
+            node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
+          const fs=require('fs');
+          const x=JSON.parse(fs.readFileSync('data/legacy-forward-audit.json','utf8'));
+          const s=x.stats||{};
+          const pct=v=>Number.isFinite(v)?`${(v*100).toFixed(1)}%`:'—';
+          console.log(`- Legacy verified: ${s.verified_forecasts??0} forecast · ${s.settled_verified??0} settled · accuracy ${pct(s.accuracy)}`);
+          console.log(`- Legacy Brier: ${Number.isFinite(s.brier)?s.brier.toFixed(4):'—'} · original qualified picks ${s.qualified_picks??0} · ROI ${pct(s.roi)}`);
           NODE
           fi
