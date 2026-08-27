@@ -11,6 +11,13 @@ function replaceExact(label, from, to) {
   console.log(`patched: ${label}`);
 }
 
+function replaceCount(label, from, to, expected) {
+  const count = html.split(from).length - 1;
+  if (count !== expected) throw new Error(`[${label}] expected ${expected} matches, found ${count}`);
+  html = html.split(from).join(to);
+  console.log(`patched: ${label} x${count}`);
+}
+
 replaceExact(
   'autopilot recovery helpers',
   "const schedulerSafe=()=>board?.meta?.automation?.scheduler_verified===true&&schedulerAge()<55;\nconst hoursToStart=",
@@ -47,16 +54,11 @@ replaceExact(
   "  const bar=$('autopilotBar'),state=$('autopilotState'),detail=$('autopilotDetail'),a=board?.meta?.automation||{},cycle=automationAge(),scheduledCycle=schedulerAge(),data=boardAge(),scheduled=schedulerSafe(),recovery=recoverySafe(),active=scheduled||recovery,dataOk=finite(data)&&data<BOARD_MAX_AGE,healthy=active&&dataOk;\n  bar.className=`autopilotBar ${scheduled&&dataOk?'ok':healthy?'warn':active||finite(cycle)?'warn':'bad'}`;\n  state.textContent=scheduled&&dataOk?'AUTOPILOT · ATTIVO':recovery&&dataOk?'AUTOPILOT · RECOVERY':scheduled?'AUTOPILOT · DATA GUARD':a.event==='workflow_dispatch'?'AUTOPILOT · SOLO MANUALE':'AUTOPILOT · DA VERIFICARE';\n  detail.textContent=scheduled?`Ciclo schedule ${Math.round(scheduledCycle)} min fa · ${finite(data)?`dati quant ${Math.round(data)} min fa`:'dati quant non aggiornati'}`:recovery?`Recovery automatico ${Math.round(cycle)} min fa (push) · dati e forecast utilizzabili; cron nativo ancora da certificare.`:finite(cycle)?`Ultimo controllo ${Math.round(cycle)} min fa (${a.event||'evento sconosciuto'}). Pipeline non certificata come recovery recente.`:'Nessun ciclo automatico recente: fail-closed attivo.';"
 );
 
-replaceExact(
-  'trust center recovery label',
+replaceCount(
+  'recovery labels',
   "['Autopilot',schedulerSafe()?'SCHEDULE OK':'GUARD']",
-  "['Autopilot',schedulerSafe()?'SCHEDULE OK':recoverySafe()?'RECOVERY OK':'GUARD']"
-);
-
-replaceExact(
-  'diagnostics recovery label',
-  "['Autopilot',schedulerSafe()?'SCHEDULE OK':'GUARD']",
-  "['Autopilot',schedulerSafe()?'SCHEDULE OK':recoverySafe()?'RECOVERY OK':'GUARD']"
+  "['Autopilot',schedulerSafe()?'SCHEDULE OK':recoverySafe()?'RECOVERY OK':'GUARD']",
+  2
 );
 
 fs.writeFileSync(path, html);
