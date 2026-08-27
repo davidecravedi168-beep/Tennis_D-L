@@ -1,0 +1,564 @@
+name: Tennis Edge Pro 12.4.1 Player Intelligence Auto-Recovery
+run-name: "TEP 12.4.1 · ${{ github.event_name }} · ${{ github.event.schedule || 'manual' }}"
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Primary hourly slot, explicitly in Italian local time (DST-safe).
+    - cron: "13 * * * *"
+      timezone: "Europe/Rome"
+    # Two recovery slots. A freshness gate prevents duplicate API runs.
+    - cron: "43 * * * *"
+      timezone: "Europe/Rome"
+    - cron: "58 * * * *"
+      timezone: "Europe/Rome"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tennis-edge-pro-quant
+  cancel-in-progress: false
+
+jobs:
+  quant:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+
+      - name: Scheduler gate and diagnostics
+        id: scheduler
+        shell: bash
+        env:
+          GH_EVENT_NAME: ${{ github.event_name }}
+          GH_EVENT_SCHEDULE: ${{ github.event.schedule }}
+          GH_RUN_ID: ${{ github.run_id }}
+          GH_RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+          const path='data/quant-board.json';
+          const event=process.env.GH_EVENT_NAME||'unknown';
+          const slot=process.env.GH_EVENT_SCHEDULE||'manual';
+          const now=Date.now();
+          let updated=null,ageMin=null;
+          if(fs.existsSync(path)){
+            try{
+              const q=JSON.parse(fs.readFileSync(path,'utf8'));
+              updated=q?.meta?.updated_at||null;
+              const ms=new Date(updated||0).getTime();
+              if(Number.isFinite(ms)&&ms>0)ageMin=(now-ms)/60000;
+            }catch{}
+          }
+          const isPrimary=event==='schedule'&&slot.startsWith('13 ');
+          const isRecovery=event==='schedule'&&(slot.startsWith('43 ')||slot.startsWith('58 '));
+          let run=true,role=event==='workflow_dispatch'?'MANUAL':isPrimary?'PRIMARY':isRecovery?'RECOVERY':'OTHER',reason='manual-or-primary';
+          // If a recovery run happened shortly before the primary slot, do not burn API quota again.
+          if(isPrimary&&Number.isFinite(ageMin)&&ageMin<25){run=false;reason=`primary-skip-fresh-${ageMin.toFixed(1)}m`}
+          // Recovery runs only when the board is genuinely stale.
+          if(isRecovery&&Number.isFinite(ageMin)){if(ageMin<50){run=false;reason=`recovery-skip-fresh-${ageMin.toFixed(1)}m`}else{run=true;reason=`recovery-stale-${ageMin.toFixed(1)}m`}}
+          if(isRecovery&&!Number.isFinite(ageMin)){run=true;reason='recovery-board-missing-or-invalid'}
+          const out=process.env.GITHUB_OUTPUT;
+          fs.appendFileSync(out,`run_quant=${run?'true':'false'}\nrole=${role}\nreason=${reason}\n`);
+          console.log(JSON.stringify({ok:true,event,slot,role,run,reason,board_updated_at:updated,board_age_min:Number.isFinite(ageMin)?+ageMin.toFixed(1):null,rome_time:new Date().toLocaleString('it-IT',{timeZone:'Europe/Rome'})}));
+          NODE
+      - name: Apply V12.3 freeze-candidate patch
+        if: steps.scheduler.outputs.run_quant == 'true'
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          const p='quant-engine.mjs';
+          let src=fs.readFileSync(p,'utf8');
+
+          function replaceBetween(start,end,replacement,label){
+            const a=src.indexOf(start),b=src.indexOf(end,a+start.length);
+            if(a<0||b<0)throw new Error(`V12.3 patch target missing: ${label}`);
+            src=src.slice(0,a)+replacement+'\n'+src.slice(b);
+          }
+          function mustReplace(oldText,newText,label){
+            if(!src.includes(oldText))throw new Error(`V12.3 patch target missing: ${label}`);
+            src=src.replace(oldText,newText);
+          }
+
+          // 1) Version + tighter per-run budget. The daily guard remains unchanged.
+          mustReplace('const MODEL_VERSION="TENNIS-EDGE-QUANT-12.1-COLD-START";',
+                      'const MODEL_VERSION="TENNIS-EDGE-QUANT-12.3-FREEZE-CANDIDATE";',
+                      'model version');
+          src=src.replace(/const RUN_CAP=\d+;/,'const RUN_CAP=10;');
+          src=src.replace(/const QUOTE_REFRESH_LIMIT=\d+;/,'const QUOTE_REFRESH_LIMIT=10;');
+
+          // 2) Name resolver: API uses "Surname, Given"; historical data uses "Given Surname".
+          //    Matching remains fail-closed: fuzzy fallbacks are accepted only when unique.
+          replaceBetween(
+            'function buildNameResolver(names){',
+            'function tennisDate(v){',
+          `function addNameResolver(map,key,name){
+            if(!key)return;
+            if(!map.has(key))map.set(key,[]);
+            const a=map.get(key);
+            if(!a.includes(name))a.push(name);
+          }
+          function buildNameResolver(names){
+            const bySig=new Map();
+            bySig.byTokens=new Map();
+            bySig.bySuffixToken=new Map();
+            for(const n of names){
+              const p=n.split(" ").filter(Boolean);if(p.length<2)continue;
+              addNameResolver(bySig,p[p.length-1]+"|"+(p[0][0]||""),n);
+              addNameResolver(bySig.byTokens,[...p].sort().join("|"),n);
+              for(let len=1;len<=Math.min(4,p.length-1);len++){
+                const surname=p.slice(-len).join(" "),given=p.slice(0,-len);
+                for(const g of given)addNameResolver(bySig.bySuffixToken,surname+"|"+g,n);
+              }
+            }
+            return bySig;
+          }
+          function uniqueName(xs){return Array.isArray(xs)&&xs.length===1?xs[0]:null}
+          function resolveNameKey(name,tourData){
+            const raw=String(name||"").trim(),n=norm(raw);
+            if(tourData.names.has(n))return n;
+            const p=n.split(" ").filter(Boolean);if(p.length<2)return null;
+            const r=tourData.nameResolver;
+            let hit=uniqueName(r?.byTokens?.get([...p].sort().join("|")));
+            if(hit)return hit;
+            if(raw.includes(",")){
+              const parts=raw.split(","),surname=norm(parts.shift()),given=norm(parts.join(" "));
+              if(surname&&given){
+                const reversed=norm(given+" "+surname);
+                if(tourData.names.has(reversed))return reversed;
+                const rp=reversed.split(" ").filter(Boolean);
+                hit=uniqueName(r?.byTokens?.get([...rp].sort().join("|")));
+                if(hit)return hit;
+                const candidates=new Set();
+                for(const g of given.split(" ").filter(Boolean)){
+                  for(const x of r?.bySuffixToken?.get(surname+"|"+g)||[])candidates.add(x);
+                }
+                if(candidates.size===1)return [...candidates][0];
+              }
+            }
+            const sig=p[p.length-1]+"|"+(p[0][0]||"");
+            return uniqueName(r?.get(sig));
+          }`,
+            'name resolver'
+          );
+
+          // 3) A reset timestamp alone does NOT mean the quota is exhausted.
+          //    Pause only after HTTP 429 or when remaining is explicitly <= 0.
+          replaceBetween(
+            'function rateLimitActive(){',
+            'function rateLimitLabel(){',
+          `function rateLimitActive(){
+            const rl=state?.rate_limit||{};
+            const reset=rl.reset_at;
+            const remaining=Number(rl.remaining);
+            const exhausted=rl.last_status===429||(Number.isFinite(remaining)&&remaining<=0);
+            return !!(exhausted&&reset&&new Date(reset)>NOW);
+          }`,
+            'rateLimitActive'
+          );
+
+          // 4) Multi-odds is progressive: keep partial good data instead of aborting
+          //    the entire Quant Board when the last batch reaches the quota.
+          replaceBetween(
+            'async function multiOdds(ids,bookmakers){',
+            'function freshOffers(event,p,mkt){',
+          `async function multiOdds(ids,bookmakers){
+            const out=new Map();
+            for(let i=0;i<ids.length;i+=10){
+              const batch=ids.slice(i,i+10);
+              const params={eventIds:batch.join(","),bookmakers:bookmakers.join(",")};if(MARKET_QUERY)params.markets=MARKET_QUERY;
+              try{
+                const raw=await api("/odds/multi",params);
+                for(const [k,v] of mapMultiOdds(raw))out.set(k,v);
+              }catch(e){
+                if(["RATE_LIMIT_WAIT","RATE_LIMIT_429","RUN_BUDGET_GUARD","DAILY_BUDGET_GUARD"].includes(e.message)){
+                  console.warn("multiOdds pause",e.message,"events",out.size);
+                  break;
+                }
+                throw e;
+              }
+            }
+            return out;
+          }`,
+            'multiOdds'
+          );
+
+          // 5) Cache the selected bookmakers for 24h: they do not need an API call every run.
+          replaceBetween(
+            '  let bookmakers=[];',
+            '  await settlePredictions(bookmakers);',
+          `  let bookmakers=[];
+            try{
+              state.cache=state.cache||{};
+              const cachedNames=selectedNames(state.cache?.bookmakers?.names||state.meta?.bookmakers||[]);
+              const fetchedMs=new Date(state.cache?.bookmakers?.fetched_at||0).getTime();
+              const cacheFresh=cachedNames.length&&Number.isFinite(fetchedMs)&&(NOW.getTime()-fetchedMs<24*3600000);
+              if(cacheFresh){
+                bookmakers=cachedNames;
+              }else if(cachedNames.length&&!state.cache?.bookmakers?.fetched_at){
+                bookmakers=cachedNames;
+                state.cache.bookmakers={names:bookmakers,fetched_at:NOW.toISOString()};
+              }else{
+                bookmakers=selectedNames(await api("/bookmakers/selected"));
+                if(bookmakers.length<1)throw new Error("NO_SELECTED_BOOKMAKERS");
+                state.cache.bookmakers={names:bookmakers,fetched_at:NOW.toISOString()};
+              }
+            }catch(e){
+              state.meta={...(state.meta||{}),updated_at:NOW.toISOString(),status:"SETUP",source:SOURCE_LABEL,model_version:MODEL_VERSION,error:e.message,api_usage_today:state.usage.calls};
+              await saveState(state);return;
+            }`,
+            'bookmaker cache'
+          );
+
+          // 6) Settlement reuses the single /events snapshot.
+          //    This removes the old /events/{id} loop that produced 404s and wasted quota.
+          replaceBetween(
+            'async function settlePredictions(bookmakers){',
+            'function stats(history){',
+          `async function settlePredictions(bookmakers,events=[]){
+            const hist=[...(state.history||[])],remaining=[];
+            const due=(state.upcoming||[]).filter(p=>new Date(p.start_at)<NOW).slice(0,MAX_SETTLEMENTS_PER_RUN);
+            const dueIds=new Set(due.map(p=>String(p.event_id)));
+            const byId=new Map((events||[]).map(e=>[String(e.id),e]));
+            let closingCalls=0;
+            for(const p of state.upcoming||[]){
+              const id=String(p.event_id);
+              if(!dueIds.has(id)){remaining.push(p);continue}
+              const e=byId.get(id),actual=e?winnerSide(e):null;
+              if(!e||!actual){remaining.push(p);continue}
+              const won=p.pick_side?p.pick_side===actual:null,profit=p.pick_side?(won?(p.pick_odds-1):-1):0,y=actual==="A"?1:0;
+              let clv=null,closingOdds=null;
+              const hourly=Number.isFinite(state.rate_limit?.remaining)?state.rate_limit.remaining:RUN_CAP;
+              if(p.pick_side&&bookmakers.length&&closingCalls<1&&!rateLimitActive()&&hourly>6&&runCalls<RUN_CAP-5&&state.usage.calls<DAILY_CAP-5){
+                closingCalls++;
+                const cm=await closingMarket(p.event_id,bookmakers);
+                if(cm){closingOdds=p.pick_side==="A"?cm.bestA:cm.bestB;if(closingOdds>1)clv=p.pick_odds/closingOdds-1}
+              }
+              const secondary_settled=settleSecondaryMarkets(e,p);
+              hist.unshift({...p,status:"SETTLED",settled_at:NOW.toISOString(),actual_side:actual,actual_winner:actual==="A"?p.player_a:p.player_b,pick_won:won,profit_units:profit,brier:(p.p_a-y)**2,log_loss:-(y*Math.log(clamp(p.p_a,.001,.999))+(1-y)*Math.log(clamp(1-p.p_a,.001,.999))),shadow_brier:Number.isFinite(p.shadow_p_a)?(p.shadow_p_a-y)**2:null,shadow_log_loss:Number.isFinite(p.shadow_p_a)?-(y*Math.log(clamp(p.shadow_p_a,.001,.999))+(1-y)*Math.log(clamp(1-p.shadow_p_a,.001,.999))):null,closing_odds:closingOdds,clv,secondary_settled});
+            }
+            state.history=hist.slice(0,4000);state.upcoming=remaining;
+          }`,
+            'settlePredictions'
+          );
+
+          // Remove the old later /events fetch, then fetch once BEFORE settlement and reuse it.
+          const eventFetch=`  let eventsRaw=await api("/events",{sport:"tennis"});
+            const events=(Array.isArray(eventsRaw)?eventsRaw:(eventsRaw?.data||eventsRaw?.events||[])).filter(isSinglesEvent);
+          `;
+          if(!src.includes(eventFetch))throw new Error('V12.3 patch target missing: events fetch');
+          src=src.replace(eventFetch,'');
+          mustReplace(
+            '  await settlePredictions(bookmakers);\n',
+          `  let eventsRaw=await api("/events",{sport:"tennis"});
+            const events=(Array.isArray(eventsRaw)?eventsRaw:(eventsRaw?.data||eventsRaw?.events||[])).filter(isSinglesEvent);
+            await settlePredictions(bookmakers,events);
+          `,
+            'main settlement reuse'
+          );
+
+          mustReplace(
+            'const n=buildNameResolver(new Set(["jannik sinner","carlos alcaraz"]));if(!n.get("sinner|j")||!n.get("alcaraz|c"))throw new Error("SELFTEST_NAMES");',
+            'const ns=new Set(["jannik sinner","carlos alcaraz","qinwen zheng","vilius gaubas","tomas barrios vera","christopher o connell"]),n=buildNameResolver(ns),nt={names:ns,nameResolver:n};if(!n.get("sinner|j")||!n.get("alcaraz|c")||resolveNameKey("Zheng, Qinwen",nt)!=="qinwen zheng"||resolveNameKey("Gaubas, Vilius",nt)!=="vilius gaubas"||resolveNameKey("Barrios Vera, Marcelo Tomas",nt)!=="tomas barrios vera"||resolveNameKey("O\\\'Connell, Christopher",nt)!=="christopher o connell")throw new Error("SELFTEST_NAMES");',
+            'name resolver self-test'
+          );
+
+          fs.writeFileSync(p,src);
+          console.log(JSON.stringify({
+            ok:true,
+            patch:"V12.3-FREEZE-CANDIDATE",
+            runCap:10,
+            quoteRefreshLimit:10,
+            settlement:"shared-events-snapshot",
+            bookmakerCache:"24h",
+            progressiveOdds:true,
+            nameResolver:"comma-order + unique token/surname matching"
+          }));
+          NODE
+      - name: Apply V12.4 Player Intelligence patch
+        if: steps.scheduler.outputs.run_quant == 'true'
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          const qp='quant-engine.mjs',hp='index.html';
+          let src=fs.readFileSync(qp,'utf8');
+
+          function replaceBetween(start,end,replacement,label){
+            const a=src.indexOf(start),b=src.indexOf(end,a+start.length);
+            if(a<0||b<0)throw new Error(`V12.4 patch target missing: ${label}`);
+            src=src.slice(0,a)+replacement+'\n'+src.slice(b);
+          }
+          function mustReplace(oldText,newText,label){
+            if(!src.includes(oldText))throw new Error(`V12.4 patch target missing: ${label}`);
+            src=src.replace(oldText,newText);
+          }
+
+          // V12.4 adds player-level historical intelligence without changing Champion model weights.
+          mustReplace('const MODEL_VERSION="TENNIS-EDGE-QUANT-12.3-FREEZE-CANDIDATE";',
+                      'const MODEL_VERSION="TENNIS-EDGE-QUANT-12.4-PLAYER-INTEL";',
+                      'model version');
+
+          replaceBetween(
+            'function metricsFast(tourData,key,surface){',
+            'function adaptationContext(A,B,targetSurface){',
+          `function safeRate(n,d){return Number.isFinite(n)&&Number.isFinite(d)&&d>0?clamp(n/d,0,1):null}
+          function historicalMatchIntel(m,key){
+            const w=norm(m.winner_name)===key;
+            const own={
+              sv:num(w?m.w_svpt:m.l_svpt),firstIn:num(w?m.w_1stIn:m.l_1stIn),firstWon:num(w?m.w_1stWon:m.l_1stWon),secondWon:num(w?m.w_2ndWon:m.l_2ndWon),
+              games:num(w?m.w_SvGms:m.l_SvGms),bpFaced:num(w?m.w_bpFaced:m.l_bpFaced),bpSaved:num(w?m.w_bpSaved:m.l_bpSaved),ace:num(w?m.w_ace:m.l_ace),df:num(w?m.w_df:m.l_df)
+            };
+            const opp={
+              sv:num(w?m.l_svpt:m.w_svpt),firstIn:num(w?m.l_1stIn:m.w_1stIn),firstWon:num(w?m.l_1stWon:m.w_1stWon),secondWon:num(w?m.l_2ndWon:m.w_2ndWon),
+              games:num(w?m.l_SvGms:m.w_SvGms),bpFaced:num(w?m.l_bpFaced:m.w_bpFaced),bpSaved:num(w?m.l_bpSaved:m.w_bpSaved),ace:num(w?m.l_ace:m.w_ace),df:num(w?m.l_df:m.w_df)
+            };
+            const ownBreaks=Number.isFinite(own.bpFaced)&&Number.isFinite(own.bpSaved)?Math.max(0,own.bpFaced-own.bpSaved):null;
+            const breaksMade=Number.isFinite(opp.bpFaced)&&Number.isFinite(opp.bpSaved)?Math.max(0,opp.bpFaced-opp.bpSaved):null;
+            const oppSecond=Number.isFinite(opp.sv)&&Number.isFinite(opp.firstIn)?Math.max(0,opp.sv-opp.firstIn):null;
+            return{
+              date:String(m.tourney_date||''),tournament:m.tourney_name||null,surface:m.surface||null,round:m.round||null,result:w?'W':'L',
+              opponent:w?m.loser_name:m.winner_name,score:m.score||null,minutes:num(m.minutes),own_rank:num(w?m.winner_rank:m.loser_rank),opponent_rank:num(w?m.loser_rank:m.winner_rank),
+              service:{first_serve_pct:safeRate(own.firstIn,own.sv),first_serve_points_won:safeRate(own.firstWon,own.firstIn),second_serve_points_won:safeRate(own.secondWon,Number.isFinite(own.sv)&&Number.isFinite(own.firstIn)?own.sv-own.firstIn:null),service_points_won:safeRate((own.firstWon??0)+(own.secondWon??0),own.sv),service_games_won:safeRate(Number.isFinite(own.games)&&Number.isFinite(ownBreaks)?own.games-ownBreaks:null,own.games),break_points_saved:safeRate(own.bpSaved,own.bpFaced),aces:own.ace,double_faults:own.df},
+              return:{first_return_points_won:safeRate(Number.isFinite(opp.firstIn)&&Number.isFinite(opp.firstWon)?opp.firstIn-opp.firstWon:null,opp.firstIn),second_return_points_won:safeRate(Number.isFinite(oppSecond)&&Number.isFinite(opp.secondWon)?oppSecond-opp.secondWon:null,oppSecond),return_points_won:safeRate(Number.isFinite(opp.sv)&&Number.isFinite(opp.firstWon)&&Number.isFinite(opp.secondWon)?opp.sv-opp.firstWon-opp.secondWon:null,opp.sv),return_games_won:safeRate(breaksMade,opp.games),break_points_converted:safeRate(breaksMade,opp.bpFaced)}
+            };
+          }
+          function metricsFast(tourData,key,surface){
+            const all=tourData.byPlayer?.get(key)||[],r20=all.slice(0,20),surf=all.filter(m=>m.surface===surface).slice(0,40),latest=all[0];
+            let ownPts=0,ownWon=0,firstIn=0,firstWon=0,secondAtt=0,secondWon=0,serviceGames=0,serviceGamesWon=0,bpFaced=0,bpSaved=0;
+            let retPts=0,retWon=0,firstRetAtt=0,firstRetWon=0,secondRetAtt=0,secondRetWon=0,returnGames=0,returnGamesWon=0,bpOpp=0,bpConverted=0;
+            let statN=0,aces=0,dfs=0,acesAllowed=0,breaks=0,breaksConceded=0,propN=0;
+            for(const m of r20){
+              const w=norm(m.winner_name)===key;
+              const sv=num(w?m.w_svpt:m.l_svpt),fi=num(w?m.w_1stIn:m.l_1stIn),fw=num(w?m.w_1stWon:m.l_1stWon),sw=num(w?m.w_2ndWon:m.l_2ndWon),sg=num(w?m.w_SvGms:m.l_SvGms);
+              const osv=num(w?m.l_svpt:m.w_svpt),ofi=num(w?m.l_1stIn:m.w_1stIn),ofw=num(w?m.l_1stWon:m.w_1stWon),osw=num(w?m.l_2ndWon:m.w_2ndWon),osg=num(w?m.l_SvGms:m.w_SvGms);
+              const bpf=num(w?m.w_bpFaced:m.l_bpFaced),bps=num(w?m.w_bpSaved:m.l_bpSaved),obpf=num(w?m.l_bpFaced:m.w_bpFaced),obps=num(w?m.l_bpSaved:m.w_bpSaved);
+              const oa=num(w?m.w_ace:m.l_ace),df=num(w?m.w_df:m.l_df),aa=num(w?m.l_ace:m.w_ace);
+              if(sv&&fi!=null&&fw!=null&&sw!=null){
+                const sa=Math.max(0,sv-fi);ownPts+=sv;ownWon+=fw+sw;firstIn+=fi;firstWon+=fw;secondAtt+=sa;secondWon+=sw;statN++;
+              }
+              if(osv&&ofi!=null&&ofw!=null&&osw!=null){
+                const osa=Math.max(0,osv-ofi);retPts+=osv;retWon+=osv-ofw-osw;firstRetAtt+=ofi;firstRetWon+=Math.max(0,ofi-ofw);secondRetAtt+=osa;secondRetWon+=Math.max(0,osa-osw);
+              }
+              if(sg!=null&&bpf!=null&&bps!=null){const bc=Math.max(0,bpf-bps);serviceGames+=sg;serviceGamesWon+=Math.max(0,sg-bc);bpFaced+=bpf;bpSaved+=bps;breaksConceded+=bc}
+              if(osg!=null&&obpf!=null&&obps!=null){const bm=Math.max(0,obpf-obps);returnGames+=osg;returnGamesWon+=bm;bpOpp+=obpf;bpConverted+=bm;breaks+=bm}
+              if(oa!=null||df!=null||aa!=null){aces+=oa||0;dfs+=df||0;acesAllowed+=aa||0;propN++}
+            }
+            const isW=latest&&norm(latest.winner_name)===key,recent7=all.filter(m=>daysAgo(m.tourney_date)<=7),recent14=all.filter(m=>daysAgo(m.tourney_date)<=14);
+            return{
+              n:all.length,rank:latest?num(isW?latest.winner_rank:latest.loser_rank):null,
+              form:weightedWinRate(r20,key,75,4),form_long:weightedWinRate(all.slice(0,35),key,150,7),surfaceN:surf.length,surface:weightedWinRate(surf,key,210,8),
+              serve:safeRate(ownWon,ownPts),ret:safeRate(retWon,retPts),statN,
+              first_serve_pct:safeRate(firstIn,ownPts),first_serve_points_won:safeRate(firstWon,firstIn),second_serve_points_won:safeRate(secondWon,secondAtt),service_points_won:safeRate(ownWon,ownPts),service_games_won:safeRate(serviceGamesWon,serviceGames),break_points_saved:safeRate(bpSaved,bpFaced),
+              first_return_points_won:safeRate(firstRetWon,firstRetAtt),second_return_points_won:safeRate(secondRetWon,secondRetAtt),return_points_won:safeRate(retWon,retPts),return_games_won:safeRate(returnGamesWon,returnGames),break_points_converted:safeRate(bpConverted,bpOpp),
+              aces_pg:propN?aces/propN:null,double_faults_pg:propN?dfs/propN:null,aces_allowed_pg:propN?acesAllowed/propN:null,breaks_pg:propN?breaks/propN:null,breaks_conceded_pg:propN?breaksConceded/propN:null,propN,
+              workload7:recent7.reduce((s,m)=>s+(num(m.minutes)||90),0),workload14:recent14.reduce((s,m)=>s+(num(m.minutes)||90),0),matches7:recent7.length,matches14:recent14.length,last_match_days:latest?daysAgo(latest.tourney_date):null,last_surface:latest?.surface||null,
+              recent_matches:all.slice(0,12).map(m=>historicalMatchIntel(m,key))
+            };
+          }
+          function verificationLinks(tour){
+            return tour==='atp'?{
+              official_stats:'https://www.atptour.com/en/stats',
+              official_match_stats:'https://www.atptour.com/en/stats/individual-game-stats',
+              sofascore:'https://www.sofascore.com/it/tennis'
+            }:{
+              official_stats:'https://www.wtatennis.com/stats',
+              official_match_stats:'https://www.wtatennis.com/stats',
+              sofascore:'https://www.sofascore.com/it/tennis'
+            };
+          }
+          function publicPlayerIntel(p,name,tour,surface){
+            return{
+              name,tour:String(tour||'').toUpperCase(),target_surface:surface||null,rank:p.rank??null,
+              sample:{matches:p.n??0,stat_matches:p.statN??0,surface_matches:p.surfaceN??0,prop_matches:p.propN??0},
+              context:{form:p.form??null,form_long:p.form_long??null,surface_form:p.surface??null,last_surface:p.last_surface??null,rest_days:p.last_match_days??null,matches_7d:p.matches7??0,matches_14d:p.matches14??0,workload_7d_minutes:p.workload7??0,workload_14d_minutes:p.workload14??0},
+              service:{first_serve_pct:p.first_serve_pct??null,first_serve_points_won:p.first_serve_points_won??null,second_serve_points_won:p.second_serve_points_won??null,service_points_won:p.service_points_won??null,service_games_won:p.service_games_won??null,break_points_saved:p.break_points_saved??null,aces_per_match:p.aces_pg??null,double_faults_per_match:p.double_faults_pg??null},
+              return:{first_return_points_won:p.first_return_points_won??null,second_return_points_won:p.second_return_points_won??null,return_points_won:p.return_points_won??null,return_games_won:p.return_games_won??null,break_points_converted:p.break_points_converted??null,breaks_per_match:p.breaks_pg??null,aces_allowed_per_match:p.aces_allowed_pg??null},
+              recent_matches:p.recent_matches||[],verification:verificationLinks(tour),
+              history_source:USING_CUSTOM_HISTORY?'CUSTOM_LICENSED_HISTORY':'TENNIS_HISTORY_ARCHIVE_RESEARCH',
+              verification_note:'Statistiche calcolate dallo storico match del motore; link ufficiali ATP/WTA e SofaScore per controllo esterno. Nessun dato viene inventato se il campione non e disponibile.'
+            };
+          }
+          `,
+            'metricsFast/player intelligence'
+          );
+
+          mustReplace(
+            '    market_lab:marketLab,market_best:marketLab.best_priced,multi_market_version:"MM-3.0-PRICE-GUARD",',
+            `    player_intel:{candidate_side:candidateSide,candidate_name:candidateName,a:publicPlayerIntel(c.A,event.home,c.tour,c.surface),b:publicPlayerIntel(c.B,event.away,c.tour,c.surface)},
+              market_lab:marketLab,market_best:marketLab.best_priced,multi_market_version:"MM-3.0-PRICE-GUARD",`,
+            'prediction player_intel payload'
+          );
+          fs.writeFileSync(qp,src);
+
+          // UI: Player Lab is persisted in index.html. It is idempotent on later runs.
+          let html=fs.readFileSync(hp,'utf8');
+          const marker='TEP-12.4-PLAYER-INTEL';
+          if(!html.includes(marker)){
+            const css=`\n/* ${marker} */\n.playerIntel{margin-top:10px;border-top:1px solid var(--line);padding-top:10px}.intelCompare{display:grid;grid-template-columns:1fr 1fr;gap:8px}.intelPlayer{border:1px solid var(--line);border-radius:14px;padding:10px;background:rgba(9,22,34,.72)}.intelPlayer.chosen{border-color:rgba(53,195,125,.58);box-shadow:inset 0 0 0 1px rgba(53,195,125,.12)}.intelHead{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:8px}.intelHead b{font-size:12px}.intelRole{font-size:7px;font-weight:900;letter-spacing:.08em;border:1px solid var(--line);border-radius:999px;padding:4px 7px;color:var(--muted)}.intelRole.chosen{color:var(--green);border-color:rgba(53,195,125,.5)}.intelGroup{margin-top:8px}.intelGroup h4{margin:0 0 5px;font-size:8px;color:var(--soft);text-transform:uppercase;letter-spacing:.09em}.intelStats{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.intelStat{border:1px solid rgba(100,130,160,.18);border-radius:9px;padding:6px;min-width:0}.intelStat b{display:block;font-size:9px}.intelStat span{display:block;font-size:6.5px;color:var(--muted);margin-top:2px;line-height:1.2}.intelHistory{margin-top:8px}.intelHistory summary{font-size:8px;color:var(--muted);cursor:pointer;font-weight:850}.intelMatch{display:grid;grid-template-columns:42px 1fr 62px 62px;gap:6px;align-items:center;border-top:1px solid rgba(100,130,160,.14);padding:6px 0;font-size:7px}.intelMatch b{font-size:8px}.intelMatch .win{color:var(--green)}.intelMatch .loss{color:var(--red)}.intelSources{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}.intelLink{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:5px 7px;color:var(--soft);text-decoration:none;font-size:7px;font-weight:800}.intelFoot{font-size:6.5px;color:var(--muted);margin-top:6px;line-height:1.35}@media(max-width:760px){.intelCompare{grid-template-columns:1fr}.intelStats{grid-template-columns:repeat(3,1fr)}.intelMatch{grid-template-columns:38px 1fr 55px}}\n`;
+            if(!html.includes('</style>'))throw new Error('V12.4 UI style target missing');
+            html=html.replace('</style>',css+'</style>');
+
+            const js=Buffer.from('Ci8vIFRFUC0xMi40LVBMQVlFUi1JTlRFTApmdW5jdGlvbiBpbnRlbFBjdCh2KXtjb25zdCB4PW4odik7cmV0dXJuIGZpbml0ZSh4KT9wY3QoeCk6J+KAlCd9CmZ1bmN0aW9uIGludGVsTnVtKHYsZD0xKXtjb25zdCB4PW4odik7cmV0dXJuIGZpbml0ZSh4KT9OdW1iZXIoeCkudG9GaXhlZChkKTon4oCUJ30KZnVuY3Rpb24gaW50ZWxTdGF0KGxhYmVsLHZhbHVlKXtyZXR1cm4gYDxkaXYgY2xhc3M9ImludGVsU3RhdCI+PGI+JHt2YWx1ZX08L2I+PHNwYW4+JHtlc2MobGFiZWwpfTwvc3Bhbj48L2Rpdj5gfQpmdW5jdGlvbiBpbnRlbERhdGUodil7Y29uc3Qgcz1TdHJpbmcodnx8JycpO3JldHVybiAvXlxkezh9JC8udGVzdChzKT9gJHtzLnNsaWNlKDYsOCl9LyR7cy5zbGljZSg0LDYpfS8ke3Muc2xpY2UoMiw0KX1gOmVzYyhzfHwn4oCUJyl9CmZ1bmN0aW9uIGludGVsSGlzdG9yeVJvd3MocCl7CiAgY29uc3Qgcm93cz0ocD8ucmVjZW50X21hdGNoZXN8fFtdKS5zbGljZSgwLDEwKTsKICBpZighcm93cy5sZW5ndGgpcmV0dXJuICc8ZGl2IGNsYXNzPSJlbXB0eSI+U3RvcmljbyBkZXR0YWdsaWF0byBub24gZGlzcG9uaWJpbGUgcGVyIHF1ZXN0byBnaW9jYXRvcmUuPC9kaXY+JzsKICByZXR1cm4gcm93cy5tYXAobT0+YDxkaXYgY2xhc3M9ImludGVsTWF0Y2giPjxiIGNsYXNzPSIke20ucmVzdWx0PT09J1cnPyd3aW4nOidsb3NzJ30iPiR7ZXNjKG0ucmVzdWx0fHwn4oCUJyl9IMK3ICR7aW50ZWxEYXRlKG0uZGF0ZSl9PC9iPjxkaXY+PGI+dnMgJHtlc2MobS5vcHBvbmVudHx8J+KAlCcpfTwvYj48c3Bhbj4ke2VzYyhtLnRvdXJuYW1lbnR8fCfigJQnKX0gwrcgJHtlc2MobS5zdXJmYWNlfHwn4oCUJyl9IMK3ICR7ZXNjKG0ucm91bmR8fCfigJQnKX0gwrcgJHtlc2MobS5zY29yZXx8J+KAlCcpfTwvc3Bhbj48L2Rpdj48ZGl2PjxiPiR7aW50ZWxQY3QobS5zZXJ2aWNlPy5zZXJ2aWNlX2dhbWVzX3dvbil9PC9iPjxzcGFuPkhvbGQ8L3NwYW4+PC9kaXY+PGRpdj48Yj4ke2ludGVsUGN0KG0ucmV0dXJuPy5yZXR1cm5fZ2FtZXNfd29uKX08L2I+PHNwYW4+QnJlYWs8L3NwYW4+PC9kaXY+PC9kaXY+YCkuam9pbignJykKfQpmdW5jdGlvbiBpbnRlbFBsYXllckNhcmQocCxjaG9zZW4pewogIGlmKCFwKXJldHVybiAnPGRpdiBjbGFzcz0iaW50ZWxQbGF5ZXIiPjxkaXYgY2xhc3M9ImVtcHR5Ij5QbGF5ZXIgZGF0YSBOL0Q8L2Rpdj48L2Rpdj4nOwogIGNvbnN0IHM9cC5zZXJ2aWNlfHx7fSxyPXAucmV0dXJufHx7fSxjPXAuY29udGV4dHx8e30sc2FtcGxlPXAuc2FtcGxlfHx7fSx2PXAudmVyaWZpY2F0aW9ufHx7fTsKICByZXR1cm4gYDxkaXYgY2xhc3M9ImludGVsUGxheWVyICR7Y2hvc2VuPydjaG9zZW4nOicnfSI+PGRpdiBjbGFzcz0iaW50ZWxIZWFkIj48ZGl2PjxiPiR7ZXNjKHAubmFtZXx8J+KAlCcpfTwvYj48ZGl2IGNsYXNzPSJiZXRNZXRhIj4ke2VzYyhwLnRvdXJ8fCfigJQnKX0gwrcgcmFuayAke3AucmFuaz8/J+KAlCd9IMK3ICR7ZXNjKHAudGFyZ2V0X3N1cmZhY2V8fCfigJQnKX08L2Rpdj48L2Rpdj48c3BhbiBjbGFzcz0iaW50ZWxSb2xlICR7Y2hvc2VuPydjaG9zZW4nOicnfSI+JHtjaG9zZW4/J1NDRUxUTyc6J0FWVkVSU0FSSU8nfTwvc3Bhbj48L2Rpdj48ZGl2IGNsYXNzPSJpbnRlbEdyb3VwIj48aDQ+U2Vydml6aW8gwrcgdWx0aW1lICR7c2FtcGxlLnN0YXRfbWF0Y2hlcz8/MH0gY29uIHN0YXRzPC9oND48ZGl2IGNsYXNzPSJpbnRlbFN0YXRzIj4ke2ludGVsU3RhdCgnMcKqIGluIGNhbXBvJyxpbnRlbFBjdChzLmZpcnN0X3NlcnZlX3BjdCkpfSR7aW50ZWxTdGF0KCdQdCB2aW50aSAxwqonLGludGVsUGN0KHMuZmlyc3Rfc2VydmVfcG9pbnRzX3dvbikpfSR7aW50ZWxTdGF0KCdQdCB2aW50aSAywqonLGludGVsUGN0KHMuc2Vjb25kX3NlcnZlX3BvaW50c193b24pKX0ke2ludGVsU3RhdCgnUHQgc2Vydml6aW8nLGludGVsUGN0KHMuc2VydmljZV9wb2ludHNfd29uKSl9JHtpbnRlbFN0YXQoJ0dhbWUgc2Vydml6aW8gdmludGknLGludGVsUGN0KHMuc2VydmljZV9nYW1lc193b24pKX0ke2ludGVsU3RhdCgnQlAgc2FsdmF0ZScsaW50ZWxQY3Qocy5icmVha19wb2ludHNfc2F2ZWQpKX0ke2ludGVsU3RhdCgnQWNlL21hdGNoJyxpbnRlbE51bShzLmFjZXNfcGVyX21hdGNoKSl9JHtpbnRlbFN0YXQoJ0RGL21hdGNoJyxpbnRlbE51bShzLmRvdWJsZV9mYXVsdHNfcGVyX21hdGNoKSl9PC9kaXY+PC9kaXY+PGRpdiBjbGFzcz0iaW50ZWxHcm91cCI+PGg0PlJpc3Bvc3RhPC9oND48ZGl2IGNsYXNzPSJpbnRlbFN0YXRzIj4ke2ludGVsU3RhdCgnUHQgcmlzcG9zdGEgMcKqJyxpbnRlbFBjdChyLmZpcnN0X3JldHVybl9wb2ludHNfd29uKSl9JHtpbnRlbFN0YXQoJ1B0IHJpc3Bvc3RhIDLCqicsaW50ZWxQY3Qoci5zZWNvbmRfcmV0dXJuX3BvaW50c193b24pKX0ke2ludGVsU3RhdCgnUHQgcmlzcG9zdGEnLGludGVsUGN0KHIucmV0dXJuX3BvaW50c193b24pKX0ke2ludGVsU3RhdCgnR2FtZSByaXNwb3N0YSB2aW50aScsaW50ZWxQY3Qoci5yZXR1cm5fZ2FtZXNfd29uKSl9JHtpbnRlbFN0YXQoJ0JQIGNvbnZlcnRpdGUnLGludGVsUGN0KHIuYnJlYWtfcG9pbnRzX2NvbnZlcnRlZCkpfSR7aW50ZWxTdGF0KCdCcmVhay9tYXRjaCcsaW50ZWxOdW0oci5icmVha3NfcGVyX21hdGNoKSl9JHtpbnRlbFN0YXQoJ0FjZSBzdWJpdGkvbWF0Y2gnLGludGVsTnVtKHIuYWNlc19hbGxvd2VkX3Blcl9tYXRjaCkpfSR7aW50ZWxTdGF0KCdGb3JtYScsaW50ZWxQY3QoYy5mb3JtKSl9PC9kaXY+PC9kaXY+PGRpdiBjbGFzcz0iaW50ZWxHcm91cCI+PGg0PkNvbnRlc3RvPC9oND48ZGl2IGNsYXNzPSJpbnRlbFN0YXRzIj4ke2ludGVsU3RhdCgnRm9ybWEgc3VwZXJmaWNpZScsaW50ZWxQY3QoYy5zdXJmYWNlX2Zvcm0pKX0ke2ludGVsU3RhdCgnTWF0Y2ggc3VwZXJmaWNpZScsc2FtcGxlLnN1cmZhY2VfbWF0Y2hlcz8/J+KAlCcpfSR7aW50ZWxTdGF0KCdSaXBvc28gZ2lvcm5pJyxpbnRlbE51bShjLnJlc3RfZGF5cywxKSl9JHtpbnRlbFN0YXQoJ0NhcmljbyA3ZycsZmluaXRlKG4oYy53b3JrbG9hZF83ZF9taW51dGVzKSk/TWF0aC5yb3VuZChuKGMud29ya2xvYWRfN2RfbWludXRlcykpKycgbWluJzon4oCUJyl9PC9kaXY+PC9kaXY+PGRldGFpbHMgY2xhc3M9ImludGVsSGlzdG9yeSI+PHN1bW1hcnk+VWx0aW1pIDEwIG1hdGNoIMK3IGFwcmkgc3Rvcmljbzwvc3VtbWFyeT4ke2ludGVsSGlzdG9yeVJvd3MocCl9PC9kZXRhaWxzPjxkaXYgY2xhc3M9ImludGVsU291cmNlcyI+JHt2Lm9mZmljaWFsX3N0YXRzP2A8YSBjbGFzcz0iaW50ZWxMaW5rIiBocmVmPSIke2VzYyh2Lm9mZmljaWFsX3N0YXRzKX0iIHRhcmdldD0iX2JsYW5rIiByZWw9Im5vb3BlbmVyIG5vcmVmZXJyZXIiPiR7cC50b3VyPT09J0FUUCc/J0FUUCBTdGF0cyc6J1dUQSBTdGF0cyd9IOKGlzwvYT5gOicnfSR7di5vZmZpY2lhbF9tYXRjaF9zdGF0cyYmdi5vZmZpY2lhbF9tYXRjaF9zdGF0cyE9PXYub2ZmaWNpYWxfc3RhdHM/YDxhIGNsYXNzPSJpbnRlbExpbmsiIGhyZWY9IiR7ZXNjKHYub2ZmaWNpYWxfbWF0Y2hfc3RhdHMpfSIgdGFyZ2V0PSJfYmxhbmsiIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJlciI+TWF0Y2ggU3RhdHMg4oaXPC9hPmA6Jyd9JHt2LnNvZmFzY29yZT9gPGEgY2xhc3M9ImludGVsTGluayIgaHJlZj0iJHtlc2Modi5zb2Zhc2NvcmUpfSIgdGFyZ2V0PSJfYmxhbmsiIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJlciI+U29mYVNjb3JlIOKGlzwvYT5gOicnfTwvZGl2PjxkaXYgY2xhc3M9ImludGVsRm9vdCI+JHtlc2MocC52ZXJpZmljYXRpb25fbm90ZXx8JycpfTwvZGl2PjwvZGl2PmAKfQpmdW5jdGlvbiBwbGF5ZXJJbnRlbEh0bWwoeCl7CiAgY29uc3QgcGk9eD8ucGxheWVyX2ludGVsOwogIGlmKCFwaT8uYXx8IXBpPy5iKXJldHVybiAnPGRpdiBjbGFzcz0icGxheWVySW50ZWwiPjxkaXYgY2xhc3M9ImVtcHR5Ij5QbGF5ZXIgTGFiIHNpIHBvcG9sZXLDoCBhbCBwcm9zc2ltbyBhZ2dpb3JuYW1lbnRvIFYxMi40LjwvZGl2PjwvZGl2Pic7CiAgY29uc3QgYUNob3Nlbj1TdHJpbmcocGkuY2FuZGlkYXRlX3NpZGV8fHguY2FuZGlkYXRlX3NpZGUpPT09J0EnOwogIHJldHVybiBgPGRpdiBjbGFzcz0icGxheWVySW50ZWwiPjxkaXYgY2xhc3M9ImNhcmRIZWFkIj48ZGl2PjxoMz5QbGF5ZXIgTGFiPC9oMz48ZGl2IGNsYXNzPSJzdWIiPlN0b3JpY28gKyBzZXJ2aXppby9yaXNwb3N0YS4gSWwgZ2lvY2F0b3JlIHNlbGV6aW9uYXRvIGRhbCBtb2RlbGxvIMOoIGV2aWRlbnppYXRvOyBjb25mcm9udG8gc2VtcHJlIGNvbiBs4oCZYXZ2ZXJzYXJpby48L2Rpdj48L2Rpdj48c3BhbiBjbGFzcz0icGlsbCI+VjEyLjQ8L3NwYW4+PC9kaXY+PGRpdiBjbGFzcz0iaW50ZWxDb21wYXJlIj4ke2ludGVsUGxheWVyQ2FyZChwaS5hLGFDaG9zZW4pfSR7aW50ZWxQbGF5ZXJDYXJkKHBpLmIsIWFDaG9zZW4pfTwvZGl2PjwvZGl2PmAKfQo=','base64').toString('utf8');
+            const fn='function renderMatches(){';
+            if(!html.includes(fn))throw new Error('V12.4 UI render target missing');
+            html=html.replace(fn,js+fn);
+            const a=html.indexOf(fn),b=html.indexOf('function renderRecord(){',a);
+            if(a<0||b<0)throw new Error('V12.4 UI render block missing');
+            let block=html.slice(a,b);
+            const old='</div></details></div></article>`}).join(\'\')';
+            const neu='</div></details>${playerIntelHtml(x)}</div></article>`}).join(\'\')';
+            if(!block.includes(old))throw new Error('V12.4 UI insert point missing');
+            block=block.replace(old,neu);
+            html=html.slice(0,a)+block+html.slice(b);
+            fs.writeFileSync(hp,html);
+          }
+          console.log(JSON.stringify({ok:true,patch:'V12.4-PLAYER-INTEL',modelWeights:'UNCHANGED',historyMatches:12,ui:'Player Lab',verificationLinks:['ATP/WTA','SofaScore']}));
+          NODE
+      - name: Engine syntax and self-tests
+        if: steps.scheduler.outputs.run_quant == 'true'
+        run: |
+          node --check quant-engine.mjs
+          node --check live-engine.mjs
+          node quant-engine.mjs --self-test
+          node live-engine.mjs --self-test
+      - name: Betting Intelligence contract
+        if: steps.scheduler.outputs.run_quant == 'true'
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          const html=fs.readFileSync('index.html','utf8');
+          const inline=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)].map(x=>x[1]).join('\n');
+          const external=[...html.matchAll(/<script[^>]+src=["']([^"']+)["'][^>]*>/gi)]
+            .map(x=>x[1]).filter(x=>!/^https?:/i.test(x)&&fs.existsSync(x)).map(x=>fs.readFileSync(x,'utf8')).join('\n');
+          const code=`${inline}\n${external}`;
+          new Function(code);
+          const htmlReq=['Tennis Edge Pro 12','TEP-12.4-PLAYER-INTEL','Player Lab','id="bestBets"','id="edgeDial"','id="marketTape"','id="marketMatrix"','id="marketFamilyTabs"','id="sharpScanner"','id="priceAlerts"','id="oddsFormatBtn"','id="liveGrid"','id="matchList"','id="matchSearch"','id="dataHealthGrid"','id="similarityLab"','id="recordTable"','id="performanceBreakdown"','id="smartSlip"','id="localLedger"','id="anomalyGuide"'];
+          const jsReq=['TEP-12.0-MARKET-LEADER','function validateBoard','function renderHero','function renderBestBets','function renderMarketTape','function renderMarketMatrix','function renderScanner','function renderAlerts','function renderLive','function renderMatches','function renderRecord','function renderPerformance','function renderBankroll','function renderLedger','function renderDataHealth','function renderSimilarity','function probabilityBand','function similarMatchesFor','function operationalSafe','function guardMeaning','function landOnSection','const rowHasBlockingAnomaly','const decimalOdds','const marketFamily','const minOdds','function offersFor'];
+          const miss=[...htmlReq.filter(x=>!html.includes(x)),...jsReq.filter(x=>!code.includes(x))];
+          if(miss.length)throw new Error('Betting Intelligence contract missing: '+miss.join(', '));
+          const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
+          const dup=[...new Set(ids.filter((x,i)=>ids.indexOf(x)!==i))];
+          if(dup.length)throw new Error('Duplicate IDs: '+dup.join(', '));
+          console.log(JSON.stringify({ok:true,version:'TEP-12.0-MARKET-LEADER',ids:ids.length}));
+          NODE
+      - name: Run Quant Engine
+        if: steps.scheduler.outputs.run_quant == 'true'
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          COMMERCIAL_MODE: ${{ vars.COMMERCIAL_MODE }}
+          COMMERCIAL_ODDS_LICENSE_CONFIRMED: ${{ vars.COMMERCIAL_ODDS_LICENSE_CONFIRMED }}
+          COMMERCIAL_HISTORY_LICENSE_CONFIRMED: ${{ vars.COMMERCIAL_HISTORY_LICENSE_CONFIRMED }}
+          ATP_HISTORY_URL_TEMPLATE: ${{ vars.ATP_HISTORY_URL_TEMPLATE }}
+          WTA_HISTORY_URL_TEMPLATE: ${{ vars.WTA_HISTORY_URL_TEMPLATE }}
+        run: node quant-engine.mjs
+      - name: Stamp automation health
+        if: steps.scheduler.outputs.run_quant == 'true'
+        shell: bash
+        env:
+          GH_EVENT_NAME: ${{ github.event_name }}
+          GH_EVENT_SCHEDULE: ${{ github.event.schedule }}
+          GH_RUN_ID: ${{ github.run_id }}
+          GH_RUN_ATTEMPT: ${{ github.run_attempt }}
+          SCHEDULER_ROLE: ${{ steps.scheduler.outputs.role }}
+          SCHEDULER_REASON: ${{ steps.scheduler.outputs.reason }}
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs'),p='data/quant-board.json';
+          if(!fs.existsSync(p))throw new Error('quant board missing after engine run');
+          const q=JSON.parse(fs.readFileSync(p,'utf8'));
+          q.meta=q.meta||{};
+          q.meta.automation={
+            checked_at:new Date().toISOString(),
+            timezone:'Europe/Rome',
+            event:process.env.GH_EVENT_NAME||null,
+            schedule:process.env.GH_EVENT_SCHEDULE||null,
+            role:process.env.SCHEDULER_ROLE||null,
+            gate_reason:process.env.SCHEDULER_REASON||null,
+            run_id:process.env.GH_RUN_ID||null,
+            run_attempt:Number(process.env.GH_RUN_ATTEMPT||1),
+            workflow_version:'12.4.1-AUTO-RECOVERY'
+          };
+          fs.writeFileSync(p,JSON.stringify(q,null,2)+'\n');
+          console.log(JSON.stringify({ok:true,automation:q.meta.automation}));
+          NODE
+      - name: Quant Board fail-closed validation
+        if: steps.scheduler.outputs.run_quant == 'true'
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=require('fs'),p='data/quant-board.json';
+          if(!fs.existsSync(p))throw new Error('quant board missing');
+          const q=JSON.parse(fs.readFileSync(p));
+          for(const k of ['upcoming','radar','history'])if(!Array.isArray(q[k]))throw new Error(k+' invalid');
+          if(!Number.isFinite(new Date(q.meta?.updated_at).getTime()))throw new Error('updated_at invalid');
+          const boardAgeMin=(Date.now()-new Date(q.meta.updated_at).getTime())/60000;if(boardAgeMin>20)throw new Error(`quant board stale after run: ${boardAgeMin.toFixed(1)}m`);
+          if(!String(q.meta?.model_version||'').includes('12.4-PLAYER-INTEL'))throw new Error('V12.4 model patch not active');
+          if(q.meta?.automation?.workflow_version!=='12.4.1-AUTO-RECOVERY')throw new Error('automation health stamp missing');
+          const radar=q.radar||[],resolvedRadar=radar.filter(x=>String(x.pre_status||'').toUpperCase()!=='DATA GAP').length;
+          const coverage=radar.length?resolvedRadar/radar.length:null;
+          if(radar.length>=50&&resolvedRadar<5)throw new Error(`RADAR_COVERAGE_SYSTEMIC_GAP ${resolvedRadar}/${radar.length}`);
+          const ids=new Set();
+          const decimalOdds=v=>{if(v===null||v===undefined||v==='')return null;if(typeof v==='number')return Number.isFinite(v)&&v>1?v:null;const s=String(v).trim();if(/^\+\d+(?:\.\d+)?$/.test(s))return 1+Number(s.slice(1))/100;if(/^-\d+(?:\.\d+)?$/.test(s))return 1+100/Math.abs(Number(s));if(/^\d+(?:\.\d+)?\/\d+(?:\.\d+)?$/.test(s)){const[a,b]=s.split('/').map(Number);return b>0?1+a/b:null}const x=Number(s);return Number.isFinite(x)&&x>1?x:null};
+          for(const x of q.upcoming){
+            const id=String(x.event_id||'');
+            if(!id||ids.has(id))throw new Error('event id missing/duplicate: '+id);
+            ids.add(id);
+            if(!x.player_a||!x.player_b)throw new Error('players missing: '+id);
+            if(x.locked&&(!x.player_intel?.a||!x.player_intel?.b))throw new Error('player_intel missing: '+id);
+            if(x.locked&&x.player_intel?.candidate_side&&!['A','B'].includes(String(x.player_intel.candidate_side)))throw new Error('player_intel candidate side invalid: '+id);
+            for(const p of [x.player_intel?.a,x.player_intel?.b].filter(Boolean)){
+              if(!p.service||!p.return||!Array.isArray(p.recent_matches))throw new Error('player_intel contract invalid: '+id);
+              for(const v of [p.service.first_serve_pct,p.service.first_serve_points_won,p.service.second_serve_points_won,p.service.service_games_won,p.return.first_return_points_won,p.return.second_return_points_won,p.return.return_games_won]){if(v!=null&&(!(Number(v)>=0)||Number(v)>1))throw new Error('player_intel percentage invalid: '+id)}
+            }
+            const rows=x.market_live?.rows?.length?x.market_live.rows:(x.market_lab?.priced||[]);
+            for(const r of rows){
+              const value=['VALUE','STRONG VALUE'].includes(String(r.verdict||'').toUpperCase());
+              const prob=Number(r.robust_prob??r.model_prob??r.pick_prob);
+              const odds=decimalOdds(r.current_odds??r.best_odds??r.pick_odds);
+              const ev=Number(r.current_robust_ev??r.robust_ev??r.current_ev??r.pick_ev);
+              if(value&&(!(prob>0&&prob<1)||!(odds>1)||!Number.isFinite(ev)))throw new Error('VALUE contract invalid: '+id);
+              if(String(r.validation_tier||'').toUpperCase()==='OFFICIAL_ML'&&value&&x.verdict==='NO BET')throw new Error('official market bypasses NO BET: '+id);
+            }
+          }
+          console.log(JSON.stringify({ok:true,model:q.meta?.model_version,events:q.upcoming.length,radar:q.radar.length,resolvedRadar,coverage:coverage==null?null:+coverage.toFixed(3),marketChecked:q.meta?.market_checked||0,processed:q.meta?.processed_this_run||0,pending:q.meta?.pending_prediction_batch||0,marketStats:q.market_stats?.settled||0}));
+          NODE
+      - name: Commit state
+        if: steps.scheduler.outputs.run_quant == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Quant engine patches stay runtime-only; Player Lab UI and board state are persisted.
+          git restore --worktree -- quant-engine.mjs
+          git config user.name "tennis-zero-cost-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/quant-board.json index.html
+          if git diff --cached --quiet; then echo "No v12.4.1 changes"; exit 0; fi
+          git commit -m "quant: v12.4.1 auto-recovery refresh"
+          git pull --rebase
+          git push
+      - name: Scheduler summary
+        if: always()
+        shell: bash
+        env:
+          RUN_QUANT: ${{ steps.scheduler.outputs.run_quant }}
+          SCHEDULER_ROLE: ${{ steps.scheduler.outputs.role }}
+          SCHEDULER_REASON: ${{ steps.scheduler.outputs.reason }}
+        run: |
+          echo "run_quant=${RUN_QUANT:-unknown}"
+          echo "role=${SCHEDULER_ROLE:-unknown}"
+          echo "reason=${SCHEDULER_REASON:-unknown}"
+          if [ "${RUN_QUANT:-false}" = "false" ]; then echo "Freshness gate: no duplicate API run needed."; fi
+
