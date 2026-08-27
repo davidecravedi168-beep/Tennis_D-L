@@ -14,9 +14,10 @@ on:
   workflow_dispatch:
   workflow_call:
   schedule:
-    # Off-peak minutes reduce GitHub scheduler congestion/dropped runs.
-    # Four chances/hour; the freshness gate spends API quota only when data is due.
-    - cron: "11,26,41,56 * * * *"
+    # Deliberately changed to force GitHub to re-register/reactivate the native scheduler.
+    # Off-peak slots reduce scheduler congestion; freshness gate prevents duplicate API work.
+    - cron: "07,22,37,52 * * * *"
+      timezone: "Europe/Rome"
 
 permissions:
   contents: write
