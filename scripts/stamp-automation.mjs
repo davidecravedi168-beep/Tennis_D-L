@@ -27,10 +27,10 @@ const automation={
   scheduler_verified:Number.isFinite(schedulerAge)&&schedulerAge<55
 };
 
-async function atomicJson(file,value){
+async function atomicJson(file,value,{pretty=true}={}){
   await fs.mkdir(path.dirname(file),{recursive:true});
   const tmp=`${file}.tmp-${process.pid}`;
-  await fs.writeFile(tmp,JSON.stringify(value,null,2)+"\n","utf8");
+  await fs.writeFile(tmp,JSON.stringify(value,null,pretty?2:0)+"\n","utf8");
   await fs.rename(tmp,file);
 }
 for(const file of ["data/quant-state.json","data/quant-board.json"]){
@@ -38,7 +38,7 @@ for(const file of ["data/quant-state.json","data/quant-board.json"]){
     const doc=JSON.parse(await fs.readFile(file,"utf8"));
     doc.meta=doc.meta||{};
     doc.meta.automation=automation;
-    await atomicJson(file,doc);
+    await atomicJson(file,doc,{pretty:file!=="data/quant-board.json"});
   }catch(e){if(e?.code!=="ENOENT")throw e}
 }
 await atomicJson("data/automation-health.json",{ok:true,...automation});

@@ -92,6 +92,11 @@ jobs:
           LIVE_REASON: ${{ steps.gate.outputs.live_reason }}
         run: node scripts/stamp-automation.mjs
 
+      - name: Final publish validation
+        run: |
+          node scripts/validate-board.mjs quant
+          node scripts/validate-board.mjs live
+
       - name: Commit validated state
         shell: bash
         run: |
