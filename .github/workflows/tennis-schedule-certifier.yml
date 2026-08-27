@@ -2,6 +2,10 @@ name: Tennis Edge Pro 12.5 Native Schedule Certifier
 run-name: "TEP 12.5 Scheduler Certifier · ${{ github.event_name }} · ${{ github.event.schedule || 'manual' }}"
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tennis-schedule-certifier.yml"
   workflow_dispatch:
   schedule:
     - cron: "13,28,43,58 * * * *"
