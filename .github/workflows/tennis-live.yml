@@ -1,0 +1,52 @@
+name: Tennis Edge Pro 9 Live Snapshot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/15 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tennis-edge-pro-live
+  cancel-in-progress: true
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Live engine checks
+        run: |
+          node --check live-engine.mjs
+          node live-engine.mjs --self-test
+      - name: Fetch live tennis snapshot
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          COMMERCIAL_MODE: ${{ vars.COMMERCIAL_MODE }}
+          COMMERCIAL_ODDS_LICENSE_CONFIRMED: ${{ vars.COMMERCIAL_ODDS_LICENSE_CONFIRMED }}
+        run: node live-engine.mjs
+      - name: Validate live board
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=require('fs'),p='data/live-board.json';if(!fs.existsSync(p))throw new Error('live-board missing');const q=JSON.parse(fs.readFileSync(p));
+          if(!q.meta||!Array.isArray(q.events))throw new Error('live-board contract invalid');
+          for(const x of q.events){if(!x.event_id||!x.player_a||!x.player_b)throw new Error('live event invalid');if(x.live_price_guard&&x.live_price_guard.target_ev!==.02)throw new Error('live price guard invalid');}
+          console.log(JSON.stringify({ok:true,events:q.events.length,status:q.meta.status,model:q.meta.model_version}));
+          NODE
+      - name: Commit live state
+        shell: bash
+        run: |
+          if git diff --quiet -- data/live-board.json; then echo "No live changes"; exit 0; fi
+          git config user.name "tennis-live-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/live-board.json
+          git commit -m "live: v9 price-guard snapshot"
+          git pull --rebase || true
+          git push
