@@ -1,0 +1,98 @@
+name: Tennis Edge Pro 12 Market Leader Quant Autopilot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "13 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tennis-edge-pro-quant
+  cancel-in-progress: false
+
+jobs:
+  quant:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Engine syntax and self-tests
+        run: |
+          node --check quant-engine.mjs
+          node --check live-engine.mjs
+          node quant-engine.mjs --self-test
+          node live-engine.mjs --self-test
+      - name: Betting Intelligence contract
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          const html=fs.readFileSync('index.html','utf8');
+          const inline=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)].map(x=>x[1]).join('\n');
+          const external=[...html.matchAll(/<script[^>]+src=["']([^"']+)["'][^>]*>/gi)]
+            .map(x=>x[1]).filter(x=>!/^https?:/i.test(x)&&fs.existsSync(x)).map(x=>fs.readFileSync(x,'utf8')).join('\n');
+          const code=`${inline}\n${external}`;
+          new Function(code);
+          const htmlReq=['Tennis Edge Pro 12','id="bestBets"','id="edgeDial"','id="marketTape"','id="marketMatrix"','id="marketFamilyTabs"','id="sharpScanner"','id="priceAlerts"','id="oddsFormatBtn"','id="liveGrid"','id="matchList"','id="matchSearch"','id="dataHealthGrid"','id="similarityLab"','id="recordTable"','id="performanceBreakdown"','id="smartSlip"','id="localLedger"','id="anomalyGuide"'];
+          const jsReq=['TEP-12.0-MARKET-LEADER','function validateBoard','function renderHero','function renderBestBets','function renderMarketTape','function renderMarketMatrix','function renderScanner','function renderAlerts','function renderLive','function renderMatches','function renderRecord','function renderPerformance','function renderBankroll','function renderLedger','function renderDataHealth','function renderSimilarity','function probabilityBand','function similarMatchesFor','function operationalSafe','function guardMeaning','function landOnSection','const rowHasBlockingAnomaly','const decimalOdds','const marketFamily','const minOdds','function offersFor'];
+          const miss=[...htmlReq.filter(x=>!html.includes(x)),...jsReq.filter(x=>!code.includes(x))];
+          if(miss.length)throw new Error('Betting Intelligence contract missing: '+miss.join(', '));
+          const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
+          const dup=[...new Set(ids.filter((x,i)=>ids.indexOf(x)!==i))];
+          if(dup.length)throw new Error('Duplicate IDs: '+dup.join(', '));
+          console.log(JSON.stringify({ok:true,version:'TEP-12.0-MARKET-LEADER',ids:ids.length}));
+          NODE
+      - name: Run Quant Engine
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          COMMERCIAL_MODE: ${{ vars.COMMERCIAL_MODE }}
+          COMMERCIAL_ODDS_LICENSE_CONFIRMED: ${{ vars.COMMERCIAL_ODDS_LICENSE_CONFIRMED }}
+          COMMERCIAL_HISTORY_LICENSE_CONFIRMED: ${{ vars.COMMERCIAL_HISTORY_LICENSE_CONFIRMED }}
+          ATP_HISTORY_URL_TEMPLATE: ${{ vars.ATP_HISTORY_URL_TEMPLATE }}
+          WTA_HISTORY_URL_TEMPLATE: ${{ vars.WTA_HISTORY_URL_TEMPLATE }}
+        run: node quant-engine.mjs
+      - name: Quant Board fail-closed validation
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=require('fs'),p='data/quant-board.json';
+          if(!fs.existsSync(p))throw new Error('quant board missing');
+          const q=JSON.parse(fs.readFileSync(p));
+          for(const k of ['upcoming','radar','history'])if(!Array.isArray(q[k]))throw new Error(k+' invalid');
+          if(!Number.isFinite(new Date(q.meta?.updated_at).getTime()))throw new Error('updated_at invalid');
+          const ids=new Set();
+          const decimalOdds=v=>{if(v===null||v===undefined||v==='')return null;if(typeof v==='number')return Number.isFinite(v)&&v>1?v:null;const s=String(v).trim();if(/^\+\d+(?:\.\d+)?$/.test(s))return 1+Number(s.slice(1))/100;if(/^-\d+(?:\.\d+)?$/.test(s))return 1+100/Math.abs(Number(s));if(/^\d+(?:\.\d+)?\/\d+(?:\.\d+)?$/.test(s)){const[a,b]=s.split('/').map(Number);return b>0?1+a/b:null}const x=Number(s);return Number.isFinite(x)&&x>1?x:null};
+          for(const x of q.upcoming){
+            const id=String(x.event_id||'');
+            if(!id||ids.has(id))throw new Error('event id missing/duplicate: '+id);
+            ids.add(id);
+            if(!x.player_a||!x.player_b)throw new Error('players missing: '+id);
+            const rows=x.market_live?.rows?.length?x.market_live.rows:(x.market_lab?.priced||[]);
+            for(const r of rows){
+              const value=['VALUE','STRONG VALUE'].includes(String(r.verdict||'').toUpperCase());
+              const prob=Number(r.robust_prob??r.model_prob??r.pick_prob);
+              const odds=decimalOdds(r.current_odds??r.best_odds??r.pick_odds);
+              const ev=Number(r.current_robust_ev??r.robust_ev??r.current_ev??r.pick_ev);
+              if(value&&(!(prob>0&&prob<1)||!(odds>1)||!Number.isFinite(ev)))throw new Error('VALUE contract invalid: '+id);
+              if(String(r.validation_tier||'').toUpperCase()==='OFFICIAL_ML'&&value&&x.verdict==='NO BET')throw new Error('official market bypasses NO BET: '+id);
+            }
+          }
+          console.log(JSON.stringify({ok:true,model:q.meta?.model_version,events:q.upcoming.length,marketStats:q.market_stats?.settled||0}));
+          NODE
+      - name: Commit state
+        shell: bash
+        run: |
+          if git diff --quiet -- data/quant-board.json; then echo "No quant changes"; exit 0; fi
+          git config user.name "tennis-zero-cost-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/quant-board.json
+          git commit -m "quant: v12 market leader refresh"
+          git pull --rebase
+          git push
