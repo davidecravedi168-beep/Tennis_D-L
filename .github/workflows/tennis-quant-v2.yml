@@ -10,12 +10,13 @@ on:
       - "live-engine.mjs"
       - "index.html"
       - "scripts/**"
+      - "data/scheduler-kick.txt"
   workflow_dispatch:
   workflow_call:
   schedule:
-    # Plain UTC cron is the most widely supported GitHub scheduler path.
-    # Six staggered chances/hour; the freshness gate spends API quota only when data is due.
-    - cron: "2,12,22,32,42,52 * * * *"
+    # Off-peak minutes reduce GitHub scheduler congestion/dropped runs.
+    # Four chances/hour; the freshness gate spends API quota only when data is due.
+    - cron: "11,26,41,56 * * * *"
 
 permissions:
   contents: write
