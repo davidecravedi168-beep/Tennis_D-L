@@ -11,6 +11,7 @@ on:
       - "index.html"
       - "scripts/**"
   workflow_dispatch:
+  workflow_call:
   schedule:
     # Plain UTC cron is the most widely supported GitHub scheduler path.
     # Six staggered chances/hour; the freshness gate spends API quota only when data is due.

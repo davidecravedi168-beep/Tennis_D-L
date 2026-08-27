@@ -1,0 +1,16 @@
+name: Tennis Edge Pro 12.5 Scheduler Watchdog
+run-name: "TEP 12.5 · watchdog · ${{ github.event_name }}"
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Independent scheduler identity. The shared freshness gate prevents duplicate API work.
+    - cron: "7,17,27,37,47,57 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  stable-autopilot:
+    uses: ./.github/workflows/tennis-quant-v2.yml
+    secrets: inherit
