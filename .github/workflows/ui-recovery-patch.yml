@@ -1,0 +1,52 @@
+name: TEP 12.5 UI Recovery Patch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/ui-recovery-patch.yml"
+      - "scripts/ui-recovery-patch.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tep-ui-recovery-patch
+  cancel-in-progress: false
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Apply recovery UI migration
+        run: node scripts/ui-recovery-patch.mjs
+
+      - name: Validate app contract
+        run: node scripts/validate-app.mjs
+
+      - name: Commit patched UI
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "No UI changes required"
+            exit 0
+          fi
+          git config user.name "tennis-edge-autopilot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "fix(ui): allow validated recovery autopilot without faking schedule"
+          git pull --rebase origin main
+          git push origin HEAD:main
