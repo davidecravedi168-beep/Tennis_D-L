@@ -52,8 +52,10 @@ jobs:
         run: |
           node --check quant-engine.mjs
           node --check live-engine.mjs
+          node --check scripts/forward-ledger.mjs
           node quant-engine.mjs --self-test
           node live-engine.mjs --self-test
+          node scripts/forward-ledger.mjs --self-test
           node scripts/validate-app.mjs
 
       - name: Run Quant Engine
@@ -100,11 +102,16 @@ jobs:
           node scripts/validate-board.mjs quant
           node scripts/validate-board.mjs live
 
+      - name: Update immutable forward ledger
+        run: |
+          node scripts/forward-ledger.mjs
+          node scripts/forward-ledger.mjs --validate
+
       - name: Commit validated state
         shell: bash
         run: |
           set -euo pipefail
-          git add -A -- data/quant-board.json data/quant-state.json data/live-board.json data/automation-health.json
+          git add -A -- data/quant-board.json data/quant-state.json data/live-board.json data/automation-health.json data/forward-ledger.json
           if git diff --cached --quiet; then
             echo "No validated state changes"
             exit 0
@@ -128,3 +135,12 @@ jobs:
           echo "- Quant: ${RUN_QUANT:-unknown} · ${QUANT_REASON:-unknown}" >> "$GITHUB_STEP_SUMMARY"
           echo "- Live: ${RUN_LIVE:-unknown} · ${LIVE_REASON:-unknown}" >> "$GITHUB_STEP_SUMMARY"
           echo "- Scheduler event: ${{ github.event_name }}" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f data/forward-ledger.json ]; then
+            node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
+          const fs=require('fs');
+          const x=JSON.parse(fs.readFileSync('data/forward-ledger.json','utf8'));
+          const s=x.stats||{};
+          console.log(`- Forward ledger: ${s.total_forecasts??0} forecast · ${s.settled_forecasts??0} settled · ${s.settled_picks??0} pick`);
+          console.log(`- Next audit: ${s.next_audit_target??100} · remaining ${s.forecasts_to_next_audit??100}`);
+          NODE
+          fi
