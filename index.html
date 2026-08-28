@@ -420,7 +420,7 @@ function exportHistory(){const rows=(board?.history||[]).filter(x=>x.status==='S
 function renderAll(){if(!board)return;$('contractBanner').classList.toggle('show',!contract.ok);$('contractBanner').textContent=contract.ok?'':`Fail-closed attivo: ${contract.errors.join(' · ')}`;renderAutomation();renderHero();renderQuick();renderMarketTape();renderBestBets();renderScanner();renderAlerts();if(!selectedEvent)selectedEvent=bestRows(true,1)[0]?.event_id||board?.upcoming?.[0]?.event_id||null;if(!selectedMarketKey){const r=bestRowForEvent(selectedEvent);selectedMarketKey=r?rowKey(r):null}renderMarketMatrix();renderLadder();renderPriceWatch();renderWhy();renderDataHealth();renderSimilarity();renderMatches();renderRecord();renderPerformance();renderBankroll();renderLedger();renderLive();updateSyncStatus()}
 function updateSyncStatus(){const ok=operationalSafe(),age=boardAge();$('onlineDot').classList.toggle('off',!ok);$('syncLabel').textContent=usingCache?'CACHE':!navigator.onLine?'OFFLINE':!contract.ok?'DATA GUARD':board&&finite(age)?`${Math.round(age)}m`:'DATA GUARD'}
 
-async function fetchJSON(url){const c=new AbortController(),timer=setTimeout(()=>c.abort(),FETCH_TIMEOUT);try{const r=await fetch(url,{cache:'no-cache',signal:c.signal,headers:{Accept:'application/json'}});if(!r.ok)throw new Error(`HTTP ${r.status}`);return await r.json()}finally{clearTimeout(timer)}}
+async function fetchJSON(url){const c=new AbortController(),timer=setTimeout(()=>c.abort(),FETCH_TIMEOUT);const sep=url.includes('?')?'&':'?';const fresh=url+sep+'v='+Date.now();try{const r=await fetch(fresh,{cache:'no-store',signal:c.signal,headers:{Accept:'application/json','Cache-Control':'no-cache'}});if(!r.ok)throw new Error(`HTTP ${r.status}`);return await r.json()}finally{clearTimeout(timer)}}
 async function sync(force=false){
   if(document.hidden&&!force)return;
   const quantRequest=fetchJSON('data/quant-board.json'),liveRequest=fetchJSON('data/live-board.json');
@@ -448,6 +448,7 @@ function bind(){
 function start(){applyPrefs();bind();const hash=(location.hash||'#bets').slice(1);showSection(hash);const c=loadCache();if(c){board=c;usingCache=true;contract=validateBoard(c);renderAll()}sync(true);setInterval(()=>sync(),180000);setInterval(()=>{if(board){renderAutomation();renderHero();renderQuick();renderMarketTape();renderAlerts();renderDataHealth();renderLive();updateSyncStatus()}},30000)}
 document.addEventListener('DOMContentLoaded',start,{once:true});
 
+// TENNIS_REFRESH_RESILIENCE_R1
 </script>
 </body>
 </html>
