@@ -51,6 +51,9 @@ jobs:
         with:
           node-version: "24"
 
+      - name: Apply browser refresh resilience
+        run: node scripts/apply-refresh-resilience.mjs
+
       - name: Scheduler freshness gate
         id: gate
         env:
@@ -62,6 +65,7 @@ jobs:
         run: |
           node --check quant-engine.mjs
           node --check live-engine.mjs
+          node --check scripts/apply-refresh-resilience.mjs
           node --check scripts/forward-ledger.mjs
           node --check scripts/legacy-forward-audit.mjs
           node quant-engine.mjs --self-test
@@ -128,7 +132,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git add -A -- data/quant-board.json data/quant-state.json data/live-board.json data/automation-health.json data/forward-ledger.json data/legacy-forward-audit.json
+          git add -A -- index.html data/quant-board.json data/quant-state.json data/live-board.json data/automation-health.json data/forward-ledger.json data/legacy-forward-audit.json
           if git diff --cached --quiet; then
             echo "No validated state changes"
             exit 0
