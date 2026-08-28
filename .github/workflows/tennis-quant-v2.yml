@@ -13,11 +13,21 @@ on:
       - "data/scheduler-kick.txt"
   workflow_dispatch:
   workflow_call:
+    inputs:
+      source_event:
+        description: "Original caller event (schedule/manual)"
+        required: false
+        type: string
+        default: ""
+      source_schedule:
+        description: "Original caller cron expression"
+        required: false
+        type: string
+        default: ""
   schedule:
-    # Deliberately changed to force GitHub to re-register/reactivate the native scheduler.
-    # Off-peak slots reduce scheduler congestion; freshness gate prevents duplicate API work.
+    # GitHub Actions cron is UTC. Minutes are intentionally off-peak.
+    # No timezone key: GitHub does not support it in workflow schedule syntax.
     - cron: "07,22,37,52 * * * *"
-      timezone: "Europe/Rome"
 
 permissions:
   contents: write
@@ -32,7 +42,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        uses: actions/checkout@3d3c42e5aac5ba80582507c181273ba90b1 # v7
         with:
           fetch-depth: 0
 
@@ -44,8 +54,8 @@ jobs:
       - name: Scheduler freshness gate
         id: gate
         env:
-          GH_EVENT_NAME: ${{ github.event_name }}
-          GH_EVENT_SCHEDULE: ${{ github.event.schedule }}
+          GH_EVENT_NAME: ${{ inputs.source_event || github.event_name }}
+          GH_EVENT_SCHEDULE: ${{ inputs.source_schedule || github.event.schedule }}
         run: node scripts/scheduler-gate.mjs
 
       - name: Source and app contract tests
@@ -89,8 +99,8 @@ jobs:
 
       - name: Stamp automation health
         env:
-          GH_EVENT_NAME: ${{ github.event_name }}
-          GH_EVENT_SCHEDULE: ${{ github.event.schedule }}
+          GH_EVENT_NAME: ${{ inputs.source_event || github.event_name }}
+          GH_EVENT_SCHEDULE: ${{ inputs.source_schedule || github.event.schedule }}
           GH_RUN_ID: ${{ github.run_id }}
           GH_RUN_ATTEMPT: ${{ github.run_attempt }}
           RUN_QUANT: ${{ steps.gate.outputs.run_quant }}
@@ -141,7 +151,7 @@ jobs:
           echo "### Tennis Edge Pro 12.5 Autopilot" >> "$GITHUB_STEP_SUMMARY"
           echo "- Quant: ${RUN_QUANT:-unknown} · ${QUANT_REASON:-unknown}" >> "$GITHUB_STEP_SUMMARY"
           echo "- Live: ${RUN_LIVE:-unknown} · ${LIVE_REASON:-unknown}" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Scheduler event: ${{ github.event_name }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Scheduler source event: ${{ inputs.source_event || github.event_name }}" >> "$GITHUB_STEP_SUMMARY"
           if [ -f data/forward-ledger.json ]; then
             node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
           const fs=require('fs');
