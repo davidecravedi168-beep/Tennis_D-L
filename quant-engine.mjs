@@ -865,14 +865,20 @@ function publicPlayerIntel(p,name,tour,surface){
     verification_note:'Statistiche calcolate dallo storico match del motore; link ufficiali ATP/WTA e SofaScore per controllo esterno. Nessun dato viene inventato se il campione non e disponibile.'
   };
 }
+function withForecastLock(p){
+  if(!p||!Number.isFinite(Number(p.p_a)))return p;
+  const side=p.forecast_side||(Number(p.p_a)>=.5?"A":"B"),name=p.forecast_name||(side==="A"?p.player_a:p.player_b),prob=Number.isFinite(p.forecast_prob)?p.forecast_prob:Math.max(Number(p.p_a),Number(p.p_b));
+  const mp=Number(p.market_consensus_a),marketSide=p.market_favorite_side||(Number.isFinite(mp)?(mp>=.5?"A":"B"):null);
+  return{...p,forecast_side:side,forecast_name:name,forecast_prob:prob,forecast_confidence:p.forecast_confidence??p.sports_confidence??p.confidence,forecast_locked_at:p.forecast_locked_at||p.predicted_at,market_favorite_side:marketSide,market_favorite_name:p.market_favorite_name||(marketSide==="A"?p.player_a:marketSide==="B"?p.player_b:null),market_favorite_prob:p.market_favorite_prob??(Number.isFinite(mp)?Math.max(mp,1-mp):null),forecast_vs_market:p.forecast_vs_market||(marketSide?(side===marketSide?"AGREE":"UPSET_CALL"):null)};
+}
 function refreshPlayerIntel(locked,event,h,calibration,drift){
   const e=event||{
     id:locked.event_id,date:locked.start_at,home:locked.player_a,away:locked.player_b,
     league:{name:locked.tournament||"",slug:locked.league_slug||null}
   };
   const c=sportsCore(e,h,calibration,drift);
-  if(!c)return{...locked,player_intel_status:"DATA_GAP"};
-  return{
+  if(!c)return withForecastLock({...locked,player_intel_status:"DATA_GAP"});
+  return withForecastLock({
     ...locked,
     player_intel:{
       candidate_side:locked.candidate_side||locked.pick_side||null,
@@ -884,7 +890,7 @@ function refreshPlayerIntel(locked,event,h,calibration,drift){
     player_intel_status:"READY",
     player_intel_refreshed_at:NOW.toISOString(),
     prediction_lock_preserved:true
-  };
+  });
 }
 
 function adaptationContext(A,B,targetSurface){
@@ -1088,6 +1094,11 @@ function buildPreview(event,h,calSet,drift){
 }
 function buildPrediction(event,mkt,h,calSet,drift){
   const c=sportsCore(event,h,calSet,drift);if(!c)return null;
+  // The forecast answers "who is more likely to win?" and is locked for every
+  // analysed match.  The candidate answers the separate betting question
+  // "which side, if any, has value at the available price?".
+  const forecastSide=c.pA>=.5?"A":"B",forecastName=forecastSide==="A"?event.home:event.away,forecastProb=Math.max(c.pA,c.pB);
+  const marketFavoriteSide=mkt.consensus>=.5?"A":"B",marketFavoriteName=marketFavoriteSide==="A"?event.home:event.away,marketFavoriteProb=Math.max(mkt.consensus,1-mkt.consensus);
   const edgeA=c.pA-mkt.consensus,edgeB=c.pB-(1-mkt.consensus),evA=c.pA*mkt.bestA-1,evB=c.pB*mkt.bestB-1;
   let candidateSide,candidateName,candidateOdds,candidateBook,candidateEV,candidateEdge,candidateProb,candidateAge,candidateUpdated;
   if(evA>=evB){candidateSide="A";candidateName=event.home;candidateOdds=mkt.bestA;candidateBook=mkt.bestBookA;candidateEV=evA;candidateEdge=edgeA;candidateProb=c.pA;candidateAge=mkt.bestAgeA;candidateUpdated=mkt.bestUpdatedA}
@@ -1125,7 +1136,10 @@ function buildPrediction(event,mkt,h,calSet,drift){
     event_id:String(event.id),start_at:event.date,player_a:event.home,player_b:event.away,tournament:event.league?.name||"—",league_slug:event.league?.slug||null,priority:Math.round(event._priority??eventPriority(event,h)),
     surface:c.surface,tour:c.tour,raw_p_a:c.rawP,shadow_p_a:c.shadowRaw,p_a:c.pA,p_b:c.pB,uncertainty:c.uncertainty,probability_low:Math.max(.01,candidateProb-c.uncertainty),probability_high:Math.min(.99,candidateProb+c.uncertainty),
     model_a_p:c.modelA,model_b_p:c.modelB,model_c_p:c.modelC,model_a_name:"Strength",model_b_name:"Surface",model_c_name:"Form/Matchup",model_disagreement:c.dis,engine_votes:`${Math.max(c.votesA,c.votesB)}/3`,engine_majority:c.majority,engine_unanimous:c.unanimous,
-    fair_a:1/c.pA,fair_b:1/c.pB,candidate_side:candidateSide,candidate_name:candidateName,candidate_prob:candidateProb,candidate_odds:candidateOdds,candidate_book:candidateBook,candidate_ev:candidateEV,candidate_edge:candidateEdge,robust_prob:robustProb,robust_ev:robustEV,robust_edge:robustEdge,
+    fair_a:1/c.pA,fair_b:1/c.pB,
+    forecast_side:forecastSide,forecast_name:forecastName,forecast_prob:forecastProb,forecast_confidence:c.sportsConf,forecast_locked_at:NOW.toISOString(),
+    market_favorite_side:marketFavoriteSide,market_favorite_name:marketFavoriteName,market_favorite_prob:marketFavoriteProb,forecast_vs_market:forecastSide===marketFavoriteSide?"AGREE":"UPSET_CALL",
+    candidate_side:candidateSide,candidate_name:candidateName,candidate_prob:candidateProb,candidate_odds:candidateOdds,candidate_book:candidateBook,candidate_ev:candidateEV,candidate_edge:candidateEdge,robust_prob:robustProb,robust_ev:robustEV,robust_edge:robustEdge,
     pick_side:official?candidateSide:null,pick_name:official?candidateName:null,pick_prob:official?candidateProb:null,pick_odds:official?candidateOdds:null,pick_book:official?candidateBook:null,pick_ev:official?candidateEV:null,pick_edge:official?candidateEdge:null,
     watch_side:watch?candidateSide:null,watch_name:watch?candidateName:null,verdict,confidence:conf,sports_confidence:c.sportsConf,data_quality:dq,market_depth:mkt.count,market_consensus_a:mkt.consensus,market_sd:mkt.sd,market_margin:mkt.margin,market_updated_at:candidateUpdated,market_age_minutes:Number.isFinite(candidateAge)?candidateAge:null,
     rank_a:c.A.rank,rank_b:c.B.rank,elo_a:c.eloA,elo_b:c.eloB,surface_elo_a:c.sEloA,surface_elo_b:c.sEloB,form_a:c.A.form,form_b:c.B.form,surface_form_a:c.A.surface,surface_form_b:c.B.surface,surface_sample_a:c.A.surfaceN,surface_sample_b:c.B.surfaceN,h2h_n:c.HH.n,h2h_edge:c.HH.edge,serve_return_delta:c.srA-c.srB,workload7_a:c.A.workload7,workload7_b:c.B.workload7,matches7_a:c.A.matches7,matches7_b:c.B.matches7,rest_days_a:c.A.last_match_days,rest_days_b:c.B.last_match_days,last_surface_a:c.A.last_surface,last_surface_b:c.B.last_surface,surface_transition_a:c.adaptation.a.surfaceChange,surface_transition_b:c.adaptation.b.surfaceChange,dense_load_a:c.adaptation.a.denseLoad,dense_load_b:c.adaptation.b.denseLoad,adaptation_risk:c.adaptation.riskMax,
@@ -1178,6 +1192,8 @@ async function settlePredictions(bookmakers,events=[]){
     if(!dueIds.has(id)){remaining.push(p);continue}
     const e=byId.get(id),actual=e?winnerSide(e):null;
     if(!e||!actual){remaining.push(p);continue}
+    const forecastSide=p.forecast_side||(Number(p.p_a)>=.5?"A":"B"),forecastName=p.forecast_name||(forecastSide==="A"?p.player_a:p.player_b),forecastProb=Number.isFinite(Number(p.forecast_prob))?Number(p.forecast_prob):Math.max(Number(p.p_a)||0,Number(p.p_b)||0);
+    const forecastWon=forecastSide===actual;
     const won=p.pick_side?p.pick_side===actual:null,profit=p.pick_side?(won?(p.pick_odds-1):-1):0,y=actual==="A"?1:0;
     let clv=null,closingOdds=null;
     const hourly=Number.isFinite(state.rate_limit?.remaining)?state.rate_limit.remaining:RUN_CAP;
@@ -1189,16 +1205,18 @@ async function settlePredictions(bookmakers,events=[]){
     const secondary_settled=settleSecondaryMarkets(e,p);
     // Keep the immutable audit facts, but drop bulky live/player payloads once a match is settled.
     const {player_intel,market_live,market_lab,quote_tape,...locked}=p;
-    hist.unshift({...locked,status:"SETTLED",settled_at:NOW.toISOString(),actual_side:actual,actual_winner:actual==="A"?p.player_a:p.player_b,pick_won:won,profit_units:profit,brier:(p.p_a-y)**2,log_loss:-(y*Math.log(clamp(p.p_a,.001,.999))+(1-y)*Math.log(clamp(1-p.p_a,.001,.999))),shadow_brier:Number.isFinite(p.shadow_p_a)?(p.shadow_p_a-y)**2:null,shadow_log_loss:Number.isFinite(p.shadow_p_a)?-(y*Math.log(clamp(p.shadow_p_a,.001,.999))+(1-y)*Math.log(clamp(1-p.shadow_p_a,.001,.999))):null,closing_odds:closingOdds,clv,secondary_settled,archive_compacted:true});
+    hist.unshift({...locked,forecast_side:forecastSide,forecast_name:forecastName,forecast_prob:forecastProb,forecast_won:forecastWon,status:"SETTLED",settled_at:NOW.toISOString(),actual_side:actual,actual_winner:actual==="A"?p.player_a:p.player_b,pick_won:won,profit_units:profit,brier:(p.p_a-y)**2,log_loss:-(y*Math.log(clamp(p.p_a,.001,.999))+(1-y)*Math.log(clamp(1-p.p_a,.001,.999))),shadow_brier:Number.isFinite(p.shadow_p_a)?(p.shadow_p_a-y)**2:null,shadow_log_loss:Number.isFinite(p.shadow_p_a)?-(y*Math.log(clamp(p.shadow_p_a,.001,.999))+(1-y)*Math.log(clamp(1-p.shadow_p_a,.001,.999))):null,closing_odds:closingOdds,clv,secondary_settled,archive_compacted:true});
   }
   state.history=hist.slice(0,2000);state.upcoming=remaining;
 }
 function stats(history){
   const closed=(history||[]).filter(x=>x.status==="SETTLED"),picks=closed.filter(x=>x.pick_side&&(x.verdict==="VALUE"||x.verdict==="STRONG VALUE")),wins=picks.filter(x=>x.pick_won).length;
+  const forecasts=closed.filter(x=>x.forecast_side||Number.isFinite(x.p_a)),forecastWins=forecasts.filter(x=>typeof x.forecast_won==="boolean"?x.forecast_won:(x.forecast_side||(Number(x.p_a)>=.5?"A":"B"))===x.actual_side).length;
   const profit=picks.reduce((s,x)=>s+(num(x.profit_units)||0),0),clvs=picks.map(x=>num(x.clv)).filter(Number.isFinite),shadow=closed.map(x=>num(x.shadow_brier)).filter(Number.isFinite);
   const championBrier=closed.length?closed.reduce((s,x)=>s+(num(x.brier)||0),0)/closed.length:null,shadowBrier=shadow.length?shadow.reduce((a,b)=>a+b,0)/shadow.length:null;
   return{
-    closed_matches:closed.length,closed_picks:picks.length,wins,hit_rate:picks.length?wins/picks.length:null,profit_units:profit,roi:picks.length?profit/picks.length:null,
+    closed_matches:closed.length,closed_forecasts:forecasts.length,forecast_wins:forecastWins,forecast_accuracy:forecasts.length?forecastWins/forecasts.length:null,
+    closed_picks:picks.length,wins,hit_rate:picks.length?wins/picks.length:null,profit_units:profit,roi:picks.length?profit/picks.length:null,
     brier:championBrier,log_loss:closed.length?closed.reduce((s,x)=>s+(num(x.log_loss)||0),0)/closed.length:null,
     avg_clv:clvs.length?clvs.reduce((a,b)=>a+b,0)/clvs.length:null,clv_sample:clvs.length,
     shadow_brier:shadowBrier,shadow_sample:shadow.length,shadow_delta:championBrier!=null&&shadowBrier!=null?shadowBrier-championBrier:null
@@ -1359,9 +1377,11 @@ function selfTest(){
   if(!ad.a.surfaceChange||ad.b.surfaceChange||ad.riskMax!==1)throw new Error("SELFTEST_ADAPTATION");
   const load=adaptationContext({last_match_days:2,last_surface:"Hard",matches7:5,workload7:560},{last_match_days:3,last_surface:"Hard",matches7:2,workload7:180},"Hard");
   if(!load.a.denseLoad||load.riskMax!==1)throw new Error("SELFTEST_FATIGUE");
+  const fl=withForecastLock({player_a:"Market Favorite",player_b:"Model Favorite",p_a:.46,p_b:.54,market_consensus_a:.66,predicted_at:NOW.toISOString()});
+  if(fl.forecast_side!=="B"||fl.forecast_name!=="Model Favorite"||fl.market_favorite_side!=="A"||fl.forecast_vs_market!=="UPSET_CALL")throw new Error("SELFTEST_FORECAST_BET_SPLIT");
   const syn=[];for(let i=0;i<20;i++){const d=String(20240101+i),aw=i%2===0;const w=aw?"Alpha One":"Beta Two",l=aw?"Beta Two":"Alpha One";syn.push({tourney_date:d,surface:"Hard",winner_name:w,loser_name:l,winner_rank:20,loser_rank:40,minutes:90,w_svpt:60,w_1stWon:28,w_2ndWon:12,l_svpt:62,l_1stWon:25,l_2ndWon:10})}
   if(historicalColdStartRecords(syn,"atp").length<6)throw new Error("SELFTEST_COLD_START_WALK_FORWARD");
-  console.log(JSON.stringify({ok:true,model:MODEL_VERSION,tests:["market_no_vig","secondary_market_parser","multi_market_sim","price_guard","paper_guard","name_resolver","rate_limit_parser","surface_adaptation_guard","fatigue_guard","cold_start_walk_forward"]}));
+  console.log(JSON.stringify({ok:true,model:MODEL_VERSION,tests:["market_no_vig","secondary_market_parser","multi_market_sim","price_guard","paper_guard","name_resolver","rate_limit_parser","surface_adaptation_guard","fatigue_guard","forecast_bet_split","cold_start_walk_forward"]}));
 }
 if(process.argv.includes("--self-test")){selfTest();process.exit(0)}
 try{await main()}
