@@ -4,10 +4,8 @@ run-name: "TEP 12.5 · watchdog · ${{ github.event_name }}"
 on:
   workflow_dispatch:
   schedule:
-    # Independent scheduler identity, deliberately changed to force GitHub re-registration.
-    # Staggered from the primary workflow and away from the top of the hour.
+    # GitHub Actions cron is UTC; minutes are staggered from the primary workflow.
     - cron: "14,29,44 * * * *"
-      timezone: "Europe/Rome"
 
 permissions:
   contents: write
@@ -15,4 +13,7 @@ permissions:
 jobs:
   stable-autopilot:
     uses: ./.github/workflows/tennis-quant-v2.yml
+    with:
+      source_event: ${{ github.event_name }}
+      source_schedule: ${{ github.event.schedule || '' }}
     secrets: inherit
