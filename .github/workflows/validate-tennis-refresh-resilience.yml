@@ -1,0 +1,37 @@
+name: Validate Tennis Refresh Resilience
+
+on:
+  push:
+    branches: [dev-tennis-refresh-resilience]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: dev-tennis-refresh-resilience
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Apply client refresh patch
+        run: node scripts/apply-refresh-resilience.mjs
+      - name: Syntax and contract
+        run: |
+          node --check scripts/apply-refresh-resilience.mjs
+          node --check quant-engine.mjs
+          node --check live-engine.mjs
+          node quant-engine.mjs --self-test
+          node live-engine.mjs --self-test
+          grep -q "cache:'no-store'" index.html
+          grep -q "TENNIS_REFRESH_RESILIENCE_R1" index.html
+          grep -q "v='+Date.now()" index.html
+          git diff --check
+      - name: App validation pass 1
+        run: node scripts/validate-app.mjs
+      - name: App validation pass 2
+        run: node scripts/validate-app.mjs
