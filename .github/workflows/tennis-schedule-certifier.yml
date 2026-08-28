@@ -8,8 +8,8 @@ on:
       - ".github/workflows/tennis-schedule-certifier.yml"
   workflow_dispatch:
   schedule:
+    # GitHub Actions cron is UTC; this independent identity certifies native scheduling.
     - cron: "13,28,43,58 * * * *"
-      timezone: "Europe/Rome"
 
 permissions:
   contents: write
@@ -21,4 +21,7 @@ concurrency:
 jobs:
   autopilot:
     uses: ./.github/workflows/tennis-quant-v2.yml
+    with:
+      source_event: ${{ github.event_name }}
+      source_schedule: ${{ github.event.schedule || '' }}
     secrets: inherit
