@@ -56,6 +56,9 @@ patchFile('quant-engine.mjs',src=>{
 patchFile('index.html',html=>{
   html=html.replace("return event==='push'&&automationAge()<55};","return event==='push'&&automationAge()<80};");
 
+  const iconLinks=`<link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">\n<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">\n<link rel="manifest" href="./manifest.webmanifest">\n<meta name="apple-mobile-web-app-title" content="Tennis Edge Pro">`;
+  if(!html.includes('apple-touch-icon'))html=html.replace('<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">',`<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\n${iconLinks}`);
+
   html=once(html,
 `for(const r of rows)out.push({...r,event_id:String(x.event_id),player_a:x.player_a,player_b:x.player_b,tournament:x.tournament,surface:x.surface,start_at:x.start_at,confidence:r.confidence??x.confidence,data_quality:r.data_quality??x.data_quality,reason_codes:r.reason_codes||x.reason_codes||[],no_bet_reasons:r.no_bet_reasons||x.no_bet_reasons||[],audit_id:r.audit_id||x.audit_id,quote_tape:r.quote_tape||x.quote_tape||[],model_health:r.model_health||x.model_health,pre_verdict:x.verdict});`,
 `for(const r of rows)out.push({...r,event_id:String(x.event_id),player_a:x.player_a,player_b:x.player_b,tournament:x.tournament,surface:x.surface,start_at:x.start_at,forecast_side:x.forecast_side,forecast_name:x.forecast_name,forecast_prob:x.forecast_prob,sports_confidence:x.sports_confidence,prediction_summary:x.market_lab?.prediction_summary||null,best_prediction:x.market_lab?.best_prediction||null,confidence:r.confidence??x.confidence,data_quality:r.data_quality??x.data_quality,reason_codes:r.reason_codes||x.reason_codes||[],no_bet_reasons:r.no_bet_reasons||x.no_bet_reasons||[],audit_id:r.audit_id||x.audit_id,quote_tape:r.quote_tape||x.quote_tape||[],model_health:r.model_health||x.model_health,pre_verdict:x.verdict});`,'market rows prediction fields');
@@ -76,4 +79,4 @@ patchFile('index.html',html=>{
   return html;
 });
 
-console.log('prediction-first upgrade complete');
+console.log('prediction-first + app icon upgrade complete');
