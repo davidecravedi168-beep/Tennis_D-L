@@ -1,0 +1,65 @@
+name: Tennis Quant UI V13
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tennis-quant-math-v13.js"
+      - "tennis-quant-lab-v13.js"
+      - "tests/quant-math-v13.test.cjs"
+      - "scripts/upgrade_quant_ui_v13.py"
+      - ".github/workflows/tennis-quant-ui-v13.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "tennis-quant-math-v13.js"
+      - "tennis-quant-lab-v13.js"
+      - "tests/quant-math-v13.test.cjs"
+      - "scripts/upgrade_quant_ui_v13.py"
+      - ".github/workflows/tennis-quant-ui-v13.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tennis-quant-ui-v13-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Apply idempotent UI migration
+        run: python scripts/upgrade_quant_ui_v13.py
+      - name: Quant formula regression tests
+        run: node tests/quant-math-v13.test.cjs
+      - name: Syntax and contract checks
+        run: |
+          node --check tennis-quant-math-v13.js
+          node --check tennis-quant-lab-v13.js
+          grep -q 'tennis-quant-math-v13.js?v=13.0' index.html
+          grep -q 'tennis-quant-lab-v13.js?v=13.0' index.html
+          grep -q 'Hold from serve-point p' tennis-quant-lab-v13.js
+          grep -q 'TENNIS QUANT' tennis-quant-lab-v13.js
+          git diff --check
+      - name: Publish tested script wiring
+        if: github.event_name != 'pull_request'
+        run: |
+          if git diff --quiet; then
+            echo 'No UI wiring changes to publish'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Tennis Edge Pro V13 — wire premium quant UI'
+          git push origin HEAD:main
