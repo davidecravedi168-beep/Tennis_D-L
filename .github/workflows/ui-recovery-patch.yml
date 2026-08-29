@@ -6,6 +6,7 @@ on:
     paths:
       - ".github/workflows/ui-recovery-patch.yml"
       - "scripts/ui-recovery-patch.mjs"
+      - "scripts/generate-tep-icons.mjs"
   workflow_dispatch:
 
 permissions:
@@ -30,6 +31,9 @@ jobs:
         with:
           node-version: "24"
 
+      - name: Generate TEP app icons
+        run: node scripts/generate-tep-icons.mjs
+
       - name: Apply prediction-first migration
         run: node scripts/ui-recovery-patch.mjs
 
@@ -37,6 +41,12 @@ jobs:
         run: |
           node --check quant-engine.mjs
           node --check scripts/ui-recovery-patch.mjs
+          node --check scripts/generate-tep-icons.mjs
+          test -s icons/favicon-32.png
+          test -s icons/apple-touch-icon.png
+          test -s icons/icon-192.png
+          test -s icons/icon-512.png
+          test -s manifest.webmanifest
 
       - name: Validate app contract
         run: node scripts/validate-app.mjs
@@ -45,13 +55,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git add index.html quant-engine.mjs
+          git add index.html quant-engine.mjs manifest.webmanifest icons scripts/generate-tep-icons.mjs
           if git diff --cached --quiet; then
-            echo "No prediction-first changes required"
+            echo "No prediction-first/icon changes required"
             exit 0
           fi
           git config user.name "tennis-edge-autopilot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "feat: prediction-first verdict and multi-market selector"
+          git commit -m "feat: add TEP home-screen and bookmark icons"
           git pull --rebase origin main
           git push origin HEAD:main
