@@ -1,4 +1,4 @@
-name: TEP 12.5 UI Recovery Patch
+name: TEP 12.5 Prediction-First Upgrade
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: tep-ui-recovery-patch
+  group: tep-prediction-first-upgrade
   cancel-in-progress: false
 
 jobs:
@@ -30,23 +30,28 @@ jobs:
         with:
           node-version: "24"
 
-      - name: Apply recovery UI migration
+      - name: Apply prediction-first migration
         run: node scripts/ui-recovery-patch.mjs
+
+      - name: Syntax checks
+        run: |
+          node --check quant-engine.mjs
+          node --check scripts/ui-recovery-patch.mjs
 
       - name: Validate app contract
         run: node scripts/validate-app.mjs
 
-      - name: Commit patched UI
+      - name: Commit validated prediction-first upgrade
         shell: bash
         run: |
           set -euo pipefail
-          git add index.html
+          git add index.html quant-engine.mjs
           if git diff --cached --quiet; then
-            echo "No UI changes required"
+            echo "No prediction-first changes required"
             exit 0
           fi
           git config user.name "tennis-edge-autopilot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "fix(ui): allow validated recovery autopilot without faking schedule"
+          git commit -m "feat: prediction-first verdict and multi-market selector"
           git pull --rebase origin main
           git push origin HEAD:main
