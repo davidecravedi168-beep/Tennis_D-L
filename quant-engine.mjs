@@ -121,7 +121,8 @@ function compactRecentMatches(rows){
 }
 function compactMarketLab(lab){
   if(!lab||typeof lab!=="object")return lab;
-  const {scenario,best_priced,detected_market_names,note,...publicLab}=lab;
+  // Keep the compact prediction-first summary public. Raw provider metadata stays private.
+  const {best_priced,detected_market_names,note,...publicLab}=lab;
   return publicLab;
 }
 function compactMarketLive(live){
@@ -493,6 +494,19 @@ function marketLabFor(event,c,mkt,conf,dq,drift,officialVerdict="NO BET",candida
   }
   const tierRank=x=>x.validation_tier==="OFFICIAL_ML"?3:1,verdictRank=x=>({"STRONG VALUE":4,VALUE:3,WATCH:2,"NO BET":1}[x.verdict]||0);
   priced.sort((a,b)=>verdictRank(b)-verdictRank(a)||tierRank(b)-tierRank(a)||(b.robust_ev||-9)-(a.robust_ev||-9));
+  // Prediction first: estimate what is most likely to happen before looking at price.
+  // Price remains a second-stage gate; it can block a bet but never rewrite the sports forecast.
+  const forecastSide=c.pA>=.5?"A":"B",forecastName=forecastSide==="A"?event.home:event.away,forecastProb=Math.max(c.pA,c.pB);
+  const marketReliability={MATCH_WINNER:1,WIN_A_SET:.98,SET_HANDICAP:.96,GAME_HANDICAP:.94,TOTAL_GAMES:.92,FIRST_SET_WINNER:.88,TIEBREAK_IN_MATCH:.76,SET_SCORE:.68};
+  const predictionCandidates=priced
+    .filter(r=>Number.isFinite(r.model_prob)&&r.model_prob>=.54&&Number.isFinite(r.robust_prob)&&!(r.reasons||[]).length)
+    .map(r=>({...r,prediction_score:clamp((.72*r.model_prob+.28*r.robust_prob)*(marketReliability[r.market]||.8),0,1)}))
+    .sort((a,b)=>b.prediction_score-a.prediction_score||(b.model_prob||0)-(a.model_prob||0));
+  // A recommended wager must also clear the price gate. High probability alone is not enough.
+  const playable=predictionCandidates.filter(r=>Number.isFinite(r.robust_ev)&&r.robust_ev>0&&Number.isFinite(r.best_odds)&&r.best_odds>1);
+  const bestPrediction=playable[0]||null,alternatives=playable.slice(1,4);
+  const likelyScoreEntry=Object.entries(sim.score_probs).sort((a,b)=>b[1]-a[1])[0]||[null,null];
+  const prediction_summary={winner_side:forecastSide,winner_name:forecastName,winner_prob:forecastProb,confidence:conf,data_quality:dq,likely_set_score:likelyScoreEntry[0],likely_set_score_prob:likelyScoreEntry[1],expected_total_games:sim.mean_total_games,best_market:bestPrediction?{market:bestPrediction.market,selection:bestPrediction.selection,model_prob:bestPrediction.model_prob,robust_prob:bestPrediction.robust_prob,best_odds:bestPrediction.best_odds,min_acceptable_odds:bestPrediction.min_acceptable_odds,robust_ev:bestPrediction.robust_ev,prediction_score:bestPrediction.prediction_score,validation_tier:bestPrediction.validation_tier}:null};
   const scenario=[];
   for(const [score,p] of Object.entries(sim.score_probs).sort((a,b)=>b[1]-a[1]))scenario.push({market:"SET_SCORE",selection:score,model_prob:p,fair_odds:p>0?1/p:null,price_status:"MODEL_ONLY"});
   scenario.push({market:"FIRST_SET_WINNER",selection:event.home,model_prob:sim.first_set_a,fair_odds:sim.first_set_a>0?1/sim.first_set_a:null,price_status:"MODEL_ONLY"});
@@ -503,7 +517,7 @@ function marketLabFor(event,c,mkt,conf,dq,drift,officialVerdict="NO BET",candida
   if(Number.isFinite(sim.expected_aces_b))scenario.push({market:"EXPECTED_ACES",selection:event.away,model_mean:sim.expected_aces_b,price_status:"MODEL_EXPERIMENTAL"});
   if(Number.isFinite(sim.expected_breaks_a))scenario.push({market:"EXPECTED_BREAKS",selection:event.home,model_mean:sim.expected_breaks_a,price_status:"MODEL_EXPERIMENTAL"});
   if(Number.isFinite(sim.expected_breaks_b))scenario.push({market:"EXPECTED_BREAKS",selection:event.away,model_mean:sim.expected_breaks_b,price_status:"MODEL_EXPERIMENTAL"});
-  return{status:"PAPER_VALIDATION",simulations:sim.simulations,best_of:sim.best_of,mean_total_games:sim.mean_total_games,median_total_games:sim.median_total_games,serve_point_a:sim.serve_point_a,serve_point_b:sim.serve_point_b,hold_a:sim.hold_a,hold_b:sim.hold_b,tb_a:sim.tb_a,market_uncertainty:marketUnc,priced,scenario:scenario.slice(0,14),best_priced:priced[0]||null,detected_market_names:mkt.secondary?.detected_market_names||[],note:"Official ML keeps its mature gate. Price Guard adds a minimum acceptable price without rewriting the locked prediction. Secondary markets remain paper-only until each market family has enough settled evidence."};
+  return{status:"PAPER_VALIDATION",simulations:sim.simulations,best_of:sim.best_of,mean_total_games:sim.mean_total_games,median_total_games:sim.median_total_games,serve_point_a:sim.serve_point_a,serve_point_b:sim.serve_point_b,hold_a:sim.hold_a,hold_b:sim.hold_b,tb_a:sim.tb_a,market_uncertainty:marketUnc,priced,scenario:scenario.slice(0,14),prediction_summary,best_prediction:bestPrediction,alternatives,best_priced:priced[0]||null,detected_market_names:mkt.secondary?.detected_market_names||[],note:"Official ML keeps its mature gate. Price Guard adds a minimum acceptable price without rewriting the locked prediction. Secondary markets remain paper-only until each market family has enough settled evidence."};
 }
 function mapMultiOdds(raw){
   const arr=Array.isArray(raw)?raw:(raw?.data||raw?.events||[]);
@@ -1171,7 +1185,7 @@ function buildPrediction(event,mkt,h,calSet,drift){
     watch_side:watch?candidateSide:null,watch_name:watch?candidateName:null,verdict,confidence:conf,sports_confidence:c.sportsConf,data_quality:dq,market_depth:mkt.count,market_consensus_a:mkt.consensus,market_sd:mkt.sd,market_margin:mkt.margin,market_updated_at:candidateUpdated,market_age_minutes:Number.isFinite(candidateAge)?candidateAge:null,
     rank_a:c.A.rank,rank_b:c.B.rank,elo_a:c.eloA,elo_b:c.eloB,surface_elo_a:c.sEloA,surface_elo_b:c.sEloB,form_a:c.A.form,form_b:c.B.form,surface_form_a:c.A.surface,surface_form_b:c.B.surface,surface_sample_a:c.A.surfaceN,surface_sample_b:c.B.surfaceN,h2h_n:c.HH.n,h2h_edge:c.HH.edge,serve_return_delta:c.srA-c.srB,workload7_a:c.A.workload7,workload7_b:c.B.workload7,matches7_a:c.A.matches7,matches7_b:c.B.matches7,rest_days_a:c.A.last_match_days,rest_days_b:c.B.last_match_days,last_surface_a:c.A.last_surface,last_surface_b:c.B.last_surface,surface_transition_a:c.adaptation.a.surfaceChange,surface_transition_b:c.adaptation.b.surfaceChange,dense_load_a:c.adaptation.a.denseLoad,dense_load_b:c.adaptation.b.denseLoad,adaptation_risk:c.adaptation.riskMax,
     player_intel:{candidate_side:candidateSide,candidate_name:candidateName,a:publicPlayerIntel(c.A,event.home,c.tour,c.surface),b:publicPlayerIntel(c.B,event.away,c.tour,c.surface)},
-    market_lab:marketLab,market_best:marketLab.best_priced,multi_market_version:"MM-3.0-PRICE-GUARD",
+    market_lab:marketLab,market_best:marketLab.best_priced,multi_market_version:"MM-4.0-PREDICTION-FIRST",
     reason_codes:reasons.slice(0,7),no_bet_reasons:hard,warnings:[...new Set(warnings)],calibration_sample:c.cal.sample,calibration_scope:c.cal.scope,calibration_active:!!c.cal.active,model_health:drift.health,model_version:MODEL_VERSION,predicted_at:NOW.toISOString(),locked:true,status:"LOCKED"
   };
   payload.audit_id=hash(payload);return payload;
