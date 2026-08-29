@@ -5,6 +5,7 @@ near(m.impliedProbability(2),0.5);
 near(m.fairOdds(0.625),1.6);
 near(m.expectedValue(0.55,2),0.10);
 near(m.probabilityEdge(0.57,0.52),0.05);
+near(m.fractionalKelly(0.55,2,0.25,0.02),0.02);
 near(m.holdProbabilityFromPoint(0.5),0.5);
 assert(m.holdProbabilityFromPoint(0.6)>0.5);
 near(m.eloWinProbability(1800,1800),0.5);
