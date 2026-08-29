@@ -54,7 +54,6 @@ patchFile('quant-engine.mjs',src=>{
 });
 
 patchFile('index.html',html=>{
-  // Preserve recovery heartbeat relaxation from the previous patch.
   html=html.replace("return event==='push'&&automationAge()<55};","return event==='push'&&automationAge()<80};");
 
   html=once(html,
@@ -68,8 +67,8 @@ patchFile('index.html',html=>{
   html=html.replace("if(!operationalSafe()||!r){","if(!r){");
 
   html=once(html,
-`ver.className=\`heroVerdict ${cls}\`;ver.textContent=st==='BET ZONE'?'BET NOW':st==='TEST VALUE'?'PAPER EDGE':st==='WATCH PRICE'?'WAIT PRICE':'NO BET';$('heroMatch').innerHTML=\`${esc(r.selection)} <span style="color:var(--muted)">· ${esc(r.player_a)} vs ${esc(r.player_b)}</span>\`;$('heroSub').textContent=\`${marketLabel(r.market)} · ${offer?.book||'book non indicato'} · ${official?'track record validato':'mercato in validazione'}\`;`,
-`ver.className=\`heroVerdict ${cls}\`;ver.textContent='PRONOSTICO';const forecastName=r.forecast_name||r.prediction_summary?.winner_name||'—',forecastProb=n(r.forecast_prob)??n(r.prediction_summary?.winner_prob);$('heroMatch').innerHTML=\`${esc(forecastName)} ${finite(forecastProb)?pct(forecastProb):'—'} <span style="color:var(--muted)">· ${esc(r.player_a)} vs ${esc(r.player_b)}</span>\`;$('heroSub').textContent=\`Giocata migliore: ${r.selection} · ${marketLabel(r.market)} · ${st==='BET ZONE'?'PREZZO OK':st==='TEST VALUE'?'PAPER ONLY':st==='WATCH PRICE'?'ATTENDI QUOTA':st==='BLOCKED'?'BLOCCATA':'NESSUN INGRESSO'}\`;`,'hero verdict semantics');
+`ver.className=\`heroVerdict \${cls}\`;ver.textContent=st==='BET ZONE'?'BET NOW':st==='TEST VALUE'?'PAPER EDGE':st==='WATCH PRICE'?'WAIT PRICE':'NO BET';$('heroMatch').innerHTML=\`\${esc(r.selection)} <span style="color:var(--muted)">· \${esc(r.player_a)} vs \${esc(r.player_b)}</span>\`;$('heroSub').textContent=\`\${marketLabel(r.market)} · \${offer?.book||'book non indicato'} · \${official?'track record validato':'mercato in validazione'}\`;`,
+`ver.className=\`heroVerdict \${cls}\`;ver.textContent='PRONOSTICO';const forecastName=r.forecast_name||r.prediction_summary?.winner_name||'—',forecastProb=n(r.forecast_prob)??n(r.prediction_summary?.winner_prob);$('heroMatch').innerHTML=\`\${esc(forecastName)} \${finite(forecastProb)?pct(forecastProb):'—'} <span style="color:var(--muted)">· \${esc(r.player_a)} vs \${esc(r.player_b)}</span>\`;$('heroSub').textContent=\`Giocata migliore: \${r.selection} · \${marketLabel(r.market)} · \${st==='BET ZONE'?'PREZZO OK':st==='TEST VALUE'?'PAPER ONLY':st==='WATCH PRICE'?'ATTENDI QUOTA':st==='BLOCKED'?'BLOCCATA':'NESSUN INGRESSO'}\`;`,'hero verdict semantics');
 
   html=html.replaceAll('<span>ENTRA DA</span>','<span>QUOTA MINIMA ≥</span>');
   html=html.replaceAll('<span class="maturity">${esc(marketFamily(r.market))} · ${esc(mat.label)}</span>','<span class="maturity">MERCATO ${esc(marketFamily(r.market))} · DATI ${esc(mat.label)}</span>');
