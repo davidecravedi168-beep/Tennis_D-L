@@ -10,7 +10,7 @@ function validatePercent(v,label){if(v!=null&&(!finite(v)||Number(v)<0||Number(v
 
 function validateQuant(){
   const bytes=fs.statSync("data/quant-board.json").size;
-  if(bytes>650000)fail(`quant: public board too large for reliable mobile loading (${bytes} bytes)`);
+  if(bytes>600000)fail(`quant: public board too large for reliable mobile loading (${bytes} bytes)`);
   const q=read("data/quant-board.json");
   if(!q.meta||!String(q.meta.model_version||"").includes("12.5"))fail("quant: V12.5 model not active");
   if(!validDate(q.meta.updated_at))fail("quant: updated_at invalid");

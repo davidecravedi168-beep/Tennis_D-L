@@ -112,24 +112,44 @@ function publicRadar(x){
   };
 }
 function compactRecentMatches(rows){
-  return (rows||[]).slice(0,10).map(m=>({
+  return (rows||[]).slice(0,6).map(m=>({
     date:m.date,tournament:m.tournament,surface:m.surface,round:m.round,result:m.result,
     opponent:m.opponent,score:m.score,
     service:{service_games_won:m.service?.service_games_won??null},
     return:{return_games_won:m.return?.return_games_won??null}
   }));
 }
+function compactMarketLab(lab){
+  if(!lab||typeof lab!=="object")return lab;
+  const {scenario,best_priced,detected_market_names,note,...publicLab}=lab;
+  return publicLab;
+}
+function compactMarketLive(live){
+  if(!live||typeof live!=="object")return live;
+  const {best_current,...publicLive}=live;
+  return publicLive;
+}
 function publicPrediction(x){
   const intel=x?.player_intel;
-  if(!intel?.a||!intel?.b)return x;
-  return{...x,player_intel:{...intel,a:{...intel.a,recent_matches:compactRecentMatches(intel.a.recent_matches)},b:{...intel.b,recent_matches:compactRecentMatches(intel.b.recent_matches)}}};
+  const out={...x,market_lab:compactMarketLab(x?.market_lab),market_live:compactMarketLive(x?.market_live)};
+  if(!intel?.a||!intel?.b)return out;
+  return{...out,player_intel:{...intel,a:{...intel.a,recent_matches:compactRecentMatches(intel.a.recent_matches)},b:{...intel.b,recent_matches:compactRecentMatches(intel.b.recent_matches)}}};
+}
+function publicHistory(x){
+  const keys=[
+    "event_id","start_at","settled_at","player_a","player_b","tournament","league_slug","surface","tour","status","model_version","locked","predicted_at","audit_id",
+    "forecast_side","forecast_name","forecast_prob","forecast_won","p_a","p_b","raw_p_a","shadow_p_a","confidence","data_quality","uncertainty","actual_side","actual_winner",
+    "verdict","pick_side","pick_name","pick_prob","pick_odds","pick_book","pick_won","profit_units","brier","log_loss","shadow_brier","shadow_log_loss","closing_odds","clv",
+    "secondary_settled","market","pick_market","bet_score","archive_compacted"
+  ];
+  return Object.fromEntries(keys.filter(k=>x?.[k]!==undefined).map(k=>[k,x[k]]));
 }
 function publicBoard(s){
   const learning=s.learning||{};
   return roundPublic({
     meta:s.meta||{},stats:s.stats||{},market_stats:s.market_stats||{},risk:s.risk||{},
     radar:Array.isArray(s.radar)?s.radar.map(publicRadar):[],upcoming:Array.isArray(s.upcoming)?s.upcoming.map(publicPrediction):[],
-    history:Array.isArray(s.history)?s.history.slice(0,300):[],
+    history:Array.isArray(s.history)?s.history.slice(0,300).map(publicHistory):[],
     learning:{challenger:learning.challenger||null,drift:learning.drift||null,cold_start:learning.cold_start||null}
   });
 }
@@ -146,6 +166,13 @@ let state=await loadState();
 state.usage=state.usage||{day:dayKey(NOW),calls:0};
 if(state.usage.day!==dayKey(NOW))state.usage={day:dayKey(NOW),calls:0};
 let runCalls=0;
+
+if(process.argv.includes("--compact-public-board")){
+  await saveState(state);
+  const bytes=(await fs.stat(OUT)).size;
+  console.log(JSON.stringify({ok:true,action:"compact-public-board",bytes}));
+  process.exit(0);
+}
 
 async function api(endpoint,params={}){
   if(!API_KEY)throw new Error("MISSING_ODDS_API_KEY");
