@@ -15,20 +15,22 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
+      - run: python -m pip install --disable-pip-version-check pillow
       - run: python scripts/app_branding_v14.py
       - name: Validate branding
         run: |
+          test -s icons/apple-touch-icon.png
           test -s icons/icon-192.png
           test -s icons/icon-512.png
           grep -q 'apple-touch-icon' index.html
           grep -q 'manifest.webmanifest' index.html
           git diff --check
-      - name: Persist branding wiring
+      - name: Persist branding
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html
+          git add index.html manifest.webmanifest icons/apple-touch-icon.png icons/favicon-32.png icons/icon-192.png icons/icon-512.png
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'feat: install Tennis home-screen identity'
+          git commit -m 'feat: apply approved premium Tennis identity'
           git pull --rebase origin main
           git push origin HEAD:main
