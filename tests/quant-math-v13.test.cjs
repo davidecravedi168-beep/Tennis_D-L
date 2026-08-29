@@ -1,0 +1,14 @@
+const assert=require('assert');
+const m=require('../tennis-quant-math-v13.js');
+const near=(a,b,e=1e-9)=>assert(Math.abs(a-b)<=e);
+near(m.impliedProbability(2),0.5);
+near(m.fairOdds(0.625),1.6);
+near(m.expectedValue(0.55,2),0.10);
+near(m.probabilityEdge(0.57,0.52),0.05);
+near(m.holdProbabilityFromPoint(0.5),0.5);
+assert(m.holdProbabilityFromPoint(0.6)>0.5);
+near(m.eloWinProbability(1800,1800),0.5);
+near(m.bestOfThreeFromSetProb(0.6),0.648);
+near(m.brier(0.8,1),0.04);
+near(m.intervalWidth(0.58,0.66),0.08);
+console.log('Tennis Quant Math V13 tests: OK');
