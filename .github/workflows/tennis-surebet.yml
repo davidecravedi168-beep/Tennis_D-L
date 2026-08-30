@@ -48,6 +48,7 @@ jobs:
           node scripts/validate-app.mjs
 
       - name: Run SureBet scanner
+        if: github.event_name != 'push'
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: node surebet-engine.mjs
@@ -56,6 +57,7 @@ jobs:
         run: node scripts/validate-surebet.mjs data/surebet-board.json
 
       - name: Commit SureBet state
+        if: github.event_name != 'push'
         shell: bash
         run: |
           set -euo pipefail
@@ -77,6 +79,7 @@ jobs:
         if: always()
         run: |
           echo "### Tennis Edge Pro · SureBet" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Mode: ${{ github.event_name == 'push' && 'tests-only (0 quota)' || 'scanner' }}" >> "$GITHUB_STEP_SUMMARY"
           if [ -f data/surebet-board.json ]; then
             node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
           const x=require('./data/surebet-board.json');
