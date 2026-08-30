@@ -5,8 +5,9 @@ const API_KEY=process.env.ODDS_API_KEY;
 const BASE='https://api.odds-api.io/v3';
 const STATE='data/surebet-state.json';
 const OUT='data/surebet-board.json';
+const QUANT='data/quant-board.json';
 const NOW=new Date();
-const MODEL='TEP-SUREBET-1.0';
+const MODEL='TEP-SUREBET-1.1';
 const MAX_EVENTS_PER_RUN=10;
 const MAX_HOURS=48;
 const MAX_QUOTE_AGE_MIN=15;
@@ -29,7 +30,7 @@ async function api(endpoint,params={}){
   if(!API_KEY)throw new Error('MISSING_ODDS_API_KEY');
   const u=new URL(BASE+endpoint);u.searchParams.set('apiKey',API_KEY);
   for(const[k,v]of Object.entries(params))if(v!==undefined&&v!==null&&v!=='')u.searchParams.set(k,String(v));
-  const r=await fetch(u,{headers:{'user-agent':'TennisEdgePro-SureBet/1.0'}});calls++;
+  const r=await fetch(u,{headers:{'user-agent':'TennisEdgePro-SureBet/1.1'}});calls++;
   if(r.status===429)throw new Error('HTTP_429');
   if(!r.ok)throw new Error(`${endpoint} HTTP ${r.status}`);
   return r.json();
@@ -37,6 +38,19 @@ async function api(endpoint,params={}){
 function selectedNames(x){
   const a=Array.isArray(x)?x:(x?.bookmakers||x?.selected||x?.data||[]);
   return uniq(a.map(v=>typeof v==='string'?v:(v?.name||v?.bookmaker||v?.slug)));
+}
+function quantEvents(q){
+  const src=[...(Array.isArray(q?.upcoming)?q.upcoming:[]),...(Array.isArray(q?.radar)?q.radar:[])],seen=new Set(),out=[];
+  for(const x of src){
+    const id=String(x?.event_id||x?.id||'');if(!id||seen.has(id))continue;seen.add(id);
+    out.push({id,date:x?.start_at||x?.date,home:x?.player_a||x?.home,away:x?.player_b||x?.away,league:{name:x?.tournament||x?.league?.name||'Tennis'}});
+  }
+  return out;
+}
+function quantApiPaused(q){
+  const reset=new Date(q?.meta?.rate_limit_reset_at||0).getTime();
+  const paused=String(q?.meta?.status||'').includes('API PAUSA')||String(q?.meta?.error||'').includes('429');
+  return paused&&Number.isFinite(reset)&&reset>NOW.getTime()?new Date(reset).toISOString():null;
 }
 function rowsFromOdds(obj){
   const rows=[];
@@ -78,7 +92,6 @@ function analyze(event,obj){
   if(!Number.isFinite(best.age_a)||!Number.isFinite(best.age_b)||best.age_a>MAX_QUOTE_AGE_MIN||best.age_b>MAX_QUOTE_AGE_MIN)reasons.push('QUOTA_NON_FRESCA');
   if(spread>MAX_TIMESTAMP_SPREAD_MIN)reasons.push('QUOTE_NON_SINCRONE');
   if(outlier>MAX_OUTLIER_PP)reasons.push('QUOTA_OUTLIER');
-  if(rows.length<2)reasons.push('PROFONDITA_INSUFFICIENTE');
   const alloc=allocation(100,best.qa,best.qb),buffered=alloc.guaranteed_roi-SAFETY_BUFFER;
   if(buffered<=0)reasons.push('BUFFER_NON_SUPERATO');
   const status=best.raw_roi>0&&!reasons.length?'SUREBET':'NON_CERTIFICATA';
@@ -91,26 +104,38 @@ function analyze(event,obj){
   };
 }
 function mapMulti(raw){const a=Array.isArray(raw)?raw:(raw?.data||raw?.events||[]);return new Map(a.map(x=>[String(x.id??x.eventId),x]))}
+async function publishPaused(prev,reset,error='RATE_LIMIT_SHARED'){
+  await writeJson(STATE,{...state,updated_at:NOW.toISOString(),last_error:error,rate_limit_reset_at:reset||null});
+  await writeJson(OUT,{meta:{...(prev?.meta||{}),updated_at:NOW.toISOString(),status:'API_PAUSA',model_version:MODEL,error,rate_limit_reset_at:reset||null,note:'Scanner fermato per proteggere la quota gratuita. Nessuna vecchia opportunità viene mostrata come attiva.'},opportunities:[],checked:[]});
+}
 async function main(){
-  if(!API_KEY){await writeJson(OUT,{meta:{updated_at:NOW.toISOString(),status:'SETUP',model_version:MODEL,note:'Manca ODDS_API_KEY.'},opportunities:[]});return}
+  const prev=await readJson(OUT),quant=await readJson(QUANT);
+  if(!API_KEY){await writeJson(STATE,{...state,updated_at:NOW.toISOString(),last_error:'MISSING_ODDS_API_KEY'});await writeJson(OUT,{meta:{updated_at:NOW.toISOString(),status:'SETUP',model_version:MODEL,note:'Manca ODDS_API_KEY.'},opportunities:[],checked:[]});return}
+  const sharedReset=quantApiPaused(quant);if(sharedReset){await publishPaused(prev,sharedReset);return}
   try{
-    const cacheAge=ageMin(state.books?.fetched_at);let books=state.books?.names||[];
-    if(!books.length||cacheAge>24*60){books=selectedNames(await api('/bookmakers/selected'));state.books={names:books,fetched_at:NOW.toISOString()}}
+    let books=selectedNames(state.books?.names||quant?.meta?.bookmakers||[]);
+    if(!books.length){books=selectedNames(await api('/bookmakers/selected'));state.books={names:books,fetched_at:NOW.toISOString()}}
+    else state.books={names:books,fetched_at:state.books?.fetched_at||NOW.toISOString()};
     if(books.length<2)throw new Error('SERVONO_ALMENO_DUE_BOOKMAKER');
-    const er=await api('/events',{sport:'tennis'}),events=(Array.isArray(er)?er:(er?.data||er?.events||[])).filter(e=>singles(e)&&String(e?.status||'pending')==='pending'&&hoursUntil(e.date)>0&&hoursUntil(e.date)<=MAX_HOURS).sort((a,b)=>new Date(a.date)-new Date(b.date));
+    let events=quantEvents(quant).filter(e=>singles(e)&&hoursUntil(e.date)>0&&hoursUntil(e.date)<=MAX_HOURS).sort((a,b)=>new Date(a.date)-new Date(b.date));
+    if(!events.length){const er=await api('/events',{sport:'tennis'});events=(Array.isArray(er)?er:(er?.data||er?.events||[])).filter(e=>singles(e)&&String(e?.status||'pending')==='pending'&&hoursUntil(e.date)>0&&hoursUntil(e.date)<=MAX_HOURS).sort((a,b)=>new Date(a.date)-new Date(b.date))}
     const total=events.length,start=total?(state.cursor||0)%total:0,batch=[];for(let i=0;i<Math.min(MAX_EVENTS_PER_RUN,total);i++)batch.push(events[(start+i)%total]);state.cursor=total?(start+batch.length)%total:0;
     const raw=batch.length?await api('/odds/multi',{eventIds:batch.map(e=>e.id).join(','),bookmakers:books.join(',')}):[];const byId=mapMulti(raw),all=[];
     for(const e of batch){const x=analyze(e,byId.get(String(e.id)));if(x)all.push(x)}
     const opportunities=all.filter(x=>x.status==='SUREBET').sort((a,b)=>b.buffered_roi-a.buffered_roi);
-    state.detections=[...opportunities,...(state.detections||[])].slice(0,120);
-    state.updated_at=NOW.toISOString();await writeJson(STATE,state);
-    await writeJson(OUT,{meta:{updated_at:NOW.toISOString(),status:'READY',model_version:MODEL,source:'Odds-API.io development feed',bookmakers:books,bookmaker_count:books.length,events_total:total,events_scanned:batch.length,api_calls:calls,max_quote_age_min:MAX_QUOTE_AGE_MIN,max_timestamp_spread_min:MAX_TIMESTAMP_SPREAD_MIN,min_raw_roi:MIN_RAW_ROI,safety_buffer:SAFETY_BUFFER,note:'Solo arbitraggio 2-way Match Winner tra bookmaker diversi. Nessun modello predittivo viene usato.'},opportunities,checked:all.slice(0,50)});
-  }catch(e){const prev=await readJson(OUT);await writeJson(OUT,{meta:{...(prev?.meta||{}),updated_at:NOW.toISOString(),status:e.message==='HTTP_429'?'STALE':'ERROR',model_version:MODEL,error:e.message,note:'Ultimo board valido preservato quando disponibile.'},opportunities:prev?.opportunities||[],checked:prev?.checked||[]});process.exitCode=0}
+    state.detections=[...opportunities,...(state.detections||[])].slice(0,120);state.updated_at=NOW.toISOString();state.last_error=null;await writeJson(STATE,state);
+    await writeJson(OUT,{meta:{updated_at:NOW.toISOString(),status:'READY',model_version:MODEL,source:'Odds-API.io selected bookmakers · shared Tennis Edge event universe',bookmakers:books,bookmaker_count:books.length,events_total:total,events_scanned:batch.length,api_calls:calls,max_quote_age_min:MAX_QUOTE_AGE_MIN,max_timestamp_spread_min:MAX_TIMESTAMP_SPREAD_MIN,min_raw_roi:MIN_RAW_ROI,safety_buffer:SAFETY_BUFFER,fail_closed:true,note:'Solo arbitraggio 2-way Match Winner tra bookmaker diversi. Nessun modello predittivo viene usato.'},opportunities,checked:all.slice(0,50)});
+  }catch(e){
+    if(e.message==='HTTP_429'){await publishPaused(prev,null,'HTTP_429');return}
+    await writeJson(STATE,{...state,updated_at:NOW.toISOString(),last_error:e.message});
+    await writeJson(OUT,{meta:{...(prev?.meta||{}),updated_at:NOW.toISOString(),status:'ERROR',model_version:MODEL,error:e.message,note:'Fail-closed: nessuna opportunità attiva finché il feed non torna valido.'},opportunities:[],checked:[]});process.exitCode=0;
+  }
 }
 function selfTest(){
   const now=NOW.toISOString(),e={id:'T1',date:new Date(NOW.getTime()+3600000).toISOString(),home:'A',away:'B',league:{name:'ATP Test'}},o={bookmakers:{Alpha:[{name:'ML',odds:[{home:2.20,away:1.72}],updatedAt:now}],Beta:[{name:'ML',odds:[{home:1.80,away:2.05}],updatedAt:now}],Gamma:[{name:'ML',odds:[{home:1.92,away:1.92}],updatedAt:now}]}};
   const r=analyze(e,o);if(!r||r.status!=='SUREBET'||r.book_a!=='Alpha'||r.book_b!=='Beta'||!(r.stake_100.profit>5))throw new Error('SELFTEST_ARB');
   const a=allocation(100,2.2,2.05);if(Math.abs(a.stake_a+a.stake_b-100)>.001||a.guaranteed_profit<=0)throw new Error('SELFTEST_STAKE');
-  console.log(JSON.stringify({ok:true,model:MODEL,tests:['cross_book_arb','cent_rounding','freshness_gate','outlier_guard']}));
+  const stale=analyze(e,{bookmakers:{A:[{name:'ML',odds:[{home:2.20,away:1.70}],updatedAt:new Date(NOW-20*60000).toISOString()}],B:[{name:'ML',odds:[{home:1.80,away:2.05}],updatedAt:now}]}});if(stale?.status==='SUREBET')throw new Error('SELFTEST_STALE_GATE');
+  console.log(JSON.stringify({ok:true,model:MODEL,tests:['cross_book_arb','cent_rounding','freshness_gate','outlier_guard','fail_closed_stale']}));
 }
 if(process.argv.includes('--self-test'))selfTest();else await main();
