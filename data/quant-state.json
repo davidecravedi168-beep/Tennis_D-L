@@ -1,8 +1,8 @@
 {
   "meta": {
-    "updated_at": "2026-08-30T19:58:38.518Z",
+    "updated_at": "2026-08-30T20:50:54.897Z",
     "data_refreshed_at": "2026-08-30T19:58:38.518Z",
-    "status": "READY · BATCHING",
+    "status": "API PAUSA · 10 MIN",
     "source": "Research mode · Odds-API.io development tier + Sackmann archive mirror (CC BY-NC-SA)",
     "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
     "state_schema": "TEP-12.5",
@@ -29,12 +29,12 @@
     "cold_start_paper_mode": false,
     "model_health": "HEALTHY",
     "operating_mode": "LIVE RESEARCH",
-    "api_usage_today": 105,
+    "api_usage_today": 106,
     "api_daily_guard": 330,
     "api_hourly_remaining": 0,
-    "rate_limit_reset_at": "2026-08-30T20:20:59.000Z",
-    "rate_limit_minutes": 23,
-    "run_calls": 3,
+    "rate_limit_reset_at": "2026-08-30T21:00:15.000Z",
+    "rate_limit_minutes": 10,
+    "run_calls": 1,
     "pending_prediction_batch": 268,
     "processed_this_run": 40,
     "market_refresh_count": 0,
@@ -57,23 +57,24 @@
     "history_matches_loaded": 20044,
     "sport_specific_guard": "Surface sample + surface-transition adaptation + recent workload/fatigue uncertainty",
     "cross_app_learning": "Shared validation, audit, fail-closed and challenger discipline; sport model remains tennis-specific.",
-    "note": "NO BET first. Historical walk-forward calibration may unlock PAPER/TEST edges during cold start, but official ML remains blocked from VALUE until forward track-record health is mature. Multi-market simulation remains paper-only until family-level validation matures. Quote tape never rewrites a Prediction Lock.",
+    "note": "Limite orario raggiunto: il motore riparte automaticamente dopo il reset.",
     "automation": {
-      "checked_at": "2026-08-30T20:44:00.845Z",
+      "checked_at": "2026-08-30T20:50:55.959Z",
       "timezone": "Europe/Rome",
       "event": "schedule",
-      "schedule": "13,28,43,58 * * * *",
-      "run_id": "33334455534",
+      "schedule": "14,29,44 * * * *",
+      "run_id": "33334770836",
       "run_attempt": 1,
-      "run_quant": false,
+      "run_quant": true,
       "run_live": false,
-      "quant_reason": "age-45.4m",
+      "quant_reason": "age-52.3m",
       "live_reason": "live-429-cooldown",
       "workflow_version": "TEP-12.5-STABLE-AUTOPILOT",
-      "last_scheduler_at": "2026-08-30T20:44:00.845Z",
-      "last_scheduler_run_id": "33334455534",
+      "last_scheduler_at": "2026-08-30T20:50:55.959Z",
+      "last_scheduler_run_id": "33334770836",
       "scheduler_verified": true
-    }
+    },
+    "error": "RATE_LIMIT_429"
   },
   "radar": [
     {
@@ -69433,7 +69434,7 @@
   },
   "usage": {
     "day": "2026-08-30",
-    "calls": 105
+    "calls": 106
   },
   "cache": {
     "bookmakers": {
@@ -69446,9 +69447,9 @@
   },
   "rate_limit": {
     "remaining": 0,
-    "reset_at": "2026-08-30T20:20:59.000Z",
+    "reset_at": "2026-08-30T21:00:15.000Z",
     "last_status": 429,
-    "last_checked_at": "2026-08-30T19:58:38.518Z"
+    "last_checked_at": "2026-08-30T20:50:54.897Z"
   },
   "cursor": {
     "prediction_offset": 49
