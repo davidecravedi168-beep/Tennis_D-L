@@ -13,6 +13,7 @@ function eventStartMs(x){const t=new Date(x?.start_at||x?.startAt||x?.date||0).g
 const quant=read("data/quant-board.json");
 const live=read("data/live-board.json");
 const manual=event==="workflow_dispatch";
+const pushOnly=event==="push";
 const quantAge=dataAge(quant),liveAge=dataAge(live);
 const quantVersion=String(quant?.meta?.model_version||"");
 const liveVersion=String(live?.meta?.model_version||"");
@@ -21,7 +22,7 @@ const liveVersion=String(live?.meta?.model_version||"");
 // that already told us to stop. When quant-engine exposes the reset instant,
 // every API-backed branch waits for that instant before retrying.
 const resetAt=new Date(quant?.meta?.rate_limit_reset_at||0).getTime();
-const quant429=String(quant?.meta?.error||"").includes("429")||String(quant?.meta?.status||"").includes("API PAUSA");
+const quant429=String(quant?.meta?.error||"").includes("429")||String(quant?.meta?.status||"").includes("API PAUSA")||String(quant?.meta?.status||"").includes("API_PAUSA");
 const resetPending=Number.isFinite(resetAt)&&resetAt>now;
 const apiPaused=quant429&&resetPending;
 
@@ -46,24 +47,31 @@ const liveRelevant=relevantWindow||previousLinked;
 
 const quantDue=quantAge>=50||!quantVersion.includes("12.5");
 const liveDue=liveAge>=12||!liveVersion.includes("12.5");
-const runQuant=!apiPaused&&(manual||quantDue);
-const runLive=!apiPaused&&!live429Backoff&&liveRelevant&&(manual||liveDue);
 
-const quantReason=apiPaused
-  ?`api-backoff-until-${new Date(resetAt).toISOString()}`
-  :manual?"manual"
-  :!quantVersion.includes("12.5")?"upgrade"
-  :!Number.isFinite(quantAge)?"missing"
-  :`age-${quantAge.toFixed(1)}m`;
+// Code pushes are validation-only. They never spend the shared odds quota.
+// Scheduled runs (or an explicit manual dispatch) remain responsible for data refreshes.
+const runQuant=!pushOnly&&!apiPaused&&(manual||quantDue);
+const runLive=!pushOnly&&!apiPaused&&!live429Backoff&&liveRelevant&&(manual||liveDue);
 
-const liveReason=apiPaused
-  ?`api-backoff-until-${new Date(resetAt).toISOString()}`
-  :live429Backoff?"live-429-cooldown"
-  :!liveRelevant?"no-linked-live-window"
-  :manual?"manual"
-  :!liveVersion.includes("12.5")?"upgrade"
-  :!Number.isFinite(liveAge)?"missing"
-  :`age-${liveAge.toFixed(1)}m`;
+const quantReason=pushOnly
+  ?"push-tests-only"
+  :apiPaused
+    ?`api-backoff-until-${new Date(resetAt).toISOString()}`
+    :manual?"manual"
+    :!quantVersion.includes("12.5")?"upgrade"
+    :!Number.isFinite(quantAge)?"missing"
+    :`age-${quantAge.toFixed(1)}m`;
+
+const liveReason=pushOnly
+  ?"push-tests-only"
+  :apiPaused
+    ?`api-backoff-until-${new Date(resetAt).toISOString()}`
+    :live429Backoff?"live-429-cooldown"
+    :!liveRelevant?"no-linked-live-window"
+    :manual?"manual"
+    :!liveVersion.includes("12.5")?"upgrade"
+    :!Number.isFinite(liveAge)?"missing"
+    :`age-${liveAge.toFixed(1)}m`;
 
 for(const [key,value] of Object.entries({
   run_quant:runQuant,
@@ -71,7 +79,8 @@ for(const [key,value] of Object.entries({
   quant_reason:quantReason,
   live_reason:liveReason,
   api_paused:apiPaused,
-  live_relevant:liveRelevant
+  live_relevant:liveRelevant,
+  push_tests_only:pushOnly
 }))output(key,String(value));
 
 console.log(JSON.stringify({
@@ -86,6 +95,7 @@ console.log(JSON.stringify({
   rate_limit_reset_at:resetPending?new Date(resetAt).toISOString():null,
   live_relevant:liveRelevant,
   live_429_backoff:live429Backoff,
+  push_tests_only:pushOnly,
   quant_age_min:Number.isFinite(quantAge)?+quantAge.toFixed(1):null,
   live_age_min:Number.isFinite(liveAge)?+liveAge.toFixed(1):null
 }));
