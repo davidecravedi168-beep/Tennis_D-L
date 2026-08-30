@@ -1,6 +1,6 @@
 {
   "schema": "TEP-LEGACY-VERIFIED-1",
-  "generated_at": "2026-08-30T14:13:51.315Z",
+  "generated_at": "2026-08-30T14:21:04.615Z",
   "legacy_cutoff": "2026-08-27T21:05:46.428Z",
   "policy": {
     "git_commit_proof_required": true,
@@ -19,14 +19,14 @@
     "parse_errors": 0
   },
   "stats": {
-    "verified_forecasts": 96,
-    "settled_verified": 56,
+    "verified_forecasts": 86,
+    "settled_verified": 46,
     "unresolved_verified": 40,
-    "accuracy": 0.4642857142857143,
-    "brier": 0.2539418989926235,
-    "log_loss": 0.700897666557113,
-    "verified_market_locks": 59,
-    "settled_market_locks": 41,
+    "accuracy": 0.4782608695652174,
+    "brier": 0.247180185821644,
+    "log_loss": 0.687110130517176,
+    "verified_market_locks": 53,
+    "settled_market_locks": 35,
     "qualified_picks": 0,
     "pick_wins": 0,
     "pick_hit_rate": null,
@@ -36,10 +36,10 @@
     "clv_sample": 0,
     "by_model": {
       "TENNIS-EDGE-QUANT-6.1": {
-        "settled": 42,
-        "wins": 20,
-        "accuracy": 0.47619047619047616,
-        "brier": 0.2543507988095799
+        "settled": 32,
+        "wins": 16,
+        "accuracy": 0.5,
+        "brier": 0.24475861731909582
       },
       "TENNIS-EDGE-QUANT-12.3-FREEZE-CANDIDATE": {
         "settled": 14,
@@ -51,1138 +51,12 @@
   },
   "records": [
     {
-      "legacy_id": "C83B6C8CE1AD0E2D3525",
+      "legacy_id": "D0704A89368734976C99",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73853054",
-        "capture_type": "RADAR",
-        "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "149055AEB5B6",
-        "predicted_at": null,
-        "start_at": "2026-08-25T19:50:00Z",
-        "player_a": "Collignon, Raphael",
-        "player_b": "Hijikata, Rinky",
-        "tournament": "ATP - Winston Salem, USA",
-        "surface": "Hard",
-        "tour": "atp",
-        "verdict": "PRE-ANALISI",
-        "p_a": 0.5910442291651522,
-        "p_b": 0.4089557708348478,
-        "predicted_side": "A",
-        "predicted_name": "Collignon, Raphael",
-        "confidence": 57.1600132626985,
-        "data_quality": 84.36363636363636,
-        "uncertainty": 0.06172988987986505,
-        "raw_p_a": null,
-        "shadow_p_a": null,
-        "candidate_side": "A",
-        "candidate_name": "Collignon, Raphael",
-        "candidate_prob": 0.5910442291651522,
-        "candidate_odds": null,
-        "candidate_book": null,
-        "candidate_ev": null,
-        "candidate_edge": null,
-        "robust_prob": 0.5293143392852871,
-        "robust_ev": null,
-        "robust_edge": null,
-        "market_consensus_a": null,
-        "market_depth": null,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": null,
-        "pick_odds": null,
-        "pick_book": null,
-        "pick_ev": null,
-        "pick_edge": null,
-        "reason_codes": [
-          "ELO ++",
-          "SURFACE +",
-          "FORM ++",
-          "SERVE/RETURN +"
-        ],
-        "no_bet_reasons": [],
-        "warnings": []
-      },
-      "immutable_sha256": "9977dbaa85ca787e0042a8130dc621db4b6754c4f09dbbf3098d8d1940195045",
-      "result": {
-        "actual_side": "B",
-        "actual_winner": "Hijikata, Rinky",
-        "settled_at": "2026-08-26T03:37:42.157Z",
-        "result_commit": "5036583d88a50a6cb957e4c4f4b12fe2e0b45bcf",
-        "result_committed_at": "2026-08-26T03:37:50Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/5036583d88a50a6cb957e4c4f4b12fe2e0b45bcf/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "CA9E6A7B2B3A4A710A90",
-      "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73997474",
-        "capture_type": "RADAR",
-        "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "D2E9E1612E68",
-        "predicted_at": null,
-        "start_at": "2026-08-25T19:50:00Z",
-        "player_a": "Jones, Francesca",
-        "player_b": "Brancaccio, Nuria",
-        "tournament": "WTA - US Open, New York, USA, Qualifying",
-        "surface": "Hard",
-        "tour": "wta",
-        "verdict": "PRE-ANALISI",
-        "p_a": 0.5024676069741897,
-        "p_b": 0.4975323930258103,
-        "predicted_side": "A",
-        "predicted_name": "Jones, Francesca",
-        "confidence": 35.09392748460196,
-        "data_quality": 65.85714285714286,
-        "uncertainty": 0.09351362310510505,
-        "raw_p_a": null,
-        "shadow_p_a": null,
-        "candidate_side": "A",
-        "candidate_name": "Jones, Francesca",
-        "candidate_prob": 0.5024676069741897,
-        "candidate_odds": null,
-        "candidate_book": null,
-        "candidate_ev": null,
-        "candidate_edge": null,
-        "robust_prob": 0.5,
-        "robust_ev": null,
-        "robust_edge": null,
-        "market_consensus_a": null,
-        "market_depth": null,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": null,
-        "pick_odds": null,
-        "pick_book": null,
-        "pick_ev": null,
-        "pick_edge": null,
-        "reason_codes": [
-          "SURFACE -",
-          "FORM -"
-        ],
-        "no_bet_reasons": [],
-        "warnings": []
-      },
-      "immutable_sha256": "d71baf6f91f6ce7217caae929d879ee8cdd0c82abb1747bd5751cf2c64c281fd",
-      "result": {
-        "actual_side": "A",
-        "actual_winner": "Jones, Francesca",
-        "settled_at": "2026-08-25T21:13:53.101Z",
-        "result_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
-        "result_committed_at": "2026-08-25T21:13:57Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "0B9F231F5FA13B2DE15E",
-      "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73997534",
-        "capture_type": "RADAR",
-        "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "BF10AFFF0902",
-        "predicted_at": null,
-        "start_at": "2026-08-25T20:05:00Z",
-        "player_a": "Nardi, Luca",
-        "player_b": "Cina, Federico",
-        "tournament": "ATP - US Open, New York, USA, Qualifying",
-        "surface": "Hard",
-        "tour": "atp",
-        "verdict": "PRE-ANALISI",
-        "p_a": 0.5241826345571247,
-        "p_b": 0.47581736544287534,
-        "predicted_side": "A",
-        "predicted_name": "Nardi, Luca",
-        "confidence": 40.64232586696984,
-        "data_quality": 68.64935064935065,
-        "uncertainty": 0.07480068472868057,
-        "raw_p_a": null,
-        "shadow_p_a": null,
-        "candidate_side": "A",
-        "candidate_name": "Nardi, Luca",
-        "candidate_prob": 0.5241826345571247,
-        "candidate_odds": null,
-        "candidate_book": null,
-        "candidate_ev": null,
-        "candidate_edge": null,
-        "robust_prob": 0.5,
-        "robust_ev": null,
-        "robust_edge": null,
-        "market_consensus_a": null,
-        "market_depth": null,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": null,
-        "pick_odds": null,
-        "pick_book": null,
-        "pick_ev": null,
-        "pick_edge": null,
-        "reason_codes": [
-          "SERVE/RETURN +"
-        ],
-        "no_bet_reasons": [],
-        "warnings": []
-      },
-      "immutable_sha256": "aa9e3e2d2e8833b81501e4622ea6e7df2ea87d7fc339f6f4261a91961f9880ad",
-      "result": {
-        "actual_side": "B",
-        "actual_winner": "Cina, Federico",
-        "settled_at": "2026-08-25T23:03:51.986Z",
-        "result_commit": "80af27e7119f498809b257197a3dcc9f77236b35",
-        "result_committed_at": "2026-08-25T23:03:56Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/80af27e7119f498809b257197a3dcc9f77236b35/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "DC1D8B099E6A95B9D9BA",
-      "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73997460",
-        "capture_type": "RADAR",
-        "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "B705FFFE798C",
-        "predicted_at": null,
-        "start_at": "2026-08-25T20:15:00Z",
-        "player_a": "Hunter, Storm",
-        "player_b": "Inglis, Maddison",
-        "tournament": "WTA - US Open, New York, USA, Qualifying",
-        "surface": "Hard",
-        "tour": "wta",
-        "verdict": "PRE-ANALISI",
-        "p_a": 0.5229131066326431,
-        "p_b": 0.4770868933673569,
-        "predicted_side": "A",
-        "predicted_name": "Hunter, Storm",
-        "confidence": 50.99770071084333,
-        "data_quality": 68.71428571428572,
-        "uncertainty": 0.0735204887747563,
-        "raw_p_a": null,
-        "shadow_p_a": null,
-        "candidate_side": "A",
-        "candidate_name": "Hunter, Storm",
-        "candidate_prob": 0.5229131066326431,
-        "candidate_odds": null,
-        "candidate_book": null,
-        "candidate_ev": null,
-        "candidate_edge": null,
-        "robust_prob": 0.5,
-        "robust_ev": null,
-        "robust_edge": null,
-        "market_consensus_a": null,
-        "market_depth": null,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": null,
-        "pick_odds": null,
-        "pick_book": null,
-        "pick_ev": null,
-        "pick_edge": null,
-        "reason_codes": [
-          "ELO +",
-          "SURFACE +",
-          "SERVE/RETURN +"
-        ],
-        "no_bet_reasons": [],
-        "warnings": []
-      },
-      "immutable_sha256": "7c0caade531b3d7cd9696ad724fb0a7340c3d6d6c5773fe5e62af7f73e1a6a29",
-      "result": {
-        "actual_side": "A",
-        "actual_winner": "Hunter, Storm",
-        "settled_at": "2026-08-25T23:03:51.986Z",
-        "result_commit": "80af27e7119f498809b257197a3dcc9f77236b35",
-        "result_committed_at": "2026-08-25T23:03:56Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/80af27e7119f498809b257197a3dcc9f77236b35/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "00FA13401C8FD737AD6E",
-      "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73997462",
-        "capture_type": "RADAR",
-        "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "8EF0C09DF880",
-        "predicted_at": null,
-        "start_at": "2026-08-25T20:15:00Z",
-        "player_a": "Ku, Yeon Woo",
-        "player_b": "Sharma, Astra",
-        "tournament": "WTA - US Open, New York, USA, Qualifying",
-        "surface": "Hard",
-        "tour": "wta",
-        "verdict": "PRE-ANALISI",
-        "p_a": 0.41612748314604536,
-        "p_b": 0.5838725168539547,
-        "predicted_side": "B",
-        "predicted_name": "Sharma, Astra",
-        "confidence": 45.79924071644187,
-        "data_quality": 61.76623376623376,
-        "uncertainty": 0.08794863552441788,
-        "raw_p_a": null,
-        "shadow_p_a": null,
-        "candidate_side": "B",
-        "candidate_name": "Sharma, Astra",
-        "candidate_prob": 0.5838725168539547,
-        "candidate_odds": null,
-        "candidate_book": null,
-        "candidate_ev": null,
-        "candidate_edge": null,
-        "robust_prob": 0.5,
-        "robust_ev": null,
-        "robust_edge": null,
-        "market_consensus_a": null,
-        "market_depth": null,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": null,
-        "pick_odds": null,
-        "pick_book": null,
-        "pick_ev": null,
-        "pick_edge": null,
-        "reason_codes": [
-          "ELO +",
-          "SURFACE +",
-          "SERVE/RETURN ++"
-        ],
-        "no_bet_reasons": [],
-        "warnings": []
-      },
-      "immutable_sha256": "fe978d74976920d31c7c3e0aadddeda6bb028d0d7b851af1669906a57da42f23",
-      "result": {
-        "actual_side": "A",
-        "actual_winner": "Ku, Yeon Woo",
-        "settled_at": "2026-08-26T03:37:42.157Z",
-        "result_commit": "5036583d88a50a6cb957e4c4f4b12fe2e0b45bcf",
-        "result_committed_at": "2026-08-26T03:37:50Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/5036583d88a50a6cb957e4c4f4b12fe2e0b45bcf/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "38C14E1356EE96BE3EBE",
-      "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73853048",
-        "capture_type": "MARKET_LOCK",
-        "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "36104F0FD052",
-        "predicted_at": "2026-08-25T17:04:26.741Z",
-        "start_at": "2026-08-25T20:20:00Z",
-        "player_a": "Grenier, Hugo",
-        "player_b": "Baez, Sebastian",
-        "tournament": "ATP - Winston Salem, USA",
-        "surface": "Hard",
-        "tour": "atp",
-        "verdict": "QUARANTINE",
-        "p_a": 0.4284276980177255,
-        "p_b": 0.5715723019822745,
-        "predicted_side": "B",
-        "predicted_name": "Baez, Sebastian",
-        "confidence": 38.87547498973616,
-        "data_quality": 84.54545454545455,
-        "uncertainty": 0.09451397468832382,
-        "raw_p_a": 0.4284276980177255,
-        "shadow_p_a": 0.4318046206926329,
-        "candidate_side": "A",
-        "candidate_name": "Grenier, Hugo",
-        "candidate_prob": 0.4284276980177255,
-        "candidate_odds": 4,
-        "candidate_book": "Bet365",
-        "candidate_ev": 0.713710792070902,
-        "candidate_edge": 0.19178925679037417,
-        "robust_prob": 0.3339137233294017,
-        "robust_ev": 0.3356548933176069,
-        "robust_edge": 0.09727528210205039,
-        "market_consensus_a": 0.23663844122735134,
-        "market_depth": 2,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": 0,
-        "pick_odds": 0,
-        "pick_book": null,
-        "pick_ev": 0,
-        "pick_edge": 0,
-        "reason_codes": [
-          "ELO -",
-          "SURFACE -",
-          "FORM +",
-          "SERVE/RETURN -",
-          "EV ++"
-        ],
-        "no_bet_reasons": [
-          "CONFIDENCE_SOTTO_SOGLIA",
-          "MODELLI_IN_DISACCORDO",
-          "CONSENSUS_NON_SUL_CANDIDATO",
-          "MODELLO_COLD",
-          "EV_ALTO_CONFIDENCE_BASSA"
-        ],
-        "warnings": [
-          "CONFIDENCE_SOTTO_SOGLIA",
-          "MODELLI_IN_DISACCORDO",
-          "CONSENSUS_NON_SUL_CANDIDATO",
-          "MODELLO_COLD",
-          "CONSENSUS_2_SU_3",
-          "CALIBRAZIONE_NON_ATTIVA"
-        ]
-      },
-      "immutable_sha256": "7fa3150659a6e342ef1ea80228eea9e440babea0c696f9f38f717bb3991975b6",
-      "result": {
-        "actual_side": "B",
-        "actual_winner": "Baez, Sebastian",
-        "settled_at": "2026-08-26T05:23:58.758Z",
-        "result_commit": "c052f234ba298f177bb3bc9634944322421090df",
-        "result_committed_at": "2026-08-26T05:23:59Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/c052f234ba298f177bb3bc9634944322421090df/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "5D0A6E31D128FA4222AC",
-      "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73997532",
-        "capture_type": "RADAR",
-        "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "2ED24F5BE4BC",
-        "predicted_at": null,
-        "start_at": "2026-08-25T20:20:00Z",
-        "player_a": "Echargui, Moez",
-        "player_b": "Dellien, Hugo",
-        "tournament": "ATP - US Open, New York, USA, Qualifying",
-        "surface": "Hard",
-        "tour": "atp",
-        "verdict": "PRE-ANALISI",
-        "p_a": 0.5614178872705,
-        "p_b": 0.4385821127295,
-        "predicted_side": "A",
-        "predicted_name": "Echargui, Moez",
-        "confidence": 48.065226025916616,
-        "data_quality": 67.27272727272728,
-        "uncertainty": 0.08343527738203255,
-        "raw_p_a": null,
-        "shadow_p_a": null,
-        "candidate_side": "A",
-        "candidate_name": "Echargui, Moez",
-        "candidate_prob": 0.5614178872705,
-        "candidate_odds": null,
-        "candidate_book": null,
-        "candidate_ev": null,
-        "candidate_edge": null,
-        "robust_prob": 0.5,
-        "robust_ev": null,
-        "robust_edge": null,
-        "market_consensus_a": null,
-        "market_depth": null,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": null,
-        "pick_odds": null,
-        "pick_book": null,
-        "pick_ev": null,
-        "pick_edge": null,
-        "reason_codes": [
-          "ELO ++",
-          "SURFACE +",
-          "SERVE/RETURN +"
-        ],
-        "no_bet_reasons": [],
-        "warnings": []
-      },
-      "immutable_sha256": "b0de95433d3a2ab75dd8c5ff8575c0332afcb0d0744d8c6fda5351cf57283ccf",
-      "result": {
-        "actual_side": "B",
-        "actual_winner": "Dellien, Hugo",
-        "settled_at": "2026-08-26T03:37:42.157Z",
-        "result_commit": "5036583d88a50a6cb957e4c4f4b12fe2e0b45bcf",
-        "result_committed_at": "2026-08-26T03:37:50Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/5036583d88a50a6cb957e4c4f4b12fe2e0b45bcf/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "8E8D915512EABF17DF46",
-      "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73997428",
-        "capture_type": "MARKET_LOCK",
-        "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "D7F821DB3E5C",
-        "predicted_at": "2026-08-25T17:04:26.741Z",
-        "start_at": "2026-08-25T20:30:00Z",
-        "player_a": "Galfi, Dalma",
-        "player_b": "Sasnovich, Aliaksandra",
-        "tournament": "WTA - US Open, New York, USA, Qualifying",
-        "surface": "Hard",
-        "tour": "wta",
-        "verdict": "NO BET",
-        "p_a": 0.41208316232596603,
-        "p_b": 0.587916837674034,
-        "predicted_side": "B",
-        "predicted_name": "Sasnovich, Aliaksandra",
-        "confidence": 57.35923790525018,
-        "data_quality": 93,
-        "uncertainty": 0.06923759272923831,
-        "raw_p_a": 0.41208316232596603,
-        "shadow_p_a": 0.40953085791571336,
-        "candidate_side": "A",
-        "candidate_name": "Galfi, Dalma",
-        "candidate_prob": 0.41208316232596603,
-        "candidate_odds": 2.5,
-        "candidate_book": "Bet365",
-        "candidate_ev": 0.03020790581491517,
-        "candidate_edge": 0.03630386058033014,
-        "robust_prob": 0.34284556959672774,
-        "robust_ev": -0.1428860760081807,
-        "robust_edge": -0.03293373214890816,
-        "market_consensus_a": 0.3757793017456359,
-        "market_depth": 2,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": 0,
-        "pick_odds": 0,
-        "pick_book": null,
-        "pick_ev": 0,
-        "pick_edge": 0,
-        "reason_codes": [
-          "ELO -",
-          "SURFACE --",
-          "H2H --",
-          "EV +"
-        ],
-        "no_bet_reasons": [
-          "ROBUST_EV_NON_POSITIVO",
-          "EDGE_NON_ROBUSTO",
-          "EV_SOTTO_SOGLIA",
-          "ROBUST_EV_SOTTO_SOGLIA",
-          "CONFIDENCE_SOTTO_SOGLIA",
-          "CONSENSUS_NON_SUL_CANDIDATO",
-          "MODELLO_COLD"
-        ],
-        "warnings": [
-          "ROBUST_EV_NON_POSITIVO",
-          "EDGE_NON_ROBUSTO",
-          "EV_SOTTO_SOGLIA",
-          "ROBUST_EV_SOTTO_SOGLIA",
-          "CONFIDENCE_SOTTO_SOGLIA",
-          "CONSENSUS_NON_SUL_CANDIDATO",
-          "MODELLO_COLD",
-          "CALIBRAZIONE_NON_ATTIVA"
-        ]
-      },
-      "immutable_sha256": "46a56e268db7284d3ab70a05aeb6333c78317969132e56a93a7d7c68708aa43c",
-      "result": {
-        "actual_side": "B",
-        "actual_winner": "Sasnovich, Aliaksandra",
-        "settled_at": "2026-08-26T05:23:58.758Z",
-        "result_commit": "c052f234ba298f177bb3bc9634944322421090df",
-        "result_committed_at": "2026-08-26T05:23:59Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/c052f234ba298f177bb3bc9634944322421090df/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "7A1B617D64E2F00D0A4A",
-      "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73997434",
-        "capture_type": "MARKET_LOCK",
-        "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "810A551F27DF",
-        "predicted_at": "2026-08-25T17:04:26.741Z",
-        "start_at": "2026-08-25T20:30:00Z",
-        "player_a": "Kalieva, Elvina",
-        "player_b": "Mladenovic, Kristina",
-        "tournament": "WTA - US Open, New York, USA, Qualifying",
-        "surface": "Hard",
-        "tour": "wta",
-        "verdict": "QUARANTINE",
-        "p_a": 0.4896800029165609,
-        "p_b": 0.5103199970834391,
-        "predicted_side": "B",
-        "predicted_name": "Mladenovic, Kristina",
-        "confidence": 35.2745837202853,
-        "data_quality": 68.93506493506493,
-        "uncertainty": 0.093917205924977,
-        "raw_p_a": 0.4896800029165609,
-        "shadow_p_a": 0.4916932623196296,
-        "candidate_side": "B",
-        "candidate_name": "Mladenovic, Kristina",
-        "candidate_prob": 0.5103199970834391,
-        "candidate_odds": 9,
-        "candidate_book": "Bet365",
-        "candidate_ev": 3.592879973750952,
-        "candidate_edge": 0.3968762230059275,
-        "robust_prob": 0.4164027911584621,
-        "robust_ev": 2.747625120426159,
-        "robust_edge": 0.3029590170809505,
-        "market_consensus_a": 0.8865562259224884,
-        "market_depth": 2,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": 0,
-        "pick_odds": 0,
-        "pick_book": null,
-        "pick_ev": 0,
-        "pick_edge": 0,
-        "reason_codes": [
-          "FORM +",
-          "EV ++"
-        ],
-        "no_bet_reasons": [
-          "DATA_QUALITY_SOTTO_SOGLIA",
-          "CONFIDENCE_SOTTO_SOGLIA",
-          "MODELLO_COLD",
-          "EV_FUORI_SCALA",
-          "ROBUST_EV_FUORI_SCALA",
-          "QUOTA_PROBABILITA_INCOERENTI",
-          "SCOSTAMENTO_ESTREMO",
-          "EV_ALTO_CONFIDENCE_BASSA"
-        ],
-        "warnings": [
-          "DATA_QUALITY_SOTTO_SOGLIA",
-          "CONFIDENCE_SOTTO_SOGLIA",
-          "MODELLO_COLD",
-          "CONSENSUS_2_SU_3",
-          "CALIBRAZIONE_NON_ATTIVA"
-        ]
-      },
-      "immutable_sha256": "f06a82706c6d9e56305be672767ba3f4449ce5bd4a3da10b3bd853783a2d50ee",
-      "result": {
-        "actual_side": "A",
-        "actual_winner": "Kalieva, Elvina",
-        "settled_at": "2026-08-26T08:24:40.951Z",
-        "result_commit": "6a65e6bd2050299d5aaf6e50cb87a4e302e51de9",
-        "result_committed_at": "2026-08-26T08:24:41Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/6a65e6bd2050299d5aaf6e50cb87a4e302e51de9/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "8E7D2B7A69CDE75C0429",
-      "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73997520",
-        "capture_type": "MARKET_LOCK",
-        "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "4F4854FA3175",
-        "predicted_at": "2026-08-25T17:04:26.741Z",
-        "start_at": "2026-08-25T20:30:00Z",
-        "player_a": "Daniel, Taro",
-        "player_b": "Johnson, Andrew",
-        "tournament": "ATP - US Open, New York, USA, Qualifying",
-        "surface": "Hard",
-        "tour": "atp",
-        "verdict": "QUARANTINE",
-        "p_a": 0.48874694565034604,
-        "p_b": 0.511253054349654,
-        "predicted_side": "B",
-        "predicted_name": "Johnson, Andrew",
-        "confidence": 43.869024274265506,
-        "data_quality": 77.81818181818181,
-        "uncertainty": 0.06999708957358998,
-        "raw_p_a": 0.48874694565034604,
-        "shadow_p_a": 0.48551524251325184,
-        "candidate_side": "B",
-        "candidate_name": "Johnson, Andrew",
-        "candidate_prob": 0.511253054349654,
-        "candidate_odds": 6.5,
-        "candidate_book": "Bet365",
-        "candidate_ev": 2.3231448532727508,
-        "candidate_edge": 0.361819967312896,
-        "robust_prob": 0.441255964776064,
-        "robust_ev": 1.8681637710444159,
-        "robust_edge": 0.29182287773930604,
-        "market_consensus_a": 0.850566912963242,
-        "market_depth": 2,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": 0,
-        "pick_odds": 0,
-        "pick_book": null,
-        "pick_ev": 0,
-        "pick_edge": 0,
-        "reason_codes": [
-          "ELO +",
-          "SERVE/RETURN -",
-          "EV ++"
-        ],
-        "no_bet_reasons": [
-          "CONFIDENCE_SOTTO_SOGLIA",
-          "MODELLO_COLD",
-          "EV_FUORI_SCALA",
-          "ROBUST_EV_FUORI_SCALA",
-          "QUOTA_PROBABILITA_INCOERENTI",
-          "SCOSTAMENTO_ESTREMO",
-          "EV_ALTO_CONFIDENCE_BASSA"
-        ],
-        "warnings": [
-          "CONFIDENCE_SOTTO_SOGLIA",
-          "MODELLO_COLD",
-          "CONSENSUS_2_SU_3",
-          "CALIBRAZIONE_NON_ATTIVA"
-        ]
-      },
-      "immutable_sha256": "f938a9a915511aadb2cbab13307e247d4d35cafb93ec8e93fc8895ce6b4c040b",
-      "result": {
-        "actual_side": "B",
-        "actual_winner": "Johnson, Andrew",
-        "settled_at": "2026-08-26T11:49:58.885Z",
-        "result_commit": "1d9da2209da1baecd7f5595351f99a6bc1e45b0f",
-        "result_committed_at": "2026-08-26T11:49:59Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/1d9da2209da1baecd7f5595351f99a6bc1e45b0f/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "4EC93ACDF714FDE15078",
-      "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73997394",
-        "capture_type": "RADAR",
-        "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "240DFD5A6761",
-        "predicted_at": null,
-        "start_at": "2026-08-25T20:35:00Z",
-        "player_a": "Yuan, Yue",
-        "player_b": "Guo, Hanyu",
-        "tournament": "WTA - US Open, New York, USA, Qualifying",
-        "surface": "Hard",
-        "tour": "wta",
-        "verdict": "PRE-ANALISI",
-        "p_a": 0.5644356533204704,
-        "p_b": 0.4355643466795296,
-        "predicted_side": "A",
-        "predicted_name": "Yuan, Yue",
-        "confidence": 57.30798795349307,
-        "data_quality": 77.0909090909091,
-        "uncertainty": 0.05596532982211073,
-        "raw_p_a": null,
-        "shadow_p_a": null,
-        "candidate_side": "A",
-        "candidate_name": "Yuan, Yue",
-        "candidate_prob": 0.5644356533204704,
-        "candidate_odds": null,
-        "candidate_book": null,
-        "candidate_ev": null,
-        "candidate_edge": null,
-        "robust_prob": 0.5084703234983596,
-        "robust_ev": null,
-        "robust_edge": null,
-        "market_consensus_a": null,
-        "market_depth": null,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": null,
-        "pick_odds": null,
-        "pick_book": null,
-        "pick_ev": null,
-        "pick_edge": null,
-        "reason_codes": [
-          "ELO +",
-          "SURFACE +",
-          "FORM +",
-          "SERVE/RETURN +"
-        ],
-        "no_bet_reasons": [],
-        "warnings": []
-      },
-      "immutable_sha256": "9d89312fdf5e86f03dfae16f6a75f64c667b9a8353f26937bfbc684ba4e64f64",
-      "result": {
-        "actual_side": "A",
-        "actual_winner": "Yuan, Yue",
-        "settled_at": "2026-08-26T03:37:42.157Z",
-        "result_commit": "5036583d88a50a6cb957e4c4f4b12fe2e0b45bcf",
-        "result_committed_at": "2026-08-26T03:37:50Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/5036583d88a50a6cb957e4c4f4b12fe2e0b45bcf/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "0267BF058841092F31A5",
-      "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73853036",
-        "capture_type": "MARKET_LOCK",
-        "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "828BB8243051",
-        "predicted_at": "2026-08-25T17:04:26.741Z",
-        "start_at": "2026-08-25T20:40:00Z",
-        "player_a": "Duckworth, James",
-        "player_b": "Navone, Mariano",
-        "tournament": "ATP - Winston Salem, USA",
-        "surface": "Hard",
-        "tour": "atp",
-        "verdict": "NO BET",
-        "p_a": 0.3765266688505893,
-        "p_b": 0.6234733311494107,
-        "predicted_side": "B",
-        "predicted_name": "Navone, Mariano",
-        "confidence": 38.13284188347658,
-        "data_quality": 92,
-        "uncertainty": 0.10310169936799013,
-        "raw_p_a": 0.3765266688505893,
-        "shadow_p_a": 0.388262924125371,
-        "candidate_side": "B",
-        "candidate_name": "Navone, Mariano",
-        "candidate_prob": 0.6234733311494107,
-        "candidate_odds": 1.57,
-        "candidate_book": "Bet365",
-        "candidate_ev": -0.021146870095425152,
-        "candidate_edge": 0.02245745690340506,
-        "robust_prob": 0.5203716317814207,
-        "robust_ev": -0.18301653810316953,
-        "robust_edge": -0.08064424246458501,
-        "market_consensus_a": 0.39898412575399433,
-        "market_depth": 2,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": 0,
-        "pick_odds": 0,
-        "pick_book": null,
-        "pick_ev": 0,
-        "pick_edge": 0,
-        "reason_codes": [
-          "ELO ++",
-          "FORM ++",
-          "SERVE/RETURN ++"
-        ],
-        "no_bet_reasons": [
-          "EV_NON_POSITIVO",
-          "ROBUST_EV_NON_POSITIVO",
-          "EDGE_TROPPO_BASSO",
-          "EDGE_NON_ROBUSTO",
-          "EV_SOTTO_SOGLIA",
-          "ROBUST_EV_SOTTO_SOGLIA",
-          "CONFIDENCE_SOTTO_SOGLIA",
-          "MODELLI_IN_DISACCORDO",
-          "MODELLO_COLD"
-        ],
-        "warnings": [
-          "EV_NON_POSITIVO",
-          "ROBUST_EV_NON_POSITIVO",
-          "EDGE_TROPPO_BASSO",
-          "EDGE_NON_ROBUSTO",
-          "EV_SOTTO_SOGLIA",
-          "ROBUST_EV_SOTTO_SOGLIA",
-          "CONFIDENCE_SOTTO_SOGLIA",
-          "MODELLI_IN_DISACCORDO",
-          "MODELLO_COLD",
-          "CONSENSUS_2_SU_3",
-          "CALIBRAZIONE_NON_ATTIVA"
-        ]
-      },
-      "immutable_sha256": "63ec6c2c23bf57b2745052863246c9b07873a92d86461debf43fdfe5d52f64b0",
-      "result": {
-        "actual_side": "A",
-        "actual_winner": "Duckworth, James",
-        "settled_at": "2026-08-26T11:49:58.885Z",
-        "result_commit": "1d9da2209da1baecd7f5595351f99a6bc1e45b0f",
-        "result_committed_at": "2026-08-26T11:49:59Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/1d9da2209da1baecd7f5595351f99a6bc1e45b0f/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "4971F99EA301D143E61F",
-      "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73997654",
-        "capture_type": "RADAR",
-        "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "8CCE397A4373",
-        "predicted_at": null,
-        "start_at": "2026-08-25T21:00:00Z",
-        "player_a": "Smith, Colton",
-        "player_b": "Pellegrino, Andrea",
-        "tournament": "ATP - US Open, New York, USA, Qualifying",
-        "surface": "Hard",
-        "tour": "atp",
-        "verdict": "PRE-ANALISI",
-        "p_a": 0.4277908289689558,
-        "p_b": 0.5722091710310442,
-        "predicted_side": "B",
-        "predicted_name": "Pellegrino, Andrea",
-        "confidence": 48.861576777585285,
-        "data_quality": 61.142857142857146,
-        "uncertainty": 0.07606916098272923,
-        "raw_p_a": null,
-        "shadow_p_a": null,
-        "candidate_side": "B",
-        "candidate_name": "Pellegrino, Andrea",
-        "candidate_prob": 0.5722091710310442,
-        "candidate_odds": null,
-        "candidate_book": null,
-        "candidate_ev": null,
-        "candidate_edge": null,
-        "robust_prob": 0.5,
-        "robust_ev": null,
-        "robust_edge": null,
-        "market_consensus_a": null,
-        "market_depth": null,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": null,
-        "pick_odds": null,
-        "pick_book": null,
-        "pick_ev": null,
-        "pick_edge": null,
-        "reason_codes": [
-          "ELO +",
-          "SURFACE +",
-          "FORM +",
-          "SERVE/RETURN +"
-        ],
-        "no_bet_reasons": [],
-        "warnings": []
-      },
-      "immutable_sha256": "de65ab0942f7c7fdd7e04f09d7173cf491fb3aede2ad096b8ad3344ece5a7722",
-      "result": {
-        "actual_side": "A",
-        "actual_winner": "Smith, Colton",
-        "settled_at": "2026-08-26T03:37:42.157Z",
-        "result_commit": "5036583d88a50a6cb957e4c4f4b12fe2e0b45bcf",
-        "result_committed_at": "2026-08-26T03:37:50Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/5036583d88a50a6cb957e4c4f4b12fe2e0b45bcf/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "0AC52960EFB562BB279C",
-      "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73999534",
-        "capture_type": "MARKET_LOCK",
-        "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "9DE96B17A2BD",
-        "predicted_at": "2026-08-25T17:04:26.741Z",
-        "start_at": "2026-08-25T21:00:00Z",
-        "player_a": "Bucsa, Cristina",
-        "player_b": "Bondar, Anna",
-        "tournament": "WTA - Monterrey, Mexico",
-        "surface": "Hard",
-        "tour": "wta",
-        "verdict": "NO BET",
-        "p_a": 0.5649969074949468,
-        "p_b": 0.4350030925050532,
-        "predicted_side": "A",
-        "predicted_name": "Bucsa, Cristina",
-        "confidence": 56.20116049715323,
-        "data_quality": 93,
-        "uncertainty": 0.07264591762272798,
-        "raw_p_a": 0.5649969074949468,
-        "shadow_p_a": 0.5711106846042611,
-        "candidate_side": "A",
-        "candidate_name": "Bucsa, Cristina",
-        "candidate_prob": 0.5649969074949468,
-        "candidate_odds": 2.12,
-        "candidate_book": "Eurobet IT",
-        "candidate_ev": 0.1977934438892872,
-        "candidate_edge": 0.11735292843735523,
-        "robust_prob": 0.4923509898722188,
-        "robust_ev": 0.04378409852910403,
-        "robust_edge": 0.044707010814627246,
-        "market_consensus_a": 0.44764397905759157,
-        "market_depth": 2,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": 0,
-        "pick_odds": 0,
-        "pick_book": null,
-        "pick_ev": 0,
-        "pick_edge": 0,
-        "reason_codes": [
-          "SURFACE ++",
-          "FORM --",
-          "H2H ++",
-          "EV ++"
-        ],
-        "no_bet_reasons": [
-          "CONFIDENCE_SOTTO_SOGLIA",
-          "MODELLO_COLD",
-          "QUOTA_STALE"
-        ],
-        "warnings": [
-          "CONFIDENCE_SOTTO_SOGLIA",
-          "MODELLO_COLD",
-          "QUOTA_STALE",
-          "CALIBRAZIONE_NON_ATTIVA"
-        ]
-      },
-      "immutable_sha256": "0cd435481dc0b6b4501460882c4aa508ed9c43ae1e32538b86b49ea23e7c2aa1",
-      "result": {
-        "actual_side": "A",
-        "actual_winner": "Bucsa, Cristina",
-        "settled_at": "2026-08-26T14:30:10.366Z",
-        "result_commit": "16e7f08088a0abe7b4812f2a843cf5f1e04a7646",
-        "result_committed_at": "2026-08-26T14:30:11Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/16e7f08088a0abe7b4812f2a843cf5f1e04a7646/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "0E81FFAB2A9A20AAF773",
-      "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73997522",
-        "capture_type": "RADAR",
-        "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "966CCE45CF68",
-        "predicted_at": null,
-        "start_at": "2026-08-25T21:15:00Z",
-        "player_a": "Mejia, Nicolas",
-        "player_b": "Draxl, Liam",
-        "tournament": "ATP - US Open, New York, USA, Qualifying",
-        "surface": "Hard",
-        "tour": "atp",
-        "verdict": "PRE-ANALISI",
-        "p_a": 0.47250356598445076,
-        "p_b": 0.5274964340155492,
-        "predicted_side": "B",
-        "predicted_name": "Draxl, Liam",
-        "confidence": 31.604591969205202,
-        "data_quality": 64.01298701298701,
-        "uncertainty": 0.10521883067427462,
-        "raw_p_a": null,
-        "shadow_p_a": null,
-        "candidate_side": "B",
-        "candidate_name": "Draxl, Liam",
-        "candidate_prob": 0.5274964340155492,
-        "candidate_odds": null,
-        "candidate_book": null,
-        "candidate_ev": null,
-        "candidate_edge": null,
-        "robust_prob": 0.5,
-        "robust_ev": null,
-        "robust_edge": null,
-        "market_consensus_a": null,
-        "market_depth": null,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": null,
-        "pick_odds": null,
-        "pick_book": null,
-        "pick_ev": null,
-        "pick_edge": null,
-        "reason_codes": [
-          "SURFACE ++",
-          "FORM -"
-        ],
-        "no_bet_reasons": [],
-        "warnings": []
-      },
-      "immutable_sha256": "bd7422d147da4d9862c65cb07de2568482111cdbbbab2065da7334406f880d1c",
-      "result": {
-        "actual_side": "B",
-        "actual_winner": "Draxl, Liam",
-        "settled_at": "2026-08-26T03:37:42.157Z",
-        "result_commit": "5036583d88a50a6cb957e4c4f4b12fe2e0b45bcf",
-        "result_committed_at": "2026-08-26T03:37:50Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/5036583d88a50a6cb957e4c4f4b12fe2e0b45bcf/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "1AE6F0C291CC776ACEDA",
-      "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73853034",
@@ -1263,12 +137,147 @@
       }
     },
     {
-      "legacy_id": "F9BA590B0614ADCA9AE0",
+      "legacy_id": "85F6FF21C17671814109",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
+      },
+      "immutable": {
+        "event_id": "73997434",
+        "capture_type": "RADAR",
+        "model_version": "TENNIS-EDGE-QUANT-6.1",
+        "prediction_audit_id": "925DA481F15D",
+        "predicted_at": null,
+        "start_at": "2026-08-25T21:30:00Z",
+        "player_a": "Kalieva, Elvina",
+        "player_b": "Mladenovic, Kristina",
+        "tournament": "WTA - US Open, New York, USA, Qualifying",
+        "surface": "Hard",
+        "tour": "wta",
+        "verdict": "PRE-ANALISI",
+        "p_a": 0.489703064276646,
+        "p_b": 0.510296935723354,
+        "predicted_side": "B",
+        "predicted_name": "Mladenovic, Kristina",
+        "confidence": 34.237592644438884,
+        "data_quality": 61.935064935064936,
+        "uncertainty": 0.09389978399755802,
+        "raw_p_a": null,
+        "shadow_p_a": null,
+        "candidate_side": "B",
+        "candidate_name": "Mladenovic, Kristina",
+        "candidate_prob": 0.510296935723354,
+        "candidate_odds": null,
+        "candidate_book": null,
+        "candidate_ev": null,
+        "candidate_edge": null,
+        "robust_prob": 0.5,
+        "robust_ev": null,
+        "robust_edge": null,
+        "market_consensus_a": null,
+        "market_depth": null,
+        "pick_side": null,
+        "pick_name": null,
+        "pick_prob": null,
+        "pick_odds": null,
+        "pick_book": null,
+        "pick_ev": null,
+        "pick_edge": null,
+        "reason_codes": [
+          "FORM +"
+        ],
+        "no_bet_reasons": [],
+        "warnings": []
+      },
+      "immutable_sha256": "9e4131ed58e5326c8ad3f8f8c41a64066068734bfb9ba4b0029c041420a29b66",
+      "result": {
+        "actual_side": "A",
+        "actual_winner": "Kalieva, Elvina",
+        "settled_at": "2026-08-26T08:24:40.951Z",
+        "result_commit": "6a65e6bd2050299d5aaf6e50cb87a4e302e51de9",
+        "result_committed_at": "2026-08-26T08:24:41Z",
+        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/6a65e6bd2050299d5aaf6e50cb87a4e302e51de9/data/quant-board.json",
+        "closing_odds": 0,
+        "clv": 0
+      }
+    },
+    {
+      "legacy_id": "93AC7990A82F759F6E81",
+      "evidence": {
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
+        "prediction_path": "data/quant-board.json",
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
+      },
+      "immutable": {
+        "event_id": "73997522",
+        "capture_type": "RADAR",
+        "model_version": "TENNIS-EDGE-QUANT-6.1",
+        "prediction_audit_id": "9520A6BD23AB",
+        "predicted_at": null,
+        "start_at": "2026-08-25T21:30:00Z",
+        "player_a": "Mejia, Nicolas",
+        "player_b": "Draxl, Liam",
+        "tournament": "ATP - US Open, New York, USA, Qualifying",
+        "surface": "Hard",
+        "tour": "atp",
+        "verdict": "PRE-ANALISI",
+        "p_a": 0.47249968728461555,
+        "p_b": 0.5275003127153844,
+        "predicted_side": "B",
+        "predicted_name": "Draxl, Liam",
+        "confidence": 31.60600356815705,
+        "data_quality": 64.01298701298701,
+        "uncertainty": 0.10521356070485441,
+        "raw_p_a": null,
+        "shadow_p_a": null,
+        "candidate_side": "B",
+        "candidate_name": "Draxl, Liam",
+        "candidate_prob": 0.5275003127153844,
+        "candidate_odds": null,
+        "candidate_book": null,
+        "candidate_ev": null,
+        "candidate_edge": null,
+        "robust_prob": 0.5,
+        "robust_ev": null,
+        "robust_edge": null,
+        "market_consensus_a": null,
+        "market_depth": null,
+        "pick_side": null,
+        "pick_name": null,
+        "pick_prob": null,
+        "pick_odds": null,
+        "pick_book": null,
+        "pick_ev": null,
+        "pick_edge": null,
+        "reason_codes": [
+          "SURFACE ++",
+          "FORM -"
+        ],
+        "no_bet_reasons": [],
+        "warnings": []
+      },
+      "immutable_sha256": "b41aaea9752107203db442159a206bc2358ed70dd3d8c5425711508d93d6de3e",
+      "result": {
+        "actual_side": "B",
+        "actual_winner": "Draxl, Liam",
+        "settled_at": "2026-08-26T03:37:42.157Z",
+        "result_commit": "5036583d88a50a6cb957e4c4f4b12fe2e0b45bcf",
+        "result_committed_at": "2026-08-26T03:37:50Z",
+        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/5036583d88a50a6cb957e4c4f4b12fe2e0b45bcf/data/quant-board.json",
+        "closing_odds": 0,
+        "clv": 0
+      }
+    },
+    {
+      "legacy_id": "09FF2DE0E36556E2E3CC",
+      "evidence": {
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
+        "prediction_path": "data/quant-board.json",
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73999532",
@@ -1332,12 +341,12 @@
       "result": null
     },
     {
-      "legacy_id": "9D70BF9608DD2CD43A35",
+      "legacy_id": "7E7BBEB9DD7674EF01AC",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73999536",
@@ -1406,12 +415,84 @@
       "result": null
     },
     {
-      "legacy_id": "94504C74C05164154E82",
+      "legacy_id": "A004394B282FAF4C24C4",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
+      },
+      "immutable": {
+        "event_id": "73853048",
+        "capture_type": "RADAR",
+        "model_version": "TENNIS-EDGE-QUANT-6.1",
+        "prediction_audit_id": "BC31DB86143D",
+        "predicted_at": null,
+        "start_at": "2026-08-25T21:40:00Z",
+        "player_a": "Grenier, Hugo",
+        "player_b": "Baez, Sebastian",
+        "tournament": "ATP - Winston Salem, USA",
+        "surface": "Hard",
+        "tour": "atp",
+        "verdict": "PRE-ANALISI",
+        "p_a": 0.4284257134743378,
+        "p_b": 0.5715742865256622,
+        "predicted_side": "B",
+        "predicted_name": "Baez, Sebastian",
+        "confidence": 37.07058216904146,
+        "data_quality": 77.54545454545455,
+        "uncertainty": 0.094510735659821,
+        "raw_p_a": null,
+        "shadow_p_a": null,
+        "candidate_side": "B",
+        "candidate_name": "Baez, Sebastian",
+        "candidate_prob": 0.5715742865256622,
+        "candidate_odds": null,
+        "candidate_book": null,
+        "candidate_ev": null,
+        "candidate_edge": null,
+        "robust_prob": 0.5,
+        "robust_ev": null,
+        "robust_edge": null,
+        "market_consensus_a": null,
+        "market_depth": null,
+        "pick_side": null,
+        "pick_name": null,
+        "pick_prob": null,
+        "pick_odds": null,
+        "pick_book": null,
+        "pick_ev": null,
+        "pick_edge": null,
+        "reason_codes": [
+          "ELO +",
+          "SURFACE +",
+          "FORM -",
+          "SERVE/RETURN +"
+        ],
+        "no_bet_reasons": [],
+        "warnings": [
+          "MODELLI_IN_DISACCORDO"
+        ]
+      },
+      "immutable_sha256": "c8f29e3b3a138366e4460e2f9e539e2d1642a556ed6838c36fad371e58004305",
+      "result": {
+        "actual_side": "B",
+        "actual_winner": "Baez, Sebastian",
+        "settled_at": "2026-08-26T05:23:58.758Z",
+        "result_commit": "c052f234ba298f177bb3bc9634944322421090df",
+        "result_committed_at": "2026-08-26T05:23:59Z",
+        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/c052f234ba298f177bb3bc9634944322421090df/data/quant-board.json",
+        "closing_odds": 0,
+        "clv": 0
+      }
+    },
+    {
+      "legacy_id": "509B4025BF9151F13289",
+      "evidence": {
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
+        "prediction_path": "data/quant-board.json",
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73863148",
@@ -1477,12 +558,12 @@
       "result": null
     },
     {
-      "legacy_id": "8B4ABF488CC371507367",
+      "legacy_id": "795D31DB8AA2D321C163",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73862992",
@@ -1556,12 +637,149 @@
       "result": null
     },
     {
-      "legacy_id": "742C6E4820D1EB5324AF",
+      "legacy_id": "BCC1268405A78A463504",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
+      },
+      "immutable": {
+        "event_id": "73997428",
+        "capture_type": "RADAR",
+        "model_version": "TENNIS-EDGE-QUANT-6.1",
+        "prediction_audit_id": "6E416E5431A8",
+        "predicted_at": null,
+        "start_at": "2026-08-25T22:10:00Z",
+        "player_a": "Galfi, Dalma",
+        "player_b": "Sasnovich, Aliaksandra",
+        "tournament": "WTA - US Open, New York, USA, Qualifying",
+        "surface": "Hard",
+        "tour": "wta",
+        "verdict": "PRE-ANALISI",
+        "p_a": 0.4120844734488644,
+        "p_b": 0.5879155265511355,
+        "predicted_side": "B",
+        "predicted_name": "Sasnovich, Aliaksandra",
+        "confidence": 55.46273430022873,
+        "data_quality": 86,
+        "uncertainty": 0.0692391252791461,
+        "raw_p_a": null,
+        "shadow_p_a": null,
+        "candidate_side": "B",
+        "candidate_name": "Sasnovich, Aliaksandra",
+        "candidate_prob": 0.5879155265511355,
+        "candidate_odds": null,
+        "candidate_book": null,
+        "candidate_ev": null,
+        "candidate_edge": null,
+        "robust_prob": 0.5186764012719894,
+        "robust_ev": null,
+        "robust_edge": null,
+        "market_consensus_a": null,
+        "market_depth": null,
+        "pick_side": null,
+        "pick_name": null,
+        "pick_prob": null,
+        "pick_odds": null,
+        "pick_book": null,
+        "pick_ev": null,
+        "pick_edge": null,
+        "reason_codes": [
+          "ELO +",
+          "SURFACE ++",
+          "H2H ++"
+        ],
+        "no_bet_reasons": [],
+        "warnings": []
+      },
+      "immutable_sha256": "da9037303759a7d65f3273eceebb5269d7734210e27f8397dc6ade0a8ca09d82",
+      "result": {
+        "actual_side": "B",
+        "actual_winner": "Sasnovich, Aliaksandra",
+        "settled_at": "2026-08-26T05:23:58.758Z",
+        "result_commit": "c052f234ba298f177bb3bc9634944322421090df",
+        "result_committed_at": "2026-08-26T05:23:59Z",
+        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/c052f234ba298f177bb3bc9634944322421090df/data/quant-board.json",
+        "closing_odds": 0,
+        "clv": 0
+      }
+    },
+    {
+      "legacy_id": "6AAB9C26AF16D39A58B8",
+      "evidence": {
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
+        "prediction_path": "data/quant-board.json",
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
+      },
+      "immutable": {
+        "event_id": "73997520",
+        "capture_type": "RADAR",
+        "model_version": "TENNIS-EDGE-QUANT-6.1",
+        "prediction_audit_id": "9B57CDCA6C6E",
+        "predicted_at": null,
+        "start_at": "2026-08-25T22:10:00Z",
+        "player_a": "Daniel, Taro",
+        "player_b": "Johnson, Andrew",
+        "tournament": "ATP - US Open, New York, USA, Qualifying",
+        "surface": "Hard",
+        "tour": "atp",
+        "verdict": "PRE-ANALISI",
+        "p_a": 0.4887500457770984,
+        "p_b": 0.5112499542229016,
+        "predicted_side": "B",
+        "predicted_name": "Johnson, Andrew",
+        "confidence": 42.34537931225108,
+        "data_quality": 70.81818181818181,
+        "uncertainty": 0.06999694753729291,
+        "raw_p_a": null,
+        "shadow_p_a": null,
+        "candidate_side": "B",
+        "candidate_name": "Johnson, Andrew",
+        "candidate_prob": 0.5112499542229016,
+        "candidate_odds": null,
+        "candidate_book": null,
+        "candidate_ev": null,
+        "candidate_edge": null,
+        "robust_prob": 0.5,
+        "robust_ev": null,
+        "robust_edge": null,
+        "market_consensus_a": null,
+        "market_depth": null,
+        "pick_side": null,
+        "pick_name": null,
+        "pick_prob": null,
+        "pick_odds": null,
+        "pick_book": null,
+        "pick_ev": null,
+        "pick_edge": null,
+        "reason_codes": [
+          "ELO +",
+          "SERVE/RETURN -"
+        ],
+        "no_bet_reasons": [],
+        "warnings": []
+      },
+      "immutable_sha256": "3e6e093f9ebdb7ea65dfa68e471fc8e80fd804dd44a7822167117d24fe36b83d",
+      "result": {
+        "actual_side": "B",
+        "actual_winner": "Johnson, Andrew",
+        "settled_at": "2026-08-26T11:49:58.885Z",
+        "result_commit": "1d9da2209da1baecd7f5595351f99a6bc1e45b0f",
+        "result_committed_at": "2026-08-26T11:49:59Z",
+        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/1d9da2209da1baecd7f5595351f99a6bc1e45b0f/data/quant-board.json",
+        "closing_odds": 0,
+        "clv": 0
+      }
+    },
+    {
+      "legacy_id": "35869EB730C44A311772",
+      "evidence": {
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
+        "prediction_path": "data/quant-board.json",
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73853076",
@@ -1639,12 +857,12 @@
       "result": null
     },
     {
-      "legacy_id": "2426EA0C393B64C7AFCE",
+      "legacy_id": "1B3868A94706C7C35BC9",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74036826",
@@ -1714,12 +932,12 @@
       "result": null
     },
     {
-      "legacy_id": "326DA855438EA0AEE5E1",
+      "legacy_id": "D873E6E60035BC384449",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73853032",
@@ -1791,12 +1009,12 @@
       "result": null
     },
     {
-      "legacy_id": "F4B622C793275C9575C8",
+      "legacy_id": "E0E208EEA6446C162739",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73862998",
@@ -1860,12 +1078,12 @@
       "result": null
     },
     {
-      "legacy_id": "536860B018A7F3847C4F",
+      "legacy_id": "8AD6D07D69D80CF4E22D",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73862990",
@@ -1934,12 +1152,12 @@
       "result": null
     },
     {
-      "legacy_id": "E1F957D5A5D80BCA2DB8",
+      "legacy_id": "DCC8878E75EC496188C6",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "13563262911",
@@ -2009,12 +1227,12 @@
       "result": null
     },
     {
-      "legacy_id": "6EE2CFB3D2F049592109",
+      "legacy_id": "DC76ADBAB0F9360D45AA",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "15972719105",
@@ -2078,12 +1296,12 @@
       "result": null
     },
     {
-      "legacy_id": "082F78A847E1A2973520",
+      "legacy_id": "E8F04B942CB7587FD832",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74028486",
@@ -2171,12 +1389,12 @@
       }
     },
     {
-      "legacy_id": "67A284590CD95D6BB735",
+      "legacy_id": "B93FC385145F024DAE05",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74028546",
@@ -2263,12 +1481,12 @@
       }
     },
     {
-      "legacy_id": "E92EA0F5EF764022394B",
+      "legacy_id": "7817EE371DDD0BD3C567",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74028626",
@@ -2346,12 +1564,12 @@
       }
     },
     {
-      "legacy_id": "AE98F63A3CEEC12586B9",
+      "legacy_id": "E670AA6E18D57419EDC7",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74029538",
@@ -2423,12 +1641,12 @@
       }
     },
     {
-      "legacy_id": "0FE56422F5A50417EF58",
+      "legacy_id": "A0DD3DA34DD5D8B98BDA",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74029838",
@@ -2502,12 +1720,12 @@
       }
     },
     {
-      "legacy_id": "2806D3ED8AEBD9B1D22E",
+      "legacy_id": "953B973D156971287497",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74030064",
@@ -2586,12 +1804,12 @@
       }
     },
     {
-      "legacy_id": "9109A05C461669AAE066",
+      "legacy_id": "C011EBCD5A3933DC7FC3",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74031592",
@@ -2676,12 +1894,12 @@
       }
     },
     {
-      "legacy_id": "26FE09646FCEFE0BE96B",
+      "legacy_id": "D3753C091AD1C8A3DE87",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74031790",
@@ -2763,12 +1981,12 @@
       }
     },
     {
-      "legacy_id": "CEB80B0F5D9DBA82EF1C",
+      "legacy_id": "540CE3903DEB10518205",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74033810",
@@ -2848,12 +2066,12 @@
       }
     },
     {
-      "legacy_id": "D24ECBF18973E834E05E",
+      "legacy_id": "79BC0CC39C087C1D2800",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74034604",
@@ -2929,12 +2147,12 @@
       }
     },
     {
-      "legacy_id": "7D2185DDC640894F41FA",
+      "legacy_id": "B5DBEDE60528EADAE0F1",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74034808",
@@ -3016,12 +2234,12 @@
       }
     },
     {
-      "legacy_id": "EB5BE02E42DDB0AFA670",
+      "legacy_id": "72859CFBFF1E51052FCA",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74034958",
@@ -3099,12 +2317,12 @@
       }
     },
     {
-      "legacy_id": "E1C14D73A784C5609387",
+      "legacy_id": "4BB69C807FB066F3B74E",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74036610",
@@ -3180,12 +2398,12 @@
       }
     },
     {
-      "legacy_id": "7551166353DFC5A9956C",
+      "legacy_id": "C7A371843812E8E7B5F3",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74036618",
@@ -3257,12 +2475,12 @@
       }
     },
     {
-      "legacy_id": "90AFA4B68765B9EAC5F8",
+      "legacy_id": "EB6F9BD4CD65F62F6956",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74036934",
@@ -3335,18 +2553,18 @@
       }
     },
     {
-      "legacy_id": "AAE65937331071EFF180",
+      "legacy_id": "5624FC031974CCB08027",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74068408",
         "capture_type": "RADAR",
         "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "A621A93E8647",
+        "prediction_audit_id": "09FDA64E05E3",
         "predicted_at": null,
         "start_at": "2026-08-26T15:00:00Z",
         "player_a": "Skatov, Timofey",
@@ -3355,23 +2573,23 @@
         "surface": "Hard",
         "tour": "atp",
         "verdict": "PRE-ANALISI",
-        "p_a": 0.39271224421347356,
-        "p_b": 0.6072877557865264,
+        "p_a": 0.3927093402352336,
+        "p_b": 0.6072906597647665,
         "predicted_side": "B",
         "predicted_name": "Dimitrov, Grigor",
-        "confidence": 55.45937374032201,
+        "confidence": 55.46017362271141,
         "data_quality": 76.72727272727273,
-        "uncertainty": 0.06260621682401,
+        "uncertainty": 0.06260323059642288,
         "raw_p_a": null,
         "shadow_p_a": null,
         "candidate_side": "B",
         "candidate_name": "Dimitrov, Grigor",
-        "candidate_prob": 0.6072877557865264,
+        "candidate_prob": 0.6072906597647665,
         "candidate_odds": null,
         "candidate_book": null,
         "candidate_ev": null,
         "candidate_edge": null,
-        "robust_prob": 0.5446815389625164,
+        "robust_prob": 0.5446874291683436,
         "robust_ev": null,
         "robust_edge": null,
         "market_consensus_a": null,
@@ -3393,7 +2611,7 @@
         "no_bet_reasons": [],
         "warnings": []
       },
-      "immutable_sha256": "021fc98e63b3b555340d7ce2f188fba047d6089265c0d051f7c51d5c34e16534",
+      "immutable_sha256": "46161b72d0e2f4761421563fe4ae730b77dab4cefffe034d930e1092a6ccd7e3",
       "result": {
         "actual_side": "B",
         "actual_winner": "Dimitrov, Grigor",
@@ -3406,18 +2624,18 @@
       }
     },
     {
-      "legacy_id": "2444934D69CE64A076CC",
+      "legacy_id": "CBCE8C04AF087BB97C13",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74068630",
         "capture_type": "RADAR",
         "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "9508122E3A44",
+        "prediction_audit_id": "124D9EA3DD6B",
         "predicted_at": null,
         "start_at": "2026-08-26T15:00:00Z",
         "player_a": "Bandecchi, Susan",
@@ -3426,18 +2644,18 @@
         "surface": "Hard",
         "tour": "wta",
         "verdict": "PRE-ANALISI",
-        "p_a": 0.4814492428695973,
-        "p_b": 0.5185507571304027,
+        "p_a": 0.4814482990961556,
+        "p_b": 0.5185517009038444,
         "predicted_side": "B",
         "predicted_name": "Hruncakova, Viktoria",
-        "confidence": 34.4300176220491,
+        "confidence": 34.42995086720362,
         "data_quality": 65.62337662337663,
-        "uncertainty": 0.09582468745776995,
+        "uncertainty": 0.09582493667585973,
         "raw_p_a": null,
         "shadow_p_a": null,
         "candidate_side": "B",
         "candidate_name": "Hruncakova, Viktoria",
-        "candidate_prob": 0.5185507571304027,
+        "candidate_prob": 0.5185517009038444,
         "candidate_odds": null,
         "candidate_book": null,
         "candidate_ev": null,
@@ -3461,7 +2679,7 @@
         "no_bet_reasons": [],
         "warnings": []
       },
-      "immutable_sha256": "4db738f759028fdd6cc26ee0380efa4b1313327636b9314caecd2e04998b0fbe",
+      "immutable_sha256": "bb1643b0ad40224413487ec1b97708af428d32790d9958b4fcc8f95749a8e37d",
       "result": {
         "actual_side": "A",
         "actual_winner": "Bandecchi, Susan",
@@ -3474,18 +2692,18 @@
       }
     },
     {
-      "legacy_id": "D84A768C80D274AA1718",
+      "legacy_id": "558AA4BF5F2D8834F3C7",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74069074",
         "capture_type": "RADAR",
         "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "617E46F4566F",
+        "prediction_audit_id": "384E082A2CBE",
         "predicted_at": null,
         "start_at": "2026-08-26T15:00:00Z",
         "player_a": "Rus, Arantxa",
@@ -3494,18 +2712,18 @@
         "surface": "Hard",
         "tour": "wta",
         "verdict": "PRE-ANALISI",
-        "p_a": 0.4849218334345313,
-        "p_b": 0.5150781665654687,
+        "p_a": 0.48491748767549075,
+        "p_b": 0.5150825123245093,
         "predicted_side": "B",
         "predicted_name": "Lamens, Suzan",
-        "confidence": 45.747281710464506,
+        "confidence": 45.748297261167664,
         "data_quality": 85,
-        "uncertainty": 0.06746014828093254,
+        "uncertainty": 0.06745635689164071,
         "raw_p_a": null,
         "shadow_p_a": null,
         "candidate_side": "B",
         "candidate_name": "Lamens, Suzan",
-        "candidate_prob": 0.5150781665654687,
+        "candidate_prob": 0.5150825123245093,
         "candidate_odds": null,
         "candidate_book": null,
         "candidate_ev": null,
@@ -3530,7 +2748,7 @@
         "no_bet_reasons": [],
         "warnings": []
       },
-      "immutable_sha256": "44206c413cd6fa90e66c21015fc81d2c9b9df23a72da510bb9bc9f0894f19233",
+      "immutable_sha256": "e4cacd4527615b3e570214910553f80ad7cf744ca33ddc9468cc5553548fb47e",
       "result": {
         "actual_side": "A",
         "actual_winner": "Rus, Arantxa",
@@ -3543,18 +2761,18 @@
       }
     },
     {
-      "legacy_id": "25E63406C97968ED41D8",
+      "legacy_id": "86DC397A49A69C866278",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "74069084",
         "capture_type": "RADAR",
         "model_version": "TENNIS-EDGE-QUANT-6.1",
-        "prediction_audit_id": "1AB9540547E3",
+        "prediction_audit_id": "9374F53FEE11",
         "predicted_at": null,
         "start_at": "2026-08-26T15:00:00Z",
         "player_a": "Hibino, Nao",
@@ -3563,18 +2781,18 @@
         "surface": "Hard",
         "tour": "wta",
         "verdict": "PRE-ANALISI",
-        "p_a": 0.4450534869934345,
-        "p_b": 0.5549465130065655,
+        "p_a": 0.4450549258547866,
+        "p_b": 0.5549450741452133,
         "predicted_side": "B",
         "predicted_name": "Siskova, Anna",
-        "confidence": 52.60315871191972,
+        "confidence": 52.60302849984379,
         "data_quality": 67.45454545454545,
-        "uncertainty": 0.06662396505125724,
+        "uncertainty": 0.06662445117634072,
         "raw_p_a": null,
         "shadow_p_a": null,
         "candidate_side": "B",
         "candidate_name": "Siskova, Anna",
-        "candidate_prob": 0.5549465130065655,
+        "candidate_prob": 0.5549450741452133,
         "candidate_odds": null,
         "candidate_book": null,
         "candidate_ev": null,
@@ -3599,7 +2817,7 @@
         "no_bet_reasons": [],
         "warnings": []
       },
-      "immutable_sha256": "a3aede7554f1722ebc10514ede984f1808e2a8c5fe4553160cc58149e297fd73",
+      "immutable_sha256": "18c0d26a713f9d54113ab869fade60fe61863480095550ae96d0e800e111db1d",
       "result": {
         "actual_side": "A",
         "actual_winner": "Hibino, Nao",
@@ -3680,12 +2898,12 @@
       }
     },
     {
-      "legacy_id": "3B904AD2605FEBB2BBF4",
+      "legacy_id": "129169862056E9B55766",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73862996",
@@ -3767,12 +2985,12 @@
       }
     },
     {
-      "legacy_id": "495A29625BFDB4EA0883",
+      "legacy_id": "F13CB1B0F89BDDCA2BDD",
       "evidence": {
-        "prediction_commit": "74a7915dc2da6e6607e07ed3f3a76c37afe77963",
-        "prediction_committed_at": "2026-08-25T19:49:14Z",
+        "prediction_commit": "8192295c7457a80a4ffdec5949ee688ec2806208",
+        "prediction_committed_at": "2026-08-25T21:13:57Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/74a7915dc2da6e6607e07ed3f3a76c37afe77963/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/8192295c7457a80a4ffdec5949ee688ec2806208/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73863000",
