@@ -1,0 +1,85 @@
+name: Tennis SureBet Autopilot
+run-name: "SureBet · ${{ github.event_name }}"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "surebet-engine.mjs"
+      - "surebet.html"
+      - "scripts/install-surebet-link.mjs"
+      - "scripts/validate-surebet.mjs"
+      - ".github/workflows/tennis-surebet.yml"
+  schedule:
+    - cron: "12,42 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tennis-surebet-autopilot
+  cancel-in-progress: false
+
+jobs:
+  surebet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: "24"
+
+      - name: Install SureBet navigation
+        run: node scripts/install-surebet-link.mjs
+
+      - name: Contract and self tests
+        run: |
+          node --check surebet-engine.mjs
+          node --check scripts/install-surebet-link.mjs
+          node --check scripts/validate-surebet.mjs
+          node surebet-engine.mjs --self-test
+          node scripts/validate-app.mjs
+
+      - name: Run SureBet scanner
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: node surebet-engine.mjs
+
+      - name: Validate SureBet board
+        run: node scripts/validate-surebet.mjs data/surebet-board.json
+
+      - name: Commit SureBet state
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- index.html data/surebet-board.json data/surebet-state.json
+          if git diff --cached --quiet; then
+            echo "No SureBet changes"
+            exit 0
+          fi
+          git config user.name "tennis-surebet-autopilot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "data: refresh SureBet board"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Tennis Edge Pro · SureBet" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f data/surebet-board.json ]; then
+            node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
+          const x=require('./data/surebet-board.json');
+          console.log(`- Status: ${x.meta?.status||'—'}`);
+          console.log(`- Bookmakers: ${x.meta?.bookmaker_count??0}`);
+          console.log(`- Events scanned: ${x.meta?.events_scanned??0}`);
+          console.log(`- Active surebets: ${(x.opportunities||[]).length}`);
+          NODE
+          fi
