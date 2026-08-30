@@ -25,8 +25,6 @@ on:
         type: string
         default: ""
   schedule:
-    # GitHub Actions cron is UTC. Minutes are intentionally off-peak.
-    # No timezone key: GitHub does not support it in workflow schedule syntax.
     - cron: "07,22,37,52 * * * *"
 
 permissions:
@@ -66,6 +64,7 @@ jobs:
           node --check quant-engine.mjs
           node --check live-engine.mjs
           node --check scripts/apply-refresh-resilience.mjs
+          node --check scripts/split-public-board.mjs
           node --check scripts/forward-ledger.mjs
           node --check scripts/legacy-forward-audit.mjs
           node quant-engine.mjs --self-test
@@ -84,6 +83,10 @@ jobs:
           ATP_HISTORY_URL_TEMPLATE: ${{ vars.ATP_HISTORY_URL_TEMPLATE }}
           WTA_HISTORY_URL_TEMPLATE: ${{ vars.WTA_HISTORY_URL_TEMPLATE }}
         run: node quant-engine.mjs
+
+      - name: Split full and mobile Quant payloads
+        if: steps.gate.outputs.run_quant == 'true'
+        run: node scripts/split-public-board.mjs
 
       - name: Validate Quant Board
         if: steps.gate.outputs.run_quant == 'true'
@@ -118,10 +121,18 @@ jobs:
           node scripts/validate-board.mjs quant
           node scripts/validate-board.mjs live
 
-      - name: Update immutable forward ledger
+      - name: Update immutable forward ledger from full board
+        shell: bash
         run: |
+          set -euo pipefail
+          cp data/quant-board.json /tmp/quant-board-mobile.json
+          if [ -f data/quant-board-full.json ]; then
+            cp data/quant-board-full.json data/quant-board.json
+          fi
           node scripts/forward-ledger.mjs
           node scripts/forward-ledger.mjs --validate
+          cp /tmp/quant-board-mobile.json data/quant-board.json
+          node scripts/validate-board.mjs quant
 
       - name: Build forensic legacy forward audit
         run: |
@@ -132,7 +143,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git add -A -- index.html data/quant-board.json data/quant-state.json data/live-board.json data/automation-health.json data/forward-ledger.json data/legacy-forward-audit.json
+          git add -A -- index.html data/quant-board.json data/quant-board-full.json data/quant-state.json data/live-board.json data/automation-health.json data/forward-ledger.json data/legacy-forward-audit.json
           if git diff --cached --quiet; then
             echo "No validated state changes"
             exit 0
@@ -162,6 +173,7 @@ jobs:
           const x=JSON.parse(fs.readFileSync('data/forward-ledger.json','utf8'));
           const s=x.stats||{};
           console.log(`- Forward ledger: ${s.total_forecasts??0} forecast · ${s.settled_forecasts??0} settled · ${s.settled_picks??0} pick`);
+          console.log(`- Paper candidates: ${s.paper_candidate_settled??0} settled · hit ${Number.isFinite(s.paper_candidate_hit_rate)?(s.paper_candidate_hit_rate*100).toFixed(1)+'%':'—'} · ROI ${Number.isFinite(s.paper_candidate_roi)?(s.paper_candidate_roi*100).toFixed(1)+'%':'—'}`);
           console.log(`- Next audit: ${s.next_audit_target??100} · remaining ${s.forecasts_to_next_audit??100}`);
           NODE
           fi
