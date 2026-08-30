@@ -1,6 +1,6 @@
 {
   "schema": "TEP-LEGACY-VERIFIED-1",
-  "generated_at": "2026-08-30T15:50:59.684Z",
+  "generated_at": "2026-08-30T15:53:00.834Z",
   "legacy_cutoff": "2026-08-27T21:05:46.428Z",
   "policy": {
     "git_commit_proof_required": true,
@@ -19,14 +19,14 @@
     "parse_errors": 0
   },
   "stats": {
-    "verified_forecasts": 7,
-    "settled_verified": 7,
+    "verified_forecasts": 6,
+    "settled_verified": 6,
     "unresolved_verified": 0,
-    "accuracy": 0.42857142857142855,
-    "brier": 0.24957188292428573,
-    "log_loss": 0.6921738594083234,
-    "verified_market_locks": 7,
-    "settled_market_locks": 7,
+    "accuracy": 0.3333333333333333,
+    "brier": 0.2528159812408333,
+    "log_loss": 0.6986461524944478,
+    "verified_market_locks": 6,
+    "settled_market_locks": 6,
     "qualified_picks": 0,
     "pick_wins": 0,
     "pick_hit_rate": null,
@@ -36,101 +36,21 @@
     "clv_sample": 0,
     "by_model": {
       "TENNIS-EDGE-QUANT-12.3-FREEZE-CANDIDATE": {
-        "settled": 7,
-        "wins": 3,
-        "accuracy": 0.42857142857142855,
-        "brier": 0.24957188292428573
+        "settled": 6,
+        "wins": 2,
+        "accuracy": 0.3333333333333333,
+        "brier": 0.2528159812408333
       }
     }
   },
   "records": [
     {
-      "legacy_id": "9A511E52603D219ECFB7",
+      "legacy_id": "A9326427ABAB60468AF3",
       "evidence": {
-        "prediction_commit": "094d1a7d0514fd09d4c560891b63a83c01d846f9",
-        "prediction_committed_at": "2026-08-27T19:58:29Z",
+        "prediction_commit": "510203a031a4b92db23bd8d4963c73e5fb05836b",
+        "prediction_committed_at": "2026-08-27T20:00:03Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/094d1a7d0514fd09d4c560891b63a83c01d846f9/data/quant-board.json"
-      },
-      "immutable": {
-        "event_id": "73853080",
-        "capture_type": "MARKET_LOCK",
-        "model_version": "TENNIS-EDGE-QUANT-12.3-FREEZE-CANDIDATE",
-        "prediction_audit_id": "80AB216E5E2C",
-        "predicted_at": "2026-08-27T10:35:43.961Z",
-        "start_at": "2026-08-27T20:00:00Z",
-        "player_a": "Cerundolo, Juan Manuel",
-        "player_b": "Buse, Ignacio",
-        "tournament": "ATP - Winston Salem, USA",
-        "surface": "Hard",
-        "tour": "atp",
-        "verdict": "NO BET",
-        "p_a": 0.479695,
-        "p_b": 0.520305,
-        "predicted_side": "B",
-        "predicted_name": "Buse, Ignacio",
-        "confidence": 45.723471,
-        "data_quality": 81.415584,
-        "uncertainty": 0.096673,
-        "raw_p_a": 0.46903,
-        "shadow_p_a": 0.478212,
-        "candidate_side": "B",
-        "candidate_name": "Buse, Ignacio",
-        "candidate_prob": 0.520305,
-        "candidate_odds": 2,
-        "candidate_book": "Bet365",
-        "candidate_ev": 0.04061,
-        "candidate_edge": 0.045368,
-        "robust_prob": 0.423632,
-        "robust_ev": -0.152736,
-        "robust_edge": -0.051306,
-        "market_consensus_a": 0.525063,
-        "market_depth": 2,
-        "pick_side": null,
-        "pick_name": null,
-        "pick_prob": 0,
-        "pick_odds": 0,
-        "pick_book": null,
-        "pick_ev": 0,
-        "pick_edge": 0,
-        "reason_codes": [
-          "ELO ++",
-          "FORM +",
-          "H2H --",
-          "SERVE/RETURN +",
-          "EV +"
-        ],
-        "no_bet_reasons": [
-          "ROBUST_EV_NON_POSITIVO",
-          "EDGE_NON_RESISTE_INCERTEZZA",
-          "MODELLI_IN_DISACCORDO"
-        ],
-        "warnings": [
-          "ROBUST_EV_NON_POSITIVO",
-          "EDGE_NON_RESISTE_INCERTEZZA",
-          "MODELLI_IN_DISACCORDO",
-          "CONSENSUS_2_SU_3"
-        ]
-      },
-      "immutable_sha256": "026c1ab95fbf42be88698cc2e869e75d4f9670a027fe49a7e939e05cd7755558",
-      "result": {
-        "actual_side": "B",
-        "actual_winner": "Buse, Ignacio",
-        "settled_at": "2026-08-28T18:57:23.553Z",
-        "result_commit": "6020a8c0fea6c2db04ab2ffec043f2ea4b78b3f1",
-        "result_committed_at": "2026-08-28T18:57:29Z",
-        "result_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/6020a8c0fea6c2db04ab2ffec043f2ea4b78b3f1/data/quant-board.json",
-        "closing_odds": 0,
-        "clv": 0
-      }
-    },
-    {
-      "legacy_id": "77D2ED93DF5FAA9EEEF2",
-      "evidence": {
-        "prediction_commit": "094d1a7d0514fd09d4c560891b63a83c01d846f9",
-        "prediction_committed_at": "2026-08-27T19:58:29Z",
-        "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/094d1a7d0514fd09d4c560891b63a83c01d846f9/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/510203a031a4b92db23bd8d4963c73e5fb05836b/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73863012",
@@ -196,12 +116,12 @@
       }
     },
     {
-      "legacy_id": "CEB6460B44A28D2ABE3D",
+      "legacy_id": "41E4B60AB016D58C8281",
       "evidence": {
-        "prediction_commit": "094d1a7d0514fd09d4c560891b63a83c01d846f9",
-        "prediction_committed_at": "2026-08-27T19:58:29Z",
+        "prediction_commit": "510203a031a4b92db23bd8d4963c73e5fb05836b",
+        "prediction_committed_at": "2026-08-27T20:00:03Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/094d1a7d0514fd09d4c560891b63a83c01d846f9/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/510203a031a4b92db23bd8d4963c73e5fb05836b/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73863152",
@@ -270,12 +190,12 @@
       }
     },
     {
-      "legacy_id": "927D0C3D2105D5D12514",
+      "legacy_id": "015A72EBE20C90CF071B",
       "evidence": {
-        "prediction_commit": "094d1a7d0514fd09d4c560891b63a83c01d846f9",
-        "prediction_committed_at": "2026-08-27T19:58:29Z",
+        "prediction_commit": "510203a031a4b92db23bd8d4963c73e5fb05836b",
+        "prediction_committed_at": "2026-08-27T20:00:03Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/094d1a7d0514fd09d4c560891b63a83c01d846f9/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/510203a031a4b92db23bd8d4963c73e5fb05836b/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73863014",
@@ -352,12 +272,12 @@
       }
     },
     {
-      "legacy_id": "7F7A0C432BBEED9DE319",
+      "legacy_id": "015AB383CDEBED602AFF",
       "evidence": {
-        "prediction_commit": "094d1a7d0514fd09d4c560891b63a83c01d846f9",
-        "prediction_committed_at": "2026-08-27T19:58:29Z",
+        "prediction_commit": "510203a031a4b92db23bd8d4963c73e5fb05836b",
+        "prediction_committed_at": "2026-08-27T20:00:03Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/094d1a7d0514fd09d4c560891b63a83c01d846f9/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/510203a031a4b92db23bd8d4963c73e5fb05836b/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73853078",
@@ -429,12 +349,12 @@
       }
     },
     {
-      "legacy_id": "BD2267F3850E5E5669B3",
+      "legacy_id": "5080F6E74296BFDCDAA5",
       "evidence": {
-        "prediction_commit": "094d1a7d0514fd09d4c560891b63a83c01d846f9",
-        "prediction_committed_at": "2026-08-27T19:58:29Z",
+        "prediction_commit": "510203a031a4b92db23bd8d4963c73e5fb05836b",
+        "prediction_committed_at": "2026-08-27T20:00:03Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/094d1a7d0514fd09d4c560891b63a83c01d846f9/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/510203a031a4b92db23bd8d4963c73e5fb05836b/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73853062",
@@ -506,12 +426,12 @@
       }
     },
     {
-      "legacy_id": "D12C98C3E53CC200F21E",
+      "legacy_id": "2FF3061B6979EDE3E439",
       "evidence": {
-        "prediction_commit": "094d1a7d0514fd09d4c560891b63a83c01d846f9",
-        "prediction_committed_at": "2026-08-27T19:58:29Z",
+        "prediction_commit": "510203a031a4b92db23bd8d4963c73e5fb05836b",
+        "prediction_committed_at": "2026-08-27T20:00:03Z",
         "prediction_path": "data/quant-board.json",
-        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/094d1a7d0514fd09d4c560891b63a83c01d846f9/data/quant-board.json"
+        "prediction_url": "https://github.com/davidecravedi168-beep/Tennis_D-L/blob/510203a031a4b92db23bd8d4963c73e5fb05836b/data/quant-board.json"
       },
       "immutable": {
         "event_id": "73863010",
