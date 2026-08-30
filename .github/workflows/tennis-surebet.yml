@@ -59,7 +59,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git add -- index.html data/surebet-board.json data/surebet-state.json
+          git add -- index.html data/surebet-board.json
+          if [ -f data/surebet-state.json ]; then
+            git add -- data/surebet-state.json
+          fi
           if git diff --cached --quiet; then
             echo "No SureBet changes"
             exit 0
@@ -81,5 +84,6 @@ jobs:
           console.log(`- Bookmakers: ${x.meta?.bookmaker_count??0}`);
           console.log(`- Events scanned: ${x.meta?.events_scanned??0}`);
           console.log(`- Active surebets: ${(x.opportunities||[]).length}`);
+          console.log(`- Fail closed: ${x.meta?.fail_closed===true?'ON':'ON (safe default)'}`);
           NODE
           fi
