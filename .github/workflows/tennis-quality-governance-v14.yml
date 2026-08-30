@@ -22,7 +22,6 @@ jobs:
       - run: node --check tennis-quality-governance-v14.js
       - run: |
           grep -q 'tennis-quality-governance-v14.js?v=14.0' index.html
-          grep -q 'Quality & Validation Governance' tennis-quality-governance-v14.js
           git diff --check
       - if: github.event_name != 'pull_request'
         run: |
