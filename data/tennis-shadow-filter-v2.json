@@ -1,0 +1,175 @@
+{
+  "schema": "TEP-SHADOW-FILTER-V2",
+  "generated_at": "2026-09-03T09:46:23.772Z",
+  "source": {
+    "ledger_schema": "TEP-FORWARD-LEDGER-1",
+    "ledger_updated_at": "2026-09-03T09:44:45.566Z"
+  },
+  "policy": {
+    "shadow_only": true,
+    "production_logic_changed": false,
+    "auto_promote": false,
+    "minimum_shadow_n_for_review": 30,
+    "persistence_required": true,
+    "note": "Counterfactual diagnostic only. The filter does not alter official picks or thresholds."
+  },
+  "rules": {
+    "hard_reject": [
+      "odds >= 3.00",
+      "at least 2 negative votes among ELO/SURFACE/FORM/SERVE-RETURN",
+      ">=3 observed core factors but <2 positive"
+    ],
+    "penalties": [
+      "WTA -1",
+      "candidate probability <55% -1"
+    ],
+    "pass": "no hard reject and score >=1"
+  },
+  "champion": {
+    "n": 139,
+    "wins": 51,
+    "hit_rate": 0.3669064748201439,
+    "profit_units": -17.29000000000001,
+    "roi": -0.12438848920863316,
+    "max_drawdown_units": 32.70000000000001
+  },
+  "shadow": {
+    "n": 39,
+    "wins": 26,
+    "hit_rate": 0.6666666666666666,
+    "profit_units": 6.080000000000002,
+    "roi": 0.15589743589743593,
+    "max_drawdown_units": 4.17
+  },
+  "delta": {
+    "roi": 0.2802859251060691,
+    "max_drawdown_units": -28.53000000000001
+  },
+  "retention_rate": 0.2805755395683453,
+  "rejection_reasons": [
+    {
+      "reason": "LOW_CALIBRATION_BAND",
+      "count": 92
+    },
+    {
+      "reason": "TWO_CORE_NEGATIVES",
+      "count": 75
+    },
+    {
+      "reason": "INSUFFICIENT_CORE_SUPPORT",
+      "count": 67
+    },
+    {
+      "reason": "ODDS_3_PLUS",
+      "count": 66
+    },
+    {
+      "reason": "WTA_PENALTY",
+      "count": 54
+    }
+  ],
+  "windows": [
+    {
+      "start_index": 1,
+      "end_index": 30,
+      "champion": {
+        "n": 30,
+        "wins": 13,
+        "hit_rate": 0.43333333333333335,
+        "profit_units": -1.0799999999999998,
+        "roi": -0.036,
+        "max_drawdown_units": 4.9
+      },
+      "shadow": {
+        "n": 13,
+        "wins": 8,
+        "hit_rate": 0.6153846153846154,
+        "profit_units": 2.7600000000000007,
+        "roi": 0.21230769230769236,
+        "max_drawdown_units": 2
+      }
+    },
+    {
+      "start_index": 31,
+      "end_index": 60,
+      "champion": {
+        "n": 30,
+        "wins": 11,
+        "hit_rate": 0.36666666666666664,
+        "profit_units": 2.52,
+        "roi": 0.084,
+        "max_drawdown_units": 6
+      },
+      "shadow": {
+        "n": 3,
+        "wins": 2,
+        "hit_rate": 0.6666666666666666,
+        "profit_units": 0.7999999999999998,
+        "roi": 0.2666666666666666,
+        "max_drawdown_units": 1
+      }
+    },
+    {
+      "start_index": 61,
+      "end_index": 90,
+      "champion": {
+        "n": 30,
+        "wins": 10,
+        "hit_rate": 0.3333333333333333,
+        "profit_units": -9.850000000000001,
+        "roi": -0.32833333333333337,
+        "max_drawdown_units": 9.850000000000001
+      },
+      "shadow": {
+        "n": 7,
+        "wins": 5,
+        "hit_rate": 0.7142857142857143,
+        "profit_units": 0.6699999999999999,
+        "roi": 0.09571428571428571,
+        "max_drawdown_units": 1
+      }
+    },
+    {
+      "start_index": 91,
+      "end_index": 120,
+      "champion": {
+        "n": 30,
+        "wins": 7,
+        "hit_rate": 0.23333333333333334,
+        "profit_units": -13.62,
+        "roi": -0.45399999999999996,
+        "max_drawdown_units": 15.079999999999998
+      },
+      "shadow": {
+        "n": 8,
+        "wins": 3,
+        "hit_rate": 0.375,
+        "profit_units": -3.17,
+        "roi": -0.39625,
+        "max_drawdown_units": 3.17
+      }
+    },
+    {
+      "start_index": 121,
+      "end_index": 139,
+      "champion": {
+        "n": 19,
+        "wins": 10,
+        "hit_rate": 0.5263157894736842,
+        "profit_units": 4.739999999999999,
+        "roi": 0.2494736842105263,
+        "max_drawdown_units": 6.92
+      },
+      "shadow": {
+        "n": 8,
+        "wins": 8,
+        "hit_rate": 1,
+        "profit_units": 5.02,
+        "roi": 0.6275,
+        "max_drawdown_units": 0
+      }
+    }
+  ],
+  "evidence": "PROMISING",
+  "promotion_eligible_for_review": true
+}
