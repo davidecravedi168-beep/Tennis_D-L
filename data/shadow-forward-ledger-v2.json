@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-03T13:00:06.606Z",
+  "updated_at": "2026-09-03T13:17:00.439Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -152,13 +152,63 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "B359B091F2B91801AE25D712",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "CCF8C9D45F66F3B94B7C",
+        "source_immutable_sha256": "b0328fdfd7deb4bb11ad228437eb81c01e01ed6e32456a8f08265968f14280bf",
+        "event_id": "73992494",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-03T13:16:52.842Z",
+        "start_at": "2026-09-04T15:00:00Z",
+        "first_observed_at": "2026-09-03T13:17:00.185Z",
+        "player_a": "Li, Ann",
+        "player_b": "Noskova, Linda",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Li, Ann",
+        "candidate_odds": 3.5,
+        "candidate_prob": 0.276114,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -6,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "NEGATIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 4,
+        "observed_core": 4,
+        "hard_reject": [
+          "ODDS_3_PLUS",
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT"
+        ],
+        "penalties": [
+          "WTA_PENALTY",
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "41b22d258c9b7334a000a5be66b3c4c7bcbfd3b19ddcc04560054fbd8e374dd7",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 3,
+    "total_decisions": 4,
     "accepted": 1,
-    "rejected": 2,
-    "open": 3,
+    "rejected": 3,
+    "open": 4,
     "settled": 0
   },
   "evidence": {
