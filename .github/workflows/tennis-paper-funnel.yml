@@ -1,0 +1,57 @@
+name: Tennis Paper Funnel Audit
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '45 */2 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tennis-paper-funnel
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Build paper funnel observability report
+        run: |
+          node scripts/paper-funnel-audit.mjs
+          node scripts/paper-funnel-audit.mjs --validate
+      - name: Commit audit report
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add data/paper-funnel.json
+          if git diff --cached --quiet; then
+            echo 'No paper funnel changes'
+            exit 0
+          fi
+          git config user.name 'tennis-edge-autopilot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'data: refresh paper funnel audit'
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Summary
+        if: always()
+        run: |
+          if [ -f data/paper-funnel.json ]; then
+            node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
+          const x=require('./data/paper-funnel.json');
+          const p=x.paper?.all_candidates||{};
+          console.log(`### Tennis Edge Pro · Paper Funnel`);
+          console.log(`- Status: ${x.status}`);
+          console.log(`- Market locks: ${x.funnel.market_locks} → candidates: ${x.funnel.valid_market_candidates} → qualified: ${x.funnel.qualified_value}`);
+          console.log(`- Paper settled: ${p.settled??0} · hit ${Number.isFinite(p.hit_rate)?(p.hit_rate*100).toFixed(1)+'%':'—'} · ROI ${Number.isFinite(p.roi)?(p.roi*100).toFixed(1)+'%':'—'} · DD ${Number.isFinite(p.max_drawdown_units)?p.max_drawdown_units.toFixed(2)+'u':'—'}`);
+          console.log(`- CLV sample: ${p.clv_sample??0} · avg ${Number.isFinite(p.avg_clv)?p.avg_clv.toFixed(4):'—'}`);
+          console.log(`- Anomalies: ${(x.anomalies||[]).map(a=>a.code).join(', ')||'none'}`);
+          NODE
+          fi
