@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-03T15:58:51.947Z",
+  "updated_at": "2026-09-03T16:17:12.665Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -202,13 +202,106 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "F1B4E7C3C4033C1B3638D661",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "7CD24FDCF62FAC3AAC10",
+        "source_immutable_sha256": "f02dea3a8e597a7e79c3555b47a2ed28d34988e99f699b6b765f7db19b5225e6",
+        "event_id": "73992580",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-03T16:17:05.698Z",
+        "start_at": "2026-09-04T15:00:00Z",
+        "first_observed_at": "2026-09-03T16:17:12.416Z",
+        "player_a": "Navarro, Emma",
+        "player_b": "Muchova, Karolina",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Navarro, Emma",
+        "candidate_odds": 4,
+        "candidate_prob": 0.241416,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -5,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "NEGATIVE",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 0,
+        "negative_core": 3,
+        "observed_core": 3,
+        "hard_reject": [
+          "ODDS_3_PLUS",
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT"
+        ],
+        "penalties": [
+          "WTA_PENALTY",
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "4670a9ce89949a9e0c9fdcd4b6dc791fb5a8b3b3f5d0704e35414172373f1dac",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "67626FDFD8C328ED95A77AE6",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "5A7B426921DEA781E415",
+        "source_immutable_sha256": "6b632bf3454e132fa06b08f7d76ab26d03671cc013a8eeea8420d0147d9de746",
+        "event_id": "73992470",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-03T16:17:05.698Z",
+        "start_at": "2026-09-04T15:00:00Z",
+        "first_observed_at": "2026-09-03T16:17:12.416Z",
+        "player_a": "Lehecka, Jiri",
+        "player_b": "Tsitsipas, Stefanos",
+        "tour": "atp",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Lehecka, Jiri",
+        "candidate_odds": 1.5,
+        "candidate_prob": 0.668862,
+        "decision": "ACCEPT",
+        "pass": true,
+        "score": 4,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 4,
+        "negative_core": 0,
+        "observed_core": 4,
+        "hard_reject": [],
+        "penalties": []
+      },
+      "immutable_sha256": "8fa87d1f94b5fb4bf4ccbd9672f7cb268f57ca26878813db90bdb6a3b87704cd",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 4,
-    "accepted": 1,
-    "rejected": 3,
-    "open": 4,
+    "total_decisions": 6,
+    "accepted": 2,
+    "rejected": 4,
+    "open": 6,
     "settled": 0
   },
   "evidence": {
