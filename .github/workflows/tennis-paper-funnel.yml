@@ -2,6 +2,12 @@ name: Tennis Paper Funnel Audit
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/paper-funnel-audit.mjs'
+      - 'scripts/tennis-model-diagnostics.mjs'
+      - '.github/workflows/tennis-paper-funnel.yml'
   schedule:
     - cron: '45 */2 * * *'
 
