@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-03T10:58:46.795Z",
+  "updated_at": "2026-09-03T11:15:10.596Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -14,12 +14,106 @@
     "min_shadow_settled_for_mature_review": 100,
     "note": "Activation checkpoint only. Historical records are never backfilled."
   },
-  "records": [],
+  "records": [
+    {
+      "shadow_id": "9DEB2BDD9D96AB3B8A827B0E",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "9C2EE9554711CA1D32B1",
+        "source_immutable_sha256": "80d0f5a920309a4448d1e5d98e08b5e5dbc12fa11d4a599ba4dbf57f29dd9b36",
+        "event_id": "15712402194",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-03T11:15:03.805Z",
+        "start_at": "2026-09-03T18:00:00Z",
+        "first_observed_at": "2026-09-03T11:15:10.368Z",
+        "player_a": "Mell Elizabeth Reasco Gonzalez",
+        "player_b": "Linda Fruhvirtova",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Mell Elizabeth Reasco Gonzalez",
+        "candidate_odds": 7.5,
+        "candidate_prob": 0.431466,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -1,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 2,
+        "negative_core": 1,
+        "observed_core": 3,
+        "hard_reject": [
+          "ODDS_3_PLUS"
+        ],
+        "penalties": [
+          "WTA_PENALTY",
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "3e1600af25c1703371bdf3de1a629cf9752cde47b509d4a008c7c9c885e5b808",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "6F182040BD9B5D521C5B2CF5",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "E81E6F0526EABC9118E8",
+        "source_immutable_sha256": "abcf9011ba53b892e0506ac95c43a089e8931012c91ce7e8bc6e66dea0b4f515",
+        "event_id": "14036131614",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-03T11:15:03.805Z",
+        "start_at": "2026-09-04T03:00:00Z",
+        "first_observed_at": "2026-09-03T11:15:10.368Z",
+        "player_a": "Sofia Costoulas",
+        "player_b": "Zhuoxuan Bai",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Sofia Costoulas",
+        "candidate_odds": 1.72,
+        "candidate_prob": 0.583737,
+        "decision": "ACCEPT",
+        "pass": true,
+        "score": 1,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 2,
+        "negative_core": 0,
+        "observed_core": 2,
+        "hard_reject": [],
+        "penalties": [
+          "WTA_PENALTY"
+        ]
+      },
+      "immutable_sha256": "f82e0c7205935d50490e0d58a1d116d619dccd464f77b78bb313a885e9f0cd17",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    }
+  ],
   "stats": {
-    "total_decisions": 0,
-    "accepted": 0,
-    "rejected": 0,
-    "open": 0,
+    "total_decisions": 2,
+    "accepted": 1,
+    "rejected": 1,
+    "open": 2,
     "settled": 0
   },
   "evidence": {
