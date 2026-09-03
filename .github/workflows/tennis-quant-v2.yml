@@ -66,10 +66,12 @@ jobs:
           node --check scripts/apply-refresh-resilience.mjs
           node --check scripts/split-public-board.mjs
           node --check scripts/forward-ledger.mjs
+          node --check scripts/shadow-forward-ledger-v2.mjs
           node --check scripts/legacy-forward-audit.mjs
           node quant-engine.mjs --self-test
           node live-engine.mjs --self-test
           node scripts/forward-ledger.mjs --self-test
+          node scripts/shadow-forward-ledger-v2.mjs --self-test
           node scripts/legacy-forward-audit.mjs --self-test
           node scripts/validate-app.mjs
 
@@ -136,6 +138,12 @@ jobs:
           cp /tmp/quant-board-mobile.json data/quant-board.json
           node scripts/validate-board.mjs quant
 
+      - name: Update immutable Shadow Forward Ledger v2
+        if: github.event_name != 'push'
+        run: |
+          node scripts/shadow-forward-ledger-v2.mjs
+          node scripts/shadow-forward-ledger-v2.mjs --validate
+
       - name: Build forensic legacy forward audit
         if: github.event_name != 'push'
         run: |
@@ -147,7 +155,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git add -A -- index.html data/quant-board.json data/quant-board-full.json data/quant-state.json data/live-board.json data/automation-health.json data/forward-ledger.json data/legacy-forward-audit.json
+          git add -A -- index.html data/quant-board.json data/quant-board-full.json data/quant-state.json data/live-board.json data/automation-health.json data/forward-ledger.json data/shadow-forward-ledger-v2.json data/legacy-forward-audit.json
           if git diff --cached --quiet; then
             echo "No validated state changes"
             exit 0
@@ -155,8 +163,12 @@ jobs:
           git config user.name "tennis-edge-autopilot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "data: TEP 12.5 validated autopilot refresh"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+            git rebase --abort || true
+            sleep $((attempt * 2))
+          done
+          exit 1
 
       - name: Run summary
         if: always()
@@ -179,6 +191,16 @@ jobs:
           console.log(`- Forward ledger: ${s.total_forecasts??0} forecast · ${s.settled_forecasts??0} settled · ${s.settled_picks??0} pick`);
           console.log(`- Paper candidates: ${s.paper_candidate_settled??0} settled · hit ${Number.isFinite(s.paper_candidate_hit_rate)?(s.paper_candidate_hit_rate*100).toFixed(1)+'%':'—'} · ROI ${Number.isFinite(s.paper_candidate_roi)?(s.paper_candidate_roi*100).toFixed(1)+'%':'—'}`);
           console.log(`- Next audit: ${s.next_audit_target??100} · remaining ${s.forecasts_to_next_audit??100}`);
+          NODE
+          fi
+          if [ -f data/shadow-forward-ledger-v2.json ]; then
+            node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
+          const fs=require('fs');
+          const x=JSON.parse(fs.readFileSync('data/shadow-forward-ledger-v2.json','utf8'));
+          const e=x.evidence||{},s=e.shadow||{},c=e.champion||{};
+          console.log(`- Shadow Forward v2: ${x.stats?.total_decisions??0} decision · ${x.stats?.accepted??0} accepted · ${x.stats?.settled??0} settled`);
+          console.log(`- Shadow evidence: ${e.state||'COLD_START'} · champion ROI ${Number.isFinite(c.roi)?(c.roi*100).toFixed(1)+'%':'—'} · shadow ROI ${Number.isFinite(s.roi)?(s.roi*100).toFixed(1)+'%':'—'}`);
+          console.log(`- Shadow review eligible: ${e.review_eligible===true?'YES':'NO'}`);
           NODE
           fi
           if [ -f data/legacy-forward-audit.json ]; then
