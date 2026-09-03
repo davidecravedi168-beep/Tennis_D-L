@@ -1,0 +1,33 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+
+const LEDGER='data/forward-ledger.json';
+const OUT='data/tennis-shadow-filter-v2.json';
+const num=v=>{const n=Number(v);return Number.isFinite(n)?n:null};
+const stage=r=>r?.immutable?.forecast_stage||'MARKET_LOCK';
+const settled=r=>r?.lifecycle?.status==='SETTLED';
+const isSide=v=>v==='A'||v==='B';
+const won=r=>r.immutable?.candidate_side===r.lifecycle?.actual_side;
+const profit=r=>won(r)?num(r.immutable?.candidate_odds)-1:-1;
+function semanticKey(r){const i=r?.immutable||{};return stage(r)==='RADAR_PREVIEW'?[stage(r),i.event_id,i.model_version].join('|'):[stage(r),i.event_id,i.model_version,i.predicted_at].join('|')}
+function dedupe(rows){const m=new Map();for(const r of rows){const k=semanticKey(r),p=m.get(k);if(!p||(!settled(p)&&settled(r)))m.set(k,r)}return [...m.values()]}
+function eligible(rows){return rows.filter(r=>stage(r)==='MARKET_LOCK'&&settled(r)&&isSide(r.immutable?.candidate_side)&&num(r.immutable?.candidate_odds)>1&&isSide(r.lifecycle?.actual_side))}
+function reasonList(r){const i=r?.immutable||{};return [...(i.reason_codes||[]),...(i.no_bet_reasons||[]),...(i.warnings||[])].map(x=>String(x||''))}
+function factorVote(r,f){const xs=reasonList(r).filter(x=>x.startsWith(f+' '));if(!xs.length)return 'UNOBSERVED';const s=xs.join(' ');if(s.includes('++')||(/\+/.test(s)&&!s.includes('--')))return 'POSITIVE';if(s.includes('--')||(/-/.test(s)&&!s.includes('++')))return 'NEGATIVE';return 'NEUTRAL'}
+function stats(rows){const wins=rows.filter(won).length,ps=rows.map(profit);let bank=0,peak=0,dd=0;for(const r of [...rows].sort((a,b)=>new Date(a.lifecycle?.settled_at||0)-new Date(b.lifecycle?.settled_at||0))){bank+=profit(r);peak=Math.max(peak,bank);dd=Math.max(dd,peak-bank)}return {n:rows.length,wins,hit_rate:rows.length?wins/rows.length:null,profit_units:ps.reduce((a,x)=>a+x,0),roi:rows.length?ps.reduce((a,x)=>a+x,0)/rows.length:null,max_drawdown_units:dd}}
+function classify(r){const i=r.immutable||{},tour=String(i.tour||'').toUpperCase(),odds=num(i.candidate_odds),p=num(i.candidate_prob);const core=['ELO','SURFACE','FORM','SERVE/RETURN'];const votes=core.map(f=>factorVote(r,f));const positive=votes.filter(x=>x==='POSITIVE').length,negative=votes.filter(x=>x==='NEGATIVE').length,observed=votes.filter(x=>x!=='UNOBSERVED').length;const hardReject=[];const penalties=[];
+  if(odds!==null&&odds>=3)hardReject.push('ODDS_3_PLUS');
+  if(tour==='WTA')penalties.push('WTA_PENALTY');
+  if(negative>=2)hardReject.push('TWO_CORE_NEGATIVES');
+  if(observed>=3&&positive<2)hardReject.push('INSUFFICIENT_CORE_SUPPORT');
+  if(p!==null&&p<.55)penalties.push('LOW_CALIBRATION_BAND');
+  const score=positive-negative-(tour==='WTA'?1:0)-(p!==null&&p<.55?1:0);
+  const pass=hardReject.length===0&&score>=1;
+  return {pass,score,positive_core:positive,negative_core:negative,observed_core:observed,hard_reject:hardReject,penalties};
+}
+function split(rows,fn){return rows.filter(fn)}
+function build(ledger){const rows=eligible(dedupe(ledger.records||[]));const accepted=[],rejected=[];for(const r of rows){const c=classify(r);(c.pass?accepted:rejected).push({r,c})}const arows=accepted.map(x=>x.r),rrows=rejected.map(x=>x.r);const reasons={};for(const x of rejected)for(const q of [...x.c.hard_reject,...x.c.penalties])reasons[q]=(reasons[q]||0)+1;const windows=[];const ordered=[...rows].sort((a,b)=>new Date(a.lifecycle?.settled_at||0)-new Date(b.lifecycle?.settled_at||0));for(let start=0;start<ordered.length;start+=30){const w=ordered.slice(start,start+30),wa=w.filter(r=>classify(r).pass);windows.push({start_index:start+1,end_index:start+w.length,champion:stats(w),shadow:stats(wa)})}
+  const champion=stats(rows),shadow=stats(arows);const delta_roi=(shadow.roi??0)-(champion.roi??0),delta_dd=(shadow.max_drawdown_units??0)-(champion.max_drawdown_units??0);let evidence='INSUFFICIENT';if(shadow.n>=30){const nonEmpty=windows.filter(w=>w.shadow.n>=5),positiveWindows=nonEmpty.filter(w=>(w.shadow.roi??-99)>(w.champion.roi??-99)).length;const persistent=nonEmpty.length>=3&&positiveWindows/nonEmpty.length>=.67;evidence=delta_roi>0&&delta_dd<=0&&persistent?'PROMISING':'MIXED'}else if(shadow.n>=10)evidence='OBSERVE';return {schema:'TEP-SHADOW-FILTER-V2',generated_at:new Date().toISOString(),source:{ledger_schema:ledger.schema||null,ledger_updated_at:ledger.updated_at||null},policy:{shadow_only:true,production_logic_changed:false,auto_promote:false,minimum_shadow_n_for_review:30,persistence_required:true,note:'Counterfactual diagnostic only. The filter does not alter official picks or thresholds.'},rules:{hard_reject:['odds >= 3.00','at least 2 negative votes among ELO/SURFACE/FORM/SERVE-RETURN','>=3 observed core factors but <2 positive'],penalties:['WTA -1','candidate probability <55% -1'],pass:'no hard reject and score >=1'},champion,shadow,delta:{roi:delta_roi,max_drawdown_units:delta_dd},retention_rate:rows.length?arows.length/rows.length:null,rejection_reasons:Object.entries(reasons).sort((a,b)=>b[1]-a[1]).map(([reason,count])=>({reason,count})),windows,evidence,promotion_eligible_for_review:evidence==='PROMISING'&&shadow.n>=30};}
+function selfTest(){const mk=(tour,odds,p,reasons,actual='A')=>({immutable:{forecast_stage:'MARKET_LOCK',event_id:Math.random(),model_version:'T',predicted_at:'2026-01-01',tour,candidate_side:'A',candidate_odds:odds,candidate_prob:p,reason_codes:reasons},lifecycle:{status:'SETTLED',actual_side:actual,settled_at:'2026-01-02'}});const rows=[];for(let i=0;i<40;i++)rows.push(mk('ATP',1.8,.62,['ELO ++','SURFACE ++','FORM +','SERVE/RETURN +'],'A'));for(let i=0;i<40;i++)rows.push(mk('WTA',3.4,.45,['ELO --','SURFACE --','FORM -','SERVE/RETURN -'],'B'));const o=build({schema:'TEP-FORWARD-LEDGER-1',records:rows});if(o.shadow.n!==40||o.shadow.roi<=o.champion.roi||o.policy.auto_promote!==false)throw new Error('SHADOW_V2_SELF_TEST');console.log(JSON.stringify({ok:true,tests:['filter_isolation','factor_consensus','odds_gate','wta_penalty','persistence_gate']}));}
+if(process.argv.includes('--self-test')){selfTest();process.exit(0)}
+const ledger=JSON.parse(await fs.readFile(LEDGER,'utf8'));const out=build(ledger);await fs.mkdir(path.dirname(OUT),{recursive:true});await fs.writeFile(OUT,JSON.stringify(out,null,2)+'\n','utf8');if(process.argv.includes('--validate')){if(out.schema!=='TEP-SHADOW-FILTER-V2'||out.policy.production_logic_changed!==false||out.policy.auto_promote!==false)throw new Error('SHADOW_V2_INVALID');console.log(JSON.stringify({ok:true,evidence:out.evidence,shadow_n:out.shadow.n,retention:out.retention_rate}))}else console.log(JSON.stringify({ok:true,evidence:out.evidence,champion:out.champion,shadow:out.shadow,delta:out.delta,output:OUT}));
