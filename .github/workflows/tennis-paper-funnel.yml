@@ -7,6 +7,7 @@ on:
     paths:
       - 'scripts/paper-funnel-audit.mjs'
       - 'scripts/tennis-model-diagnostics.mjs'
+      - 'scripts/tennis-shadow-filter-v2.mjs'
       - '.github/workflows/tennis-paper-funnel.yml'
   schedule:
     - cron: '45 */2 * * *'
@@ -37,18 +38,23 @@ jobs:
           node scripts/tennis-model-diagnostics.mjs --self-test
           node scripts/tennis-model-diagnostics.mjs
           node scripts/tennis-model-diagnostics.mjs --validate
+      - name: Build governed shadow filter v2
+        run: |
+          node scripts/tennis-shadow-filter-v2.mjs --self-test
+          node scripts/tennis-shadow-filter-v2.mjs
+          node scripts/tennis-shadow-filter-v2.mjs --validate
       - name: Commit audit reports
         shell: bash
         run: |
           set -euo pipefail
-          git add data/paper-funnel.json data/tennis-model-diagnostics.json
+          git add data/paper-funnel.json data/tennis-model-diagnostics.json data/tennis-shadow-filter-v2.json
           if git diff --cached --quiet; then
             echo 'No tennis audit changes'
             exit 0
           fi
           git config user.name 'tennis-edge-autopilot'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'data: refresh tennis paper and model diagnostics'
+          git commit -m 'data: refresh tennis paper model and shadow diagnostics'
           for attempt in 1 2 3 4 5; do
             if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
             git rebase --abort || true
@@ -77,5 +83,17 @@ jobs:
           console.log(`- CLV state: ${x.clv?.state||'—'} · sample ${x.clv?.clv_sample??0} · closing odds ${x.clv?.closing_odds_sample??0}`);
           console.log(`- CLV anomalies: ${(x.clv?.anomalies||[]).join(', ')||'none'}`);
           console.log(`- Attribution: ${(x.attribution||[]).map(a=>`${a.factor}:${a.evidence}`).join(' · ')}`);
+          NODE
+          fi
+          if [ -f data/tennis-shadow-filter-v2.json ]; then
+            node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
+          const x=require('./data/tennis-shadow-filter-v2.json');
+          console.log(`### Shadow Filter v2`);
+          console.log(`- Evidence: ${x.evidence}`);
+          console.log(`- Retention: ${Number.isFinite(x.retention_rate)?(x.retention_rate*100).toFixed(1)+'%':'—'}`);
+          console.log(`- Champion ROI: ${Number.isFinite(x.champion?.roi)?(x.champion.roi*100).toFixed(1)+'%':'—'}`);
+          console.log(`- Shadow ROI: ${Number.isFinite(x.shadow?.roi)?(x.shadow.roi*100).toFixed(1)+'%':'—'}`);
+          console.log(`- Shadow DD: ${Number.isFinite(x.shadow?.max_drawdown_units)?x.shadow.max_drawdown_units.toFixed(2)+'u':'—'}`);
+          console.log(`- Promotion review eligible: ${x.promotion_eligible_for_review===true?'YES':'NO'}`);
           NODE
           fi
