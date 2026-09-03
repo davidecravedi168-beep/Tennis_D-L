@@ -26,20 +26,29 @@ jobs:
         run: |
           node scripts/paper-funnel-audit.mjs
           node scripts/paper-funnel-audit.mjs --validate
-      - name: Commit audit report
+      - name: Build model diagnostics
+        run: |
+          node scripts/tennis-model-diagnostics.mjs --self-test
+          node scripts/tennis-model-diagnostics.mjs
+          node scripts/tennis-model-diagnostics.mjs --validate
+      - name: Commit audit reports
         shell: bash
         run: |
           set -euo pipefail
-          git add data/paper-funnel.json
+          git add data/paper-funnel.json data/tennis-model-diagnostics.json
           if git diff --cached --quiet; then
-            echo 'No paper funnel changes'
+            echo 'No tennis audit changes'
             exit 0
           fi
           git config user.name 'tennis-edge-autopilot'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'data: refresh paper funnel audit'
-          git pull --rebase origin main
-          git push origin HEAD:main
+          git commit -m 'data: refresh tennis paper and model diagnostics'
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+            git rebase --abort || true
+            sleep $((attempt * 2))
+          done
+          exit 1
       - name: Summary
         if: always()
         run: |
@@ -51,7 +60,16 @@ jobs:
           console.log(`- Status: ${x.status}`);
           console.log(`- Market locks: ${x.funnel.market_locks} → candidates: ${x.funnel.valid_market_candidates} → qualified: ${x.funnel.qualified_value}`);
           console.log(`- Paper settled: ${p.settled??0} · hit ${Number.isFinite(p.hit_rate)?(p.hit_rate*100).toFixed(1)+'%':'—'} · ROI ${Number.isFinite(p.roi)?(p.roi*100).toFixed(1)+'%':'—'} · DD ${Number.isFinite(p.max_drawdown_units)?p.max_drawdown_units.toFixed(2)+'u':'—'}`);
-          console.log(`- CLV sample: ${p.clv_sample??0} · avg ${Number.isFinite(p.avg_clv)?p.avg_clv.toFixed(4):'—'}`);
-          console.log(`- Anomalies: ${(x.anomalies||[]).map(a=>a.code).join(', ')||'none'}`);
+          NODE
+          fi
+          if [ -f data/tennis-model-diagnostics.json ]; then
+            node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
+          const x=require('./data/tennis-model-diagnostics.json');
+          console.log(`### Model diagnostics`);
+          console.log(`- Settled candidates: ${x.overall?.n??0}`);
+          console.log(`- Paper ROI: ${Number.isFinite(x.overall?.roi)?(x.overall.roi*100).toFixed(1)+'%':'—'}`);
+          console.log(`- CLV state: ${x.clv?.state||'—'} · sample ${x.clv?.clv_sample??0} · closing odds ${x.clv?.closing_odds_sample??0}`);
+          console.log(`- CLV anomalies: ${(x.clv?.anomalies||[]).join(', ')||'none'}`);
+          console.log(`- Attribution: ${(x.attribution||[]).map(a=>`${a.factor}:${a.evidence}`).join(' · ')}`);
           NODE
           fi
