@@ -1,9 +1,9 @@
 {
   "schema": "TEP-SHADOW-FILTER-V2",
-  "generated_at": "2026-09-04T16:46:54.691Z",
+  "generated_at": "2026-09-04T18:47:56.360Z",
   "source": {
     "ledger_schema": "TEP-FORWARD-LEDGER-1",
-    "ledger_updated_at": "2026-09-04T16:45:05.168Z"
+    "ledger_updated_at": "2026-09-04T18:46:34.056Z"
   },
   "policy": {
     "shadow_only": true,
@@ -26,46 +26,46 @@
     "pass": "no hard reject and score >=1"
   },
   "champion": {
-    "n": 180,
-    "wins": 63,
-    "hit_rate": 0.35,
-    "profit_units": -19.910000000000004,
-    "roi": -0.11061111111111113,
+    "n": 183,
+    "wins": 65,
+    "hit_rate": 0.3551912568306011,
+    "profit_units": -20.430000000000007,
+    "roi": -0.11163934426229512,
     "max_drawdown_units": 32.70000000000001
   },
   "shadow": {
-    "n": 47,
-    "wins": 32,
-    "hit_rate": 0.6808510638297872,
-    "profit_units": 6.150000000000002,
-    "roi": 0.13085106382978728,
+    "n": 49,
+    "wins": 34,
+    "hit_rate": 0.6938775510204082,
+    "profit_units": 6.630000000000003,
+    "roi": 0.13530612244897963,
     "max_drawdown_units": 4.17
   },
   "delta": {
-    "roi": 0.24146217494089842,
+    "roi": 0.24694546671127476,
     "max_drawdown_units": -28.53000000000001
   },
-  "retention_rate": 0.2611111111111111,
+  "retention_rate": 0.2677595628415301,
   "rejection_reasons": [
     {
       "reason": "LOW_CALIBRATION_BAND",
-      "count": 122
+      "count": 123
     },
     {
       "reason": "TWO_CORE_NEGATIVES",
-      "count": 100
+      "count": 101
     },
     {
       "reason": "ODDS_3_PLUS",
-      "count": 89
+      "count": 90
     },
     {
       "reason": "INSUFFICIENT_CORE_SUPPORT",
-      "count": 88
+      "count": 89
     },
     {
       "reason": "WTA_PENALTY",
-      "count": 72
+      "count": 73
     }
   ],
   "windows": [
@@ -187,6 +187,26 @@
         "profit_units": -0.55,
         "roi": -0.07857142857142858,
         "max_drawdown_units": 1.84
+      }
+    },
+    {
+      "start_index": 181,
+      "end_index": 183,
+      "champion": {
+        "n": 3,
+        "wins": 2,
+        "hit_rate": 0.6666666666666666,
+        "profit_units": -0.52,
+        "roi": -0.17333333333333334,
+        "max_drawdown_units": 1
+      },
+      "shadow": {
+        "n": 2,
+        "wins": 2,
+        "hit_rate": 1,
+        "profit_units": 0.48,
+        "roi": 0.24,
+        "max_drawdown_units": 0
       }
     }
   ],
