@@ -1,7 +1,7 @@
 {
   "meta": {
-    "updated_at": "2026-09-05T00:25:00.476Z",
-    "data_refreshed_at": "2026-09-05T00:25:00.476Z",
+    "updated_at": "2026-09-05T01:18:32.128Z",
+    "data_refreshed_at": "2026-09-05T01:18:32.128Z",
     "status": "READY · BATCHING",
     "source": "Research mode · Odds-API.io development tier + Sackmann archive mirror (CC BY-NC-SA)",
     "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
@@ -13,30 +13,30 @@
       "Bet365",
       "Eurobet IT"
     ],
-    "locked_predictions": 20,
+    "locked_predictions": 18,
     "radar_events": 300,
-    "pre_analyzed": 22,
-    "early_watch": 7,
-    "data_gap": 278,
-    "market_checked": 17,
-    "calibration_sample": 243,
+    "pre_analyzed": 21,
+    "early_watch": 5,
+    "data_gap": 279,
+    "market_checked": 15,
+    "calibration_sample": 245,
     "calibration_active": true,
     "calibration_origin": "FORWARD_TRACK_RECORD",
-    "forward_calibration_sample": 243,
+    "forward_calibration_sample": 245,
     "historical_seed_records": 5200,
     "historical_seed_holdout_n": 1456,
     "historical_seed_holdout_brier": 0.24285048441679452,
     "cold_start_paper_mode": false,
     "model_health": "HEALTHY",
     "operating_mode": "LIVE RESEARCH",
-    "api_usage_today": 6,
+    "api_usage_today": 12,
     "api_daily_guard": 330,
-    "api_hourly_remaining": 92,
-    "rate_limit_reset_at": "2026-09-05T00:50:30.000Z",
-    "rate_limit_minutes": 26,
+    "api_hourly_remaining": 91,
+    "rate_limit_reset_at": "2026-09-05T01:54:15.000Z",
+    "rate_limit_minutes": 36,
     "run_calls": 6,
-    "pending_prediction_batch": 62,
-    "processed_this_run": 40,
+    "pending_prediction_batch": 79,
+    "processed_this_run": 30,
     "market_refresh_count": 10,
     "quote_refresh_limit": 10,
     "quote_refresh_policy": "Hourly priority refresh of locked matches; Prediction Lock remains immutable. All bookmaker market names are parsed defensively; unsupported schemas are ignored.",
@@ -59,19 +59,19 @@
     "cross_app_learning": "Shared validation, audit, fail-closed and challenger discipline; sport model remains tennis-specific.",
     "note": "NO BET first. Historical walk-forward calibration may unlock PAPER/TEST edges during cold start, but official ML remains blocked from VALUE until forward track-record health is mature. Multi-market simulation remains paper-only until family-level validation matures. Quote tape never rewrites a Prediction Lock.",
     "automation": {
-      "checked_at": "2026-09-05T01:13:58.091Z",
+      "checked_at": "2026-09-05T01:18:36.083Z",
       "timezone": "Europe/Rome",
       "event": "schedule",
-      "schedule": "07,22,37,52 * * * *",
-      "run_id": "33935513573",
+      "schedule": "13,28,43,58 * * * *",
+      "run_id": "33935749972",
       "run_attempt": 1,
-      "run_quant": false,
-      "run_live": true,
-      "quant_reason": "age-48.9m",
-      "live_reason": "age-14.9m",
+      "run_quant": true,
+      "run_live": false,
+      "quant_reason": "age-53.5m",
+      "live_reason": "age-4.6m",
       "workflow_version": "TEP-12.5-STABLE-AUTOPILOT",
-      "last_scheduler_at": "2026-09-05T01:13:58.091Z",
-      "last_scheduler_run_id": "33935513573",
+      "last_scheduler_at": "2026-09-05T01:18:36.083Z",
+      "last_scheduler_run_id": "33935749972",
       "scheduler_verified": true
     }
   },
@@ -87,21 +87,21 @@
       "pre_status": "EARLY WATCH",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.19773903970909656,
-      "model_p_b": 0.8022609602909034,
+      "model_p_a": 0.19263365440119928,
+      "model_p_b": 0.8073663455988007,
       "favorite_side": "B",
       "favorite_name": "Alcaraz, Carlos",
-      "favorite_prob": 0.8022609602909034,
-      "robust_prob": 0.7187620883355882,
-      "uncertainty": 0.08349887195531525,
-      "confidence": 70.41101644054056,
+      "favorite_prob": 0.8073663455988007,
+      "robust_prob": 0.7238662548452911,
+      "uncertainty": 0.0835000907535096,
+      "confidence": 70.4106899767385,
       "data_quality": 90,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.18903871031236352,
-      "model_b_p": 0.27185329504419264,
-      "model_c_p": 0.3568918244384894,
-      "model_disagreement": 0.16785311412612586,
+      "model_b_p": 0.27185488914208267,
+      "model_c_p": 0.3568961772891835,
+      "model_disagreement": 0.16785746697681997,
       "reason_codes": [
         "ELO ++",
         "SURFACE ++",
@@ -113,47 +113,7 @@
       ],
       "market_checked": false,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "2F28F06D864E"
-    },
-    {
-      "event_id": "73992578",
-      "start_at": "2026-09-05T00:40:00Z",
-      "player_a": "Svitolina, Elina",
-      "player_b": "Kalinskaya, Anna",
-      "tournament": "WTA - US Open, New York, USA",
-      "priority": 262,
-      "market_priority": 312,
-      "pre_status": "EARLY WATCH",
-      "surface": "Hard",
-      "tour": "wta",
-      "model_p_a": 0.7129743480361632,
-      "model_p_b": 0.2870256519638368,
-      "favorite_side": "A",
-      "favorite_name": "Svitolina, Elina",
-      "favorite_prob": 0.7129743480361632,
-      "robust_prob": 0.6530999554817009,
-      "uncertainty": 0.05987439255446232,
-      "confidence": 76.54703770862616,
-      "data_quality": 89,
-      "engine_votes": "3/3",
-      "engine_unanimous": true,
-      "model_a_p": 0.7150792813532489,
-      "model_b_p": 0.6369175247340824,
-      "model_c_p": 0.6357064508015978,
-      "model_disagreement": 0.07937283055165112,
-      "reason_codes": [
-        "ELO ++",
-        "SURFACE ++",
-        "FORM ++",
-        "H2H +",
-        "SERVE/RETURN ++"
-      ],
-      "warnings": [],
-      "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "3945F90FD487",
-      "market_status": "NO BET",
-      "market_checked_at": "2026-09-03T06:00:09.371Z"
+      "preview_id": "4202D690EF04"
     },
     {
       "event_id": "73992586",
@@ -166,21 +126,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.626186004392642,
-      "model_p_b": 0.37381399560735795,
+      "model_p_a": 0.6269970071257852,
+      "model_p_b": 0.3730029928742148,
       "favorite_side": "A",
       "favorite_name": "Pegula, Jessica",
-      "favorite_prob": 0.626186004392642,
-      "robust_prob": 0.5384554336396703,
-      "uncertainty": 0.08773057075297172,
-      "confidence": 68.31770426259686,
+      "favorite_prob": 0.6269970071257852,
+      "robust_prob": 0.5392662776636372,
+      "uncertainty": 0.087730729462148,
+      "confidence": 68.31766175121035,
       "data_quality": 85,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.6690095603940296,
-      "model_b_p": 0.6111767505464883,
-      "model_c_p": 0.5065789505619878,
-      "model_disagreement": 0.16243060983204183,
+      "model_b_p": 0.6111764117423052,
+      "model_c_p": 0.5065783837435011,
+      "model_disagreement": 0.16243117665052853,
       "reason_codes": [
         "ELO ++",
         "SURFACE ++"
@@ -190,7 +150,7 @@
       ],
       "market_checked": false,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "542AAF453F3D"
+      "preview_id": "FA3EB5F81D4D"
     },
     {
       "event_id": "73992366",
@@ -199,25 +159,25 @@
       "player_b": "Tabilo, Alejandro",
       "tournament": "ATP - US Open, New York, USA",
       "priority": 251,
-      "market_priority": 316,
+      "market_priority": 315,
       "pre_status": "EARLY WATCH",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.850245334729496,
-      "model_p_b": 0.14975466527050396,
+      "model_p_a": 0.8460538390663728,
+      "model_p_b": 0.15394616093362723,
       "favorite_side": "A",
       "favorite_name": "Zverev, Alexander",
-      "favorite_prob": 0.850245334729496,
-      "robust_prob": 0.7950717752067182,
-      "uncertainty": 0.055173559522777804,
-      "confidence": 77.42226084211309,
+      "favorite_prob": 0.8460538390663728,
+      "robust_prob": 0.7908772748230017,
+      "uncertainty": 0.05517656424337104,
+      "confidence": 77.4214560062399,
       "data_quality": 87,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.8120161738537786,
-      "model_b_p": 0.7628389471752607,
-      "model_c_p": 0.7576463184152864,
-      "model_disagreement": 0.054369855438492154,
+      "model_b_p": 0.7628370928451574,
+      "model_c_p": 0.7576355872703106,
+      "model_disagreement": 0.054380586583468005,
       "reason_codes": [
         "ELO ++",
         "SURFACE ++",
@@ -228,7 +188,7 @@
       "warnings": [],
       "market_checked": true,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "D175A6AF1B70",
+      "preview_id": "131E6CBC4B92",
       "market_status": "NO BET",
       "market_checked_at": "2026-09-04T09:16:17.067Z"
     },
@@ -243,21 +203,21 @@
       "pre_status": "DATA CAUTION",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.3493454670682799,
-      "model_p_b": 0.6506545329317202,
+      "model_p_a": 0.35013309593734715,
+      "model_p_b": 0.6498669040626528,
       "favorite_side": "B",
       "favorite_name": "Anisimova, Amanda",
-      "favorite_prob": 0.6506545329317202,
-      "robust_prob": 0.542260175091176,
-      "uncertainty": 0.10839435784054416,
-      "confidence": 52.78276129271139,
+      "favorite_prob": 0.6498669040626528,
+      "robust_prob": 0.5414737049383183,
+      "uncertainty": 0.10839319912433448,
+      "confidence": 52.783071663124694,
       "data_quality": 85,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.32087447822169274,
-      "model_b_p": 0.32467780676102914,
-      "model_c_p": 0.5571043276522075,
-      "model_disagreement": 0.23622984943051478,
+      "model_b_p": 0.3246795332025268,
+      "model_c_p": 0.5571001893800301,
+      "model_disagreement": 0.2362257111583374,
       "reason_codes": [
         "ELO +",
         "SURFACE ++",
@@ -269,7 +229,7 @@
       ],
       "market_checked": true,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "6DABAF6B1FD7",
+      "preview_id": "07D8DE362E72",
       "market_status": "NO BET",
       "market_checked_at": "2026-09-04T07:15:57.644Z"
     },
@@ -284,21 +244,21 @@
       "pre_status": "DATA CAUTION",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.8482838934200945,
-      "model_p_b": 0.15171610657990553,
+      "model_p_a": 0.8487241328937756,
+      "model_p_b": 0.15127586710622443,
       "favorite_side": "A",
       "favorite_name": "Sabalenka, Aryna",
-      "favorite_prob": 0.8482838934200945,
-      "robust_prob": 0.7491789824308932,
-      "uncertainty": 0.09910491098920132,
-      "confidence": 65.27100598503536,
+      "favorite_prob": 0.8487241328937756,
+      "robust_prob": 0.749615003924287,
+      "uncertainty": 0.09910912896948851,
+      "confidence": 65.26987616888701,
       "data_quality": 85,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.8576393833166925,
-      "model_b_p": 0.821116172113082,
-      "model_c_p": 0.6545861297838307,
-      "model_disagreement": 0.20305325353286185,
+      "model_b_p": 0.8211143822081471,
+      "model_c_p": 0.6545710655685193,
+      "model_disagreement": 0.20306831774817324,
       "reason_codes": [
         "ELO ++",
         "SURFACE ++",
@@ -310,7 +270,7 @@
       ],
       "market_checked": false,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "F9F3F77D706E"
+      "preview_id": "ED539CB1D8EB"
     },
     {
       "event_id": "73992574",
@@ -323,21 +283,21 @@
       "pre_status": "EARLY WATCH",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.79191194698674,
-      "model_p_b": 0.20808805301326005,
+      "model_p_a": 0.7924809728485933,
+      "model_p_b": 0.2075190271514067,
       "favorite_side": "A",
       "favorite_name": "Swiatek, Iga",
-      "favorite_prob": 0.79191194698674,
-      "robust_prob": 0.7252997142523585,
-      "uncertainty": 0.06661223273438145,
-      "confidence": 74.55029480329068,
+      "favorite_prob": 0.7924809728485933,
+      "robust_prob": 0.7258677764427633,
+      "uncertainty": 0.06661319640583,
+      "confidence": 74.55003667700983,
       "data_quality": 88,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.7865748747645509,
-      "model_b_p": 0.7074707549467626,
-      "model_c_p": 0.68724547214176,
-      "model_disagreement": 0.09932940262279089,
+      "model_b_p": 0.70746906653029,
+      "model_c_p": 0.6872420304580152,
+      "model_disagreement": 0.09933284430653566,
       "reason_codes": [
         "ELO ++",
         "SURFACE ++",
@@ -348,7 +308,7 @@
       "warnings": [],
       "market_checked": true,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "7C890843C416",
+      "preview_id": "414CCF8F587B",
       "market_status": "NO BET",
       "market_checked_at": "2026-09-04T07:15:57.644Z"
     },
@@ -363,21 +323,21 @@
       "pre_status": "EARLY WATCH",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.13229040654071117,
-      "model_p_b": 0.8677095934592889,
+      "model_p_a": 0.1326940880086766,
+      "model_p_b": 0.8673059119913233,
       "favorite_side": "B",
       "favorite_name": "Gauff, Coco",
-      "favorite_prob": 0.8677095934592889,
-      "robust_prob": 0.7995152210628661,
-      "uncertainty": 0.06819437239642276,
-      "confidence": 73.74257882238676,
+      "favorite_prob": 0.8673059119913233,
+      "robust_prob": 0.7991110388518688,
+      "uncertainty": 0.06819487313945445,
+      "confidence": 73.74244469478899,
       "data_quality": 86,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.1605161901053093,
-      "model_b_p": 0.25728180580681914,
-      "model_c_p": 0.22073300705996474,
-      "model_disagreement": 0.09676561570150985,
+      "model_b_p": 0.25728359417478947,
+      "model_c_p": 0.22074807512608818,
+      "model_disagreement": 0.09676740406948017,
       "reason_codes": [
         "ELO ++",
         "SURFACE ++",
@@ -388,51 +348,9 @@
       "warnings": [],
       "market_checked": true,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "8BB10E4CED84",
+      "preview_id": "ADF4D0205237",
       "market_status": "NO BET",
       "market_checked_at": "2026-09-04T07:15:57.644Z"
-    },
-    {
-      "event_id": "73992468",
-      "start_at": "2026-09-05T00:40:00Z",
-      "player_a": "Shelton, Ben",
-      "player_b": "Shapovalov, Denis",
-      "tournament": "ATP - US Open, New York, USA",
-      "priority": 240,
-      "market_priority": 294,
-      "pre_status": "EARLY WATCH",
-      "surface": "Hard",
-      "tour": "atp",
-      "model_p_a": 0.7589674507050299,
-      "model_p_b": 0.2410325492949701,
-      "favorite_side": "A",
-      "favorite_name": "Shelton, Ben",
-      "favorite_prob": 0.7589674507050299,
-      "robust_prob": 0.6811513274673385,
-      "uncertainty": 0.07781612323769138,
-      "confidence": 71.7412169899041,
-      "data_quality": 89,
-      "engine_votes": "3/3",
-      "engine_unanimous": true,
-      "model_a_p": 0.7541674824391756,
-      "model_b_p": 0.6107170423045636,
-      "model_c_p": 0.7143551923281969,
-      "model_disagreement": 0.14345044013461206,
-      "reason_codes": [
-        "ELO ++",
-        "SURFACE ++",
-        "FORM ++",
-        "H2H ++",
-        "SERVE/RETURN +"
-      ],
-      "warnings": [
-        "MODELLI_IN_DISACCORDO"
-      ],
-      "market_checked": true,
-      "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "5403F23EA04F",
-      "market_status": "NO BET",
-      "market_checked_at": "2026-09-03T06:00:09.371Z"
     },
     {
       "event_id": "73992596",
@@ -445,21 +363,21 @@
       "pre_status": "DATA CAUTION",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.18128073380077975,
-      "model_p_b": 0.8187192661992202,
+      "model_p_a": 0.18179970573444992,
+      "model_p_b": 0.8182002942655501,
       "favorite_side": "B",
       "favorite_name": "Rybakina, Elena",
-      "favorite_prob": 0.8187192661992202,
-      "robust_prob": 0.6680967946414539,
-      "uncertainty": 0.15062247155776634,
-      "confidence": 41.66362368988402,
+      "favorite_prob": 0.8182002942655501,
+      "robust_prob": 0.6675760140946599,
+      "uncertainty": 0.15062428017089013,
+      "confidence": 41.663139239940136,
       "data_quality": 86,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.1449827811170074,
-      "model_b_p": 0.12628531616818925,
-      "model_c_p": 0.517437000303069,
-      "model_disagreement": 0.3911516841348798,
+      "model_b_p": 0.1262875950883967,
+      "model_c_p": 0.5174457385558615,
+      "model_disagreement": 0.3911581434674648,
       "reason_codes": [
         "ELO ++",
         "SURFACE ++",
@@ -472,7 +390,7 @@
       ],
       "market_checked": true,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "AD6FCC8D5BC3",
+      "preview_id": "00359A2107FA",
       "market_status": "NO BET",
       "market_checked_at": "2026-09-04T07:15:57.644Z"
     },
@@ -483,25 +401,25 @@
       "player_b": "Noskova, Linda",
       "tournament": "WTA - US Open, New York, USA",
       "priority": 235,
-      "market_priority": 237,
+      "market_priority": 238,
       "pre_status": "DATA CAUTION",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.6298479388423825,
-      "model_p_b": 0.37015206115761745,
+      "model_p_a": 0.6306519510116921,
+      "model_p_b": 0.36934804898830786,
       "favorite_side": "A",
       "favorite_name": "Kostyuk, Marta",
-      "favorite_prob": 0.6298479388423825,
-      "robust_prob": 0.5205974512541478,
-      "uncertainty": 0.10925048758823479,
-      "confidence": 62.74540511029426,
+      "favorite_prob": 0.6306519510116921,
+      "robust_prob": 0.5214041635328316,
+      "uncertainty": 0.10924778747886059,
+      "confidence": 62.74612835387663,
       "data_quality": 86,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.5532187096299084,
-      "model_b_p": 0.5089120239010574,
-      "model_c_p": 0.7523066224304673,
-      "model_disagreement": 0.24339459852940992,
+      "model_b_p": 0.5089120080084724,
+      "model_c_p": 0.7522969632901173,
+      "model_disagreement": 0.24338495528164494,
       "reason_codes": [
         "ELO ++",
         "FORM ++",
@@ -513,7 +431,7 @@
       ],
       "market_checked": false,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "2247A46B5688"
+      "preview_id": "30231192A2C5"
     },
     {
       "event_id": "73992456",
@@ -526,28 +444,28 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.5552073430416645,
-      "model_p_b": 0.4447926569583355,
+      "model_p_a": 0.5471663185320337,
+      "model_p_b": 0.4528336814679663,
       "favorite_side": "A",
       "favorite_name": "Fritz, Taylor",
-      "favorite_prob": 0.5552073430416645,
+      "favorite_prob": 0.5471663185320337,
       "robust_prob": 0.5,
-      "uncertainty": 0.074752825323984,
-      "confidence": 62.17781464536144,
+      "uncertainty": 0.07475132735269721,
+      "confidence": 62.17821588767039,
       "data_quality": 87,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.6037124763811337,
-      "model_b_p": 0.5291020533606818,
-      "model_c_p": 0.4794166716526194,
-      "model_disagreement": 0.12429580472851426,
+      "model_b_p": 0.529101905980649,
+      "model_c_p": 0.47942202155007224,
+      "model_disagreement": 0.12429045483106144,
       "reason_codes": [
         "FORM -"
       ],
       "warnings": [],
       "market_checked": true,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "8B523535FF04",
+      "preview_id": "B51002A6FAE9",
       "market_status": "NO BET",
       "market_checked_at": "2026-09-04T07:15:57.644Z"
     },
@@ -562,21 +480,21 @@
       "pre_status": "EARLY WATCH",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.7968667912539881,
-      "model_p_b": 0.20313320874601193,
+      "model_p_a": 0.7974219039314492,
+      "model_p_b": 0.20257809606855082,
       "favorite_side": "A",
       "favorite_name": "Andreeva, Mirra",
-      "favorite_prob": 0.7968667912539881,
-      "robust_prob": 0.7072295499172037,
-      "uncertainty": 0.08963724133678437,
-      "confidence": 66.8995213951795,
+      "favorite_prob": 0.7974219039314492,
+      "robust_prob": 0.7077843917115231,
+      "uncertainty": 0.08963751221992615,
+      "confidence": 66.8994488371951,
       "data_quality": 80.27272727272727,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.8253915152059623,
-      "model_b_p": 0.675566951990174,
-      "model_c_p": 0.6848798936437986,
-      "model_disagreement": 0.1498245632157883,
+      "model_b_p": 0.675565984550382,
+      "model_c_p": 0.6848652475759728,
+      "model_disagreement": 0.14982553065558035,
       "reason_codes": [
         "ELO ++",
         "SURFACE ++",
@@ -588,7 +506,7 @@
       ],
       "market_checked": true,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "C66125F22EF4",
+      "preview_id": "05CCCE5F0624",
       "market_status": "NO BET",
       "market_checked_at": "2026-09-04T07:15:57.644Z"
     },
@@ -603,21 +521,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5068130532050237,
-      "model_p_b": 0.4931869467949763,
+      "model_p_a": 0.5076780990584472,
+      "model_p_b": 0.4923219009415528,
       "favorite_side": "A",
       "favorite_name": "Osaka, Naomi",
-      "favorite_prob": 0.5068130532050237,
+      "favorite_prob": 0.5076780990584472,
       "robust_prob": 0.5,
-      "uncertainty": 0.06726912718451528,
-      "confidence": 64.37434093271912,
+      "uncertainty": 0.0672700355724586,
+      "confidence": 64.37409761452001,
       "data_quality": 88,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5527349998400181,
-      "model_b_p": 0.5274646124510128,
-      "model_c_p": 0.45105954560960637,
-      "model_disagreement": 0.10167545423041169,
+      "model_b_p": 0.527463872093249,
+      "model_c_p": 0.45105630136695163,
+      "model_disagreement": 0.10167869847306643,
       "reason_codes": [
         "ELO +",
         "H2H --",
@@ -626,7 +544,7 @@
       "warnings": [],
       "market_checked": true,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "07AC42D02A7E",
+      "preview_id": "8C92780CACAD",
       "market_status": "NO BET",
       "market_checked_at": "2026-09-04T07:15:57.644Z"
     },
@@ -637,32 +555,32 @@
       "player_b": "Tien, Learner",
       "tournament": "ATP - US Open, New York, USA",
       "priority": 222,
-      "market_priority": 223,
+      "market_priority": 224,
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.41752009991746397,
-      "model_p_b": 0.582479900082536,
+      "model_p_a": 0.40963570348989353,
+      "model_p_b": 0.5903642965101065,
       "favorite_side": "B",
       "favorite_name": "Tien, Learner",
-      "favorite_prob": 0.582479900082536,
-      "robust_prob": 0.5135649909102266,
-      "uncertainty": 0.06891490917230945,
-      "confidence": 73.54957790027426,
+      "favorite_prob": 0.5903642965101065,
+      "robust_prob": 0.5214499842078034,
+      "uncertainty": 0.06891431230230304,
+      "confidence": 73.54973777616883,
       "data_quality": 86,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.4739556000745472,
-      "model_b_p": 0.47089263601003306,
-      "model_c_p": 0.37461663874487056,
-      "model_disagreement": 0.09933896132967662,
+      "model_b_p": 0.47089340953778736,
+      "model_c_p": 0.3746187704234649,
+      "model_disagreement": 0.09933682965108226,
       "reason_codes": [
         "H2H ++"
       ],
       "warnings": [],
       "market_checked": true,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "3744BFA166F7",
+      "preview_id": "84886EE6B3D4",
       "market_status": "NO BET",
       "market_checked_at": "2026-09-04T07:15:57.644Z"
     },
@@ -677,21 +595,21 @@
       "pre_status": "DATA CAUTION",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.4240384988405459,
-      "model_p_b": 0.5759615011594541,
+      "model_p_a": 0.4161185779603838,
+      "model_p_b": 0.5838814220396162,
       "favorite_side": "B",
       "favorite_name": "Cobolli, Flavio",
-      "favorite_prob": 0.5759615011594541,
+      "favorite_prob": 0.5838814220396162,
       "robust_prob": 0.5,
-      "uncertainty": 0.11169920994188687,
-      "confidence": 51.18202980452705,
+      "uncertainty": 0.11169965097789822,
+      "confidence": 51.181911669881146,
       "data_quality": 81.27272727272727,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.3561033624329032,
-      "model_b_p": 0.410819701520615,
-      "model_c_p": 0.5888278135240576,
-      "model_disagreement": 0.23272445109115436,
+      "model_b_p": 0.410820167979893,
+      "model_c_p": 0.5888293886526695,
+      "model_disagreement": 0.23272602621976635,
       "reason_codes": [
         "ELO +",
         "SURFACE ++",
@@ -702,7 +620,7 @@
       ],
       "market_checked": true,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "14A89BBD1A2D",
+      "preview_id": "28ABA1FD85A8",
       "market_status": "NO BET",
       "market_checked_at": "2026-09-04T09:16:17.067Z"
     },
@@ -717,21 +635,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.6239486119645746,
-      "model_p_b": 0.37605138803542537,
+      "model_p_a": 0.6247611845652197,
+      "model_p_b": 0.3752388154347803,
       "favorite_side": "A",
       "favorite_name": "Jovic, Iva",
-      "favorite_prob": 0.6239486119645746,
-      "robust_prob": 0.5587098664117333,
-      "uncertainty": 0.06523874555284133,
-      "confidence": 74.53426458406037,
+      "favorite_prob": 0.6247611845652197,
+      "robust_prob": 0.5595224100263625,
+      "uncertainty": 0.06523877453885714,
+      "confidence": 74.53425681994898,
       "data_quality": 86,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.606566249925305,
-      "model_b_p": 0.5493779079074478,
-      "model_c_p": 0.6355877134533097,
-      "model_disagreement": 0.08620980554586188,
+      "model_b_p": 0.5493769496860504,
+      "model_c_p": 0.6355868587533974,
+      "model_disagreement": 0.08620990906734693,
       "reason_codes": [
         "ELO +",
         "SURFACE +",
@@ -740,7 +658,7 @@
       "warnings": [],
       "market_checked": true,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "4FB369EE15C4",
+      "preview_id": "0EC4422D7DC8",
       "market_status": "NO BET",
       "market_checked_at": "2026-09-04T09:16:17.067Z"
     },
@@ -755,21 +673,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.5409035114915884,
-      "model_p_b": 0.45909648850841156,
+      "model_p_a": 0.5417612953559519,
+      "model_p_b": 0.45823870464404814,
       "favorite_side": "A",
       "favorite_name": "Keys, Madison",
-      "favorite_prob": 0.5409035114915884,
+      "favorite_prob": 0.5417612953559519,
       "robust_prob": 0.5,
-      "uncertainty": 0.06787407683614442,
-      "confidence": 64.02033656174703,
+      "uncertainty": 0.0678740860562831,
+      "confidence": 64.02033409206703,
       "data_quality": 87,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5946899764350512,
-      "model_b_p": 0.49496113059167823,
-      "model_c_p": 0.5099725241109596,
-      "model_disagreement": 0.09972884584337294,
+      "model_b_p": 0.49496109766261154,
+      "model_c_p": 0.5099651101293431,
+      "model_disagreement": 0.09972887877243963,
       "reason_codes": [
         "FORM +",
         "H2H --"
@@ -777,7 +695,7 @@
       "warnings": [],
       "market_checked": true,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "79538B9DFEF3",
+      "preview_id": "A53170C1960D",
       "market_status": "NO BET",
       "market_checked_at": "2026-09-04T06:20:12.578Z"
     },
@@ -788,25 +706,25 @@
       "player_b": "Bonzi, Benjamin",
       "tournament": "ATP - US Open, New York, USA",
       "priority": 197,
-      "market_priority": 203,
+      "market_priority": 202,
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.6406059796156547,
-      "model_p_b": 0.3593940203843453,
+      "model_p_a": 0.6330833222489456,
+      "model_p_b": 0.3669166777510544,
       "favorite_side": "A",
       "favorite_name": "Khachanov, Karen",
-      "favorite_prob": 0.6406059796156547,
-      "robust_prob": 0.5545771771738303,
-      "uncertainty": 0.08602880244182441,
-      "confidence": 68.77353506022561,
+      "favorite_prob": 0.6330833222489456,
+      "robust_prob": 0.5470544501398339,
+      "uncertainty": 0.0860288721091117,
+      "confidence": 68.77351639934508,
       "data_quality": 85,
       "engine_votes": "3/3",
       "engine_unanimous": true,
       "model_a_p": 0.6977953529198905,
-      "model_b_p": 0.5414424870562319,
-      "model_c_p": 0.5539466033675455,
-      "model_disagreement": 0.1563528658636586,
+      "model_b_p": 0.5414422382444916,
+      "model_c_p": 0.5539395533554984,
+      "model_disagreement": 0.15635311467539892,
       "reason_codes": [
         "ELO +",
         "SURFACE +",
@@ -818,9 +736,44 @@
       ],
       "market_checked": true,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "C590C596DA4E",
+      "preview_id": "39AA5C75D50C",
       "market_status": "NO BET",
       "market_checked_at": "2026-09-04T10:16:31.100Z"
+    },
+    {
+      "event_id": "73992424",
+      "start_at": "2026-09-06T15:00:00Z",
+      "player_a": "Michelsen, Alex",
+      "player_b": "Etcheverry, Tomas Martin",
+      "tournament": "ATP - US Open, New York, USA",
+      "priority": 193,
+      "market_priority": 193,
+      "pre_status": "PRE-ANALISI",
+      "surface": "Hard",
+      "tour": "atp",
+      "model_p_a": 0.5011431024350446,
+      "model_p_b": 0.49885689756495544,
+      "favorite_side": "A",
+      "favorite_name": "Michelsen, Alex",
+      "favorite_prob": 0.5011431024350446,
+      "robust_prob": 0.5,
+      "uncertainty": 0.0693753188953679,
+      "confidence": 63.23428958159789,
+      "data_quality": 85,
+      "engine_votes": "2/3",
+      "engine_unanimous": false,
+      "model_a_p": 0.4636614429028806,
+      "model_b_p": 0.5605375818149088,
+      "model_c_p": 0.5119010751492042,
+      "model_disagreement": 0.09687613891202818,
+      "reason_codes": [
+        "SURFACE +",
+        "FORM +"
+      ],
+      "warnings": [],
+      "market_checked": false,
+      "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+      "preview_id": "BE3181957FC0"
     },
     {
       "event_id": "73992368",
@@ -829,25 +782,25 @@
       "player_b": "Sweeny, Dane",
       "tournament": "ATP - US Open, New York, USA",
       "priority": 181,
-      "market_priority": 182,
+      "market_priority": 181,
       "pre_status": "DATA CAUTION",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.6525752422860226,
-      "model_p_b": 0.3474247577139774,
+      "model_p_a": 0.6451644882509624,
+      "model_p_b": 0.3548355117490376,
       "favorite_side": "A",
       "favorite_name": "Darderi, Luciano",
-      "favorite_prob": 0.6525752422860226,
-      "robust_prob": 0.511051534815373,
-      "uncertainty": 0.14152370747064963,
-      "confidence": 42.21605238205002,
+      "favorite_prob": 0.6451644882509624,
+      "robust_prob": 0.503640981017203,
+      "uncertainty": 0.1415235072337594,
+      "confidence": 42.216106016931334,
       "data_quality": 76.18181818181819,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.7493991487134493,
-      "model_b_p": 0.4310677259286616,
-      "model_c_p": 0.5875504840867419,
-      "model_disagreement": 0.31833142278478765,
+      "model_b_p": 0.4310684410604124,
+      "model_c_p": 0.5875435220829667,
+      "model_disagreement": 0.31833070765303684,
       "reason_codes": [
         "ELO ++",
         "SURFACE -",
@@ -859,7 +812,7 @@
       ],
       "market_checked": true,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "26C44B017180",
+      "preview_id": "FBC123981C54",
       "market_status": "NO BET",
       "market_checked_at": "2026-09-04T06:20:12.578Z"
     },
@@ -874,21 +827,21 @@
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "atp",
-      "model_p_a": 0.4983437244183625,
-      "model_p_b": 0.5016562755816375,
+      "model_p_a": 0.49021939070451176,
+      "model_p_b": 0.5097806092954882,
       "favorite_side": "B",
       "favorite_name": "Van de Zandschulp, Botic",
-      "favorite_prob": 0.5016562755816375,
+      "favorite_prob": 0.5097806092954882,
       "robust_prob": 0.5,
-      "uncertainty": 0.0692165092096856,
-      "confidence": 63.276827890262794,
+      "uncertainty": 0.06921436573093603,
+      "confidence": 63.27740203635642,
       "data_quality": 85,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.5264830663777506,
-      "model_b_p": 0.5336321295069703,
-      "model_c_p": 0.43732316804380744,
-      "model_disagreement": 0.09630896146316281,
+      "model_b_p": 0.5336318332293177,
+      "model_c_p": 0.43733052704740333,
+      "model_disagreement": 0.0963013061819144,
       "reason_codes": [
         "SURFACE -",
         "FORM +",
@@ -897,7 +850,7 @@
       "warnings": [],
       "market_checked": true,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "170202C3E1DD",
+      "preview_id": "C4DB945FAD3B",
       "market_status": "NO BET",
       "market_checked_at": "2026-09-04T06:20:12.578Z"
     },
@@ -1104,24 +1057,6 @@
       "start_at": "2026-09-06T15:00:00Z",
       "player_a": "Medvedev, Daniil",
       "player_b": "R16P10",
-      "tournament": "ATP - US Open, New York, USA",
-      "priority": 120,
-      "pre_status": "DATA GAP",
-      "market_priority": 120,
-      "data_quality": 0,
-      "confidence": 0,
-      "reason_codes": [],
-      "warnings": [
-        "STORICO_NON_SUFFICIENTE"
-      ],
-      "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT"
-    },
-    {
-      "event_id": "73992424",
-      "start_at": "2026-09-06T15:00:00Z",
-      "player_a": "R16P11",
-      "player_b": "R16P12",
       "tournament": "ATP - US Open, New York, USA",
       "priority": 120,
       "pre_status": "DATA GAP",
@@ -2432,32 +2367,14 @@
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT"
     },
     {
-      "event_id": "74150186",
-      "start_at": "2026-09-05T00:40:00Z",
-      "player_a": "Hernandez, Joseph",
-      "player_b": "Prat, Antonio",
-      "tournament": "UTR Men - UTR PTT Miami Men 01, Group A",
-      "priority": 108,
-      "pre_status": "DATA GAP",
-      "market_priority": 108,
-      "data_quality": 0,
-      "confidence": 0,
-      "reason_codes": [],
-      "warnings": [
-        "STORICO_NON_SUFFICIENTE"
-      ],
-      "market_checked": false,
-      "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT"
-    },
-    {
       "event_id": "13453566693",
       "start_at": "2026-09-05T08:30:00Z",
       "player_a": "Ryan Nijboer",
       "player_b": "Alejandro Manzanera Pertusa",
       "tournament": "Tennis - ITF Men Madrid - SF",
-      "priority": 105,
+      "priority": 106,
       "pre_status": "DATA GAP",
-      "market_priority": 105,
+      "market_priority": 106,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -2473,9 +2390,9 @@
       "player_a": "Pedro Rodenas",
       "player_b": "Martin Van Der Meerschen",
       "tournament": "Tennis - ITF Men Madrid - SF",
-      "priority": 105,
+      "priority": 106,
       "pre_status": "DATA GAP",
-      "market_priority": 105,
+      "market_priority": 106,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -3427,9 +3344,9 @@
       "player_a": "Simakin, Ilia",
       "player_b": "Leong, Mitsuki Wei Kang",
       "tournament": "Challenger - Zhangjiagang, China",
-      "priority": 37,
+      "priority": 38,
       "pre_status": "DATA GAP",
-      "market_priority": 37,
+      "market_priority": 38,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -3445,9 +3362,9 @@
       "player_a": "Kravchenko, Georgii",
       "player_b": "Obradovic, Dusan",
       "tournament": "Challenger - Plovdiv 3, Bulgaria",
-      "priority": 35,
+      "priority": 36,
       "pre_status": "DATA GAP",
-      "market_priority": 35,
+      "market_priority": 36,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -3481,9 +3398,9 @@
       "player_a": "Milev, Yanaki",
       "player_b": "Aboian, Valerio",
       "tournament": "Challenger - Plovdiv 3, Bulgaria",
-      "priority": 34,
+      "priority": 35,
       "pre_status": "DATA GAP",
-      "market_priority": 34,
+      "market_priority": 35,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -3499,9 +3416,9 @@
       "player_a": "Heide, Gustavo",
       "player_b": "Mena, Facundo",
       "tournament": "Challenger - Porto, Portugal",
-      "priority": 34,
+      "priority": 35,
       "pre_status": "DATA GAP",
-      "market_priority": 34,
+      "market_priority": 35,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -4953,7 +4870,7 @@
     },
     {
       "event_id": "74336156",
-      "start_at": "2026-09-05T01:35:00Z",
+      "start_at": "2026-09-05T02:35:00Z",
       "player_a": "Kawanak, Haru",
       "player_b": "Ono, Christopher Kosei",
       "tournament": "UTR Men - UTR PTT Saitama Men 08, 17-20 Playoff",
@@ -4971,7 +4888,7 @@
     },
     {
       "event_id": "74304452",
-      "start_at": "2026-09-05T01:35:00Z",
+      "start_at": "2026-09-05T02:35:00Z",
       "player_a": "Fu, Hong-Lin",
       "player_b": "Gasanov, Raffael",
       "tournament": "UTR Men - UTR PTT Saitama Men 08, 9-12 Playoff",
@@ -4989,7 +4906,7 @@
     },
     {
       "event_id": "74304454",
-      "start_at": "2026-09-05T01:45:00Z",
+      "start_at": "2026-09-05T02:45:00Z",
       "player_a": "Takada, Mao",
       "player_b": "Motokura, Yakumo",
       "tournament": "UTR Men - UTR PTT Saitama Men 08, 9-12 Playoff",
@@ -5007,7 +4924,7 @@
     },
     {
       "event_id": "74336154",
-      "start_at": "2026-09-05T02:45:00Z",
+      "start_at": "2026-09-05T03:45:00Z",
       "player_a": "Shen, Jacob Kailiang",
       "player_b": "Shtengelov, Alexey",
       "tournament": "UTR Men - UTR PTT Saitama Men 08, 17-20 Playoff",
@@ -5025,7 +4942,7 @@
     },
     {
       "event_id": "74336158",
-      "start_at": "2026-09-05T02:45:00Z",
+      "start_at": "2026-09-05T03:45:00Z",
       "player_a": "Mochizuki, Kotaro",
       "player_b": "Uenoyama, Taiyo",
       "tournament": "UTR Men - UTR PTT Saitama Men 08, 5-8 Playoff",
@@ -5043,7 +4960,7 @@
     },
     {
       "event_id": "74330430",
-      "start_at": "2026-09-05T02:55:00Z",
+      "start_at": "2026-09-05T03:55:00Z",
       "player_a": "Matsumura, Ryotero",
       "player_b": "Karigyo, Toshiki",
       "tournament": "UTR Men - UTR PTT Saitama Men 08, 1-4 Playoff",
@@ -5263,9 +5180,9 @@
       "player_a": "Dornbusch, Henry",
       "player_b": "Corthey, Lautaro Agustin",
       "tournament": "UTR Men - UTR PTT Frankfurt Men 01, 5-8 Playoff",
-      "priority": 23,
+      "priority": 24,
       "pre_status": "DATA GAP",
-      "market_priority": 23,
+      "market_priority": 24,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -5281,9 +5198,9 @@
       "player_a": "Marmousez, Lilian",
       "player_b": "Pfau, Simon",
       "tournament": "UTR Men - UTR PTT Frankfurt Men 01, 17-20 Playoff",
-      "priority": 23,
+      "priority": 24,
       "pre_status": "DATA GAP",
-      "market_priority": 23,
+      "market_priority": 24,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -5299,9 +5216,9 @@
       "player_a": "Welker, Emily",
       "player_b": "Vajsejtlova, Tereza",
       "tournament": "UTR Women - UTR PTT Frankfurt Women 01, 1-4 Playoff",
-      "priority": 23,
+      "priority": 24,
       "pre_status": "DATA GAP",
-      "market_priority": 23,
+      "market_priority": 24,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -5317,9 +5234,9 @@
       "player_a": "Pryshchepa, Mariia",
       "player_b": "Sevald, Nikol",
       "tournament": "UTR Women - UTR PTT Frankfurt Women 01, 13-16 Playoff",
-      "priority": 23,
+      "priority": 24,
       "pre_status": "DATA GAP",
-      "market_priority": 23,
+      "market_priority": 24,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -5335,9 +5252,9 @@
       "player_a": "Vaneva, Zinovia",
       "player_b": "Njiric, Silvia",
       "tournament": "UTR Women - UTR PTT Skopje Women +H 04, 1-4 Playoff",
-      "priority": 23,
+      "priority": 24,
       "pre_status": "DATA GAP",
-      "market_priority": 23,
+      "market_priority": 24,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -5353,9 +5270,9 @@
       "player_a": "Gamretkaia, Arina",
       "player_b": "Radenkovic, Maja",
       "tournament": "UTR Women - UTR PTT Skopje Women +H 04, 5-8 Playoff",
-      "priority": 23,
+      "priority": 24,
       "pre_status": "DATA GAP",
-      "market_priority": 23,
+      "market_priority": 24,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -5371,9 +5288,9 @@
       "player_a": "Borodulina, Victoria",
       "player_b": "Djokic, Aleksandra",
       "tournament": "UTR Women - UTR PTT Skopje Women +H 04, 5-8 Playoff",
-      "priority": 23,
+      "priority": 24,
       "pre_status": "DATA GAP",
-      "market_priority": 23,
+      "market_priority": 24,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -5389,9 +5306,9 @@
       "player_a": "Martishev, Valeriy",
       "player_b": "Takacs, Bercel Sandor",
       "tournament": "UTR Men - UTR PTT Skopje Men +H 04, 1-4 Playoff",
-      "priority": 23,
+      "priority": 24,
       "pre_status": "DATA GAP",
-      "market_priority": 23,
+      "market_priority": 24,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -5407,9 +5324,9 @@
       "player_a": "Milanovic, Dusan",
       "player_b": "Kis Balazs, Rafael",
       "tournament": "UTR Men - UTR PTT Skopje Men +H 04, 1-4 Playoff",
-      "priority": 23,
+      "priority": 24,
       "pre_status": "DATA GAP",
-      "market_priority": 23,
+      "market_priority": 24,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -5425,26 +5342,26 @@
       "player_a": "Zhuoxuan Bai",
       "player_b": "Joanna Garland",
       "tournament": "Tennis - ITF Women Tianjin - SF",
-      "priority": 23,
-      "market_priority": 23,
+      "priority": 24,
+      "market_priority": 24,
       "pre_status": "PRE-ANALISI",
       "surface": "Hard",
       "tour": "wta",
-      "model_p_a": 0.3944076169166435,
-      "model_p_b": 0.6055923830833565,
+      "model_p_a": 0.3952362876113318,
+      "model_p_b": 0.6047637123886682,
       "favorite_side": "B",
       "favorite_name": "Joanna Garland",
-      "favorite_prob": 0.6055923830833565,
+      "favorite_prob": 0.6047637123886682,
       "robust_prob": 0.5,
-      "uncertainty": 0.11348044794051662,
-      "confidence": 47.52379003448593,
+      "uncertainty": 0.11348043284225179,
+      "confidence": 47.52379407866401,
       "data_quality": 64.7012987012987,
       "engine_votes": "2/3",
       "engine_unanimous": false,
       "model_a_p": 0.3327074401735666,
-      "model_b_p": 0.4846486415451702,
-      "model_c_p": 0.5037322310557456,
-      "model_disagreement": 0.17102479088217898,
+      "model_b_p": 0.4846489533554031,
+      "model_c_p": 0.5037321771333712,
+      "model_disagreement": 0.17102473695980452,
       "reason_codes": [
         "ELO +"
       ],
@@ -5454,7 +5371,7 @@
       ],
       "market_checked": false,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "preview_id": "12D7B38D015B"
+      "preview_id": "C2FC9124693B"
     },
     {
       "event_id": "74347646",
@@ -5696,9 +5613,9 @@
       "player_a": "Ribnikar, Mia Sara",
       "player_b": "Cassidy, Lucia",
       "tournament": "UTR Women - UTR PTT Skopje Women +H 04, 17-20 Playoff",
-      "priority": 22,
+      "priority": 23,
       "pre_status": "DATA GAP",
-      "market_priority": 22,
+      "market_priority": 23,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -5714,9 +5631,9 @@
       "player_a": "Gvozdenovic, Sara",
       "player_b": "Czapulak, Ewa",
       "tournament": "UTR Women - UTR PTT Skopje Women +H 04, 17-20 Playoff",
-      "priority": 22,
+      "priority": 23,
       "pre_status": "DATA GAP",
-      "market_priority": 22,
+      "market_priority": 23,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -5732,9 +5649,9 @@
       "player_a": "Pikkaart, James",
       "player_b": "Ristov, Milan",
       "tournament": "UTR Men - UTR PTT Skopje Men +H 04, 13-16 Playoff",
-      "priority": 22,
+      "priority": 23,
       "pre_status": "DATA GAP",
-      "market_priority": 22,
+      "market_priority": 23,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -5750,9 +5667,9 @@
       "player_a": "Holban, Vladimir",
       "player_b": "Schoemacher, Bjorn",
       "tournament": "UTR Men - UTR PTT Skopje Men +H 04, 17-20 Playoff",
-      "priority": 22,
+      "priority": 23,
       "pre_status": "DATA GAP",
-      "market_priority": 22,
+      "market_priority": 23,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -5768,9 +5685,9 @@
       "player_a": "Morega, David Ioan",
       "player_b": "Szamborski, Joachim",
       "tournament": "UTR Men - UTR PTT Skopje Men +H 04, 17-20 Playoff",
-      "priority": 22,
+      "priority": 23,
       "pre_status": "DATA GAP",
-      "market_priority": 22,
+      "market_priority": 23,
       "data_quality": 0,
       "confidence": 0,
       "reason_codes": [],
@@ -5941,6 +5858,60 @@
       ],
       "market_checked": false,
       "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT"
+    },
+    {
+      "event_id": "74351800",
+      "start_at": "2026-09-05T16:10:00Z",
+      "player_a": "Hidalgo, Jonatan Santiago",
+      "player_b": "Goubin, Dmitri",
+      "tournament": "UTR Men - UTR PTT Waco Men 03, 17-20 Playoff",
+      "priority": 22,
+      "pre_status": "DATA GAP",
+      "market_priority": 22,
+      "data_quality": 0,
+      "confidence": 0,
+      "reason_codes": [],
+      "warnings": [
+        "STORICO_NON_SUFFICIENTE"
+      ],
+      "market_checked": false,
+      "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT"
+    },
+    {
+      "event_id": "74351902",
+      "start_at": "2026-09-05T16:30:00Z",
+      "player_a": "Andreevskaya, Vladislava",
+      "player_b": "Psonka, Jade",
+      "tournament": "UTR Women - UTR PTT Waco Women 03, 9-12 Playoff",
+      "priority": 22,
+      "pre_status": "DATA GAP",
+      "market_priority": 22,
+      "data_quality": 0,
+      "confidence": 0,
+      "reason_codes": [],
+      "warnings": [
+        "STORICO_NON_SUFFICIENTE"
+      ],
+      "market_checked": false,
+      "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT"
+    },
+    {
+      "event_id": "74351908",
+      "start_at": "2026-09-05T18:00:00Z",
+      "player_a": "Lovato, Esther",
+      "player_b": "Gullacksen, Nikoline",
+      "tournament": "UTR Women - UTR PTT Waco Women 03, 13-16 Playoff",
+      "priority": 22,
+      "pre_status": "DATA GAP",
+      "market_priority": 22,
+      "data_quality": 0,
+      "confidence": 0,
+      "reason_codes": [],
+      "warnings": [
+        "STORICO_NON_SUFFICIENTE"
+      ],
+      "market_checked": false,
+      "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT"
     }
   ],
   "upcoming": [
@@ -6042,7 +6013,7 @@
       "player_intel": {
         "candidate_side": "B",
         "candidate_name": "Varillas, Juan Pablo",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Seyboth Wild, Thiago",
           "tour": "ATP",
@@ -6055,11 +6026,11 @@
             "prop_matches": 18
           },
           "context": {
-            "form": 0.47863744191871993,
-            "form_long": 0.45855209742378644,
-            "surface_form": 0.5,
+            "form": 0.47864421430299736,
+            "form_long": 0.4585573180727292,
+            "surface_form": 0.4999999999999999,
             "last_surface": "Clay",
-            "rest_days": 207.51736662037038,
+            "rest_days": 207.5545385185185,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -6196,11 +6167,11 @@
             "prop_matches": 18
           },
           "context": {
-            "form": 0.4824626361321731,
-            "form_long": 0.46713946036408455,
-            "surface_form": 0.49864306425756927,
+            "form": 0.4824684455199059,
+            "form_long": 0.4671445802946481,
+            "surface_form": 0.4986432302825612,
             "last_surface": "Hard",
-            "rest_days": 210.51736662037038,
+            "rest_days": 210.5545385185185,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -6761,7 +6732,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992578",
@@ -6861,7 +6832,7 @@
       "player_intel": {
         "candidate_side": "A",
         "candidate_name": "Svitolina, Elina",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Svitolina, Elina",
           "tour": "WTA",
@@ -6874,11 +6845,11 @@
             "prop_matches": 14
           },
           "context": {
-            "form": 0.6670681052548639,
-            "form_long": 0.7109903896924157,
-            "surface_form": 0.6623460497371515,
+            "form": 0.6670450857653867,
+            "form_long": 0.710979642090901,
+            "surface_form": 0.6623393846356636,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -7015,11 +6986,11 @@
             "prop_matches": 15
           },
           "context": {
-            "form": 0.5746946882873833,
-            "form_long": 0.5769927537681055,
-            "surface_form": 0.5581219587871037,
+            "form": 0.5746835282276229,
+            "form_long": 0.5769884244000116,
+            "surface_form": 0.5581194670239521,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -7607,7 +7578,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992468",
@@ -7707,7 +7678,7 @@
       "player_intel": {
         "candidate_side": "B",
         "candidate_name": "Shapovalov, Denis",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Shelton, Ben",
           "tour": "ATP",
@@ -7720,11 +7691,11 @@
             "prop_matches": 18
           },
           "context": {
-            "form": 0.5599851116154416,
-            "form_long": 0.575239193686256,
-            "surface_form": 0.6076776692326394,
+            "form": 0.5599759949201771,
+            "form_long": 0.5752349662474638,
+            "surface_form": 0.607673068063451,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -7861,11 +7832,11 @@
             "prop_matches": 19
           },
           "context": {
-            "form": 0.4345527312594367,
-            "form_long": 0.4547470106898182,
-            "surface_form": 0.5291407594609636,
+            "form": 0.434564055373149,
+            "form_long": 0.4547499278157814,
+            "surface_form": 0.5291394226208178,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -8384,1724 +8355,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
-    },
-    {
-      "event_id": "73992446",
-      "start_at": "2026-09-04T15:00:00Z",
-      "player_a": "Vacherot, Valentin",
-      "player_b": "Tiafoe, Frances",
-      "tournament": "ATP - US Open, New York, USA",
-      "league_slug": "atp-us-open-new-york-usa",
-      "priority": 226,
-      "surface": "Hard",
-      "tour": "atp",
-      "raw_p_a": 0.5162962689486059,
-      "shadow_p_a": 0.5159469695871308,
-      "p_a": 0.5196610081210743,
-      "p_b": 0.4803389918789257,
-      "uncertainty": 0.047343970618380325,
-      "probability_low": 0.472317037502694,
-      "probability_high": 0.5670049787394547,
-      "model_a_p": 0.5255598136897554,
-      "model_b_p": 0.5140180958006605,
-      "model_c_p": 0.5073670614812542,
-      "model_a_name": "Strength",
-      "model_b_name": "Surface",
-      "model_c_name": "Form/Matchup",
-      "model_disagreement": 0.01819275220850114,
-      "engine_votes": "3/3",
-      "engine_majority": "A",
-      "engine_unanimous": true,
-      "fair_a": 1.9243314090769976,
-      "fair_b": 2.081863052775154,
-      "forecast_side": "A",
-      "forecast_name": "Vacherot, Valentin",
-      "forecast_prob": 0.5196610081210743,
-      "forecast_confidence": 79.13554358436241,
-      "forecast_locked_at": "2026-09-03T08:34:51.930Z",
-      "market_favorite_side": "B",
-      "market_favorite_name": "Tiafoe, Frances",
-      "market_favorite_prob": 0.6491499454904387,
-      "forecast_vs_market": "UPSET_CALL",
-      "candidate_side": "A",
-      "candidate_name": "Vacherot, Valentin",
-      "candidate_prob": 0.5196610081210743,
-      "candidate_odds": 2.75,
-      "candidate_book": "Bet365",
-      "candidate_ev": 0.42906777233295434,
-      "candidate_edge": 0.168810953611513,
-      "robust_prob": 0.472317037502694,
-      "robust_ev": 0.2988718531324084,
-      "robust_edge": 0.12146698299313269,
-      "pick_side": "A",
-      "pick_name": "Vacherot, Valentin",
-      "pick_prob": 0.5196610081210743,
-      "pick_odds": 2.75,
-      "pick_book": "Bet365",
-      "pick_ev": 0.42906777233295434,
-      "pick_edge": 0.168810953611513,
-      "watch_side": null,
-      "watch_name": null,
-      "verdict": "VALUE",
-      "confidence": 80.17892533790062,
-      "sports_confidence": 79.13554358436241,
-      "data_quality": 92,
-      "market_depth": 2,
-      "market_consensus_a": 0.3508500545095613,
-      "market_sd": 0.007174636848463395,
-      "market_margin": 0.06617568255499284,
-      "market_updated_at": "2026-09-03T08:27:12.13Z",
-      "market_age_minutes": 7.663333333333333,
-      "rank_a": 19,
-      "rank_b": 22,
-      "elo_a": 1674.6826738175705,
-      "elo_b": 1656.891734429863,
-      "surface_elo_a": 1660.465727912093,
-      "surface_elo_b": 1661.5806859579695,
-      "form_a": 0.5647495809441966,
-      "form_b": 0.5864866649305654,
-      "surface_form_a": 0.6225004952074218,
-      "surface_form_b": 0.5841213315534277,
-      "surface_sample_a": 32,
-      "surface_sample_b": 40,
-      "h2h_n": 0,
-      "h2h_edge": 0,
-      "serve_return_delta": 0.04392801068451324,
-      "workload7_a": 0,
-      "workload7_b": 0,
-      "matches7_a": 0,
-      "matches7_b": 0,
-      "rest_days_a": 100.8575454861111,
-      "rest_days_b": 100.8575454861111,
-      "last_surface_a": "Clay",
-      "last_surface_b": "Clay",
-      "surface_transition_a": false,
-      "surface_transition_b": false,
-      "dense_load_a": false,
-      "dense_load_b": false,
-      "adaptation_risk": 0,
-      "player_intel": {
-        "candidate_side": "A",
-        "candidate_name": "Vacherot, Valentin",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
-        "a": {
-          "name": "Vacherot, Valentin",
-          "tour": "ATP",
-          "target_surface": "Hard",
-          "rank": 19,
-          "sample": {
-            "matches": 53,
-            "stat_matches": 16,
-            "surface_matches": 32,
-            "prop_matches": 16
-          },
-          "context": {
-            "form": 0.5642763554983248,
-            "form_long": 0.5892635870935968,
-            "surface_form": 0.6222550282804764,
-            "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
-            "matches_7d": 0,
-            "matches_14d": 0,
-            "workload_7d_minutes": 0,
-            "workload_14d_minutes": 0
-          },
-          "service": {
-            "first_serve_pct": 0.6442006269592476,
-            "first_serve_points_won": 0.7798053527980535,
-            "second_serve_points_won": 0.5088105726872246,
-            "service_points_won": 0.6833855799373041,
-            "service_games_won": 0.8689320388349514,
-            "break_points_saved": 0.6966292134831461,
-            "aces_per_match": 9.25,
-            "double_faults_per_match": 2.625
-          },
-          "return": {
-            "first_return_points_won": 0.2783132530120482,
-            "second_return_points_won": 0.4957627118644068,
-            "return_points_won": 0.35714285714285715,
-            "return_games_won": 0.19117647058823528,
-            "break_points_converted": 0.3277310924369748,
-            "breaks_per_match": 2.4375,
-            "aces_allowed_per_match": 7.25
-          },
-          "recent_matches": [
-            {
-              "date": "20260525",
-              "tournament": "Roland Garros",
-              "surface": "Clay",
-              "round": "R128",
-              "result": "W",
-              "opponent": "Thomas Faurel",
-              "score": "6-3 6-4 3-6 7-6(6)",
-              "service": {
-                "service_games_won": null
-              },
-              "return": {
-                "return_games_won": null
-              }
-            },
-            {
-              "date": "20260525",
-              "tournament": "Roland Garros",
-              "surface": "Clay",
-              "round": "R64",
-              "result": "L",
-              "opponent": "Alejandro Tabilo",
-              "score": "W/O",
-              "service": {
-                "service_games_won": null
-              },
-              "return": {
-                "return_games_won": null
-              }
-            },
-            {
-              "date": "20260422",
-              "tournament": "Madrid Masters",
-              "surface": "Clay",
-              "round": "R64",
-              "result": "L",
-              "opponent": "Emilio Nava",
-              "score": "6-7(5) 7-6(1) 6-3",
-              "service": {
-                "service_games_won": 0.8125
-              },
-              "return": {
-                "return_games_won": 0.11764705882352941
-              }
-            },
-            {
-              "date": "20260405",
-              "tournament": "Monte Carlo Masters",
-              "surface": "Clay",
-              "round": "SF",
-              "result": "L",
-              "opponent": "Carlos Alcaraz",
-              "score": "6-4 6-4",
-              "service": {
-                "service_games_won": 0.7
-              },
-              "return": {
-                "return_games_won": 0.1
-              }
-            },
-            {
-              "date": "20260405",
-              "tournament": "Monte Carlo Masters",
-              "surface": "Clay",
-              "round": "QF",
-              "result": "W",
-              "opponent": "Alex De Minaur",
-              "score": "6-4 3-6 6-3",
-              "service": {
-                "service_games_won": 0.7857142857142857
-              },
-              "return": {
-                "return_games_won": 0.2857142857142857
-              }
-            },
-            {
-              "date": "20260405",
-              "tournament": "Monte Carlo Masters",
-              "surface": "Clay",
-              "round": "R16",
-              "result": "W",
-              "opponent": "Hubert Hurkacz",
-              "score": "6-7(4) 6-3 6-4",
-              "service": {
-                "service_games_won": 0.875
-              },
-              "return": {
-                "return_games_won": 0.26666666666666666
-              }
-            }
-          ],
-          "verification": {
-            "official_stats": "https://www.atptour.com/en/stats",
-            "official_match_stats": "https://www.atptour.com/en/stats/individual-game-stats",
-            "sofascore": "https://www.sofascore.com/it/tennis"
-          },
-          "history_source": "TENNIS_HISTORY_ARCHIVE_RESEARCH",
-          "verification_note": "Statistiche calcolate dallo storico match del motore; link ufficiali ATP/WTA e SofaScore per controllo esterno. Nessun dato viene inventato se il campione non e disponibile."
-        },
-        "b": {
-          "name": "Tiafoe, Frances",
-          "tour": "ATP",
-          "target_surface": "Hard",
-          "rank": 22,
-          "sample": {
-            "matches": 201,
-            "stat_matches": 16,
-            "surface_matches": 40,
-            "prop_matches": 16
-          },
-          "context": {
-            "form": 0.585921712877553,
-            "form_long": 0.6027938161087919,
-            "surface_form": 0.5839698112103153,
-            "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
-            "matches_7d": 0,
-            "matches_14d": 0,
-            "workload_7d_minutes": 0,
-            "workload_14d_minutes": 0
-          },
-          "service": {
-            "first_serve_pct": 0.5978344934261408,
-            "first_serve_points_won": 0.723156532988357,
-            "second_serve_points_won": 0.5134615384615384,
-            "service_points_won": 0.6388244392884764,
-            "service_games_won": 0.8219895287958116,
-            "break_points_saved": 0.66,
-            "aces_per_match": 5.25,
-            "double_faults_per_match": 1.6875
-          },
-          "return": {
-            "first_return_points_won": 0.272264631043257,
-            "second_return_points_won": 0.5054945054945055,
-            "return_points_won": 0.3577759871071716,
-            "return_games_won": 0.20618556701030927,
-            "break_points_converted": 0.425531914893617,
-            "breaks_per_match": 2.5,
-            "aces_allowed_per_match": 9.5625
-          },
-          "recent_matches": [
-            {
-              "date": "20260525",
-              "tournament": "Roland Garros",
-              "surface": "Clay",
-              "round": "R128",
-              "result": "W",
-              "opponent": "Eliot Spizzirri",
-              "score": "6-3 6-7(5) 6-4 6-3",
-              "service": {
-                "service_games_won": null
-              },
-              "return": {
-                "return_games_won": null
-              }
-            },
-            {
-              "date": "20260525",
-              "tournament": "Roland Garros",
-              "surface": "Clay",
-              "round": "R64",
-              "result": "W",
-              "opponent": "Hubert Hurkacz",
-              "score": "6-7(5) 7-6(5) 6-4 6-7(1) 6-4",
-              "service": {
-                "service_games_won": null
-              },
-              "return": {
-                "return_games_won": null
-              }
-            },
-            {
-              "date": "20260525",
-              "tournament": "Roland Garros",
-              "surface": "Clay",
-              "round": "R32",
-              "result": "W",
-              "opponent": "Jaime Faria",
-              "score": "4-6 6-7(2) 7-6(4) 6-1 6-2",
-              "service": {
-                "service_games_won": null
-              },
-              "return": {
-                "return_games_won": null
-              }
-            },
-            {
-              "date": "20260525",
-              "tournament": "Roland Garros",
-              "surface": "Clay",
-              "round": "R16",
-              "result": "L",
-              "opponent": "Matteo Arnaldi",
-              "score": "7-6(5) 6-7(5) 3-6 7-6(3) 6-4",
-              "service": {
-                "service_games_won": null
-              },
-              "return": {
-                "return_games_won": null
-              }
-            },
-            {
-              "date": "20260517",
-              "tournament": "Hamburg",
-              "surface": "Clay",
-              "round": "R16",
-              "result": "L",
-              "opponent": "Camilo Ugo Carabelli",
-              "score": "7-6(3) 7-6(4)",
-              "service": {
-                "service_games_won": 0.75
-              },
-              "return": {
-                "return_games_won": 0.25
-              }
-            },
-            {
-              "date": "20260517",
-              "tournament": "Hamburg",
-              "surface": "Clay",
-              "round": "R32",
-              "result": "W",
-              "opponent": "Diego Dedura Palomero",
-              "score": "6-4 6-4",
-              "service": {
-                "service_games_won": 1
-              },
-              "return": {
-                "return_games_won": 0.2
-              }
-            }
-          ],
-          "verification": {
-            "official_stats": "https://www.atptour.com/en/stats",
-            "official_match_stats": "https://www.atptour.com/en/stats/individual-game-stats",
-            "sofascore": "https://www.sofascore.com/it/tennis"
-          },
-          "history_source": "TENNIS_HISTORY_ARCHIVE_RESEARCH",
-          "verification_note": "Statistiche calcolate dallo storico match del motore; link ufficiali ATP/WTA e SofaScore per controllo esterno. Nessun dato viene inventato se il campione non e disponibile."
-        }
-      },
-      "market_lab": {
-        "status": "PAPER_VALIDATION",
-        "simulations": 5000,
-        "best_of": 3,
-        "mean_total_games": 26.0796,
-        "median_total_games": 26,
-        "serve_point_a": 0.6547570398380175,
-        "serve_point_b": 0.6507449908236488,
-        "hold_a": 0.8374222045861163,
-        "hold_b": 0.83087653981191,
-        "tb_a": 0.5066198808737084,
-        "market_uncertainty": 0.059087658845233836,
-        "priced": [
-          {
-            "market": "MATCH_WINNER",
-            "selection": "Vacherot, Valentin",
-            "side": "A",
-            "book": "Bet365",
-            "offer_key": "MATCH_WINNER|A",
-            "model_prob": 0.5196610081210743,
-            "market_prob": 0.3508500545095613,
-            "best_odds": 2.75,
-            "edge": 0.168810953611513,
-            "ev": 0.42906777233295434,
-            "robust_prob": 0.4605733492758405,
-            "robust_edge": 0.10972329476627918,
-            "robust_ev": 0.26657671050856124,
-            "verdict": "VALUE",
-            "reasons": [],
-            "validation_tier": "OFFICIAL_ML",
-            "target_robust_ev": 0.022,
-            "min_acceptable_odds": 2.2189733765683375,
-            "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed."
-          },
-          {
-            "market": "MATCH_WINNER",
-            "selection": "Tiafoe, Frances",
-            "side": "B",
-            "book": "Eurobet IT",
-            "offer_key": "MATCH_WINNER|B",
-            "model_prob": 0.4803389918789257,
-            "market_prob": 0.6491499454904387,
-            "best_odds": 1.45,
-            "edge": -0.168810953611513,
-            "ev": -0.3035084617755578,
-            "robust_prob": 0.4212513330336919,
-            "robust_edge": -0.2278986124567468,
-            "robust_ev": -0.3891855671011468,
-            "verdict": "NO BET",
-            "reasons": [],
-            "validation_tier": "OFFICIAL_ML",
-            "target_robust_ev": 0.01,
-            "min_acceptable_odds": 2.3976185255637392,
-            "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed."
-          }
-        ],
-        "scenario": [
-          {
-            "market": "SET_SCORE",
-            "selection": "2-1",
-            "model_prob": 0.276,
-            "fair_odds": 3.623188405797101,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "SET_SCORE",
-            "selection": "2-0",
-            "model_prob": 0.2528,
-            "fair_odds": 3.9556962025316453,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "SET_SCORE",
-            "selection": "1-2",
-            "model_prob": 0.2368,
-            "fair_odds": 4.222972972972973,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "SET_SCORE",
-            "selection": "0-2",
-            "model_prob": 0.2344,
-            "fair_odds": 4.266211604095563,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "FIRST_SET_WINNER",
-            "selection": "Vacherot, Valentin",
-            "model_prob": 0.5058,
-            "fair_odds": 1.9770660340055357,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "PLAYER_TO_WIN_A_SET",
-            "selection": "Vacherot, Valentin",
-            "model_prob": 0.7656,
-            "fair_odds": 1.3061650992685476,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "PLAYER_TO_WIN_A_SET",
-            "selection": "Tiafoe, Frances",
-            "model_prob": 0.7472,
-            "fair_odds": 1.3383297644539616,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "TIEBREAK_IN_MATCH",
-            "selection": "YES",
-            "model_prob": 0.521,
-            "fair_odds": 1.9193857965451055,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "EXPECTED_ACES",
-            "selection": "Vacherot, Valentin",
-            "model_mean": 10.170364843749999,
-            "price_status": "MODEL_EXPERIMENTAL"
-          },
-          {
-            "market": "EXPECTED_ACES",
-            "selection": "Tiafoe, Frances",
-            "model_mean": 6.465567499999999,
-            "price_status": "MODEL_EXPERIMENTAL"
-          },
-          {
-            "market": "EXPECTED_BREAKS",
-            "selection": "Vacherot, Valentin",
-            "model_mean": 2.5298570312499997,
-            "price_status": "MODEL_EXPERIMENTAL"
-          },
-          {
-            "market": "EXPECTED_BREAKS",
-            "selection": "Tiafoe, Frances",
-            "model_mean": 2.40760890625,
-            "price_status": "MODEL_EXPERIMENTAL"
-          }
-        ],
-        "prediction_summary": {
-          "winner_side": "A",
-          "winner_name": "Vacherot, Valentin",
-          "winner_prob": 0.5196610081210743,
-          "confidence": 80.17892533790062,
-          "data_quality": 92,
-          "likely_set_score": "2-1",
-          "likely_set_score_prob": 0.276,
-          "expected_total_games": 26.0796,
-          "best_market": null
-        },
-        "best_prediction": null,
-        "alternatives": [],
-        "best_priced": {
-          "market": "MATCH_WINNER",
-          "selection": "Vacherot, Valentin",
-          "side": "A",
-          "book": "Bet365",
-          "offer_key": "MATCH_WINNER|A",
-          "model_prob": 0.5196610081210743,
-          "market_prob": 0.3508500545095613,
-          "best_odds": 2.75,
-          "edge": 0.168810953611513,
-          "ev": 0.42906777233295434,
-          "robust_prob": 0.4605733492758405,
-          "robust_edge": 0.10972329476627918,
-          "robust_ev": 0.26657671050856124,
-          "verdict": "VALUE",
-          "reasons": [],
-          "validation_tier": "OFFICIAL_ML",
-          "target_robust_ev": 0.022,
-          "min_acceptable_odds": 2.2189733765683375,
-          "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed."
-        },
-        "detected_market_names": [
-          "ML",
-          "SET BETTING",
-          "SPREAD (GAMES)",
-          "TEAM TOTAL (GAMES) AWAY",
-          "TEAM TOTAL (GAMES) HOME",
-          "TOTALS 1ST SET",
-          "TOTALS (GAMES)"
-        ],
-        "note": "Official ML keeps its mature gate. Price Guard adds a minimum acceptable price without rewriting the locked prediction. Secondary markets remain paper-only until each market family has enough settled evidence."
-      },
-      "market_best": {
-        "market": "MATCH_WINNER",
-        "selection": "Vacherot, Valentin",
-        "side": "A",
-        "book": "Bet365",
-        "offer_key": "MATCH_WINNER|A",
-        "model_prob": 0.5196610081210743,
-        "market_prob": 0.3508500545095613,
-        "best_odds": 2.75,
-        "edge": 0.168810953611513,
-        "ev": 0.42906777233295434,
-        "robust_prob": 0.4605733492758405,
-        "robust_edge": 0.10972329476627918,
-        "robust_ev": 0.26657671050856124,
-        "verdict": "VALUE",
-        "reasons": [],
-        "validation_tier": "OFFICIAL_ML",
-        "target_robust_ev": 0.022,
-        "min_acceptable_odds": 2.2189733765683375,
-        "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed."
-      },
-      "multi_market_version": "MM-4.0-PREDICTION-FIRST",
-      "reason_codes": [
-        "SERVE/RETURN +",
-        "EV ++"
-      ],
-      "no_bet_reasons": [],
-      "warnings": [],
-      "calibration_sample": 82,
-      "calibration_scope": "atp:Hard",
-      "calibration_active": true,
-      "model_health": "HEALTHY",
-      "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "predicted_at": "2026-09-03T08:34:51.930Z",
-      "locked": true,
-      "status": "LOCKED",
-      "audit_id": "476A6DD20E2B",
-      "current_odds": 2.62,
-      "current_book": "Bet365",
-      "current_ev": 0.3615118412772147,
-      "current_market_consensus_a": 0.37156501949010967,
-      "current_market_books": 2,
-      "current_odds_updated_at": "2026-09-04T14:07:17.452Z",
-      "current_odds_age_min": 8.15205,
-      "market_watch_status": "OBSERVED",
-      "prediction_lock_preserved": true,
-      "quote_tape": [
-        {
-          "at": "2026-09-03T15:18:50.558Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-03T16:17:05.698Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-03T17:14:51.874Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-03T18:18:56.512Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-03T19:13:23.035Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-03T20:15:31.258Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-03T21:15:26.986Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-03T22:15:12.872Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-03T23:13:48.645Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T00:23:39.038Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T01:17:08.131Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T02:15:44.067Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T03:15:51.616Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T04:16:25.109Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T05:15:01.950Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T06:20:12.578Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T07:15:57.644Z",
-          "odds": 2.75,
-          "consensus_a": 0.3486669771232319,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T08:17:43.098Z",
-          "odds": 2.62,
-          "consensus_a": 0.36566166373557546,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T09:16:17.067Z",
-          "odds": 2.62,
-          "consensus_a": 0.36566166373557546,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T10:16:31.100Z",
-          "odds": 2.62,
-          "consensus_a": 0.3687556269314062,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T11:15:31.879Z",
-          "odds": 2.62,
-          "consensus_a": 0.3742498902278383,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T12:20:59.042Z",
-          "odds": 2.62,
-          "consensus_a": 0.37156501949010967,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T13:16:03.781Z",
-          "odds": 2.62,
-          "consensus_a": 0.37156501949010967,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T14:15:26.575Z",
-          "odds": 2.62,
-          "consensus_a": 0.37156501949010967,
-          "book": "Bet365"
-        }
-      ],
-      "market_live": {
-        "status": "MARKET_OBSERVED",
-        "updated_at": "2026-09-04T14:15:26.575Z",
-        "rows": [
-          {
-            "market": "MATCH_WINNER",
-            "selection": "Vacherot, Valentin",
-            "side": "A",
-            "book": "Bet365",
-            "offer_key": "MATCH_WINNER|A",
-            "model_prob": 0.5196610081210743,
-            "market_prob": 0.3508500545095613,
-            "best_odds": 2.75,
-            "edge": 0.168810953611513,
-            "ev": 0.42906777233295434,
-            "robust_prob": 0.4605733492758405,
-            "robust_edge": 0.10972329476627918,
-            "robust_ev": 0.26657671050856124,
-            "verdict": "VALUE",
-            "reasons": [],
-            "validation_tier": "OFFICIAL_ML",
-            "target_robust_ev": 0.022,
-            "min_acceptable_odds": 2.2189733765683375,
-            "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed.",
-            "current_odds": 2.62,
-            "current_market_prob": 0.37156501949010967,
-            "current_book": "Bet365",
-            "current_books": 2,
-            "current_updated_at": "2026-09-04T14:07:17.452Z",
-            "current_ev": 0.3615118412772147,
-            "current_robust_ev": 0.20670217510270206,
-            "current_price_status": "BET_ZONE",
-            "price_cushion": 0.18072619873062834,
-            "odds_move_pct": -0.047272727272727244,
-            "market_prob_move_pp": 0.020714964980548367,
-            "current_status": "OBSERVED"
-          },
-          {
-            "market": "MATCH_WINNER",
-            "selection": "Tiafoe, Frances",
-            "side": "B",
-            "book": "Eurobet IT",
-            "offer_key": "MATCH_WINNER|B",
-            "model_prob": 0.4803389918789257,
-            "market_prob": 0.6491499454904387,
-            "best_odds": 1.45,
-            "edge": -0.168810953611513,
-            "ev": -0.3035084617755578,
-            "robust_prob": 0.4212513330336919,
-            "robust_edge": -0.2278986124567468,
-            "robust_ev": -0.3891855671011468,
-            "verdict": "NO BET",
-            "reasons": [],
-            "validation_tier": "OFFICIAL_ML",
-            "target_robust_ev": 0.01,
-            "min_acceptable_odds": 2.3976185255637392,
-            "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed.",
-            "current_odds": 1.52,
-            "current_market_prob": 0.6284349805098903,
-            "current_book": "Eurobet IT",
-            "current_books": 2,
-            "current_updated_at": "2026-09-04T11:34:04.851Z",
-            "current_ev": -0.2698847323440329,
-            "current_robust_ev": -0.3596979737887883,
-            "current_price_status": "PASS",
-            "price_cushion": -0.36603759781068157,
-            "odds_move_pct": 0.048275862068965614,
-            "market_prob_move_pp": -0.020714964980548367,
-            "current_status": "OBSERVED"
-          }
-        ],
-        "best_current": {
-          "market": "MATCH_WINNER",
-          "selection": "Vacherot, Valentin",
-          "side": "A",
-          "book": "Bet365",
-          "offer_key": "MATCH_WINNER|A",
-          "model_prob": 0.5196610081210743,
-          "market_prob": 0.3508500545095613,
-          "best_odds": 2.75,
-          "edge": 0.168810953611513,
-          "ev": 0.42906777233295434,
-          "robust_prob": 0.4605733492758405,
-          "robust_edge": 0.10972329476627918,
-          "robust_ev": 0.26657671050856124,
-          "verdict": "VALUE",
-          "reasons": [],
-          "validation_tier": "OFFICIAL_ML",
-          "target_robust_ev": 0.022,
-          "min_acceptable_odds": 2.2189733765683375,
-          "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed.",
-          "current_odds": 2.62,
-          "current_market_prob": 0.37156501949010967,
-          "current_book": "Bet365",
-          "current_books": 2,
-          "current_updated_at": "2026-09-04T14:07:17.452Z",
-          "current_ev": 0.3615118412772147,
-          "current_robust_ev": 0.20670217510270206,
-          "current_price_status": "BET_ZONE",
-          "price_cushion": 0.18072619873062834,
-          "odds_move_pct": -0.047272727272727244,
-          "market_prob_move_pp": 0.020714964980548367,
-          "current_status": "OBSERVED"
-        }
-      },
-      "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
-    },
-    {
-      "event_id": "73992470",
-      "start_at": "2026-09-04T15:00:00Z",
-      "player_a": "Lehecka, Jiri",
-      "player_b": "Tsitsipas, Stefanos",
-      "tournament": "ATP - US Open, New York, USA",
-      "league_slug": "atp-us-open-new-york-usa",
-      "priority": 248,
-      "surface": "Hard",
-      "tour": "atp",
-      "raw_p_a": 0.6441163171995716,
-      "shadow_p_a": 0.6371609207371992,
-      "p_a": 0.6688624512660669,
-      "p_b": 0.3311375487339331,
-      "uncertainty": 0.08048330867303043,
-      "probability_low": 0.5883791425930365,
-      "probability_high": 0.7493457599390974,
-      "model_a_p": 0.7164849446029993,
-      "model_b_p": 0.567615985056462,
-      "model_c_p": 0.6307142831728437,
-      "model_a_name": "Strength",
-      "model_b_name": "Surface",
-      "model_c_name": "Form/Matchup",
-      "model_disagreement": 0.14886895954653723,
-      "engine_votes": "3/3",
-      "engine_majority": "A",
-      "engine_unanimous": true,
-      "fair_a": 1.4950757036923423,
-      "fair_b": 3.0198931043108423,
-      "forecast_side": "A",
-      "forecast_name": "Lehecka, Jiri",
-      "forecast_prob": 0.6688624512660669,
-      "forecast_confidence": 70.8348280340097,
-      "forecast_locked_at": "2026-09-03T16:17:05.698Z",
-      "market_favorite_side": "A",
-      "market_favorite_name": "Lehecka, Jiri",
-      "market_favorite_prob": 0.6312443730685938,
-      "forecast_vs_market": "AGREE",
-      "candidate_side": "A",
-      "candidate_name": "Lehecka, Jiri",
-      "candidate_prob": 0.6688624512660669,
-      "candidate_odds": 1.5,
-      "candidate_book": "Bet365",
-      "candidate_ev": 0.0032936768991003174,
-      "candidate_edge": 0.03761807819747309,
-      "robust_prob": 0.5883791425930365,
-      "robust_ev": -0.11743128611044529,
-      "robust_edge": -0.04286523047555735,
-      "pick_side": null,
-      "pick_name": null,
-      "pick_prob": null,
-      "pick_odds": null,
-      "pick_book": null,
-      "pick_ev": null,
-      "pick_edge": null,
-      "watch_side": null,
-      "watch_name": null,
-      "verdict": "NO BET",
-      "confidence": 72.21110043021055,
-      "sports_confidence": 70.8348280340097,
-      "data_quality": 95,
-      "market_depth": 2,
-      "market_consensus_a": 0.6312443730685938,
-      "market_sd": 0.004677957028493607,
-      "market_margin": 0.05974349778847954,
-      "market_updated_at": "2026-09-03T16:00:06.524Z",
-      "market_age_minutes": 16.986233333333335,
-      "rank_a": 12,
-      "rank_b": 79,
-      "elo_a": 1702.6626832862985,
-      "elo_b": 1605.5955651491006,
-      "surface_elo_a": 1689.039441853405,
-      "surface_elo_b": 1622.7959323980733,
-      "form_a": 0.5705915102034768,
-      "form_b": 0.4781759669302723,
-      "surface_form_a": 0.5987427816321009,
-      "surface_form_b": 0.553524532133808,
-      "surface_sample_a": 40,
-      "surface_sample_b": 40,
-      "h2h_n": 3,
-      "h2h_edge": 0.48910378583571473,
-      "serve_return_delta": 0.03377500963508728,
-      "workload7_a": 0,
-      "workload7_b": 0,
-      "matches7_a": 0,
-      "matches7_b": 0,
-      "rest_days_a": 101.1785381712963,
-      "rest_days_b": 101.1785381712963,
-      "last_surface_a": "Clay",
-      "last_surface_b": "Clay",
-      "surface_transition_a": false,
-      "surface_transition_b": false,
-      "dense_load_a": false,
-      "dense_load_b": false,
-      "adaptation_risk": 0,
-      "player_intel": {
-        "candidate_side": "A",
-        "candidate_name": "Lehecka, Jiri",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
-        "a": {
-          "name": "Lehecka, Jiri",
-          "tour": "ATP",
-          "target_surface": "Hard",
-          "rank": 12,
-          "sample": {
-            "matches": 201,
-            "stat_matches": 19,
-            "surface_matches": 40,
-            "prop_matches": 19
-          },
-          "context": {
-            "form": 0.570198650543019,
-            "form_long": 0.5632406500129096,
-            "surface_form": 0.5985980320809214,
-            "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
-            "matches_7d": 0,
-            "matches_14d": 0,
-            "workload_7d_minutes": 0,
-            "workload_14d_minutes": 0
-          },
-          "service": {
-            "first_serve_pct": 0.6616270698344132,
-            "first_serve_points_won": 0.735582154515778,
-            "second_serve_points_won": 0.551063829787234,
-            "service_points_won": 0.6731461483081354,
-            "service_games_won": 0.8790697674418605,
-            "break_points_saved": 0.7078651685393258,
-            "aces_per_match": 7.2631578947368425,
-            "double_faults_per_match": 0.6842105263157895
-          },
-          "return": {
-            "first_return_points_won": 0.28743169398907104,
-            "second_return_points_won": 0.46555323590814196,
-            "return_points_won": 0.3486370157819225,
-            "return_games_won": 0.1643192488262911,
-            "break_points_converted": 0.2966101694915254,
-            "breaks_per_match": 1.8421052631578947,
-            "aces_allowed_per_match": 5.157894736842105
-          },
-          "recent_matches": [
-            {
-              "date": "20260525",
-              "tournament": "Roland Garros",
-              "surface": "Clay",
-              "round": "R128",
-              "result": "L",
-              "opponent": "Pablo Carreno Busta",
-              "score": "6-3 7-6(3) 6-3",
-              "service": {
-                "service_games_won": null
-              },
-              "return": {
-                "return_games_won": null
-              }
-            },
-            {
-              "date": "20260506",
-              "tournament": "Rome Masters",
-              "surface": "Clay",
-              "round": "R32",
-              "result": "L",
-              "opponent": "Casper Ruud",
-              "score": "6-3 6-4",
-              "service": {
-                "service_games_won": 0.6666666666666666
-              },
-              "return": {
-                "return_games_won": 0.1
-              }
-            },
-            {
-              "date": "20260506",
-              "tournament": "Rome Masters",
-              "surface": "Clay",
-              "round": "R64",
-              "result": "W",
-              "opponent": "Jan Lennard Struff",
-              "score": "7-6(4) 6-3",
-              "service": {
-                "service_games_won": 0.9090909090909091
-              },
-              "return": {
-                "return_games_won": 0.2
-              }
-            },
-            {
-              "date": "20260422",
-              "tournament": "Madrid Masters",
-              "surface": "Clay",
-              "round": "QF",
-              "result": "L",
-              "opponent": "Arthur Fils",
-              "score": "6-3 6-4",
-              "service": {
-                "service_games_won": 0.7777777777777778
-              },
-              "return": {
-                "return_games_won": 0
-              }
-            },
-            {
-              "date": "20260422",
-              "tournament": "Madrid Masters",
-              "surface": "Clay",
-              "round": "R16",
-              "result": "W",
-              "opponent": "Lorenzo Musetti",
-              "score": "6-3 6-3",
-              "service": {
-                "service_games_won": 1
-              },
-              "return": {
-                "return_games_won": 0.3333333333333333
-              }
-            },
-            {
-              "date": "20260422",
-              "tournament": "Madrid Masters",
-              "surface": "Clay",
-              "round": "R32",
-              "result": "W",
-              "opponent": "Alex Michelsen",
-              "score": "6-4 6-2",
-              "service": {
-                "service_games_won": 1
-              },
-              "return": {
-                "return_games_won": 0.3333333333333333
-              }
-            }
-          ],
-          "verification": {
-            "official_stats": "https://www.atptour.com/en/stats",
-            "official_match_stats": "https://www.atptour.com/en/stats/individual-game-stats",
-            "sofascore": "https://www.sofascore.com/it/tennis"
-          },
-          "history_source": "TENNIS_HISTORY_ARCHIVE_RESEARCH",
-          "verification_note": "Statistiche calcolate dallo storico match del motore; link ufficiali ATP/WTA e SofaScore per controllo esterno. Nessun dato viene inventato se il campione non e disponibile."
-        },
-        "b": {
-          "name": "Tsitsipas, Stefanos",
-          "tour": "ATP",
-          "target_surface": "Hard",
-          "rank": 79,
-          "sample": {
-            "matches": 210,
-            "stat_matches": 18,
-            "surface_matches": 40,
-            "prop_matches": 18
-          },
-          "context": {
-            "form": 0.478294481708556,
-            "form_long": 0.5136141766284337,
-            "surface_form": 0.5534371184743361,
-            "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
-            "matches_7d": 0,
-            "matches_14d": 0,
-            "workload_7d_minutes": 0,
-            "workload_14d_minutes": 0
-          },
-          "service": {
-            "first_serve_pct": 0.633457249070632,
-            "first_serve_points_won": 0.7593896713615024,
-            "second_serve_points_won": 0.5030425963488844,
-            "service_points_won": 0.6654275092936803,
-            "service_games_won": 0.8605769230769231,
-            "break_points_saved": 0.7070707070707071,
-            "aces_per_match": 5.555555555555555,
-            "double_faults_per_match": 1.7777777777777777
-          },
-          "return": {
-            "first_return_points_won": 0.24624277456647398,
-            "second_return_points_won": 0.47368421052631576,
-            "return_points_won": 0.3225806451612903,
-            "return_games_won": 0.1323529411764706,
-            "break_points_converted": 0.32142857142857145,
-            "breaks_per_match": 1.5,
-            "aces_allowed_per_match": 4.444444444444445
-          },
-          "recent_matches": [
-            {
-              "date": "20260525",
-              "tournament": "Roland Garros",
-              "surface": "Clay",
-              "round": "R128",
-              "result": "W",
-              "opponent": "Alexandre Muller",
-              "score": "6-2 3-0 RET",
-              "service": {
-                "service_games_won": null
-              },
-              "return": {
-                "return_games_won": null
-              }
-            },
-            {
-              "date": "20260525",
-              "tournament": "Roland Garros",
-              "surface": "Clay",
-              "round": "R64",
-              "result": "L",
-              "opponent": "Matteo Arnaldi",
-              "score": "7-6(2) 5-7 6-3 6-2",
-              "service": {
-                "service_games_won": null
-              },
-              "return": {
-                "return_games_won": null
-              }
-            },
-            {
-              "date": "20260517",
-              "tournament": "Geneva",
-              "surface": "Clay",
-              "round": "R16",
-              "result": "L",
-              "opponent": "Learner Tien",
-              "score": "7-6(4) 7-6(2)",
-              "service": {
-                "service_games_won": 0.8333333333333334
-              },
-              "return": {
-                "return_games_won": 0.16666666666666666
-              }
-            },
-            {
-              "date": "20260517",
-              "tournament": "Geneva",
-              "surface": "Clay",
-              "round": "R32",
-              "result": "W",
-              "opponent": "Giovanni Mpetshi Perricard",
-              "score": "6-4 7-6(8)",
-              "service": {
-                "service_games_won": 1
-              },
-              "return": {
-                "return_games_won": 0.09090909090909091
-              }
-            },
-            {
-              "date": "20260506",
-              "tournament": "Rome Masters",
-              "surface": "Clay",
-              "round": "R128",
-              "result": "L",
-              "opponent": "Tomas Machac",
-              "score": "6-4 7-6(4)",
-              "service": {
-                "service_games_won": 0.8181818181818182
-              },
-              "return": {
-                "return_games_won": 0.09090909090909091
-              }
-            },
-            {
-              "date": "20260422",
-              "tournament": "Madrid Masters",
-              "surface": "Clay",
-              "round": "R16",
-              "result": "L",
-              "opponent": "Casper Ruud",
-              "score": "6-7(4) 7-6(2) 7-6(3)",
-              "service": {
-                "service_games_won": 0.9444444444444444
-              },
-              "return": {
-                "return_games_won": 0.05555555555555555
-              }
-            }
-          ],
-          "verification": {
-            "official_stats": "https://www.atptour.com/en/stats",
-            "official_match_stats": "https://www.atptour.com/en/stats/individual-game-stats",
-            "sofascore": "https://www.sofascore.com/it/tennis"
-          },
-          "history_source": "TENNIS_HISTORY_ARCHIVE_RESEARCH",
-          "verification_note": "Statistiche calcolate dallo storico match del motore; link ufficiali ATP/WTA e SofaScore per controllo esterno. Nessun dato viene inventato se il campione non e disponibile."
-        }
-      },
-      "market_lab": {
-        "status": "PAPER_VALIDATION",
-        "simulations": 5000,
-        "best_of": 3,
-        "mean_total_games": 25.9402,
-        "median_total_games": 25,
-        "serve_point_a": 0.6851733309323548,
-        "serve_point_b": 0.6489942333241983,
-        "hold_a": 0.8821374660255973,
-        "hold_b": 0.8279733929701533,
-        "tb_a": 0.5596955110534583,
-        "market_uncertainty": 0.08294798224458191,
-        "priced": [
-          {
-            "market": "MATCH_WINNER",
-            "selection": "Lehecka, Jiri",
-            "side": "A",
-            "book": "Bet365",
-            "offer_key": "MATCH_WINNER|A",
-            "model_prob": 0.6688624512660669,
-            "market_prob": 0.6312443730685938,
-            "best_odds": 1.5,
-            "edge": 0.03761807819747309,
-            "ev": 0.0032936768991003174,
-            "robust_prob": 0.585914469021485,
-            "robust_edge": -0.04532990404710879,
-            "robust_ev": -0.12112829646777246,
-            "verdict": "NO BET",
-            "reasons": [
-              "MODELLI_IN_DISACCORDO"
-            ],
-            "validation_tier": "OFFICIAL_ML",
-            "target_robust_ev": 0.01,
-            "min_acceptable_odds": 1.723801089409458,
-            "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed."
-          },
-          {
-            "market": "MATCH_WINNER",
-            "selection": "Tsitsipas, Stefanos",
-            "side": "B",
-            "book": "Bet365",
-            "offer_key": "MATCH_WINNER|B",
-            "model_prob": 0.3311375487339331,
-            "market_prob": 0.3687556269314062,
-            "best_odds": 2.62,
-            "edge": -0.03761807819747309,
-            "ev": -0.13241962231709525,
-            "robust_prob": 0.24818956648935117,
-            "robust_edge": -0.120566060442055,
-            "robust_ev": -0.34974333579789996,
-            "verdict": "NO BET",
-            "reasons": [
-              "MODELLI_IN_DISACCORDO"
-            ],
-            "validation_tier": "OFFICIAL_ML",
-            "target_robust_ev": 0.01,
-            "min_acceptable_odds": 4.069470019576086,
-            "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed."
-          }
-        ],
-        "scenario": [
-          {
-            "market": "SET_SCORE",
-            "selection": "2-0",
-            "model_prob": 0.376,
-            "fair_odds": 2.6595744680851063,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "SET_SCORE",
-            "selection": "2-1",
-            "model_prob": 0.2914,
-            "fair_odds": 3.431708991077557,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "SET_SCORE",
-            "selection": "1-2",
-            "model_prob": 0.1852,
-            "fair_odds": 5.399568034557236,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "SET_SCORE",
-            "selection": "0-2",
-            "model_prob": 0.1474,
-            "fair_odds": 6.784260515603799,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "FIRST_SET_WINNER",
-            "selection": "Lehecka, Jiri",
-            "model_prob": 0.619,
-            "fair_odds": 1.6155088852988693,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "PLAYER_TO_WIN_A_SET",
-            "selection": "Lehecka, Jiri",
-            "model_prob": 0.8526,
-            "fair_odds": 1.172882946281961,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "PLAYER_TO_WIN_A_SET",
-            "selection": "Tsitsipas, Stefanos",
-            "model_prob": 0.624,
-            "fair_odds": 1.6025641025641026,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "TIEBREAK_IN_MATCH",
-            "selection": "YES",
-            "model_prob": 0.5492,
-            "fair_odds": 1.8208302986161689,
-            "price_status": "MODEL_ONLY"
-          },
-          {
-            "market": "EXPECTED_ACES",
-            "selection": "Lehecka, Jiri",
-            "model_mean": 6.7840196539961015,
-            "price_status": "MODEL_EXPERIMENTAL"
-          },
-          {
-            "market": "EXPECTED_ACES",
-            "selection": "Tsitsipas, Stefanos",
-            "model_mean": 5.854242992202729,
-            "price_status": "MODEL_EXPERIMENTAL"
-          },
-          {
-            "market": "EXPECTED_BREAKS",
-            "selection": "Lehecka, Jiri",
-            "model_mean": 1.903640286306043,
-            "price_status": "MODEL_EXPERIMENTAL"
-          },
-          {
-            "market": "EXPECTED_BREAKS",
-            "selection": "Tsitsipas, Stefanos",
-            "model_mean": 1.5714868969298246,
-            "price_status": "MODEL_EXPERIMENTAL"
-          }
-        ],
-        "prediction_summary": {
-          "winner_side": "A",
-          "winner_name": "Lehecka, Jiri",
-          "winner_prob": 0.6688624512660669,
-          "confidence": 72.21110043021055,
-          "data_quality": 95,
-          "likely_set_score": "2-0",
-          "likely_set_score_prob": 0.376,
-          "expected_total_games": 25.9402,
-          "best_market": null
-        },
-        "best_prediction": null,
-        "alternatives": [],
-        "best_priced": {
-          "market": "MATCH_WINNER",
-          "selection": "Lehecka, Jiri",
-          "side": "A",
-          "book": "Bet365",
-          "offer_key": "MATCH_WINNER|A",
-          "model_prob": 0.6688624512660669,
-          "market_prob": 0.6312443730685938,
-          "best_odds": 1.5,
-          "edge": 0.03761807819747309,
-          "ev": 0.0032936768991003174,
-          "robust_prob": 0.585914469021485,
-          "robust_edge": -0.04532990404710879,
-          "robust_ev": -0.12112829646777246,
-          "verdict": "NO BET",
-          "reasons": [
-            "MODELLI_IN_DISACCORDO"
-          ],
-          "validation_tier": "OFFICIAL_ML",
-          "target_robust_ev": 0.01,
-          "min_acceptable_odds": 1.723801089409458,
-          "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed."
-        },
-        "detected_market_names": [
-          "ML",
-          "SPREAD (GAMES)",
-          "TEAM TOTAL (DOUBLE FAULTS) AWAY",
-          "TEAM TOTAL (DOUBLE FAULTS) HOME",
-          "TOTALS 1ST SET",
-          "TEAM TOTAL (GAMES) AWAY",
-          "TEAM TOTAL (GAMES) HOME",
-          "TOTALS (DOUBLE FAULTS)",
-          "TOTALS (GAMES)",
-          "SET BETTING"
-        ],
-        "note": "Official ML keeps its mature gate. Price Guard adds a minimum acceptable price without rewriting the locked prediction. Secondary markets remain paper-only until each market family has enough settled evidence."
-      },
-      "market_best": {
-        "market": "MATCH_WINNER",
-        "selection": "Lehecka, Jiri",
-        "side": "A",
-        "book": "Bet365",
-        "offer_key": "MATCH_WINNER|A",
-        "model_prob": 0.6688624512660669,
-        "market_prob": 0.6312443730685938,
-        "best_odds": 1.5,
-        "edge": 0.03761807819747309,
-        "ev": 0.0032936768991003174,
-        "robust_prob": 0.585914469021485,
-        "robust_edge": -0.04532990404710879,
-        "robust_ev": -0.12112829646777246,
-        "verdict": "NO BET",
-        "reasons": [
-          "MODELLI_IN_DISACCORDO"
-        ],
-        "validation_tier": "OFFICIAL_ML",
-        "target_robust_ev": 0.01,
-        "min_acceptable_odds": 1.723801089409458,
-        "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed."
-      },
-      "multi_market_version": "MM-4.0-PREDICTION-FIRST",
-      "reason_codes": [
-        "ELO ++",
-        "SURFACE +",
-        "FORM ++",
-        "H2H ++",
-        "SERVE/RETURN +",
-        "EV +"
-      ],
-      "no_bet_reasons": [
-        "ROBUST_EV_NON_POSITIVO",
-        "EDGE_NON_RESISTE_INCERTEZZA",
-        "MODELLI_IN_DISACCORDO"
-      ],
-      "warnings": [
-        "ROBUST_EV_NON_POSITIVO",
-        "EDGE_NON_RESISTE_INCERTEZZA",
-        "MODELLI_IN_DISACCORDO"
-      ],
-      "calibration_sample": 87,
-      "calibration_scope": "atp:Hard",
-      "calibration_active": true,
-      "model_health": "HEALTHY",
-      "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
-      "predicted_at": "2026-09-03T16:17:05.698Z",
-      "locked": true,
-      "status": "LOCKED",
-      "audit_id": "19D08467110B",
-      "current_odds": 1.53,
-      "current_book": "Bet365",
-      "current_ev": 0.023359550437082488,
-      "current_market_consensus_a": 0.6211189709023123,
-      "current_market_books": 2,
-      "current_odds_updated_at": "2026-09-04T14:11:11.323Z",
-      "current_odds_age_min": 4.2542,
-      "market_watch_status": "OBSERVED",
-      "prediction_lock_preserved": true,
-      "quote_tape": [
-        {
-          "at": "2026-09-03T16:17:05.698Z",
-          "odds": 1.5,
-          "consensus_a": 0.6312443730685938,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-03T23:13:48.645Z",
-          "odds": 1.53,
-          "consensus_a": 0.6195171316139059,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T00:23:39.038Z",
-          "odds": 1.53,
-          "consensus_a": 0.6195171316139059,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T01:17:08.131Z",
-          "odds": 1.53,
-          "consensus_a": 0.6195171316139059,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T02:15:44.067Z",
-          "odds": 1.53,
-          "consensus_a": 0.6160112607222481,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T03:15:51.616Z",
-          "odds": 1.53,
-          "consensus_a": 0.6160112607222481,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T04:16:25.109Z",
-          "odds": 1.53,
-          "consensus_a": 0.6160112607222481,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T05:15:01.950Z",
-          "odds": 1.53,
-          "consensus_a": 0.6160112607222481,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T06:20:12.578Z",
-          "odds": 1.53,
-          "consensus_a": 0.6160112607222481,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T07:15:57.644Z",
-          "odds": 1.53,
-          "consensus_a": 0.6160112607222481,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T08:17:43.098Z",
-          "odds": 1.53,
-          "consensus_a": 0.6160112607222481,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T09:16:17.067Z",
-          "odds": 1.54,
-          "consensus_a": 0.6167063605870544,
-          "book": "Eurobet IT"
-        },
-        {
-          "at": "2026-09-04T10:16:31.100Z",
-          "odds": 1.54,
-          "consensus_a": 0.6167063605870544,
-          "book": "Eurobet IT"
-        },
-        {
-          "at": "2026-09-04T11:15:31.879Z",
-          "odds": 1.54,
-          "consensus_a": 0.6167063605870544,
-          "book": "Eurobet IT"
-        },
-        {
-          "at": "2026-09-04T12:20:59.042Z",
-          "odds": 1.54,
-          "consensus_a": 0.6167063605870544,
-          "book": "Eurobet IT"
-        },
-        {
-          "at": "2026-09-04T13:16:03.781Z",
-          "odds": 1.53,
-          "consensus_a": 0.6211189709023123,
-          "book": "Bet365"
-        },
-        {
-          "at": "2026-09-04T14:15:26.575Z",
-          "odds": 1.53,
-          "consensus_a": 0.6211189709023123,
-          "book": "Bet365"
-        }
-      ],
-      "market_live": {
-        "status": "MARKET_OBSERVED",
-        "updated_at": "2026-09-04T14:15:26.575Z",
-        "rows": [
-          {
-            "market": "MATCH_WINNER",
-            "selection": "Lehecka, Jiri",
-            "side": "A",
-            "book": "Bet365",
-            "offer_key": "MATCH_WINNER|A",
-            "model_prob": 0.6688624512660669,
-            "market_prob": 0.6312443730685938,
-            "best_odds": 1.5,
-            "edge": 0.03761807819747309,
-            "ev": 0.0032936768991003174,
-            "robust_prob": 0.585914469021485,
-            "robust_edge": -0.04532990404710879,
-            "robust_ev": -0.12112829646777246,
-            "verdict": "NO BET",
-            "reasons": [
-              "MODELLI_IN_DISACCORDO"
-            ],
-            "validation_tier": "OFFICIAL_ML",
-            "target_robust_ev": 0.01,
-            "min_acceptable_odds": 1.723801089409458,
-            "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed.",
-            "current_odds": 1.53,
-            "current_market_prob": 0.6211189709023123,
-            "current_book": "Bet365",
-            "current_books": 2,
-            "current_updated_at": "2026-09-04T14:11:11.323Z",
-            "current_ev": 0.023359550437082488,
-            "current_robust_ev": -0.10355086239712785,
-            "current_price_status": "PASS",
-            "price_cushion": -0.11242659643279995,
-            "odds_move_pct": 0.020000000000000018,
-            "market_prob_move_pp": -0.01012540216628155,
-            "current_status": "OBSERVED"
-          },
-          {
-            "market": "MATCH_WINNER",
-            "selection": "Tsitsipas, Stefanos",
-            "side": "B",
-            "book": "Bet365",
-            "offer_key": "MATCH_WINNER|B",
-            "model_prob": 0.3311375487339331,
-            "market_prob": 0.3687556269314062,
-            "best_odds": 2.62,
-            "edge": -0.03761807819747309,
-            "ev": -0.13241962231709525,
-            "robust_prob": 0.24818956648935117,
-            "robust_edge": -0.120566060442055,
-            "robust_ev": -0.34974333579789996,
-            "verdict": "NO BET",
-            "reasons": [
-              "MODELLI_IN_DISACCORDO"
-            ],
-            "validation_tier": "OFFICIAL_ML",
-            "target_robust_ev": 0.01,
-            "min_acceptable_odds": 4.069470019576086,
-            "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed.",
-            "current_odds": 2.5,
-            "current_market_prob": 0.3788810290976877,
-            "current_book": "Bet365",
-            "current_books": 2,
-            "current_updated_at": "2026-09-04T14:11:11.323Z",
-            "current_ev": -0.17215612816516734,
-            "current_robust_ev": -0.3795260837766221,
-            "current_price_status": "PASS",
-            "price_cushion": -0.3856693898778437,
-            "odds_move_pct": -0.04580152671755733,
-            "market_prob_move_pp": 0.01012540216628155,
-            "current_status": "OBSERVED"
-          }
-        ],
-        "best_current": {
-          "market": "MATCH_WINNER",
-          "selection": "Lehecka, Jiri",
-          "side": "A",
-          "book": "Bet365",
-          "offer_key": "MATCH_WINNER|A",
-          "model_prob": 0.6688624512660669,
-          "market_prob": 0.6312443730685938,
-          "best_odds": 1.5,
-          "edge": 0.03761807819747309,
-          "ev": 0.0032936768991003174,
-          "robust_prob": 0.585914469021485,
-          "robust_edge": -0.04532990404710879,
-          "robust_ev": -0.12112829646777246,
-          "verdict": "NO BET",
-          "reasons": [
-            "MODELLI_IN_DISACCORDO"
-          ],
-          "validation_tier": "OFFICIAL_ML",
-          "target_robust_ev": 0.01,
-          "min_acceptable_odds": 1.723801089409458,
-          "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed.",
-          "current_odds": 1.53,
-          "current_market_prob": 0.6211189709023123,
-          "current_book": "Bet365",
-          "current_books": 2,
-          "current_updated_at": "2026-09-04T14:11:11.323Z",
-          "current_ev": 0.023359550437082488,
-          "current_robust_ev": -0.10355086239712785,
-          "current_price_status": "PASS",
-          "price_cushion": -0.11242659643279995,
-          "odds_move_pct": 0.020000000000000018,
-          "market_prob_move_pp": -0.01012540216628155,
-          "current_status": "OBSERVED"
-        }
-      },
-      "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992576",
@@ -10201,7 +8455,7 @@
       "player_intel": {
         "candidate_side": "B",
         "candidate_name": "Zheng, Qinwen",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Keys, Madison",
           "tour": "WTA",
@@ -10214,11 +8468,11 @@
             "prop_matches": 16
           },
           "context": {
-            "form": 0.5859844431654507,
-            "form_long": 0.5854136711003115,
-            "surface_form": 0.5767438753138509,
+            "form": 0.5859707100554788,
+            "form_long": 0.5854083718818475,
+            "surface_form": 0.5767400678029422,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -10355,11 +8609,11 @@
             "prop_matches": 19
           },
           "context": {
-            "form": 0.507757553804613,
-            "form_long": 0.5313418563957979,
-            "surface_form": 0.5616745999991383,
+            "form": 0.5077560963150813,
+            "form_long": 0.5313394822825753,
+            "surface_form": 0.5616708774750975,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -10711,8 +8965,8 @@
       "current_ev": 0.09804589501125127,
       "current_market_consensus_a": 0.5997304934847454,
       "current_market_books": 2,
-      "current_odds_updated_at": "2026-09-05T00:24:44.505Z",
-      "current_odds_age_min": 0.2661833333333333,
+      "current_odds_updated_at": "2026-09-05T01:15:44.247Z",
+      "current_odds_age_min": 2.798016666666667,
       "market_watch_status": "OBSERVED",
       "prediction_lock_preserved": true,
       "quote_tape": [
@@ -10781,11 +9035,17 @@
           "odds": 2.37,
           "consensus_a": 0.5997304934847454,
           "book": "Bet365"
+        },
+        {
+          "at": "2026-09-05T01:18:32.128Z",
+          "odds": 2.37,
+          "consensus_a": 0.5997304934847454,
+          "book": "Bet365"
         }
       ],
       "market_live": {
         "status": "MARKET_OBSERVED",
-        "updated_at": "2026-09-05T00:25:00.476Z",
+        "updated_at": "2026-09-05T01:18:32.128Z",
         "rows": [
           {
             "market": "MATCH_WINNER",
@@ -10811,7 +9071,7 @@
             "current_market_prob": 0.4002695065152546,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:24:44.505Z",
+            "current_updated_at": "2026-09-05T01:15:44.247Z",
             "current_ev": 0.09804589501125127,
             "current_robust_ev": -0.07702411411942367,
             "current_price_status": "PASS",
@@ -10844,7 +9104,7 @@
             "current_market_prob": 0.5997304934847454,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:24:44.505Z",
+            "current_updated_at": "2026-09-05T01:15:44.247Z",
             "current_ev": -0.15739749163192596,
             "current_robust_ev": -0.27337213903072755,
             "current_price_status": "PASS",
@@ -10878,7 +9138,7 @@
           "current_market_prob": 0.4002695065152546,
           "current_book": "Bet365",
           "current_books": 2,
-          "current_updated_at": "2026-09-05T00:24:44.505Z",
+          "current_updated_at": "2026-09-05T01:15:44.247Z",
           "current_ev": 0.09804589501125127,
           "current_robust_ev": -0.07702411411942367,
           "current_price_status": "PASS",
@@ -10889,7 +9149,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992368",
@@ -10989,7 +9249,7 @@
       "player_intel": {
         "candidate_side": "B",
         "candidate_name": "Sweeny, Dane",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Darderi, Luciano",
           "tour": "ATP",
@@ -11002,11 +9262,11 @@
             "prop_matches": 17
           },
           "context": {
-            "form": 0.5471559582020895,
-            "form_long": 0.5878566925846355,
-            "surface_form": 0.4111326922584147,
+            "form": 0.5471494163222542,
+            "form_long": 0.5878521855306439,
+            "surface_form": 0.4111373773070669,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -11143,11 +9403,11 @@
             "prop_matches": 7
           },
           "context": {
-            "form": 0.4878646370685615,
-            "form_long": 0.4787040686857919,
-            "surface_form": 0.4728136073689801,
+            "form": 0.4878684721692868,
+            "form_long": 0.47870724816494914,
+            "surface_form": 0.4728164111603427,
             "last_surface": "Hard",
-            "rest_days": 228.51736662037038,
+            "rest_days": 228.5545385185185,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -11646,7 +9906,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992372",
@@ -11746,7 +10006,7 @@
       "player_intel": {
         "candidate_side": "A",
         "candidate_name": "Bergs, Zizou",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Bergs, Zizou",
           "tour": "ATP",
@@ -11759,11 +10019,11 @@
             "prop_matches": 19
           },
           "context": {
-            "form": 0.44626462059132904,
-            "form_long": 0.465738297704411,
-            "surface_form": 0.4924085554300289,
+            "form": 0.446273734359209,
+            "form_long": 0.4657404330088549,
+            "surface_form": 0.4924088886542559,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -11900,11 +10160,11 @@
             "prop_matches": 19
           },
           "context": {
-            "form": 0.5208484560770246,
-            "form_long": 0.5042921236990846,
-            "surface_form": 0.47699497262941176,
+            "form": 0.5208450252947209,
+            "form_long": 0.5042918580768511,
+            "surface_form": 0.47699607391618265,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -12375,7 +10635,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992572",
@@ -12475,7 +10735,7 @@
       "player_intel": {
         "candidate_side": "A",
         "candidate_name": "Bucsa, Cristina",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Bucsa, Cristina",
           "tour": "WTA",
@@ -12488,11 +10748,11 @@
             "prop_matches": 19
           },
           "context": {
-            "form": 0.41617985903488897,
-            "form_long": 0.4459860728090185,
-            "surface_form": 0.4999028451459607,
+            "form": 0.41619493905230603,
+            "form_long": 0.4459896457137562,
+            "surface_form": 0.4999028495444723,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -12629,11 +10889,11 @@
             "prop_matches": 17
           },
           "context": {
-            "form": 0.6432563767333387,
-            "form_long": 0.6515235279557462,
-            "surface_form": 0.6535552530585191,
+            "form": 0.6432360855182876,
+            "form_long": 0.6515156543550871,
+            "surface_form": 0.653549219485511,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -12992,8 +11252,8 @@
       "current_ev": 0.9283145322822484,
       "current_market_consensus_a": 0.07455654591069366,
       "current_market_books": 2,
-      "current_odds_updated_at": "2026-09-05T00:15:43.13Z",
-      "current_odds_age_min": 9.2891,
+      "current_odds_updated_at": "2026-09-05T01:17:59.353Z",
+      "current_odds_age_min": 0.54625,
       "market_watch_status": "OBSERVED",
       "prediction_lock_preserved": true,
       "quote_tape": [
@@ -13062,11 +11322,17 @@
           "odds": 15,
           "consensus_a": 0.07455654591069366,
           "book": "Bet365"
+        },
+        {
+          "at": "2026-09-05T01:18:32.128Z",
+          "odds": 15,
+          "consensus_a": 0.07455654591069366,
+          "book": "Bet365"
         }
       ],
       "market_live": {
         "status": "MARKET_OBSERVED",
-        "updated_at": "2026-09-05T00:25:00.476Z",
+        "updated_at": "2026-09-05T01:18:32.128Z",
         "rows": [
           {
             "market": "MATCH_WINNER",
@@ -13092,7 +11358,7 @@
             "current_market_prob": 0.9254434540893064,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:15:43.13Z",
+            "current_updated_at": "2026-09-05T01:17:59.353Z",
             "current_ev": -0.10241093121671441,
             "current_robust_ev": -0.17872674221191964,
             "current_price_status": "PASS",
@@ -13125,7 +11391,7 @@
             "current_market_prob": 0.07455654591069366,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:15:43.13Z",
+            "current_updated_at": "2026-09-05T01:17:59.353Z",
             "current_ev": 0.9283145322822484,
             "current_robust_ev": -0.18308077347316842,
             "current_price_status": "PASS",
@@ -13159,7 +11425,7 @@
           "current_market_prob": 0.9254434540893064,
           "current_book": "Bet365",
           "current_books": 2,
-          "current_updated_at": "2026-09-05T00:15:43.13Z",
+          "current_updated_at": "2026-09-05T01:17:59.353Z",
           "current_ev": -0.10241093121671441,
           "current_robust_ev": -0.17872674221191964,
           "current_price_status": "PASS",
@@ -13170,7 +11436,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992574",
@@ -13270,7 +11536,7 @@
       "player_intel": {
         "candidate_side": "B",
         "candidate_name": "Bouzkova, Marie",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Swiatek, Iga",
           "tour": "WTA",
@@ -13283,11 +11549,11 @@
             "prop_matches": 16
           },
           "context": {
-            "form": 0.6002805265515566,
-            "form_long": 0.6054014652438999,
-            "surface_form": 0.6346254873395671,
+            "form": 0.6002659864217722,
+            "form_long": 0.6053957121838303,
+            "surface_form": 0.6346199051068312,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -13424,11 +11690,11 @@
             "prop_matches": 15
           },
           "context": {
-            "form": 0.5590988938100463,
-            "form_long": 0.5353414338443727,
-            "surface_form": 0.5069840439338243,
+            "form": 0.5590902923610837,
+            "form_long": 0.5353394669052159,
+            "surface_form": 0.5069837251373124,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -13795,8 +12061,8 @@
       "current_ev": 0.17364384839425062,
       "current_market_consensus_a": 0.8168411902644133,
       "current_market_books": 2,
-      "current_odds_updated_at": "2026-09-04T23:48:58.642Z",
-      "current_odds_age_min": 36.030566666666665,
+      "current_odds_updated_at": "2026-09-05T01:06:14.305Z",
+      "current_odds_age_min": 12.29705,
       "market_watch_status": "OBSERVED",
       "prediction_lock_preserved": true,
       "quote_tape": [
@@ -13865,11 +12131,17 @@
           "odds": 5.5,
           "consensus_a": 0.8168411902644133,
           "book": "Bet365"
+        },
+        {
+          "at": "2026-09-05T01:18:32.128Z",
+          "odds": 5.5,
+          "consensus_a": 0.8168411902644133,
+          "book": "Bet365"
         }
       ],
       "market_live": {
         "status": "MARKET_OBSERVED",
-        "updated_at": "2026-09-05T00:25:00.476Z",
+        "updated_at": "2026-09-05T01:18:32.128Z",
         "rows": [
           {
             "market": "MATCH_WINNER",
@@ -13928,7 +12200,7 @@
             "current_market_prob": 0.18315880973558674,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-04T23:48:58.642Z",
+            "current_updated_at": "2026-09-05T01:06:14.305Z",
             "current_ev": 0.17364384839425062,
             "current_robust_ev": -0.22756727598335724,
             "current_price_status": "PASS",
@@ -13973,7 +12245,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992582",
@@ -14073,7 +12345,7 @@
       "player_intel": {
         "candidate_side": "A",
         "candidate_name": "Andreeva, Mirra",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Andreeva, Mirra",
           "tour": "WTA",
@@ -14086,11 +12358,11 @@
             "prop_matches": 13
           },
           "context": {
-            "form": 0.7265858748259595,
-            "form_long": 0.7294793000446439,
-            "surface_form": 0.6174702879316701,
+            "form": 0.7265561949852655,
+            "form_long": 0.7294682695434098,
+            "surface_form": 0.6174652541291087,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -14227,11 +12499,11 @@
             "prop_matches": 19
           },
           "context": {
-            "form": 0.5115449529557926,
-            "form_long": 0.5212220555520417,
-            "surface_form": 0.5310007421335882,
+            "form": 0.5115425890321913,
+            "form_long": 0.5212201692473123,
+            "surface_form": 0.5309985560585249,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -14607,8 +12879,8 @@
       "current_ev": -0.0340855570615578,
       "current_market_consensus_a": 0.7761541202219168,
       "current_market_books": 2,
-      "current_odds_updated_at": "2026-09-05T00:22:29.829Z",
-      "current_odds_age_min": 2.5107833333333334,
+      "current_odds_updated_at": "2026-09-05T01:08:29.415Z",
+      "current_odds_age_min": 10.045216666666667,
       "market_watch_status": "OBSERVED",
       "prediction_lock_preserved": true,
       "quote_tape": [
@@ -14677,11 +12949,17 @@
           "odds": 1.22,
           "consensus_a": 0.7761541202219168,
           "book": "Bet365"
+        },
+        {
+          "at": "2026-09-05T01:18:32.128Z",
+          "odds": 1.22,
+          "consensus_a": 0.7761541202219168,
+          "book": "Bet365"
         }
       ],
       "market_live": {
         "status": "MARKET_OBSERVED",
-        "updated_at": "2026-09-05T00:25:00.476Z",
+        "updated_at": "2026-09-05T01:18:32.128Z",
         "rows": [
           {
             "market": "MATCH_WINNER",
@@ -14709,7 +12987,7 @@
             "current_market_prob": 0.7761541202219168,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:22:29.829Z",
+            "current_updated_at": "2026-09-05T01:08:29.415Z",
             "current_ev": -0.0340855570615578,
             "current_robust_ev": -0.14331833921916326,
             "current_price_status": "PASS",
@@ -14744,7 +13022,7 @@
             "current_market_prob": 0.22384587977808323,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:22:29.829Z",
+            "current_updated_at": "2026-09-05T01:08:29.415Z",
             "current_ev": -0.09820453928152029,
             "current_robust_ev": -0.48589138087367734,
             "current_price_status": "PASS",
@@ -14780,7 +13058,7 @@
           "current_market_prob": 0.7761541202219168,
           "current_book": "Bet365",
           "current_books": 2,
-          "current_updated_at": "2026-09-05T00:22:29.829Z",
+          "current_updated_at": "2026-09-05T01:08:29.415Z",
           "current_ev": -0.0340855570615578,
           "current_robust_ev": -0.14331833921916326,
           "current_price_status": "PASS",
@@ -14791,7 +13069,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992596",
@@ -14891,7 +13169,7 @@
       "player_intel": {
         "candidate_side": "A",
         "candidate_name": "Starodubtseva, Yuliia",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Starodubtseva, Yuliia",
           "tour": "WTA",
@@ -14904,11 +13182,11 @@
             "prop_matches": 17
           },
           "context": {
-            "form": 0.5502963894107029,
-            "form_long": 0.5238282509397848,
-            "surface_form": 0.4209319739688602,
+            "form": 0.550288763027771,
+            "form_long": 0.5238267629766857,
+            "surface_form": 0.42093694703341367,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -15045,11 +13323,11 @@
             "prop_matches": 18
           },
           "context": {
-            "form": 0.6386810396129285,
-            "form_long": 0.7010592801450584,
-            "surface_form": 0.7225632976687133,
+            "form": 0.6386606662104506,
+            "form_long": 0.7010487710390702,
+            "surface_form": 0.722554945599468,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -15539,7 +13817,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992584",
@@ -15639,7 +13917,7 @@
       "player_intel": {
         "candidate_side": "A",
         "candidate_name": "Potapova, Anastasia",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Potapova, Anastasia",
           "tour": "WTA",
@@ -15652,11 +13930,11 @@
             "prop_matches": 16
           },
           "context": {
-            "form": 0.6527163408489418,
-            "form_long": 0.6350295073611896,
-            "surface_form": 0.5133994800483885,
+            "form": 0.6526950390827791,
+            "form_long": 0.6350222233814321,
+            "surface_form": 0.5133988084887638,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -15793,11 +14071,11 @@
             "prop_matches": 16
           },
           "context": {
-            "form": 0.5767322567747867,
-            "form_long": 0.6300227973325305,
-            "surface_form": 0.6398684635466061,
+            "form": 0.5767187388310174,
+            "form_long": 0.630014453692638,
+            "surface_form": 0.6398627120778608,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -16291,7 +14569,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992456",
@@ -16391,7 +14669,7 @@
       "player_intel": {
         "candidate_side": "B",
         "candidate_name": "Cerundolo, Francisco",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Fritz, Taylor",
           "tour": "ATP",
@@ -16404,11 +14682,11 @@
             "prop_matches": 19
           },
           "context": {
-            "form": 0.49526068267697576,
-            "form_long": 0.5154671632022803,
-            "surface_form": 0.5795710425203452,
+            "form": 0.4952615537521894,
+            "form_long": 0.5154661714577328,
+            "surface_form": 0.5795678711271056,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -16545,11 +14823,11 @@
             "prop_matches": 17
           },
           "context": {
-            "form": 0.5521119244301452,
-            "form_long": 0.5874983276206074,
-            "surface_form": 0.5597649614809336,
+            "form": 0.5521043858418695,
+            "form_long": 0.587493744212038,
+            "surface_form": 0.5597621717161056,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -16905,8 +15183,8 @@
       "current_ev": 1.4539987839720694,
       "current_market_consensus_a": 0.8276328899057178,
       "current_market_books": 2,
-      "current_odds_updated_at": "2026-09-05T00:21:28.485Z",
-      "current_odds_age_min": 3.533183333333333,
+      "current_odds_updated_at": "2026-09-05T00:57:14.686Z",
+      "current_odds_age_min": 21.2907,
       "market_watch_status": "OBSERVED",
       "prediction_lock_preserved": true,
       "quote_tape": [
@@ -16975,11 +15253,17 @@
           "odds": 5.5,
           "consensus_a": 0.8276328899057178,
           "book": "Bet365"
+        },
+        {
+          "at": "2026-09-05T01:18:32.128Z",
+          "odds": 5.5,
+          "consensus_a": 0.8276328899057178,
+          "book": "Bet365"
         }
       ],
       "market_live": {
         "status": "MARKET_OBSERVED",
-        "updated_at": "2026-09-05T00:25:00.476Z",
+        "updated_at": "2026-09-05T01:18:32.128Z",
         "rows": [
           {
             "market": "MATCH_WINNER",
@@ -17005,7 +15289,7 @@
             "current_market_prob": 0.17236711009428218,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:21:28.485Z",
+            "current_updated_at": "2026-09-05T00:57:14.686Z",
             "current_ev": 1.4539987839720694,
             "current_robust_ev": 1.0203636140594043,
             "current_price_status": "BET_ZONE",
@@ -17038,7 +15322,7 @@
             "current_market_prob": 0.8276328899057178,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:21:28.485Z",
+            "current_updated_at": "2026-09-05T00:57:14.686Z",
             "current_ev": -0.36864702067784716,
             "current_robust_ev": -0.45852776498701786,
             "current_price_status": "PASS",
@@ -17072,7 +15356,7 @@
           "current_market_prob": 0.17236711009428218,
           "current_book": "Bet365",
           "current_books": 2,
-          "current_updated_at": "2026-09-05T00:21:28.485Z",
+          "current_updated_at": "2026-09-05T00:57:14.686Z",
           "current_ev": 1.4539987839720694,
           "current_robust_ev": 1.0203636140594043,
           "current_price_status": "BET_ZONE",
@@ -17083,7 +15367,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992594",
@@ -17183,7 +15467,7 @@
       "player_intel": {
         "candidate_side": "B",
         "candidate_name": "Mertens, Elise",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Osaka, Naomi",
           "tour": "WTA",
@@ -17196,11 +15480,11 @@
             "prop_matches": 12
           },
           "context": {
-            "form": 0.5817785478419913,
-            "form_long": 0.5963977145156308,
-            "surface_form": 0.58088122599526,
+            "form": 0.5817656926670773,
+            "form_long": 0.5963916733653046,
+            "surface_form": 0.5808772830655632,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -17337,11 +15621,11 @@
             "prop_matches": 17
           },
           "context": {
-            "form": 0.5488684436714132,
-            "form_long": 0.5675527123394749,
-            "surface_form": 0.5458854479536126,
+            "form": 0.5488607616589204,
+            "form_long": 0.5675487610382133,
+            "surface_form": 0.5458834214065886,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -17705,8 +15989,8 @@
       "current_ev": 0.7039999735690867,
       "current_market_consensus_a": 0.7133903347115942,
       "current_market_books": 2,
-      "current_odds_updated_at": "2026-09-05T00:21:43.151Z",
-      "current_odds_age_min": 3.28875,
+      "current_odds_updated_at": "2026-09-05T01:15:02.592Z",
+      "current_odds_age_min": 3.4922666666666666,
       "market_watch_status": "OBSERVED",
       "prediction_lock_preserved": true,
       "quote_tape": [
@@ -17775,11 +16059,17 @@
           "odds": 3.4,
           "consensus_a": 0.7133903347115942,
           "book": "Bet365"
+        },
+        {
+          "at": "2026-09-05T01:18:32.128Z",
+          "odds": 3.4,
+          "consensus_a": 0.7133903347115942,
+          "book": "Bet365"
         }
       ],
       "market_live": {
         "status": "MARKET_OBSERVED",
-        "updated_at": "2026-09-05T00:25:00.476Z",
+        "updated_at": "2026-09-05T01:18:32.128Z",
         "rows": [
           {
             "market": "MATCH_WINNER",
@@ -17805,7 +16095,7 @@
             "current_market_prob": 0.2866096652884058,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:21:43.151Z",
+            "current_updated_at": "2026-09-05T01:15:02.592Z",
             "current_ev": 0.7039999735690867,
             "current_robust_ev": 0.45436788842220865,
             "current_price_status": "BET_ZONE",
@@ -17838,7 +16128,7 @@
             "current_market_prob": 0.7133903347115942,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:21:43.151Z",
+            "current_updated_at": "2026-09-05T01:15:02.592Z",
             "current_ev": -0.33656469554320145,
             "current_robust_ev": -0.4342148935565391,
             "current_price_status": "PASS",
@@ -17872,7 +16162,7 @@
           "current_market_prob": 0.2866096652884058,
           "current_book": "Bet365",
           "current_books": 2,
-          "current_updated_at": "2026-09-05T00:21:43.151Z",
+          "current_updated_at": "2026-09-05T01:15:02.592Z",
           "current_ev": 0.7039999735690867,
           "current_robust_ev": 0.45436788842220865,
           "current_price_status": "BET_ZONE",
@@ -17883,7 +16173,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992454",
@@ -17983,7 +16273,7 @@
       "player_intel": {
         "candidate_side": "B",
         "candidate_name": "Tien, Learner",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Mensik, Jakub",
           "tour": "ATP",
@@ -17996,11 +16286,11 @@
             "prop_matches": 14
           },
           "context": {
-            "form": 0.5787347891338055,
-            "form_long": 0.6243445685378765,
-            "surface_form": 0.5910725318228256,
+            "form": 0.5787235939527625,
+            "form_long": 0.62433797122406,
+            "surface_form": 0.5910688650050383,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -18137,11 +16427,11 @@
             "prop_matches": 17
           },
           "context": {
-            "form": 0.6057069801054038,
-            "form_long": 0.6265356679383423,
-            "surface_form": 0.6417110025567676,
+            "form": 0.605691808261038,
+            "form_long": 0.6265288543594448,
+            "surface_form": 0.6417053327504674,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -18496,8 +16786,8 @@
       "current_ev": 0.0041835620689005815,
       "current_market_consensus_a": 0.4473531122745782,
       "current_market_books": 2,
-      "current_odds_updated_at": "2026-09-05T00:05:00.247Z",
-      "current_odds_age_min": 20.003816666666665,
+      "current_odds_updated_at": "2026-09-05T01:03:46.162Z",
+      "current_odds_age_min": 14.7661,
       "market_watch_status": "OBSERVED",
       "prediction_lock_preserved": true,
       "quote_tape": [
@@ -18566,11 +16856,17 @@
           "odds": 1.72,
           "consensus_a": 0.4473531122745782,
           "book": "Bet365"
+        },
+        {
+          "at": "2026-09-05T01:18:32.128Z",
+          "odds": 1.72,
+          "consensus_a": 0.4473531122745782,
+          "book": "Bet365"
         }
       ],
       "market_live": {
         "status": "MARKET_OBSERVED",
-        "updated_at": "2026-09-05T00:25:00.476Z",
+        "updated_at": "2026-09-05T01:18:32.128Z",
         "rows": [
           {
             "market": "MATCH_WINNER",
@@ -18596,7 +16892,7 @@
             "current_market_prob": 0.5526468877254218,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:05:00.247Z",
+            "current_updated_at": "2026-09-05T01:03:46.162Z",
             "current_ev": 0.0041835620689005815,
             "current_robust_ev": -0.12417486427246016,
             "current_price_status": "PASS",
@@ -18629,7 +16925,7 @@
             "current_market_prob": 0.4473531122745782,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:05:00.247Z",
+            "current_updated_at": "2026-09-05T01:03:46.162Z",
             "current_ev": -0.1260380699678435,
             "current_robust_ev": -0.2827547532915978,
             "current_price_status": "PASS",
@@ -18663,7 +16959,7 @@
           "current_market_prob": 0.5526468877254218,
           "current_book": "Bet365",
           "current_books": 2,
-          "current_updated_at": "2026-09-05T00:05:00.247Z",
+          "current_updated_at": "2026-09-05T01:03:46.162Z",
           "current_ev": 0.0041835620689005815,
           "current_robust_ev": -0.12417486427246016,
           "current_price_status": "PASS",
@@ -18674,7 +16970,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992366",
@@ -18774,7 +17070,7 @@
       "player_intel": {
         "candidate_side": "A",
         "candidate_name": "Zverev, Alexander",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Zverev, Alexander",
           "tour": "ATP",
@@ -18787,11 +17083,11 @@
             "prop_matches": 13
           },
           "context": {
-            "form": 0.7251450291307738,
-            "form_long": 0.725237653892272,
-            "surface_form": 0.6458237668095093,
+            "form": 0.7251154406099509,
+            "form_long": 0.725226872148479,
+            "surface_form": 0.6458181165256422,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -18928,11 +17224,11 @@
             "prop_matches": 16
           },
           "context": {
-            "form": 0.5398036559641273,
-            "form_long": 0.5594869982669611,
-            "surface_form": 0.48137741061298434,
+            "form": 0.5397976890219948,
+            "form_long": 0.5594837782676055,
+            "surface_form": 0.48137837301590747,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -19283,13 +17579,13 @@
       "locked": true,
       "status": "LOCKED",
       "audit_id": "6DECD48A00FD",
-      "current_odds": 1.12,
-      "current_book": "Bet365",
-      "current_ev": -0.048376226371719455,
-      "current_market_consensus_a": 0.8380149812734081,
+      "current_odds": 1.13,
+      "current_book": "Eurobet IT",
+      "current_ev": -0.03987958553575277,
+      "current_market_consensus_a": 0.8348245780064353,
       "current_market_books": 2,
-      "current_odds_updated_at": "2026-09-05T00:23:45.065Z",
-      "current_odds_age_min": 1.25685,
+      "current_odds_updated_at": "2026-09-05T00:44:47.092Z",
+      "current_odds_age_min": 33.7506,
       "market_watch_status": "OBSERVED",
       "prediction_lock_preserved": true,
       "quote_tape": [
@@ -19358,11 +17654,17 @@
           "odds": 1.12,
           "consensus_a": 0.8380149812734081,
           "book": "Bet365"
+        },
+        {
+          "at": "2026-09-05T01:18:32.128Z",
+          "odds": 1.13,
+          "consensus_a": 0.8348245780064353,
+          "book": "Eurobet IT"
         }
       ],
       "market_live": {
         "status": "MARKET_OBSERVED",
-        "updated_at": "2026-09-05T00:25:00.476Z",
+        "updated_at": "2026-09-05T01:18:32.128Z",
         "rows": [
           {
             "market": "MATCH_WINNER",
@@ -19384,17 +17686,17 @@
             "target_robust_ev": 0.01,
             "min_acceptable_odds": 1.2866638547896767,
             "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed.",
-            "current_odds": 1.12,
-            "current_market_prob": 0.8380149812734081,
-            "current_book": "Bet365",
+            "current_odds": 1.13,
+            "current_market_prob": 0.8348245780064353,
+            "current_book": "Eurobet IT",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:23:45.065Z",
-            "current_ev": -0.048376226371719455,
-            "current_robust_ev": -0.12082709420254079,
+            "current_updated_at": "2026-09-05T00:44:47.092Z",
+            "current_ev": -0.03987958553575277,
+            "current_robust_ev": -0.11297733611506366,
             "current_price_status": "PASS",
-            "price_cushion": -0.12953177643815927,
-            "odds_move_pct": -0.01754385964912264,
-            "market_prob_move_pp": 0.017825706825458587,
+            "price_cushion": -0.1217597387277859,
+            "odds_move_pct": -0.00877192982456143,
+            "market_prob_move_pp": 0.014635303558485746,
             "current_status": "OBSERVED"
           },
           {
@@ -19418,16 +17720,16 @@
             "min_acceptable_odds": 11.792502183014607,
             "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed.",
             "current_odds": 6,
-            "current_market_prob": 0.16198501872659188,
+            "current_market_prob": 0.16517542199356472,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:23:45.065Z",
+            "current_updated_at": "2026-09-05T01:17:29.852Z",
             "current_ev": -0.09798450158007399,
             "current_robust_ev": -0.48611415067376007,
             "current_price_status": "PASS",
             "price_cushion": -0.49120212937996044,
             "odds_move_pct": 0.15384615384615374,
-            "market_prob_move_pp": -0.017825706825458587,
+            "market_prob_move_pp": -0.014635303558485746,
             "current_status": "OBSERVED"
           }
         ],
@@ -19451,22 +17753,22 @@
           "target_robust_ev": 0.01,
           "min_acceptable_odds": 1.2866638547896767,
           "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed.",
-          "current_odds": 1.12,
-          "current_market_prob": 0.8380149812734081,
-          "current_book": "Bet365",
+          "current_odds": 1.13,
+          "current_market_prob": 0.8348245780064353,
+          "current_book": "Eurobet IT",
           "current_books": 2,
-          "current_updated_at": "2026-09-05T00:23:45.065Z",
-          "current_ev": -0.048376226371719455,
-          "current_robust_ev": -0.12082709420254079,
+          "current_updated_at": "2026-09-05T00:44:47.092Z",
+          "current_ev": -0.03987958553575277,
+          "current_robust_ev": -0.11297733611506366,
           "current_price_status": "PASS",
-          "price_cushion": -0.12953177643815927,
-          "odds_move_pct": -0.01754385964912264,
-          "market_prob_move_pp": 0.017825706825458587,
+          "price_cushion": -0.1217597387277859,
+          "odds_move_pct": -0.00877192982456143,
+          "market_prob_move_pp": 0.014635303558485746,
           "current_status": "OBSERVED"
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992458",
@@ -19566,7 +17868,7 @@
       "player_intel": {
         "candidate_side": "B",
         "candidate_name": "Cobolli, Flavio",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Blockx, Alexander",
           "tour": "ATP",
@@ -19579,11 +17881,11 @@
             "prop_matches": 17
           },
           "context": {
-            "form": 0.594671034602602,
-            "form_long": 0.5940692347169422,
-            "surface_form": 0.49952314828125466,
+            "form": 0.5946568450768519,
+            "form_long": 0.5940633490802193,
+            "surface_form": 0.4995231852532256,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -19720,11 +18022,11 @@
             "prop_matches": 13
           },
           "context": {
-            "form": 0.6292234737382367,
-            "form_long": 0.6228792820393325,
-            "surface_form": 0.5291598282463332,
+            "form": 0.6292064430798102,
+            "form_long": 0.622873234539497,
+            "surface_form": 0.5291586218995512,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -20224,7 +18526,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992570",
@@ -20324,7 +18626,7 @@
       "player_intel": {
         "candidate_side": "A",
         "candidate_name": "Jovic, Iva",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Jovic, Iva",
           "tour": "WTA",
@@ -20337,11 +18639,11 @@
             "prop_matches": 15
           },
           "context": {
-            "form": 0.5063042656413891,
-            "form_long": 0.5567366653050857,
-            "surface_form": 0.6113221800097225,
+            "form": 0.5063033458085204,
+            "form_long": 0.5567336435345284,
+            "surface_form": 0.611317560115209,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -20478,11 +18780,11 @@
             "prop_matches": 19
           },
           "context": {
-            "form": 0.5004937801384884,
-            "form_long": 0.5080798694111944,
-            "surface_form": 0.5481379445447321,
+            "form": 0.5004937031897279,
+            "form_long": 0.5080794100242838,
+            "surface_form": 0.5481358218334652,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -20841,8 +19143,8 @@
       "current_ev": 0.10793371870501889,
       "current_market_consensus_a": 0.5304451287793952,
       "current_market_books": 2,
-      "current_odds_updated_at": "2026-09-05T00:19:43.143Z",
-      "current_odds_age_min": 5.288883333333334,
+      "current_odds_updated_at": "2026-09-05T01:07:43.758Z",
+      "current_odds_age_min": 10.806166666666666,
       "market_watch_status": "OBSERVED",
       "prediction_lock_preserved": true,
       "quote_tape": [
@@ -20911,11 +19213,17 @@
           "odds": 1.8,
           "consensus_a": 0.5304451287793952,
           "book": "Bet365"
+        },
+        {
+          "at": "2026-09-05T01:18:32.128Z",
+          "odds": 1.8,
+          "consensus_a": 0.5304451287793952,
+          "book": "Bet365"
         }
       ],
       "market_live": {
         "status": "MARKET_OBSERVED",
-        "updated_at": "2026-09-05T00:25:00.476Z",
+        "updated_at": "2026-09-05T01:18:32.128Z",
         "rows": [
           {
             "market": "MATCH_WINNER",
@@ -20941,7 +19249,7 @@
             "current_market_prob": 0.5304451287793952,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:19:43.143Z",
+            "current_updated_at": "2026-09-05T01:07:43.758Z",
             "current_ev": 0.10793371870501889,
             "current_robust_ev": -0.02161505725833257,
             "current_price_status": "PASS",
@@ -21008,7 +19316,7 @@
           "current_market_prob": 0.5304451287793952,
           "current_book": "Bet365",
           "current_books": 2,
-          "current_updated_at": "2026-09-05T00:19:43.143Z",
+          "current_updated_at": "2026-09-05T01:07:43.758Z",
           "current_ev": 0.10793371870501889,
           "current_robust_ev": -0.02161505725833257,
           "current_price_status": "PASS",
@@ -21019,7 +19327,7 @@
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     },
     {
       "event_id": "73992452",
@@ -21119,7 +19427,7 @@
       "player_intel": {
         "candidate_side": "B",
         "candidate_name": "Bonzi, Benjamin",
-        "calculated_at": "2026-09-05T00:25:00.476Z",
+        "calculated_at": "2026-09-05T01:18:32.128Z",
         "a": {
           "name": "Khachanov, Karen",
           "tour": "ATP",
@@ -21132,11 +19440,11 @@
             "prop_matches": 17
           },
           "context": {
-            "form": 0.5183729309941252,
-            "form_long": 0.5068742143338653,
-            "surface_form": 0.500724951601327,
+            "form": 0.5183702751420183,
+            "form_long": 0.5068738325422208,
+            "surface_form": 0.5007249190067091,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -21273,11 +19581,11 @@
             "prop_matches": 19
           },
           "context": {
-            "form": 0.4628699388781303,
-            "form_long": 0.45023875233736455,
-            "surface_form": 0.4897294704529533,
+            "form": 0.4628785252847961,
+            "form_long": 0.45024299492237757,
+            "surface_form": 0.4897300843947754,
             "last_surface": "Clay",
-            "rest_days": 102.51736662037037,
+            "rest_days": 102.55453851851851,
             "matches_7d": 0,
             "matches_14d": 0,
             "workload_7d_minutes": 0,
@@ -21651,10 +19959,10 @@
       "current_odds": 2.75,
       "current_book": "Bet365",
       "current_ev": -0.008578351200835832,
-      "current_market_consensus_a": 0.6475726105797706,
+      "current_market_consensus_a": 0.6521231713650502,
       "current_market_books": 2,
-      "current_odds_updated_at": "2026-09-05T00:14:58.922Z",
-      "current_odds_age_min": 10.0259,
+      "current_odds_updated_at": "2026-09-05T01:17:02.044Z",
+      "current_odds_age_min": 1.5014,
       "market_watch_status": "OBSERVED",
       "prediction_lock_preserved": true,
       "quote_tape": [
@@ -21723,11 +20031,17 @@
           "odds": 2.75,
           "consensus_a": 0.6475726105797706,
           "book": "Bet365"
+        },
+        {
+          "at": "2026-09-05T01:18:32.128Z",
+          "odds": 2.75,
+          "consensus_a": 0.6521231713650502,
+          "book": "Bet365"
         }
       ],
       "market_live": {
         "status": "MARKET_OBSERVED",
-        "updated_at": "2026-09-05T00:25:00.476Z",
+        "updated_at": "2026-09-05T01:18:32.128Z",
         "rows": [
           {
             "market": "MATCH_WINNER",
@@ -21751,17 +20065,17 @@
             "target_robust_ev": 0.01,
             "min_acceptable_odds": 1.8279117244172662,
             "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed.",
-            "current_odds": 1.47,
-            "current_market_prob": 0.6475726105797706,
-            "current_book": "Eurobet IT",
+            "current_odds": 1.44,
+            "current_market_prob": 0.6521231713650502,
+            "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-04T18:54:03.545Z",
-            "current_ev": -0.059959935903553196,
-            "current_robust_ev": -0.18776165163374137,
+            "current_updated_at": "2026-09-05T01:17:02.044Z",
+            "current_ev": -0.07914442700756241,
+            "current_robust_ev": -0.2043379444575426,
             "current_price_status": "PASS",
-            "price_cushion": -0.19580361547895186,
-            "odds_move_pct": 0.02083333333333326,
-            "market_prob_move_pp": -0.0045505607852796,
+            "price_cushion": -0.21221578659162632,
+            "odds_move_pct": 0,
+            "market_prob_move_pp": 0,
             "current_status": "OBSERVED"
           },
           {
@@ -21787,16 +20101,16 @@
             "min_acceptable_odds": 3.6918305421183875,
             "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed.",
             "current_odds": 2.75,
-            "current_market_prob": 0.35242738942022944,
+            "current_market_prob": 0.34787682863494984,
             "current_book": "Bet365",
             "current_books": 2,
-            "current_updated_at": "2026-09-05T00:14:58.922Z",
+            "current_updated_at": "2026-09-05T01:17:02.044Z",
             "current_ev": -0.008578351200835832,
             "current_robust_ev": -0.24766319355322863,
             "current_price_status": "PASS",
             "price_cushion": -0.25511207282497894,
             "odds_move_pct": 0,
-            "market_prob_move_pp": 0.0045505607852796,
+            "market_prob_move_pp": 0,
             "current_status": "OBSERVED"
           }
         ],
@@ -21822,25 +20136,355 @@
           "target_robust_ev": 0.01,
           "min_acceptable_odds": 1.8279117244172662,
           "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed.",
-          "current_odds": 1.47,
-          "current_market_prob": 0.6475726105797706,
-          "current_book": "Eurobet IT",
+          "current_odds": 1.44,
+          "current_market_prob": 0.6521231713650502,
+          "current_book": "Bet365",
           "current_books": 2,
-          "current_updated_at": "2026-09-04T18:54:03.545Z",
-          "current_ev": -0.059959935903553196,
-          "current_robust_ev": -0.18776165163374137,
+          "current_updated_at": "2026-09-05T01:17:02.044Z",
+          "current_ev": -0.07914442700756241,
+          "current_robust_ev": -0.2043379444575426,
           "current_price_status": "PASS",
-          "price_cushion": -0.19580361547895186,
-          "odds_move_pct": 0.02083333333333326,
-          "market_prob_move_pp": -0.0045505607852796,
+          "price_cushion": -0.21221578659162632,
+          "odds_move_pct": 0,
+          "market_prob_move_pp": 0,
           "current_status": "OBSERVED"
         }
       },
       "player_intel_status": "READY",
-      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z"
+      "player_intel_refreshed_at": "2026-09-05T01:18:32.128Z"
     }
   ],
   "history": [
+    {
+      "event_id": "73992470",
+      "start_at": "2026-09-04T15:00:00Z",
+      "player_a": "Lehecka, Jiri",
+      "player_b": "Tsitsipas, Stefanos",
+      "tournament": "ATP - US Open, New York, USA",
+      "league_slug": "atp-us-open-new-york-usa",
+      "priority": 248,
+      "surface": "Hard",
+      "tour": "atp",
+      "raw_p_a": 0.6441163171995716,
+      "shadow_p_a": 0.6371609207371992,
+      "p_a": 0.6688624512660669,
+      "p_b": 0.3311375487339331,
+      "uncertainty": 0.08048330867303043,
+      "probability_low": 0.5883791425930365,
+      "probability_high": 0.7493457599390974,
+      "model_a_p": 0.7164849446029993,
+      "model_b_p": 0.567615985056462,
+      "model_c_p": 0.6307142831728437,
+      "model_a_name": "Strength",
+      "model_b_name": "Surface",
+      "model_c_name": "Form/Matchup",
+      "model_disagreement": 0.14886895954653723,
+      "engine_votes": "3/3",
+      "engine_majority": "A",
+      "engine_unanimous": true,
+      "fair_a": 1.4950757036923423,
+      "fair_b": 3.0198931043108423,
+      "forecast_side": "A",
+      "forecast_name": "Lehecka, Jiri",
+      "forecast_prob": 0.6688624512660669,
+      "forecast_confidence": 70.8348280340097,
+      "forecast_locked_at": "2026-09-03T16:17:05.698Z",
+      "market_favorite_side": "A",
+      "market_favorite_name": "Lehecka, Jiri",
+      "market_favorite_prob": 0.6312443730685938,
+      "forecast_vs_market": "AGREE",
+      "candidate_side": "A",
+      "candidate_name": "Lehecka, Jiri",
+      "candidate_prob": 0.6688624512660669,
+      "candidate_odds": 1.5,
+      "candidate_book": "Bet365",
+      "candidate_ev": 0.0032936768991003174,
+      "candidate_edge": 0.03761807819747309,
+      "robust_prob": 0.5883791425930365,
+      "robust_ev": -0.11743128611044529,
+      "robust_edge": -0.04286523047555735,
+      "pick_side": null,
+      "pick_name": null,
+      "pick_prob": null,
+      "pick_odds": null,
+      "pick_book": null,
+      "pick_ev": null,
+      "pick_edge": null,
+      "watch_side": null,
+      "watch_name": null,
+      "verdict": "NO BET",
+      "confidence": 72.21110043021055,
+      "sports_confidence": 70.8348280340097,
+      "data_quality": 95,
+      "market_depth": 2,
+      "market_consensus_a": 0.6312443730685938,
+      "market_sd": 0.004677957028493607,
+      "market_margin": 0.05974349778847954,
+      "market_updated_at": "2026-09-03T16:00:06.524Z",
+      "market_age_minutes": 16.986233333333335,
+      "rank_a": 12,
+      "rank_b": 79,
+      "elo_a": 1702.6626832862985,
+      "elo_b": 1605.5955651491006,
+      "surface_elo_a": 1689.039441853405,
+      "surface_elo_b": 1622.7959323980733,
+      "form_a": 0.5705915102034768,
+      "form_b": 0.4781759669302723,
+      "surface_form_a": 0.5987427816321009,
+      "surface_form_b": 0.553524532133808,
+      "surface_sample_a": 40,
+      "surface_sample_b": 40,
+      "h2h_n": 3,
+      "h2h_edge": 0.48910378583571473,
+      "serve_return_delta": 0.03377500963508728,
+      "workload7_a": 0,
+      "workload7_b": 0,
+      "matches7_a": 0,
+      "matches7_b": 0,
+      "rest_days_a": 101.1785381712963,
+      "rest_days_b": 101.1785381712963,
+      "last_surface_a": "Clay",
+      "last_surface_b": "Clay",
+      "surface_transition_a": false,
+      "surface_transition_b": false,
+      "dense_load_a": false,
+      "dense_load_b": false,
+      "adaptation_risk": 0,
+      "market_best": {
+        "market": "MATCH_WINNER",
+        "selection": "Lehecka, Jiri",
+        "side": "A",
+        "book": "Bet365",
+        "offer_key": "MATCH_WINNER|A",
+        "model_prob": 0.6688624512660669,
+        "market_prob": 0.6312443730685938,
+        "best_odds": 1.5,
+        "edge": 0.03761807819747309,
+        "ev": 0.0032936768991003174,
+        "robust_prob": 0.585914469021485,
+        "robust_edge": -0.04532990404710879,
+        "robust_ev": -0.12112829646777246,
+        "verdict": "NO BET",
+        "reasons": [
+          "MODELLI_IN_DISACCORDO"
+        ],
+        "validation_tier": "OFFICIAL_ML",
+        "target_robust_ev": 0.01,
+        "min_acceptable_odds": 1.723801089409458,
+        "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed."
+      },
+      "multi_market_version": "MM-4.0-PREDICTION-FIRST",
+      "reason_codes": [
+        "ELO ++",
+        "SURFACE +",
+        "FORM ++",
+        "H2H ++",
+        "SERVE/RETURN +",
+        "EV +"
+      ],
+      "no_bet_reasons": [
+        "ROBUST_EV_NON_POSITIVO",
+        "EDGE_NON_RESISTE_INCERTEZZA",
+        "MODELLI_IN_DISACCORDO"
+      ],
+      "warnings": [
+        "ROBUST_EV_NON_POSITIVO",
+        "EDGE_NON_RESISTE_INCERTEZZA",
+        "MODELLI_IN_DISACCORDO"
+      ],
+      "calibration_sample": 87,
+      "calibration_scope": "atp:Hard",
+      "calibration_active": true,
+      "model_health": "HEALTHY",
+      "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+      "predicted_at": "2026-09-03T16:17:05.698Z",
+      "locked": true,
+      "status": "SETTLED",
+      "audit_id": "19D08467110B",
+      "current_odds": 1.53,
+      "current_book": "Bet365",
+      "current_ev": 0.023359550437082488,
+      "current_market_consensus_a": 0.6211189709023123,
+      "current_market_books": 2,
+      "current_odds_updated_at": "2026-09-04T14:11:11.323Z",
+      "current_odds_age_min": 4.2542,
+      "market_watch_status": "OBSERVED",
+      "prediction_lock_preserved": true,
+      "player_intel_status": "READY",
+      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z",
+      "forecast_won": false,
+      "settled_at": "2026-09-05T01:18:32.128Z",
+      "actual_side": "B",
+      "actual_winner": "Tsitsipas, Stefanos",
+      "pick_won": null,
+      "profit_units": 0,
+      "brier": 0.44737697871365173,
+      "log_loss": 1.1052214348367655,
+      "shadow_brier": 0.40597403891467543,
+      "shadow_log_loss": 1.0137958508232214,
+      "closing_odds": null,
+      "clv": null,
+      "secondary_settled": [],
+      "archive_compacted": true
+    },
+    {
+      "event_id": "73992446",
+      "start_at": "2026-09-04T15:00:00Z",
+      "player_a": "Vacherot, Valentin",
+      "player_b": "Tiafoe, Frances",
+      "tournament": "ATP - US Open, New York, USA",
+      "league_slug": "atp-us-open-new-york-usa",
+      "priority": 226,
+      "surface": "Hard",
+      "tour": "atp",
+      "raw_p_a": 0.5162962689486059,
+      "shadow_p_a": 0.5159469695871308,
+      "p_a": 0.5196610081210743,
+      "p_b": 0.4803389918789257,
+      "uncertainty": 0.047343970618380325,
+      "probability_low": 0.472317037502694,
+      "probability_high": 0.5670049787394547,
+      "model_a_p": 0.5255598136897554,
+      "model_b_p": 0.5140180958006605,
+      "model_c_p": 0.5073670614812542,
+      "model_a_name": "Strength",
+      "model_b_name": "Surface",
+      "model_c_name": "Form/Matchup",
+      "model_disagreement": 0.01819275220850114,
+      "engine_votes": "3/3",
+      "engine_majority": "A",
+      "engine_unanimous": true,
+      "fair_a": 1.9243314090769976,
+      "fair_b": 2.081863052775154,
+      "forecast_side": "A",
+      "forecast_name": "Vacherot, Valentin",
+      "forecast_prob": 0.5196610081210743,
+      "forecast_confidence": 79.13554358436241,
+      "forecast_locked_at": "2026-09-03T08:34:51.930Z",
+      "market_favorite_side": "B",
+      "market_favorite_name": "Tiafoe, Frances",
+      "market_favorite_prob": 0.6491499454904387,
+      "forecast_vs_market": "UPSET_CALL",
+      "candidate_side": "A",
+      "candidate_name": "Vacherot, Valentin",
+      "candidate_prob": 0.5196610081210743,
+      "candidate_odds": 2.75,
+      "candidate_book": "Bet365",
+      "candidate_ev": 0.42906777233295434,
+      "candidate_edge": 0.168810953611513,
+      "robust_prob": 0.472317037502694,
+      "robust_ev": 0.2988718531324084,
+      "robust_edge": 0.12146698299313269,
+      "pick_side": "A",
+      "pick_name": "Vacherot, Valentin",
+      "pick_prob": 0.5196610081210743,
+      "pick_odds": 2.75,
+      "pick_book": "Bet365",
+      "pick_ev": 0.42906777233295434,
+      "pick_edge": 0.168810953611513,
+      "watch_side": null,
+      "watch_name": null,
+      "verdict": "VALUE",
+      "confidence": 80.17892533790062,
+      "sports_confidence": 79.13554358436241,
+      "data_quality": 92,
+      "market_depth": 2,
+      "market_consensus_a": 0.3508500545095613,
+      "market_sd": 0.007174636848463395,
+      "market_margin": 0.06617568255499284,
+      "market_updated_at": "2026-09-03T08:27:12.13Z",
+      "market_age_minutes": 7.663333333333333,
+      "rank_a": 19,
+      "rank_b": 22,
+      "elo_a": 1674.6826738175705,
+      "elo_b": 1656.891734429863,
+      "surface_elo_a": 1660.465727912093,
+      "surface_elo_b": 1661.5806859579695,
+      "form_a": 0.5647495809441966,
+      "form_b": 0.5864866649305654,
+      "surface_form_a": 0.6225004952074218,
+      "surface_form_b": 0.5841213315534277,
+      "surface_sample_a": 32,
+      "surface_sample_b": 40,
+      "h2h_n": 0,
+      "h2h_edge": 0,
+      "serve_return_delta": 0.04392801068451324,
+      "workload7_a": 0,
+      "workload7_b": 0,
+      "matches7_a": 0,
+      "matches7_b": 0,
+      "rest_days_a": 100.8575454861111,
+      "rest_days_b": 100.8575454861111,
+      "last_surface_a": "Clay",
+      "last_surface_b": "Clay",
+      "surface_transition_a": false,
+      "surface_transition_b": false,
+      "dense_load_a": false,
+      "dense_load_b": false,
+      "adaptation_risk": 0,
+      "market_best": {
+        "market": "MATCH_WINNER",
+        "selection": "Vacherot, Valentin",
+        "side": "A",
+        "book": "Bet365",
+        "offer_key": "MATCH_WINNER|A",
+        "model_prob": 0.5196610081210743,
+        "market_prob": 0.3508500545095613,
+        "best_odds": 2.75,
+        "edge": 0.168810953611513,
+        "ev": 0.42906777233295434,
+        "robust_prob": 0.4605733492758405,
+        "robust_edge": 0.10972329476627918,
+        "robust_ev": 0.26657671050856124,
+        "verdict": "VALUE",
+        "reasons": [],
+        "validation_tier": "OFFICIAL_ML",
+        "target_robust_ev": 0.022,
+        "min_acceptable_odds": 2.2189733765683375,
+        "price_rule": "BET only when current odds stay at/above min_acceptable_odds; secondary markets remain paper until reviewed."
+      },
+      "multi_market_version": "MM-4.0-PREDICTION-FIRST",
+      "reason_codes": [
+        "SERVE/RETURN +",
+        "EV ++"
+      ],
+      "no_bet_reasons": [],
+      "warnings": [],
+      "calibration_sample": 82,
+      "calibration_scope": "atp:Hard",
+      "calibration_active": true,
+      "model_health": "HEALTHY",
+      "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+      "predicted_at": "2026-09-03T08:34:51.930Z",
+      "locked": true,
+      "status": "SETTLED",
+      "audit_id": "476A6DD20E2B",
+      "current_odds": 2.62,
+      "current_book": "Bet365",
+      "current_ev": 0.3615118412772147,
+      "current_market_consensus_a": 0.37156501949010967,
+      "current_market_books": 2,
+      "current_odds_updated_at": "2026-09-04T14:07:17.452Z",
+      "current_odds_age_min": 8.15205,
+      "market_watch_status": "OBSERVED",
+      "prediction_lock_preserved": true,
+      "player_intel_status": "READY",
+      "player_intel_refreshed_at": "2026-09-05T00:25:00.476Z",
+      "forecast_won": false,
+      "settled_at": "2026-09-05T01:18:32.128Z",
+      "actual_side": "B",
+      "actual_winner": "Tiafoe, Frances",
+      "pick_won": false,
+      "profit_units": -1,
+      "brier": 0.2700475633614112,
+      "log_loss": 0.733263191264335,
+      "shadow_brier": 0.2662012754261437,
+      "shadow_log_loss": 0.7255608112987892,
+      "closing_odds": 2.62,
+      "clv": 0.04961832061068705,
+      "secondary_settled": [],
+      "archive_compacted": true
+    },
     {
       "event_id": "73992580",
       "start_at": "2026-09-04T15:00:00Z",
@@ -61288,37 +59932,37 @@
   "learning": {
     "calibration": {
       "active": true,
-      "sample": 243,
+      "sample": 245,
       "global": {
         "active": true,
-        "sample": 243,
-        "intercept": -0.027928566050364985,
+        "sample": 245,
+        "intercept": -0.040174330057982516,
         "slope": 1.38,
-        "updated_at": "2026-09-05T00:25:00.476Z"
+        "updated_at": "2026-09-05T01:18:32.128Z"
       },
       "tour": {
         "atp": {
           "active": true,
-          "sample": 111,
-          "intercept": -0.00928192048176578,
+          "sample": 113,
+          "intercept": -0.03996990128703647,
           "slope": 1.38,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         },
         "wta": {
           "active": true,
           "sample": 132,
-          "intercept": -0.043871272689847966,
+          "intercept": -0.04040344834485311,
           "slope": 1.38,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         }
       },
       "surface": {
         "atp:Hard": {
           "active": true,
-          "sample": 105,
-          "intercept": -0.0090526904671918,
+          "sample": 107,
+          "intercept": -0.04156735032055724,
           "slope": 1.38,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         },
         "atp:Clay": {
           "active": false,
@@ -61335,9 +59979,9 @@
         "wta:Hard": {
           "active": true,
           "sample": 132,
-          "intercept": -0.043871272689847966,
+          "intercept": -0.04040344834485311,
           "slope": 1.38,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         },
         "wta:Clay": {
           "active": false,
@@ -61352,43 +59996,43 @@
           "slope": 1
         }
       },
-      "updated_at": "2026-09-05T00:25:00.476Z",
+      "updated_at": "2026-09-05T01:18:32.128Z",
       "origin": "FORWARD_TRACK_RECORD",
       "cold_start": false
     },
     "calibration_forward": {
       "active": true,
-      "sample": 243,
+      "sample": 245,
       "global": {
         "active": true,
-        "sample": 243,
-        "intercept": -0.027928566050364985,
+        "sample": 245,
+        "intercept": -0.040174330057982516,
         "slope": 1.38,
-        "updated_at": "2026-09-05T00:25:00.476Z"
+        "updated_at": "2026-09-05T01:18:32.128Z"
       },
       "tour": {
         "atp": {
           "active": true,
-          "sample": 111,
-          "intercept": -0.00928192048176578,
+          "sample": 113,
+          "intercept": -0.03996990128703647,
           "slope": 1.38,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         },
         "wta": {
           "active": true,
           "sample": 132,
-          "intercept": -0.043871272689847966,
+          "intercept": -0.04040344834485311,
           "slope": 1.38,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         }
       },
       "surface": {
         "atp:Hard": {
           "active": true,
-          "sample": 105,
-          "intercept": -0.0090526904671918,
+          "sample": 107,
+          "intercept": -0.04156735032055724,
           "slope": 1.38,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         },
         "atp:Clay": {
           "active": false,
@@ -61405,9 +60049,9 @@
         "wta:Hard": {
           "active": true,
           "sample": 132,
-          "intercept": -0.043871272689847966,
+          "intercept": -0.04040344834485311,
           "slope": 1.38,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         },
         "wta:Clay": {
           "active": false,
@@ -61422,7 +60066,7 @@
           "slope": 1
         }
       },
-      "updated_at": "2026-09-05T00:25:00.476Z"
+      "updated_at": "2026-09-05T01:18:32.128Z"
     },
     "calibration_seed": {
       "active": true,
@@ -61432,7 +60076,7 @@
         "sample": 3744,
         "intercept": 0.06804266215229418,
         "slope": 0.8166473110624672,
-        "updated_at": "2026-09-05T00:25:00.476Z"
+        "updated_at": "2026-09-05T01:18:32.128Z"
       },
       "tour": {
         "atp": {
@@ -61440,14 +60084,14 @@
           "sample": 2009,
           "intercept": 0.048995033481674055,
           "slope": 0.8356485798515089,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         },
         "wta": {
           "active": true,
           "sample": 1735,
           "intercept": 0.09030483458327396,
           "slope": 0.7924375529619231,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         }
       },
       "surface": {
@@ -61456,45 +60100,45 @@
           "sample": 1402,
           "intercept": 0.02492657940688295,
           "slope": 0.8423695407909726,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         },
         "atp:Clay": {
           "active": true,
           "sample": 330,
           "intercept": 0.2504433603291767,
           "slope": 0.7785164837313826,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         },
         "atp:Grass": {
           "active": true,
           "sample": 277,
           "intercept": -0.07207245484690777,
           "slope": 0.8599864850614287,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         },
         "wta:Hard": {
           "active": true,
           "sample": 1263,
           "intercept": 0.06042343102163382,
           "slope": 0.774157837937881,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         },
         "wta:Clay": {
           "active": true,
           "sample": 195,
           "intercept": 0.291696601878789,
           "slope": 1.1678464714447048,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         },
         "wta:Grass": {
           "active": true,
           "sample": 277,
           "intercept": 0.09810034957568574,
           "slope": 0.6356081038431147,
-          "updated_at": "2026-09-05T00:25:00.476Z"
+          "updated_at": "2026-09-05T01:18:32.128Z"
         }
       },
-      "updated_at": "2026-09-05T00:25:00.476Z",
+      "updated_at": "2026-09-05T01:18:32.128Z",
       "origin": "HISTORICAL_WALK_FORWARD",
       "cold_start": true,
       "seed_records": 5200,
@@ -61506,9 +60150,9 @@
     "drift": {
       "health": "HEALTHY",
       "penalty": 0,
-      "sample": 243,
-      "recentBrier": 0.1703640992200561,
-      "allBrier": 0.20261471460265545
+      "sample": 245,
+      "recentBrier": 0.17498627359970365,
+      "allBrier": 0.20388898036947076
     },
     "cold_start": {
       "approved": true,
@@ -61520,19 +60164,19 @@
     },
     "challenger": {
       "status": "HOLD",
-      "sample": 243,
-      "champion_brier": 0.20261471460265545,
-      "challenger_brier": 0.20250552789246645,
-      "brier_gain": 0.00010918671018900206,
-      "champion_log_loss": 0.5900747548327647,
-      "challenger_log_loss": 0.5915603132999613,
-      "log_loss_gain": -0.0014855584671965572,
+      "sample": 245,
+      "champion_brier": 0.20388898036947076,
+      "challenger_brier": 0.20359599425391905,
+      "brier_gain": 0.0002929861155517022,
+      "champion_log_loss": 0.5927618369406651,
+      "challenger_log_loss": 0.5938306644653575,
+      "log_loss_gain": -0.001068827524692395,
       "note": "Nessuna auto-promozione: il Champion resta stabile."
     }
   },
   "usage": {
     "day": "2026-09-05",
-    "calls": 6
+    "calls": 12
   },
   "cache": {
     "bookmakers": {
@@ -61544,31 +60188,31 @@
     }
   },
   "rate_limit": {
-    "remaining": 92,
-    "reset_at": "2026-09-05T00:50:30.000Z",
+    "remaining": 91,
+    "reset_at": "2026-09-05T01:54:15.000Z",
     "last_status": 200,
-    "last_checked_at": "2026-09-05T00:25:00.476Z"
+    "last_checked_at": "2026-09-05T01:18:32.128Z"
   },
   "cursor": {
     "prediction_offset": 78
   },
   "stats": {
-    "closed_matches": 243,
-    "closed_forecasts": 243,
+    "closed_matches": 245,
+    "closed_forecasts": 245,
     "forecast_wins": 159,
-    "forecast_accuracy": 0.654320987654321,
-    "closed_picks": 2,
+    "forecast_accuracy": 0.6489795918367347,
+    "closed_picks": 3,
     "wins": 1,
-    "hit_rate": 0.5,
-    "profit_units": -0.5,
-    "roi": -0.25,
-    "brier": 0.20261471460265545,
-    "log_loss": 0.5900747548327647,
-    "avg_clv": 0.02468354430379749,
-    "clv_sample": 2,
-    "shadow_brier": 0.20250552789246645,
-    "shadow_sample": 243,
-    "shadow_delta": -0.00010918671018900206
+    "hit_rate": 0.3333333333333333,
+    "profit_units": -1.5,
+    "roi": -0.5,
+    "brier": 0.20388898036947076,
+    "log_loss": 0.5927618369406651,
+    "avg_clv": 0.03299513640609401,
+    "clv_sample": 3,
+    "shadow_brier": 0.20359599425391905,
+    "shadow_sample": 245,
+    "shadow_delta": -0.0002929861155517022
   },
   "decision_funnel": {
     "radar": 300,
@@ -64850,7 +63494,7 @@
     "sport_guard": "TENNIS_SPECIFIC",
     "surface_adaptation_guard": "ON",
     "fatigue_guard": "ON",
-    "active_signals": 1,
+    "active_signals": 0,
     "max_concurrent_signals": 4,
     "concentration_policy": "Monitor tournament/surface clustering; no basketball-style correlation assumptions are imported."
   }
