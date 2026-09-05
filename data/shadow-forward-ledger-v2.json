@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-05T20:58:47.455Z",
+  "updated_at": "2026-09-05T21:14:18.432Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -579,11 +579,11 @@
       },
       "immutable_sha256": "3f2a129a6ef0dfa6fccb781c34ad6b52ec3acc19777a49726795c56220aa10df",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-05T21:14:12.917Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -770,11 +770,11 @@
       },
       "immutable_sha256": "a0f32d558accbdfc6383c65aa17d5d06fb676da481a2444cde556678184275c1",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-05T21:14:12.917Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -1419,23 +1419,111 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "220CD7DADDAC0D3D69A108F5",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "7641D66543103006B1D2",
+        "source_immutable_sha256": "2d6028b697e97be9f71c94c84734e64603811a0f209c392107e14e9566b22be9",
+        "event_id": "74368508",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-05T21:14:12.917Z",
+        "start_at": "2026-09-07T07:00:00Z",
+        "first_observed_at": "2026-09-05T21:14:18.191Z",
+        "player_a": "Ymer, Elias",
+        "player_b": "Kotov, Pavel",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "B",
+        "candidate_name": "Kotov, Pavel",
+        "candidate_odds": 2.2,
+        "candidate_prob": 0.550031,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -1,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 1,
+        "observed_core": 1,
+        "hard_reject": [],
+        "penalties": []
+      },
+      "immutable_sha256": "ef97bb7d88f40525a924d4f6b93a2ea5b3f86e3788f91fb603610ee1e95fcc4c",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "4D1A4FD8997B840C01E368AF",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "F8FE678E6416DCB62F7D",
+        "source_immutable_sha256": "ed73e65ac6098f74c0b2e91aa5c2dfe25f11963579a1a2832c2e0900d653d598",
+        "event_id": "74368514",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-05T21:14:12.917Z",
+        "start_at": "2026-09-07T07:00:00Z",
+        "first_observed_at": "2026-09-05T21:14:18.191Z",
+        "player_a": "Ivashka, Ilya",
+        "player_b": "Hsu, Yu Hsiou",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "B",
+        "candidate_name": "Hsu, Yu Hsiou",
+        "candidate_odds": 1.83,
+        "candidate_prob": 0.509756,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 0,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 1,
+        "negative_core": 0,
+        "observed_core": 1,
+        "hard_reject": [],
+        "penalties": [
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "145b23909da19398ccc2ccb6f2e4d96a49572e09e7ff00e671fb05edc982be00",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 30,
+    "total_decisions": 32,
     "accepted": 9,
-    "rejected": 21,
+    "rejected": 23,
     "open": 21,
-    "settled": 9
+    "settled": 11
   },
   "evidence": {
     "state": "COLD_START",
     "champion": {
-      "n": 9,
-      "wins": 4,
-      "hit_rate": 0.4444444444444444,
-      "profit_units": 3.34,
-      "roi": 0.3711111111111111,
+      "n": 11,
+      "wins": 5,
+      "hit_rate": 0.45454545454545453,
+      "profit_units": 6.54,
+      "roi": 0.5945454545454546,
       "max_drawdown_units": 4
     },
     "shadow": {
@@ -1446,7 +1534,7 @@
       "roi": -0.5933333333333334,
       "max_drawdown_units": 2
     },
-    "delta_roi": -0.9644444444444444,
+    "delta_roi": -1.187878787878788,
     "review_eligible": false
   }
 }
