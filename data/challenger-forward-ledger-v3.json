@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-05T12:59:25.530Z",
+  "updated_at": "2026-09-05T13:19:21.060Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -14,12 +14,63 @@
     "min_settled_for_mature_review": 100,
     "note": "Development rules frozen from the first 195 settled paper candidates. Evaluation is prospective only; no historical record may be backfilled."
   },
-  "records": [],
+  "records": [
+    {
+      "challenger_id": "8418848EB9B41EFCD6BAFDF4",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "92443D831259822E2C46",
+        "source_immutable_sha256": "1d9d7404aebe7333dbcc9b8d3698d114dd531854a1b9159fa127c8db7480f92e",
+        "event_id": "73992426",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-05T13:14:07.215Z",
+        "start_at": "2026-09-06T15:00:00Z",
+        "first_observed_at": "2026-09-05T13:14:11.407Z",
+        "player_a": "Shelton, Ben",
+        "player_b": "Tsitsipas, Stefanos",
+        "tour": "atp",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Tsitsipas, Stefanos",
+        "candidate_odds": 3.2,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -4,
+        "raw_prob": 0.374621,
+        "calibrated_prob": 0.24350365,
+        "calibrated_ev": -0.22078832000000004,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "NEGATIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 4,
+        "observed_core": 4,
+        "hard_reject": [
+          "ODDS_3_PLUS",
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_LT_2PCT"
+        ],
+        "penalties": []
+      },
+      "immutable_sha256": "29e24f044769a3a3d9d36270e71d4098b6a44a01ac61a89cea897136c8010113",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    }
+  ],
   "stats": {
-    "total_decisions": 0,
+    "total_decisions": 1,
     "accepted": 0,
-    "rejected": 0,
-    "open": 0,
+    "rejected": 1,
+    "open": 1,
     "settled": 0
   },
   "evidence": {
