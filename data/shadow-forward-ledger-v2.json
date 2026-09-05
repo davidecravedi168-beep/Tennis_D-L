@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-05T12:58:44.757Z",
+  "updated_at": "2026-09-05T13:14:11.920Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -1370,13 +1370,62 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "C081FE7044C279887B6AC117",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "92443D831259822E2C46",
+        "source_immutable_sha256": "1d9d7404aebe7333dbcc9b8d3698d114dd531854a1b9159fa127c8db7480f92e",
+        "event_id": "73992426",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-05T13:14:07.215Z",
+        "start_at": "2026-09-06T15:00:00Z",
+        "first_observed_at": "2026-09-05T13:14:11.407Z",
+        "player_a": "Shelton, Ben",
+        "player_b": "Tsitsipas, Stefanos",
+        "tour": "atp",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Tsitsipas, Stefanos",
+        "candidate_odds": 3.2,
+        "candidate_prob": 0.374621,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -5,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "NEGATIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 4,
+        "observed_core": 4,
+        "hard_reject": [
+          "ODDS_3_PLUS",
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT"
+        ],
+        "penalties": [
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "33306243fac6732c32d65ed2b38838d7161e071bf1c7ae022fcca85ab762da56",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 29,
+    "total_decisions": 30,
     "accepted": 9,
-    "rejected": 20,
-    "open": 23,
+    "rejected": 21,
+    "open": 24,
     "settled": 6
   },
   "evidence": {
