@@ -1,0 +1,87 @@
+name: Tennis Edge Pro Challenger V3
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "12,27,42,57 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tennis-edge-pro-challenger-v3
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: "24"
+
+      - name: Contract tests
+        run: |
+          node --check scripts/challenger-forward-ledger-v3.mjs
+          node --check scripts/tennis-model-diagnostics-v2.mjs
+          node scripts/challenger-forward-ledger-v3.mjs --self-test
+          node scripts/tennis-model-diagnostics-v2.mjs --self-test
+
+      - name: Update Challenger V3 forward ledger
+        run: node scripts/challenger-forward-ledger-v3.mjs
+
+      - name: Build enhanced model diagnostics
+        run: |
+          node scripts/tennis-model-diagnostics-v2.mjs
+          node scripts/tennis-model-diagnostics-v2.mjs --validate
+
+      - name: Commit evaluation state
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- data/challenger-forward-ledger-v3.json data/tennis-model-diagnostics-v2.json
+          if git diff --cached --quiet; then
+            echo "No challenger state changes"
+            exit 0
+          fi
+          git config user.name "tennis-edge-challenger"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "data: update Challenger V3 evaluation"
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+            git rebase --abort || true
+            sleep $((attempt * 2))
+          done
+          exit 1
+
+      - name: Summary
+        if: always()
+        shell: bash
+        run: |
+          echo "### Tennis Edge Pro Challenger V3" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f data/challenger-forward-ledger-v3.json ]; then
+            node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
+          const fs=require('fs');
+          const x=JSON.parse(fs.readFileSync('data/challenger-forward-ledger-v3.json','utf8'));
+          const e=x.evidence||{},c=e.challenger||{},b=e.champion||{};
+          const pct=v=>Number.isFinite(v)?`${(v*100).toFixed(1)}%`:'—';
+          console.log(`- Decisions: ${x.stats?.total_decisions??0} · accepted ${x.stats?.accepted??0} · settled ${x.stats?.settled??0}`);
+          console.log(`- Evidence: ${e.state||'COLD_START'} · champion ${pct(b.roi)} · challenger ${pct(c.roi)} · review ${e.review_eligible?'YES':'NO'}`);
+          NODE
+          fi
+          if [ -f data/tennis-model-diagnostics-v2.json ]; then
+            node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
+          const fs=require('fs');
+          const x=JSON.parse(fs.readFileSync('data/tennis-model-diagnostics-v2.json','utf8'));
+          const o=x.overall||{};
+          console.log(`- Brier: ${Number.isFinite(o.brier)?o.brier.toFixed(4):'—'} · LogLoss: ${Number.isFinite(o.logloss)?o.logloss.toFixed(4):'—'} · ECE: ${Number.isFinite(o.ece)?o.ece.toFixed(4):'—'}`);
+          console.log(`- Drift: ${x.drift?.state||'—'} · CLV: ${x.clv?.state||'—'}`);
+          NODE
+          fi
