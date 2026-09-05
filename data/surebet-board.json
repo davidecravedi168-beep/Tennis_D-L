@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_at": "2026-09-05T15:50:26.516Z",
+    "updated_at": "2026-09-05T16:25:05.417Z",
     "status": "READY",
     "model_version": "TEP-SUREBET-1.2",
     "source": "Odds-API.io selected bookmakers · shared Tennis Edge event universe",
@@ -23,5 +23,54 @@
     "note": "Solo arbitraggio 2-way Match Winner tra bookmaker diversi. Nessun modello predittivo viene usato."
   },
   "opportunities": [],
-  "checked": []
+  "checked": [
+    {
+      "event_id": "73992370",
+      "start_at": "2026-09-05T17:30:00Z",
+      "player_a": "Zheng, Michael",
+      "player_b": "Gea, Arthur",
+      "tournament": "ATP - US Open, New York, USA",
+      "market": "MATCH_WINNER_2WAY",
+      "status": "NON_CERTIFICATA",
+      "book_a": "Bet365",
+      "book_b": "Eurobet IT",
+      "odds_a": 1.66,
+      "odds_b": 2.27,
+      "updated_a": "2026-09-05T16:19:00.316Z",
+      "updated_b": "2026-09-05T15:45:59.245Z",
+      "age_a_min": 6.1,
+      "age_b_min": 39.1,
+      "timestamp_spread_min": 33,
+      "implied_sum": 1.04293827,
+      "raw_roi": -0.04117048,
+      "safety_buffer": 0.0025,
+      "buffered_roi": -0.043684,
+      "market_depth": 2,
+      "median_no_vig_a": 0.580563,
+      "outlier_distance": 0.010614,
+      "reasons": [
+        "MARGINE_TROPPO_BASSO",
+        "QUOTA_NON_FRESCA",
+        "QUOTE_NON_SINCRONE",
+        "BUFFER_NON_SUPERATO",
+        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
+      ],
+      "expires_at": "2026-09-05T15:55:59.245Z",
+      "execution_window_sec": 0,
+      "same_market_verified": true,
+      "settlement_rules_verified": false,
+      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
+      "stake_100": {
+        "stake_a": 57.76,
+        "stake_b": 42.24,
+        "return_if_a": 95.88,
+        "return_if_b": 95.88,
+        "worst_return": 95.88,
+        "profit": -4.12,
+        "roi": -0.041184
+      },
+      "detected_at": "2026-09-05T16:25:05.417Z",
+      "execution_note": "Copertura matematica valida solo finché entrambe le quote restano accettabili e le regole di settlement dei due bookmaker sono equivalenti."
+    }
+  ]
 }
