@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-06T02:58:50.409Z",
+  "updated_at": "2026-09-06T03:15:33.798Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -674,11 +674,11 @@
       },
       "immutable_sha256": "b02f530a1a0fd754e7fa956b55aed6cfef90db841deeee301050258d17ad28a6",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-06T03:15:27.953Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -992,11 +992,11 @@
       },
       "immutable_sha256": "22b26ce916ebe77b5340cc17939efc5d91d72c540b6fbc2e4be749973cb2f408",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
-        "won": null,
-        "profit_units": null
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-06T03:15:27.953Z",
+        "won": true,
+        "profit_units": 0.72
       }
     },
     {
@@ -1040,11 +1040,11 @@
       },
       "immutable_sha256": "b6bc74e187af2bce9b5e1b0646fa2c7c99e8dc50bbe9c3f9574469a8e8dfd9b0",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-06T03:15:27.953Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -1695,34 +1695,79 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "3A179FC4D4FB9E3A611A396E",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "707126D1ABFE439681C0",
+        "source_immutable_sha256": "b4a0bd67088b2af67c5388ef8c41d0260c22b6217df7f57abcb171579f225924",
+        "event_id": "74375210",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-06T03:15:27.953Z",
+        "start_at": "2026-09-07T08:00:00Z",
+        "first_observed_at": "2026-09-06T03:15:33.636Z",
+        "player_a": "Cecchinato, Marco",
+        "player_b": "Djere, Laslo",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "A",
+        "candidate_name": "Cecchinato, Marco",
+        "candidate_odds": 2.37,
+        "candidate_prob": 0.541561,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -1,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 1,
+        "negative_core": 1,
+        "observed_core": 2,
+        "hard_reject": [],
+        "penalties": [
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "b73165143be11e02ecdc427bd1bd53b92e788a9f6a04c71fabc23d5865c75532",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 36,
+    "total_decisions": 37,
     "accepted": 10,
-    "rejected": 26,
-    "open": 20,
-    "settled": 16
+    "rejected": 27,
+    "open": 18,
+    "settled": 19
   },
   "evidence": {
     "state": "COLD_START",
     "champion": {
-      "n": 16,
-      "wins": 5,
-      "hit_rate": 0.3125,
-      "profit_units": 1.54,
-      "roi": 0.09625,
-      "max_drawdown_units": 5
+      "n": 19,
+      "wins": 6,
+      "hit_rate": 0.3157894736842105,
+      "profit_units": 0.26,
+      "roi": 0.01368421052631579,
+      "max_drawdown_units": 6.28
     },
     "shadow": {
-      "n": 4,
-      "wins": 1,
-      "hit_rate": 0.25,
-      "profit_units": -2.7800000000000002,
-      "roi": -0.6950000000000001,
+      "n": 5,
+      "wins": 2,
+      "hit_rate": 0.4,
+      "profit_units": -2.0600000000000005,
+      "roi": -0.4120000000000001,
       "max_drawdown_units": 2.7800000000000002
     },
-    "delta_roi": -0.79125,
+    "delta_roi": -0.4256842105263159,
     "review_eligible": false
   }
 }
