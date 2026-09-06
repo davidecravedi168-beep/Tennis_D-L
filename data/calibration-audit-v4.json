@@ -1,0 +1,31 @@
+{
+  "schema": "TEP-CALIBRATION-AUDIT-V4",
+  "generated_at": "2026-09-06T08:59:41.980Z",
+  "policy": "TEP_CALIBRATION_V4_2026-09-06",
+  "development": {
+    "n": 210,
+    "raw": {
+      "n": 210,
+      "brier": 0.1907081348986524,
+      "logloss": 0.5635665738528578,
+      "ece": 0.11245343333333335
+    },
+    "calibrated": {
+      "n": 210,
+      "brier": 0.1755406805216513,
+      "logloss": 0.5277915678159958,
+      "ece": 0.06841413765174484
+    },
+    "warning": "Development comparison is descriptive only, not proof of improvement."
+  },
+  "forward": {
+    "n": 0,
+    "raw": null,
+    "calibrated": null,
+    "state": "INSUFFICIENT_FORWARD_SAMPLE"
+  },
+  "drift_interpretation": {
+    "current_watch_is_roi_only": true,
+    "note": "Recent raw Brier and LogLoss improved versus baseline while ROI worsened; treat this as monetization/selection drift, not probability-model drift, unless forward probabilistic metrics also deteriorate."
+  }
+}
