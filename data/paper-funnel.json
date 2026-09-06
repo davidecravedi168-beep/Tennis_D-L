@@ -1,10 +1,10 @@
 {
   "schema": "TEP-PAPER-FUNNEL-1",
-  "generated_at": "2026-09-06T00:53:19.082Z",
+  "generated_at": "2026-09-06T02:47:29.869Z",
   "source": {
     "ledger_schema": "TEP-FORWARD-LEDGER-1",
-    "ledger_updated_at": "2026-09-06T00:52:22.022Z",
-    "freshness_minutes": 0.951
+    "ledger_updated_at": "2026-09-06T02:46:14.182Z",
+    "freshness_minutes": 1.26145
   },
   "policy": {
     "validation_only": true,
@@ -14,26 +14,26 @@
     "note": "Observability only: tracks every locked market candidate and rejection reason without relaxing betting thresholds."
   },
   "funnel": {
-    "market_locks": 240,
-    "valid_market_candidates": 240,
+    "market_locks": 241,
+    "valid_market_candidates": 241,
     "watch": 7,
-    "no_bet": 227,
+    "no_bet": 228,
     "qualified_value": 6,
-    "settled_market_locks": 203,
-    "settled_paper_candidates": 203,
+    "settled_market_locks": 205,
+    "settled_paper_candidates": 205,
     "missing_candidate_side": 0,
     "missing_candidate_odds": 0
   },
   "paper": {
     "all_candidates": {
-      "settled": 203,
+      "settled": 205,
       "wins": 73,
-      "hit_rate": 0.35960591133004927,
-      "profit_units": -17.150000000000006,
-      "roi": -0.08448275862068969,
+      "hit_rate": 0.35609756097560974,
+      "profit_units": -19.150000000000006,
+      "roi": -0.09341463414634149,
       "max_drawdown_units": 32.70000000000001,
-      "clv_sample": 203,
-      "avg_clv": 0.00048761083743842376
+      "clv_sample": 205,
+      "avg_clv": 0.00048285365853658544
     },
     "watch": {
       "settled": 5,
@@ -46,13 +46,13 @@
       "avg_clv": 0
     },
     "no_bet": {
-      "settled": 195,
+      "settled": 197,
       "wins": 71,
-      "hit_rate": 0.3641025641025641,
-      "profit_units": -12.369999999999997,
-      "roi": -0.06343589743589742,
+      "hit_rate": 0.3604060913705584,
+      "profit_units": -14.369999999999997,
+      "roi": -0.07294416243654821,
       "max_drawdown_units": 30.42,
-      "clv_sample": 195,
+      "clv_sample": 197,
       "avg_clv": 0
     },
     "official_qualified": {
@@ -73,169 +73,169 @@
     "market_consensus": 1,
     "data_quality": 1,
     "confidence": 1,
-    "avg_data_quality": 87.46055196249999,
-    "avg_confidence": 65.84248052499994
+    "avg_data_quality": 87.4171471825726,
+    "avg_confidence": 65.85491946058086
   },
   "rejection_reasons": [
     {
       "reason": "ROBUST_EV_NON_POSITIVO",
-      "count": 143,
-      "share": 0.6299559471365639
+      "count": 144,
+      "share": 0.631578947368421
     },
     {
       "reason": "EV ++",
       "count": 139,
-      "share": 0.6123348017621145
+      "share": 0.6096491228070176
     },
     {
       "reason": "EDGE_NON_RESISTE_INCERTEZZA",
-      "count": 128,
-      "share": 0.5638766519823789
+      "count": 129,
+      "share": 0.5657894736842105
     },
     {
       "reason": "MODELLI_IN_DISACCORDO",
       "count": 117,
-      "share": 0.5154185022026432
+      "share": 0.5131578947368421
     },
     {
       "reason": "ELO --",
       "count": 91,
-      "share": 0.4008810572687225
+      "share": 0.3991228070175439
     },
     {
       "reason": "SURFACE --",
       "count": 89,
-      "share": 0.3920704845814978
+      "share": 0.39035087719298245
     },
     {
       "reason": "CONSENSUS_2_SU_3",
       "count": 76,
-      "share": 0.33480176211453744
+      "share": 0.3333333333333333
     },
     {
       "reason": "FORM --",
       "count": 63,
-      "share": 0.2775330396475771
+      "share": 0.27631578947368424
     },
     {
       "reason": "SERVE/RETURN --",
       "count": 54,
-      "share": 0.23788546255506607
+      "share": 0.23684210526315788
     },
     {
       "reason": "EV +",
-      "count": 50,
-      "share": 0.22026431718061673
+      "count": 51,
+      "share": 0.2236842105263158
     },
     {
       "reason": "SERVE/RETURN -",
       "count": 45,
-      "share": 0.19823788546255505
+      "share": 0.19736842105263158
     },
     {
       "reason": "FORM -",
       "count": 43,
-      "share": 0.1894273127753304
+      "share": 0.18859649122807018
     },
     {
       "reason": "SCOSTAMENTO_ESTREMO",
       "count": 42,
-      "share": 0.18502202643171806
+      "share": 0.18421052631578946
     },
     {
       "reason": "FORM ++",
-      "count": 40,
-      "share": 0.1762114537444934
+      "count": 41,
+      "share": 0.17982456140350878
     },
     {
       "reason": "EV_NON_POSITIVO",
       "count": 38,
-      "share": 0.16740088105726872
+      "share": 0.16666666666666666
     },
     {
       "reason": "SURFACE ++",
       "count": 36,
-      "share": 0.15859030837004406
+      "share": 0.15789473684210525
     },
     {
       "reason": "H2H ++",
       "count": 36,
-      "share": 0.15859030837004406
+      "share": 0.15789473684210525
     },
     {
       "reason": "ELO ++",
       "count": 35,
-      "share": 0.15418502202643172
+      "share": 0.15350877192982457
     },
     {
       "reason": "SURFACE -",
       "count": 33,
-      "share": 0.14537444933920704
+      "share": 0.14473684210526316
     },
     {
       "reason": "H2H --",
       "count": 33,
-      "share": 0.14537444933920704
+      "share": 0.14473684210526316
     },
     {
       "reason": "ELO -",
       "count": 33,
-      "share": 0.14537444933920704
+      "share": 0.14473684210526316
     },
     {
       "reason": "QUOTA_NON_FRESCA",
       "count": 33,
-      "share": 0.14537444933920704
+      "share": 0.14473684210526316
     },
     {
       "reason": "SERVE/RETURN +",
-      "count": 30,
-      "share": 0.13215859030837004
+      "count": 31,
+      "share": 0.13596491228070176
     },
     {
       "reason": "EDGE_TROPPO_BASSO",
       "count": 29,
-      "share": 0.1277533039647577
+      "share": 0.12719298245614036
     },
     {
       "reason": "STORICO_GIOCATORE_LIMITATO",
       "count": 29,
-      "share": 0.1277533039647577
+      "share": 0.12719298245614036
     },
     {
       "reason": "FORM +",
       "count": 28,
-      "share": 0.12334801762114538
+      "share": 0.12280701754385964
     },
     {
       "reason": "ELO +",
-      "count": 27,
-      "share": 0.11894273127753303
+      "count": 28,
+      "share": 0.12280701754385964
     },
     {
       "reason": "SURFACE_SAMPLE_LIMITATO",
-      "count": 23,
-      "share": 0.1013215859030837
+      "count": 24,
+      "share": 0.10526315789473684
+    },
+    {
+      "reason": "SURFACE +",
+      "count": 24,
+      "share": 0.10526315789473684
     },
     {
       "reason": "SERVE/RETURN ++",
       "count": 23,
-      "share": 0.1013215859030837
-    },
-    {
-      "reason": "SURFACE +",
-      "count": 23,
-      "share": 0.1013215859030837
+      "share": 0.10087719298245613
     },
     {
       "reason": "H2H +",
       "count": 2,
-      "share": 0.00881057268722467
+      "share": 0.008771929824561403
     },
     {
       "reason": "H2H -",
       "count": 1,
-      "share": 0.004405286343612335
+      "share": 0.0043859649122807015
     }
   ],
   "watch_reasons": [
