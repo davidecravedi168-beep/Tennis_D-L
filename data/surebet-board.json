@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_at": "2026-09-06T07:24:36.411Z",
+    "updated_at": "2026-09-06T07:50:56.399Z",
     "status": "READY",
     "model_version": "TEP-SUREBET-1.2",
     "source": "Odds-API.io selected bookmakers · shared Tennis Edge event universe",
@@ -23,5 +23,54 @@
     "note": "Solo arbitraggio 2-way Match Winner tra bookmaker diversi. Nessun modello predittivo viene usato."
   },
   "opportunities": [],
-  "checked": []
+  "checked": [
+    {
+      "event_id": "16288214618",
+      "start_at": "2026-09-06T08:30:00Z",
+      "player_a": "Ryan Nijboer",
+      "player_b": "Martin Van Der Meerschen",
+      "tournament": "Tennis - ITF Men Madrid - Final",
+      "market": "MATCH_WINNER_2WAY",
+      "status": "NON_CERTIFICATA",
+      "book_a": "Bet365",
+      "book_b": "Eurobet IT",
+      "odds_a": 1.4,
+      "odds_b": 2.65,
+      "updated_a": "2026-09-06T07:50:03.049Z",
+      "updated_b": "2026-09-06T05:21:42.403Z",
+      "age_a_min": 0.9,
+      "age_b_min": 149.2,
+      "timestamp_spread_min": 148.3,
+      "implied_sum": 1.0916442,
+      "raw_roi": -0.08395062,
+      "safety_buffer": 0.0025,
+      "buffered_roi": -0.08648,
+      "market_depth": 2,
+      "median_no_vig_a": 0.662651,
+      "outlier_distance": 0.000151,
+      "reasons": [
+        "MARGINE_TROPPO_BASSO",
+        "QUOTA_NON_FRESCA",
+        "QUOTE_NON_SINCRONE",
+        "BUFFER_NON_SUPERATO",
+        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
+      ],
+      "expires_at": "2026-09-06T05:31:42.403Z",
+      "execution_window_sec": 0,
+      "same_market_verified": true,
+      "settlement_rules_verified": false,
+      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
+      "stake_100": {
+        "stake_a": 65.43,
+        "stake_b": 34.57,
+        "return_if_a": 91.6,
+        "return_if_b": 91.61,
+        "worst_return": 91.6,
+        "profit": -8.4,
+        "roi": -0.08398
+      },
+      "detected_at": "2026-09-06T07:50:56.399Z",
+      "execution_note": "Copertura matematica valida solo finché entrambe le quote restano accettabili e le regole di settlement dei due bookmaker sono equivalenti."
+    }
+  ]
 }
