@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-06T22:58:41.549Z",
+  "updated_at": "2026-09-06T23:14:22.485Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -1083,11 +1083,11 @@
       },
       "immutable_sha256": "e70991773cc8908f594de5c3b7fefb9c7fb365cc4c5f2aa2190a59b36d643851",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
-        "won": null,
-        "profit_units": null
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-06T23:14:16.861Z",
+        "won": false,
+        "profit_units": -1
       }
     },
     {
@@ -2230,34 +2230,261 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "55DC4B5C358ECF0943410115",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "6EB21BD9C07174833072",
+        "source_immutable_sha256": "dcbfa793159811ac8d4805f21013ab25a85a04e34cb412f6725fd0908187b115",
+        "event_id": "73992466",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-06T23:14:16.861Z",
+        "start_at": "2026-09-07T17:00:00Z",
+        "first_observed_at": "2026-09-06T23:14:22.206Z",
+        "player_a": "Cerundolo, Francisco",
+        "player_b": "Blockx, Alexander",
+        "tour": "atp",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Cerundolo, Francisco",
+        "candidate_odds": 2.37,
+        "candidate_prob": 0.534197,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 0,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "NEGATIVE",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 2,
+        "negative_core": 1,
+        "observed_core": 3,
+        "hard_reject": [],
+        "penalties": [
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "8fea68cce5249e7a3ce29ba7e1c76b3bab7c7626d222f51e6445d8682428590a",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "3C78DBD4D4A4419EF9D88544",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "A13150E6E0F65F02E1D5",
+        "source_immutable_sha256": "7b9048689132db6ee3e54b7d3dfbb925a5035ce77f2b022d3f156f72bf5bbf6d",
+        "event_id": "73992550",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-06T23:14:16.861Z",
+        "start_at": "2026-09-07T18:30:00Z",
+        "first_observed_at": "2026-09-06T23:14:22.206Z",
+        "player_a": "Osaka, Naomi",
+        "player_b": "Rybakina, Elena",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Rybakina, Elena",
+        "candidate_odds": 1.72,
+        "candidate_prob": 0.767719,
+        "decision": "ACCEPT",
+        "pass": true,
+        "score": 3,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 4,
+        "negative_core": 0,
+        "observed_core": 4,
+        "hard_reject": [],
+        "penalties": [
+          "WTA_PENALTY"
+        ]
+      },
+      "immutable_sha256": "f9cfae03bf1110d149d78fde8e3881ca3ab00fee9860d85755e3bca30c843bc1",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "894F8EE55B9317EE157C0556",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "591722A3FA4EB1D686AE",
+        "source_immutable_sha256": "ea7641fc1e1a8be908871211cc0d624a77d58f5f6523c3ddd5420c2e4bad2f29",
+        "event_id": "73992464",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-06T23:14:16.861Z",
+        "start_at": "2026-09-07T20:00:00Z",
+        "first_observed_at": "2026-09-06T23:14:22.206Z",
+        "player_a": "Khachanov, Karen",
+        "player_b": "Tien, Learner",
+        "tour": "atp",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Tien, Learner",
+        "candidate_odds": 1.57,
+        "candidate_prob": 0.633482,
+        "decision": "ACCEPT",
+        "pass": true,
+        "score": 3,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 3,
+        "negative_core": 0,
+        "observed_core": 3,
+        "hard_reject": [],
+        "penalties": []
+      },
+      "immutable_sha256": "c02b1388ff753348e59cd92b3e21cfe125cd703c910dba5f3ee8e6bc0e339973",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "A8CC738FCDCC814DE3A2BC7A",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "0B50977206164B8EB9D1",
+        "source_immutable_sha256": "c29d25974999d8ffc2d10ab92a2ec58315c97770407b3bade048b672f303e702",
+        "event_id": "73992592",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-06T23:14:16.861Z",
+        "start_at": "2026-09-07T23:00:00Z",
+        "first_observed_at": "2026-09-06T23:14:22.206Z",
+        "player_a": "Jovic, Iva",
+        "player_b": "Gauff, Coco",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Gauff, Coco",
+        "candidate_odds": 1.36,
+        "candidate_prob": 0.781123,
+        "decision": "ACCEPT",
+        "pass": true,
+        "score": 3,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 4,
+        "negative_core": 0,
+        "observed_core": 4,
+        "hard_reject": [],
+        "penalties": [
+          "WTA_PENALTY"
+        ]
+      },
+      "immutable_sha256": "fe4ca27955ef4c04079bc4fe6d1bfe29329e67e6b2e680d6ce3389e4a5a13209",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "5C83D4A23E4D564A3C7BA714",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "06406A4EF476D1D9AD4E",
+        "source_immutable_sha256": "b4a2fa4b9e1c3b5a6e616d8ec26e159c1f4181a1064e00794d9fcac3175d0d03",
+        "event_id": "73992460",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-06T23:14:16.861Z",
+        "start_at": "2026-09-08T00:10:00Z",
+        "first_observed_at": "2026-09-06T23:14:22.206Z",
+        "player_a": "Zverev, Alexander",
+        "player_b": "Darderi, Luciano",
+        "tour": "atp",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Darderi, Luciano",
+        "candidate_odds": 7.2,
+        "candidate_prob": 0.180549,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -5,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "NEGATIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 4,
+        "observed_core": 4,
+        "hard_reject": [
+          "ODDS_3_PLUS",
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT"
+        ],
+        "penalties": [
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "2a8a11ca1cc5df619e38074136c3b60ec67a8d670b9c1ff22787bedbbf64790c",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 48,
-    "accepted": 17,
-    "rejected": 31,
-    "open": 23,
-    "settled": 25
+    "total_decisions": 53,
+    "accepted": 20,
+    "rejected": 33,
+    "open": 27,
+    "settled": 26
   },
   "evidence": {
     "state": "COLD_START",
     "champion": {
-      "n": 25,
+      "n": 26,
       "wins": 9,
-      "hit_rate": 0.36,
-      "profit_units": -1.6300000000000001,
-      "roi": -0.06520000000000001,
-      "max_drawdown_units": 8.17
+      "hit_rate": 0.34615384615384615,
+      "profit_units": -2.63,
+      "roi": -0.10115384615384615,
+      "max_drawdown_units": 9.17
     },
     "shadow": {
-      "n": 8,
+      "n": 9,
       "wins": 4,
-      "hit_rate": 0.5,
-      "profit_units": -2.750000000000001,
-      "roi": -0.3437500000000001,
-      "max_drawdown_units": 2.7800000000000002
+      "hit_rate": 0.4444444444444444,
+      "profit_units": -3.750000000000001,
+      "roi": -0.41666666666666674,
+      "max_drawdown_units": 3.750000000000001
     },
-    "delta_roi": -0.2785500000000001,
+    "delta_roi": -0.3155128205128206,
     "review_eligible": false
   }
 }
