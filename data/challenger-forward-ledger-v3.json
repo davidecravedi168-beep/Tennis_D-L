@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-06T09:59:50.858Z",
+  "updated_at": "2026-09-06T10:20:44.356Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -404,13 +404,61 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "6E7C6C41A900C00043A2D46B",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "E13580AC16D6E4B627A8",
+        "source_immutable_sha256": "e86f2fcb893e75b6af8f3dc7b50af879b53c3107d02852a3941e9f0685591ee9",
+        "event_id": "73992462",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-06T10:15:29.891Z",
+        "start_at": "2026-09-07T15:00:00Z",
+        "first_observed_at": "2026-09-06T10:15:35.002Z",
+        "player_a": "Gea, Arthur",
+        "player_b": "Van de Zandschulp, Botic",
+        "tour": "atp",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Van de Zandschulp, Botic",
+        "candidate_odds": 1.61,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 3,
+        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "raw_prob": 0.614354,
+        "calibrated_prob": 0.614354,
+        "calibrated_ev": -0.010890060000000035,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 3,
+        "negative_core": 0,
+        "observed_core": 3,
+        "hard_reject": [
+          "CALIBRATED_EV_LT_2PCT"
+        ],
+        "penalties": []
+      },
+      "immutable_sha256": "9561cfdbfb107cfd91209d3e2234c0304b573893d73bc15f9bc6d6fe4da0d31d",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 8,
+    "total_decisions": 9,
     "accepted": 1,
-    "rejected": 7,
-    "open": 8,
+    "rejected": 8,
+    "open": 9,
     "settled": 0
   },
   "evidence": {
