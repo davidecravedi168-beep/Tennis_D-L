@@ -21,36 +21,31 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           fetch-depth: 0
-
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: "24"
-
       - name: Contract tests
         run: |
+          node --check scripts/calibration-policy-v4.mjs
+          node --check scripts/calibration-audit-v4.mjs
           node --check scripts/challenger-forward-ledger-v3.mjs
           node --check scripts/tennis-model-diagnostics-v2.mjs
           node scripts/challenger-forward-ledger-v3.mjs --self-test
           node scripts/tennis-model-diagnostics-v2.mjs --self-test
-
       - name: Update Challenger V3 forward ledger
         run: node scripts/challenger-forward-ledger-v3.mjs
-
-      - name: Build enhanced model diagnostics
+      - name: Build diagnostics and calibration audit
         run: |
           node scripts/tennis-model-diagnostics-v2.mjs
           node scripts/tennis-model-diagnostics-v2.mjs --validate
-
+          node scripts/calibration-audit-v4.mjs
       - name: Commit evaluation state
         shell: bash
         run: |
           set -euo pipefail
-          git add -- data/challenger-forward-ledger-v3.json data/tennis-model-diagnostics-v2.json
-          if git diff --cached --quiet; then
-            echo "No challenger state changes"
-            exit 0
-          fi
+          git add -- data/challenger-forward-ledger-v3.json data/tennis-model-diagnostics-v2.json data/calibration-audit-v4.json
+          if git diff --cached --quiet; then echo "No challenger state changes"; exit 0; fi
           git config user.name "tennis-edge-challenger"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "data: update Challenger V3 evaluation"
@@ -60,28 +55,9 @@ jobs:
             sleep $((attempt * 2))
           done
           exit 1
-
       - name: Summary
         if: always()
-        shell: bash
         run: |
-          echo "### Tennis Edge Pro Challenger V3" >> "$GITHUB_STEP_SUMMARY"
-          if [ -f data/challenger-forward-ledger-v3.json ]; then
-            node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
-          const fs=require('fs');
-          const x=JSON.parse(fs.readFileSync('data/challenger-forward-ledger-v3.json','utf8'));
-          const e=x.evidence||{},c=e.challenger||{},b=e.champion||{};
-          const pct=v=>Number.isFinite(v)?`${(v*100).toFixed(1)}%`:'—';
-          console.log(`- Decisions: ${x.stats?.total_decisions??0} · accepted ${x.stats?.accepted??0} · settled ${x.stats?.settled??0}`);
-          console.log(`- Evidence: ${e.state||'COLD_START'} · champion ${pct(b.roi)} · challenger ${pct(c.roi)} · review ${e.review_eligible?'YES':'NO'}`);
-          NODE
-          fi
-          if [ -f data/tennis-model-diagnostics-v2.json ]; then
-            node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
-          const fs=require('fs');
-          const x=JSON.parse(fs.readFileSync('data/tennis-model-diagnostics-v2.json','utf8'));
-          const o=x.overall||{};
-          console.log(`- Brier: ${Number.isFinite(o.brier)?o.brier.toFixed(4):'—'} · LogLoss: ${Number.isFinite(o.logloss)?o.logloss.toFixed(4):'—'} · ECE: ${Number.isFinite(o.ece)?o.ece.toFixed(4):'—'}`);
-          console.log(`- Drift: ${x.drift?.state||'—'} · CLV: ${x.clv?.state||'—'}`);
-          NODE
-          fi
+          echo "### Tennis Edge Pro Challenger V3 + Calibration V4" >> "$GITHUB_STEP_SUMMARY"
+          node -e "const fs=require('fs');if(fs.existsSync('data/tennis-model-diagnostics-v2.json')){const x=JSON.parse(fs.readFileSync('data/tennis-model-diagnostics-v2.json'));console.log('- Drift: '+x.drift.state+' · CLV: '+x.clv.state)}" >> "$GITHUB_STEP_SUMMARY"
+          node -e "const fs=require('fs');if(fs.existsSync('data/calibration-audit-v4.json')){const x=JSON.parse(fs.readFileSync('data/calibration-audit-v4.json'));console.log('- Calibration forward sample: '+x.forward.n+' · '+x.forward.state)}" >> "$GITHUB_STEP_SUMMARY"
