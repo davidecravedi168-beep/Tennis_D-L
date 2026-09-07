@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-07T15:59:58.105Z",
+  "updated_at": "2026-09-07T16:22:26.100Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -1527,13 +1527,118 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "AAD612C8FA032A4AC4F346F5",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "26740A8417B09F39A0CB",
+        "source_immutable_sha256": "add6a8d722e713515fc263ddb729026dac12a75d4cb7f35b9208c900215040e1",
+        "event_id": "74413586",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-07T16:16:34.246Z",
+        "start_at": "2026-09-08T15:00:00Z",
+        "first_observed_at": "2026-09-07T16:16:39.743Z",
+        "player_a": "Salkova, Dominika",
+        "player_b": "Riera, Julia",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Riera, Julia",
+        "candidate_odds": 2.37,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -2,
+        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "raw_prob": 0.480085,
+        "calibrated_prob": 0.4077421875,
+        "calibrated_ev": -0.03365101562499995,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "NEGATIVE",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 2,
+        "observed_core": 2,
+        "hard_reject": [
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_LT_2PCT",
+          "WTA_NEEDS_3_CORE_POSITIVE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "b18c475172c0484eca249414e33548a6a5a19dbe182554b594b0264f74a8f84f",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "challenger_id": "362AEC56F7BE55E37B1BBBB7",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "6DA614C17644BD6E3FCB",
+        "source_immutable_sha256": "8732fb4e61c7794fbebf81cbc0086d2ce48a107c8f5b66dfb3dc9bd910f847bc",
+        "event_id": "74413594",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-07T16:16:34.246Z",
+        "start_at": "2026-09-08T15:00:00Z",
+        "first_observed_at": "2026-09-07T16:16:39.743Z",
+        "player_a": "You, Xiaodi",
+        "player_b": "Liu, Claire",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "You, Xiaodi",
+        "candidate_odds": 4.33,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -1,
+        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "raw_prob": 0.476264,
+        "calibrated_prob": 0.23094688221709006,
+        "calibrated_ev": 0,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 1,
+        "observed_core": 1,
+        "hard_reject": [
+          "ODDS_3_PLUS",
+          "CALIBRATED_EV_LT_2PCT",
+          "WTA_NEEDS_3_CORE_POSITIVE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "67e14d28fde194127e37d8a7c7d6457c4d60d4f32498f64a04696b0aff41472f",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 31,
+    "total_decisions": 33,
     "accepted": 7,
-    "rejected": 24,
-    "open": 29,
+    "rejected": 26,
+    "open": 31,
     "settled": 2
   },
   "evidence": {
