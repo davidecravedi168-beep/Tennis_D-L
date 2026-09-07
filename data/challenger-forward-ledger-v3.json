@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-06T23:59:48.961Z",
+  "updated_at": "2026-09-07T00:33:20.809Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -494,11 +494,11 @@
       },
       "immutable_sha256": "c1f6bbf27af0e6580638c104102197e8a6a8e27db4cdda0298cb9faea9697343",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-07T00:27:10.276Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -1186,18 +1186,18 @@
     "total_decisions": 24,
     "accepted": 5,
     "rejected": 19,
-    "open": 24,
-    "settled": 0
+    "open": 23,
+    "settled": 1
   },
   "evidence": {
     "state": "COLD_START",
     "champion": {
-      "n": 0,
+      "n": 1,
       "wins": 0,
-      "hit_rate": null,
-      "profit_units": 0,
-      "roi": null,
-      "max_drawdown_units": 0
+      "hit_rate": 0,
+      "profit_units": -1,
+      "roi": -1,
+      "max_drawdown_units": 1
     },
     "challenger": {
       "n": 0,
@@ -1207,7 +1207,7 @@
       "roi": null,
       "max_drawdown_units": 0
     },
-    "delta_roi": 0,
+    "delta_roi": 1,
     "review_eligible": false
   }
 }
