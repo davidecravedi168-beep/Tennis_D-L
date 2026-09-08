@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-08T09:00:30.384Z",
+  "updated_at": "2026-09-08T09:23:38.795Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -446,11 +446,11 @@
       },
       "immutable_sha256": "9561cfdbfb107cfd91209d3e2234c0304b573893d73bc15f9bc6d6fe4da0d31d",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-08T09:17:34.925Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -977,11 +977,11 @@
       },
       "immutable_sha256": "2df4af7b68832547f163e6c1af33cfba9108eea39d3761748c7a9d00acc041d0",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
-        "won": null,
-        "profit_units": null
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-08T09:17:34.925Z",
+        "won": false,
+        "profit_units": -1
       }
     },
     {
@@ -1228,11 +1228,11 @@
       },
       "immutable_sha256": "effcb4710e92ca43be3801c3f4f4d8700dae8918e60380064e6be2c1552a9204",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-08T09:17:34.925Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -1278,11 +1278,11 @@
       },
       "immutable_sha256": "4c85e0e408c9d7ccadc620f068b07624ecb78cc53160dd4e42ea6fd7823863ef",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-08T09:17:34.925Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -1834,28 +1834,28 @@
     "total_decisions": 37,
     "accepted": 7,
     "rejected": 30,
-    "open": 30,
-    "settled": 7
+    "open": 26,
+    "settled": 11
   },
   "evidence": {
     "state": "COLD_START",
     "champion": {
-      "n": 7,
-      "wins": 3,
-      "hit_rate": 0.42857142857142855,
-      "profit_units": -0.7700000000000002,
-      "roi": -0.11000000000000003,
+      "n": 11,
+      "wins": 5,
+      "hit_rate": 0.45454545454545453,
+      "profit_units": 0.5899999999999999,
+      "roi": 0.05363636363636362,
       "max_drawdown_units": 3
     },
     "challenger": {
-      "n": 0,
+      "n": 1,
       "wins": 0,
-      "hit_rate": null,
-      "profit_units": 0,
-      "roi": null,
-      "max_drawdown_units": 0
+      "hit_rate": 0,
+      "profit_units": -1,
+      "roi": -1,
+      "max_drawdown_units": 1
     },
-    "delta_roi": 0.11000000000000003,
+    "delta_roi": -1.0536363636363637,
     "review_eligible": false
   }
 }
