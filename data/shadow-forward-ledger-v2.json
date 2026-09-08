@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-08T12:22:14.867Z",
+  "updated_at": "2026-09-08T12:27:58.046Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -3238,13 +3238,62 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "8A3C56C2E54DB6EF47B0A0E7",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "AD812071EB7714827B35",
+        "source_immutable_sha256": "aec4b42be9c0c339906ada68f9632873f2522a85cda7cbe0b0e545103e0407ba",
+        "event_id": "15024409816",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-08T12:27:51.866Z",
+        "start_at": "2026-09-09T02:00:00Z",
+        "first_observed_at": "2026-09-08T12:27:57.824Z",
+        "player_a": "Joanna Garland",
+        "player_b": "Sijia Wei",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Sijia Wei",
+        "candidate_odds": 3.75,
+        "candidate_prob": 0.416581,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -4,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 0,
+        "negative_core": 2,
+        "observed_core": 2,
+        "hard_reject": [
+          "ODDS_3_PLUS",
+          "TWO_CORE_NEGATIVES"
+        ],
+        "penalties": [
+          "WTA_PENALTY",
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "fdd4ae1ed8306bfc7283e1f1265ad6c31688dfc2fe355d96504bdedcd3425243",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 70,
+    "total_decisions": 71,
     "accepted": 26,
-    "rejected": 44,
-    "open": 27,
+    "rejected": 45,
+    "open": 28,
     "settled": 43
   },
   "evidence": {

@@ -1,7 +1,7 @@
 {
   "schema": "TEP-FORWARD-LEDGER-1",
   "created_at": "2026-08-27T21:05:46.428Z",
-  "updated_at": "2026-09-08T12:22:14.608Z",
+  "updated_at": "2026-09-08T12:27:57.824Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -14,18 +14,18 @@
     "paper_candidate_note": "Paper candidate metrics evaluate every settled pre-match market candidate at flat 1u using the locked candidate odds. They are validation-only and never count as official VALUE/STRONG VALUE picks."
   },
   "stats": {
-    "total_forecasts": 300,
-    "unique_matches": 300,
-    "ledger_records": 577,
-    "audited_records": 572,
+    "total_forecasts": 301,
+    "unique_matches": 301,
+    "ledger_records": 578,
+    "audited_records": 573,
     "duplicate_records_ignored": 5,
     "radar_forecasts": 297,
-    "market_lock_forecasts": 275,
-    "open_forecasts": 65,
+    "market_lock_forecasts": 276,
+    "open_forecasts": 66,
     "settled_forecasts": 235,
     "settled_radar_forecasts": 232,
     "settled_market_forecasts": 232,
-    "no_bet_forecasts": 260,
+    "no_bet_forecasts": 261,
     "watch_forecasts": 9,
     "qualified_forecasts": 6,
     "settled_picks": 4,
@@ -53,7 +53,7 @@
     "avg_clv": 0.031690750000000004,
     "clv_sample": 4,
     "next_audit_target": 500,
-    "forecasts_to_next_audit": 200
+    "forecasts_to_next_audit": 199
   },
   "records": [
     {
@@ -41533,6 +41533,80 @@
         "warnings": []
       },
       "immutable_sha256": "fed6e09cc7021da58a367d9119d72b4619a7c45d81261bd7b1b21945f0866b79",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "actual_winner": null,
+        "settled_at": null,
+        "pick_won": null,
+        "profit_units": null,
+        "brier": null,
+        "log_loss": null,
+        "shadow_brier": null,
+        "clv": null,
+        "closing_odds": null
+      }
+    },
+    {
+      "ledger_id": "AD812071EB7714827B35",
+      "first_observed_at": "2026-09-08T12:27:57.824Z",
+      "capture_method": "FIRST_OBSERVED_MARKET_LOCK_PREMATCH",
+      "immutable": {
+        "forecast_stage": "MARKET_LOCK",
+        "event_id": "15024409816",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "prediction_audit_id": "9B6421EE70D1",
+        "predicted_at": "2026-09-08T12:27:51.866Z",
+        "start_at": "2026-09-09T02:00:00Z",
+        "player_a": "Joanna Garland",
+        "player_b": "Sijia Wei",
+        "tournament": "Tennis - ITF Women Guiyang - R1",
+        "surface": "Hard",
+        "tour": "wta",
+        "pre_status": null,
+        "verdict": "NO BET",
+        "p_a": 0.583419,
+        "p_b": 0.416581,
+        "raw_p_a": 0.567395,
+        "shadow_p_a": 0.571846,
+        "confidence": 64.945806,
+        "data_quality": 67.558442,
+        "uncertainty": 0.084953,
+        "candidate_side": "B",
+        "candidate_name": "Sijia Wei",
+        "candidate_prob": 0.416581,
+        "candidate_odds": 3.75,
+        "candidate_book": "Bet365",
+        "candidate_ev": 0.562178,
+        "candidate_edge": 0.166581,
+        "robust_prob": 0.331628,
+        "robust_ev": 0.243606,
+        "robust_edge": 0.081628,
+        "market_consensus_a": 0.75,
+        "market_depth": 1,
+        "pick_side": null,
+        "pick_name": null,
+        "pick_prob": null,
+        "pick_odds": null,
+        "pick_book": null,
+        "pick_ev": null,
+        "pick_edge": null,
+        "calibration_scope": "wta:Hard",
+        "calibration_sample": 152,
+        "model_health": "HEALTHY",
+        "reason_codes": [
+          "ELO -",
+          "SURFACE --",
+          "EV ++"
+        ],
+        "no_bet_reasons": [
+          "STORICO_GIOCATORE_LIMITATO"
+        ],
+        "warnings": [
+          "STORICO_GIOCATORE_LIMITATO"
+        ]
+      },
+      "immutable_sha256": "aec4b42be9c0c339906ada68f9632873f2522a85cda7cbe0b0e545103e0407ba",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
