@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-08T11:59:43.464Z",
+  "updated_at": "2026-09-08T12:28:39.260Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -2030,13 +2030,67 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "11FE0D5A095DDDF0BBE71AD7",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "AD812071EB7714827B35",
+        "source_immutable_sha256": "aec4b42be9c0c339906ada68f9632873f2522a85cda7cbe0b0e545103e0407ba",
+        "event_id": "15024409816",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-08T12:27:51.866Z",
+        "start_at": "2026-09-09T02:00:00Z",
+        "first_observed_at": "2026-09-08T12:27:57.824Z",
+        "player_a": "Joanna Garland",
+        "player_b": "Sijia Wei",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Sijia Wei",
+        "candidate_odds": 3.75,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -2,
+        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "raw_prob": 0.416581,
+        "calibrated_prob": 0.26666666666666666,
+        "calibrated_ev": 0,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 0,
+        "negative_core": 2,
+        "observed_core": 2,
+        "hard_reject": [
+          "ODDS_3_PLUS",
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_LT_2PCT",
+          "WTA_NEEDS_3_CORE_POSITIVE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "0aa115b14270efe87d541acb01e60825243a962f75f221a678c1418953274648",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 41,
+    "total_decisions": 42,
     "accepted": 7,
-    "rejected": 34,
-    "open": 26,
+    "rejected": 35,
+    "open": 27,
     "settled": 15
   },
   "evidence": {
