@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-08T14:01:03.793Z",
+  "updated_at": "2026-09-08T14:18:52.896Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -2224,11 +2224,11 @@
       },
       "immutable_sha256": "4a876421216f1e9b89fc4e0968d625b66e2534bd282b2c7e19bb6e28637af3c4",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
-        "won": null,
-        "profit_units": null
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-08T14:18:46.189Z",
+        "won": true,
+        "profit_units": 1.1
       }
     },
     {
@@ -3287,34 +3287,79 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "1CE14CD83ED2ED35F48925CA",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "8DC5CB0B217D14AE6C3B",
+        "source_immutable_sha256": "4bef9847b2df4c13152b4cf96eff3f29d14a68e48461247d6284ed755afcf8db",
+        "event_id": "15430508111",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-08T14:18:46.189Z",
+        "start_at": "2026-09-09T09:00:00Z",
+        "first_observed_at": "2026-09-08T14:18:52.681Z",
+        "player_a": "Aoi Ito",
+        "player_b": "Linda Fruhvirtova",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Aoi Ito",
+        "candidate_odds": 2.5,
+        "candidate_prob": 0.581031,
+        "decision": "ACCEPT",
+        "pass": true,
+        "score": 1,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 3,
+        "negative_core": 1,
+        "observed_core": 4,
+        "hard_reject": [],
+        "penalties": [
+          "WTA_PENALTY"
+        ]
+      },
+      "immutable_sha256": "588af5a23553a175c9b207e23d7c0f9d59f07e3e87b6c25a55257623671e5660",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 71,
-    "accepted": 26,
+    "total_decisions": 72,
+    "accepted": 27,
     "rejected": 45,
     "open": 28,
-    "settled": 43
+    "settled": 44
   },
   "evidence": {
     "state": "OBSERVE",
     "champion": {
-      "n": 43,
-      "wins": 16,
-      "hit_rate": 0.37209302325581395,
-      "profit_units": -4.96,
-      "roi": -0.11534883720930232,
+      "n": 44,
+      "wins": 17,
+      "hit_rate": 0.38636363636363635,
+      "profit_units": -3.86,
+      "roi": -0.08772727272727272,
       "max_drawdown_units": 14.17
     },
     "shadow": {
-      "n": 16,
-      "wins": 8,
-      "hit_rate": 0.5,
-      "profit_units": -4.4,
-      "roi": -0.275,
+      "n": 17,
+      "wins": 9,
+      "hit_rate": 0.5294117647058824,
+      "profit_units": -3.3000000000000003,
+      "roi": -0.19411764705882353,
       "max_drawdown_units": 4.760000000000001
     },
-    "delta_roi": -0.1596511627906977,
+    "delta_roi": -0.10639037433155081,
     "review_eligible": false
   }
 }
