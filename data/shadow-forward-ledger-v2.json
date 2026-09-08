@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-08T07:59:55.890Z",
+  "updated_at": "2026-09-08T08:18:10.779Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -2043,11 +2043,11 @@
       },
       "immutable_sha256": "374e71eb3469ec5be750025851007c424e2100652cfa5c96f3089f64dc8d7522",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
-        "won": null,
-        "profit_units": null
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-08T08:18:04.908Z",
+        "won": true,
+        "profit_units": 0.6599999999999999
       }
     },
     {
@@ -2088,11 +2088,11 @@
       },
       "immutable_sha256": "cc93b2fc9bf220ca6b2b404354b219046c4a333ef8eab7c77bc035f26fa0a0f2",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
-        "won": null,
-        "profit_units": null
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-08T08:18:04.908Z",
+        "won": false,
+        "profit_units": -1
       }
     },
     {
@@ -3059,28 +3059,28 @@
     "total_decisions": 66,
     "accepted": 25,
     "rejected": 41,
-    "open": 33,
-    "settled": 33
+    "open": 31,
+    "settled": 35
   },
   "evidence": {
-    "state": "COLD_START",
+    "state": "OBSERVE",
     "champion": {
-      "n": 33,
-      "wins": 11,
-      "hit_rate": 0.3333333333333333,
-      "profit_units": -5.0600000000000005,
-      "roi": -0.15333333333333335,
+      "n": 35,
+      "wins": 12,
+      "hit_rate": 0.34285714285714286,
+      "profit_units": -5.4,
+      "roi": -0.1542857142857143,
       "max_drawdown_units": 14.17
     },
     "shadow": {
-      "n": 9,
-      "wins": 4,
-      "hit_rate": 0.4444444444444444,
-      "profit_units": -3.750000000000001,
-      "roi": -0.41666666666666674,
-      "max_drawdown_units": 3.750000000000001
+      "n": 11,
+      "wins": 5,
+      "hit_rate": 0.45454545454545453,
+      "profit_units": -4.090000000000001,
+      "roi": -0.3718181818181819,
+      "max_drawdown_units": 4.090000000000001
     },
-    "delta_roi": -0.2633333333333334,
+    "delta_roi": -0.21753246753246758,
     "review_eligible": false
   }
 }
