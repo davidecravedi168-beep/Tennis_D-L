@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-09T21:00:02.607Z",
+  "updated_at": "2026-09-09T21:20:09.311Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -1975,11 +1975,11 @@
       },
       "immutable_sha256": "172078f58b4adf9508cc1a1f0fef20b736aea82e92a789e9a320d27bbc3cdcf9",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-09T21:14:31.735Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -2126,11 +2126,11 @@
       },
       "immutable_sha256": "4219bfc64508c4902dda7b58122456c5560e67c07e36119e5977c60dc78d773e",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
-        "won": null,
-        "profit_units": null
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-09T21:14:31.735Z",
+        "won": true,
+        "profit_units": 1.5
       }
     },
     {
@@ -2803,28 +2803,28 @@
     "total_decisions": 56,
     "accepted": 8,
     "rejected": 48,
-    "open": 26,
-    "settled": 30
+    "open": 24,
+    "settled": 32
   },
   "evidence": {
     "state": "COLD_START",
     "champion": {
-      "n": 30,
-      "wins": 15,
+      "n": 32,
+      "wins": 16,
       "hit_rate": 0.5,
-      "profit_units": 0.4100000000000008,
-      "roi": 0.013666666666666693,
-      "max_drawdown_units": 4
+      "profit_units": 0.9100000000000008,
+      "roi": 0.028437500000000025,
+      "max_drawdown_units": 4.64
     },
     "challenger": {
-      "n": 5,
-      "wins": 2,
-      "hit_rate": 0.4,
-      "profit_units": -1.92,
-      "roi": -0.384,
+      "n": 6,
+      "wins": 3,
+      "hit_rate": 0.5,
+      "profit_units": -0.41999999999999993,
+      "roi": -0.06999999999999999,
       "max_drawdown_units": 1.92
     },
-    "delta_roi": -0.3976666666666667,
+    "delta_roi": -0.09843750000000001,
     "review_eligible": false
   }
 }
