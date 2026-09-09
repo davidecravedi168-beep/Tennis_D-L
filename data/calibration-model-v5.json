@@ -1,11 +1,34 @@
 {
   "schema": "TEP-CALIBRATION-MODEL-V5",
-  "status": "INACTIVE",
-  "version": "V5-BOOTSTRAP",
-  "source_settled_n": 0,
-  "params": null,
+  "status": "ACTIVE",
+  "version": "V5-247-1788983089019",
+  "promoted_at": "2026-09-09T19:44:49.019Z",
+  "source_settled_n": 247,
+  "train_n": 207,
+  "validation_n": 40,
+  "params": {
+    "a": 1.45,
+    "b": -0.35000000000000003,
+    "wta_bias": 0.05
+  },
+  "validation": {
+    "incumbent": {
+      "n": 40,
+      "brier": 0.2034255863895229,
+      "logloss": 0.5913703686156,
+      "ece": 0.13348834903713175
+    },
+    "candidate": {
+      "n": 40,
+      "brier": 0.1960634471132704,
+      "logloss": 0.5661803041760065,
+      "ece": 0.08050156677982875
+    }
+  },
   "policy": {
-    "fallback": "TEP_CALIBRATION_V4_2026-09-06",
-    "note": "Becomes ACTIVE only after the guarded trainer passes holdout promotion gates."
+    "auto_train_every_cycle": true,
+    "min_new_labels_for_promotion": 10,
+    "holdout_size": 40,
+    "rollback": "fallback to previous active model or V4 if state invalid"
   }
 }
