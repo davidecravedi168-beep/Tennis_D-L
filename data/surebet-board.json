@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_at": "2026-09-09T22:25:52.128Z",
+    "updated_at": "2026-09-09T22:51:11.654Z",
     "status": "READY",
     "model_version": "TEP-SUREBET-1.2",
     "source": "Odds-API.io selected bookmakers · shared Tennis Edge event universe",
@@ -9,7 +9,7 @@
       "Eurobet IT"
     ],
     "bookmaker_count": 2,
-    "events_total": 184,
+    "events_total": 183,
     "events_scanned": 10,
     "api_calls": 1,
     "api_call_budget": 3,
@@ -23,5 +23,101 @@
     "note": "Solo arbitraggio 2-way Match Winner tra bookmaker diversi. Nessun modello predittivo viene usato."
   },
   "opportunities": [],
-  "checked": []
+  "checked": [
+    {
+      "event_id": "73992544",
+      "start_at": "2026-09-10T23:00:00Z",
+      "player_a": "Sabalenka, Aryna",
+      "player_b": "Pegula, Jessica",
+      "tournament": "WTA - US Open, New York, USA",
+      "market": "MATCH_WINNER_2WAY",
+      "status": "NON_CERTIFICATA",
+      "book_a": "Bet365",
+      "book_b": "Eurobet IT",
+      "odds_a": 1.53,
+      "odds_b": 2.45,
+      "updated_a": "2026-09-09T22:44:49.252Z",
+      "updated_b": "2026-09-09T08:00:48.198Z",
+      "age_a_min": 6.4,
+      "age_b_min": 890.4,
+      "timestamp_spread_min": 884,
+      "implied_sum": 1.06175804,
+      "raw_roi": -0.05816583,
+      "safety_buffer": 0.0025,
+      "buffered_roi": -0.06072,
+      "market_depth": 2,
+      "median_no_vig_a": 0.620347,
+      "outlier_distance": 0.001661,
+      "reasons": [
+        "MARGINE_TROPPO_BASSO",
+        "QUOTA_NON_FRESCA",
+        "QUOTE_NON_SINCRONE",
+        "BUFFER_NON_SUPERATO",
+        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
+      ],
+      "expires_at": "2026-09-09T08:10:48.198Z",
+      "execution_window_sec": 0,
+      "same_market_verified": true,
+      "settlement_rules_verified": false,
+      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
+      "stake_100": {
+        "stake_a": 61.56,
+        "stake_b": 38.44,
+        "return_if_a": 94.19,
+        "return_if_b": 94.18,
+        "worst_return": 94.18,
+        "profit": -5.82,
+        "roi": -0.05822
+      },
+      "detected_at": "2026-09-09T22:51:11.654Z",
+      "execution_note": "Copertura matematica valida solo finché entrambe le quote restano accettabili e le regole di settlement dei due bookmaker sono equivalenti."
+    },
+    {
+      "event_id": "73992546",
+      "start_at": "2026-09-11T00:10:00Z",
+      "player_a": "Gauff, Coco",
+      "player_b": "Rybakina, Elena",
+      "tournament": "WTA - US Open, New York, USA",
+      "market": "MATCH_WINNER_2WAY",
+      "status": "NON_CERTIFICATA",
+      "book_a": "Eurobet IT",
+      "book_b": "Bet365",
+      "odds_a": 1.71,
+      "odds_b": 2.2,
+      "updated_a": "2026-09-09T22:22:52.201Z",
+      "updated_b": "2026-09-09T22:26:49.001Z",
+      "age_a_min": 28.3,
+      "age_b_min": 24.4,
+      "timestamp_spread_min": 3.9,
+      "implied_sum": 1.03934078,
+      "raw_roi": -0.03785166,
+      "safety_buffer": 0.0025,
+      "buffered_roi": -0.04044,
+      "market_depth": 2,
+      "median_no_vig_a": 0.569948,
+      "outlier_distance": 0.022329,
+      "reasons": [
+        "MARGINE_TROPPO_BASSO",
+        "QUOTA_NON_FRESCA",
+        "BUFFER_NON_SUPERATO",
+        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
+      ],
+      "expires_at": "2026-09-09T22:32:52.201Z",
+      "execution_window_sec": 0,
+      "same_market_verified": true,
+      "settlement_rules_verified": false,
+      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
+      "stake_100": {
+        "stake_a": 56.27,
+        "stake_b": 43.73,
+        "return_if_a": 96.22,
+        "return_if_b": 96.21,
+        "worst_return": 96.21,
+        "profit": -3.79,
+        "roi": -0.03794
+      },
+      "detected_at": "2026-09-09T22:51:11.654Z",
+      "execution_note": "Copertura matematica valida solo finché entrambe le quote restano accettabili e le regole di settlement dei due bookmaker sono equivalenti."
+    }
+  ]
 }
