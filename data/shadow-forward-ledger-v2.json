@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-09T07:01:29.760Z",
+  "updated_at": "2026-09-09T07:17:49.684Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -3612,13 +3612,110 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "7272C8592F1B426A7B12CA3A",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "E7B20FF0CC2D3214C156",
+        "source_immutable_sha256": "6dbd5e773ec5a5a86032e388d7991e89324cf65ecd89a5055a6cd06d03d6d4bc",
+        "event_id": "74293728",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-09T07:17:43.512Z",
+        "start_at": "2026-09-09T19:40:00Z",
+        "first_observed_at": "2026-09-09T07:17:49.420Z",
+        "player_a": "Day, Kayla",
+        "player_b": "Jacquemot, Elsa",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Jacquemot, Elsa",
+        "candidate_odds": 3,
+        "candidate_prob": 0.546748,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -2,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "NEGATIVE",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 1,
+        "negative_core": 1,
+        "observed_core": 2,
+        "hard_reject": [
+          "ODDS_3_PLUS"
+        ],
+        "penalties": [
+          "WTA_PENALTY",
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "71732b0e75eb320dd14ec7828a7f275d7c3fb4e39f9926fa79a100e9d699bb63",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "9699741ED5B1E9DB589598F1",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "48883AC37AAE36DD4144",
+        "source_immutable_sha256": "9686867e0056e29a303ac9c694ca961ae155c9a0601fc9d24efca25169854315",
+        "event_id": "74293718",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-09T07:17:43.512Z",
+        "start_at": "2026-09-09T20:50:00Z",
+        "first_observed_at": "2026-09-09T07:17:49.420Z",
+        "player_a": "Podoroska, Nadia",
+        "player_b": "Blinkova, Anna",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Podoroska, Nadia",
+        "candidate_odds": 2.5,
+        "candidate_prob": 0.462733,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -4,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 1,
+        "negative_core": 3,
+        "observed_core": 4,
+        "hard_reject": [
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT"
+        ],
+        "penalties": [
+          "WTA_PENALTY",
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "ac10dd6e653b599174cbbb04d221d86b635a673933d207a10600b033363db4d7",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 78,
+    "total_decisions": 80,
     "accepted": 28,
-    "rejected": 50,
-    "open": 25,
+    "rejected": 52,
+    "open": 27,
     "settled": 53
   },
   "evidence": {
