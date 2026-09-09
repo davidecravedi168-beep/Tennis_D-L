@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-09T02:59:02.733Z",
+  "updated_at": "2026-09-09T03:16:58.346Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -2724,11 +2724,11 @@
       },
       "immutable_sha256": "b3a44249f191f899871ccb0c86f5ec142e68fba9ce519aeebb1556c875ced138",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
-        "won": null,
-        "profit_units": null
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-09T03:16:51.434Z",
+        "won": true,
+        "profit_units": 0.18999999999999995
       }
     },
     {
@@ -3517,34 +3517,129 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "23A260B586735E37ADC8CD08",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "BBD7459CCF751393B1F4",
+        "source_immutable_sha256": "b3e69c785f78be66494714a6685f3deb3700763a6a27b3f373a9d9fb1d11d014",
+        "event_id": "74283870",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-09T03:16:51.434Z",
+        "start_at": "2026-09-09T18:15:00Z",
+        "first_observed_at": "2026-09-09T03:16:58.099Z",
+        "player_a": "Munar, Jaume",
+        "player_b": "Bueno, Gonzalo",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "B",
+        "candidate_name": "Bueno, Gonzalo",
+        "candidate_odds": 4,
+        "candidate_prob": 0.383286,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -2,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 0,
+        "negative_core": 1,
+        "observed_core": 1,
+        "hard_reject": [
+          "ODDS_3_PLUS"
+        ],
+        "penalties": [
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "cb01879ac1071b719932b5d8a65c1d4ccd032e162a9abde06e304706dfec4be2",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "525158F93BEAF7A932653777",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "8241DFFAB892B02B932A",
+        "source_immutable_sha256": "18ea09bbbfa93c62affde91b1b95a45082a54eb263a6cfa26e235115037ff3b2",
+        "event_id": "74294126",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-09T03:16:51.434Z",
+        "start_at": "2026-09-10T09:30:00Z",
+        "first_observed_at": "2026-09-09T03:16:58.099Z",
+        "player_a": "Waltert, Simona",
+        "player_b": "Papamichail, Despina",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Papamichail, Despina",
+        "candidate_odds": 7,
+        "candidate_prob": 0.531292,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 0,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 2,
+        "negative_core": 0,
+        "observed_core": 2,
+        "hard_reject": [
+          "ODDS_3_PLUS"
+        ],
+        "penalties": [
+          "WTA_PENALTY",
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "0b51d200a7d644884a96fb1f5089dcc690c0b89a7b42d06b9671acded560b5da",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 76,
+    "total_decisions": 78,
     "accepted": 28,
-    "rejected": 48,
-    "open": 25,
-    "settled": 51
+    "rejected": 50,
+    "open": 26,
+    "settled": 52
   },
   "evidence": {
     "state": "OBSERVE",
     "champion": {
-      "n": 51,
-      "wins": 21,
-      "hit_rate": 0.4117647058823529,
-      "profit_units": -3.5199999999999987,
-      "roi": -0.06901960784313722,
+      "n": 52,
+      "wins": 22,
+      "hit_rate": 0.4230769230769231,
+      "profit_units": -3.3299999999999987,
+      "roi": -0.06403846153846152,
       "max_drawdown_units": 14.17
     },
     "shadow": {
-      "n": 20,
-      "wins": 11,
-      "hit_rate": 0.55,
-      "profit_units": -3.33,
-      "roi": -0.1665,
+      "n": 21,
+      "wins": 12,
+      "hit_rate": 0.5714285714285714,
+      "profit_units": -3.14,
+      "roi": -0.14952380952380953,
       "max_drawdown_units": 4.760000000000001
     },
-    "delta_roi": -0.09748039215686279,
+    "delta_roi": -0.08548534798534801,
     "review_eligible": false
   }
 }
