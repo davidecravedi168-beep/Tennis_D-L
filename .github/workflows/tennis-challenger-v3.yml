@@ -28,11 +28,15 @@ jobs:
       - name: Contract tests
         run: |
           node --check scripts/calibration-policy-v4.mjs
+          node --check scripts/adaptive-calibration-v5.mjs
+          node --check scripts/auto-calibration-trainer-v5.mjs
           node --check scripts/calibration-audit-v4.mjs
           node --check scripts/challenger-forward-ledger-v3.mjs
           node --check scripts/tennis-model-diagnostics-v2.mjs
           node scripts/challenger-forward-ledger-v3.mjs --self-test
           node scripts/tennis-model-diagnostics-v2.mjs --self-test
+      - name: Train guarded calibration candidate
+        run: node scripts/auto-calibration-trainer-v5.mjs
       - name: Update Challenger V3 forward ledger
         run: node scripts/challenger-forward-ledger-v3.mjs
       - name: Build diagnostics and calibration audit
@@ -44,11 +48,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git add -- data/challenger-forward-ledger-v3.json data/tennis-model-diagnostics-v2.json data/calibration-audit-v4.json
+          git add -- data/calibration-model-v5.json data/calibration-training-v5.json data/challenger-forward-ledger-v3.json data/tennis-model-diagnostics-v2.json data/calibration-audit-v4.json
           if git diff --cached --quiet; then echo "No challenger state changes"; exit 0; fi
           git config user.name "tennis-edge-challenger"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "data: update Challenger V3 evaluation"
+          git commit -m "data: update adaptive calibration and Challenger evaluation"
           for attempt in 1 2 3 4 5; do
             if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
             git rebase --abort || true
@@ -58,6 +62,6 @@ jobs:
       - name: Summary
         if: always()
         run: |
-          echo "### Tennis Edge Pro Challenger V3 + Calibration V4" >> "$GITHUB_STEP_SUMMARY"
+          echo "### Tennis Edge Pro · Adaptive Calibration V5" >> "$GITHUB_STEP_SUMMARY"
+          node -e "const fs=require('fs');if(fs.existsSync('data/calibration-training-v5.json')){const x=JSON.parse(fs.readFileSync('data/calibration-training-v5.json'));console.log('- Auto-ML: '+x.status+' · settled '+x.settled_n+' · holdout '+(x.holdout_n||0))}" >> "$GITHUB_STEP_SUMMARY"
           node -e "const fs=require('fs');if(fs.existsSync('data/tennis-model-diagnostics-v2.json')){const x=JSON.parse(fs.readFileSync('data/tennis-model-diagnostics-v2.json'));console.log('- Drift: '+x.drift.state+' · CLV: '+x.clv.state)}" >> "$GITHUB_STEP_SUMMARY"
-          node -e "const fs=require('fs');if(fs.existsSync('data/calibration-audit-v4.json')){const x=JSON.parse(fs.readFileSync('data/calibration-audit-v4.json'));console.log('- Calibration forward sample: '+x.forward.n+' · '+x.forward.state)}" >> "$GITHUB_STEP_SUMMARY"
