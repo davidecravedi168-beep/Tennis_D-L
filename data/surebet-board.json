@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_at": "2026-09-09T15:28:04.333Z",
+    "updated_at": "2026-09-09T15:53:30.158Z",
     "status": "READY",
     "model_version": "TEP-SUREBET-1.2",
     "source": "Odds-API.io selected bookmakers · shared Tennis Edge event universe",
@@ -9,7 +9,7 @@
       "Eurobet IT"
     ],
     "bookmaker_count": 2,
-    "events_total": 179,
+    "events_total": 175,
     "events_scanned": 10,
     "api_calls": 1,
     "api_call_budget": 3,
@@ -23,5 +23,99 @@
     "note": "Solo arbitraggio 2-way Match Winner tra bookmaker diversi. Nessun modello predittivo viene usato."
   },
   "opportunities": [],
-  "checked": []
+  "checked": [
+    {
+      "event_id": "74283862",
+      "start_at": "2026-09-09T16:00:00Z",
+      "player_a": "Ritschard, Alexander",
+      "player_b": "Ofner, Sebastian",
+      "tournament": "Challenger - Seville, Spain",
+      "market": "MATCH_WINNER_2WAY",
+      "status": "NON_CERTIFICATA",
+      "book_a": "Eurobet IT",
+      "book_b": "Bet365",
+      "odds_a": 2.11,
+      "odds_b": 1.66,
+      "updated_a": "2026-09-09T15:02:36.045Z",
+      "updated_b": "2026-09-09T15:49:32.217Z",
+      "age_a_min": 50.9,
+      "age_b_min": 4,
+      "timestamp_spread_min": 46.9,
+      "implied_sum": 1.07634329,
+      "raw_roi": -0.07092838,
+      "safety_buffer": 0.0025,
+      "buffered_roi": -0.073467,
+      "market_depth": 2,
+      "median_no_vig_a": 0.441489,
+      "outlier_distance": 0.00266,
+      "reasons": [
+        "MARGINE_TROPPO_BASSO",
+        "QUOTA_NON_FRESCA",
+        "QUOTE_NON_SINCRONE",
+        "BUFFER_NON_SUPERATO",
+        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
+      ],
+      "expires_at": "2026-09-09T15:12:36.045Z",
+      "execution_window_sec": 0,
+      "same_market_verified": true,
+      "settlement_rules_verified": false,
+      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
+      "stake_100": {
+        "stake_a": 44.03,
+        "stake_b": 55.97,
+        "return_if_a": 92.9,
+        "return_if_b": 92.91,
+        "worst_return": 92.9,
+        "profit": -7.1,
+        "roi": -0.070967
+      },
+      "detected_at": "2026-09-09T15:53:30.158Z",
+      "execution_note": "Copertura matematica valida solo finché entrambe le quote restano accettabili e le regole di settlement dei due bookmaker sono equivalenti."
+    },
+    {
+      "event_id": "74283874",
+      "start_at": "2026-09-09T16:00:00Z",
+      "player_a": "Diaz Acosta, Facundo",
+      "player_b": "Moro Canas, Alejandro",
+      "tournament": "Challenger - Seville, Spain",
+      "market": "MATCH_WINNER_2WAY",
+      "status": "NON_CERTIFICATA",
+      "book_a": "Eurobet IT",
+      "book_b": "Bet365",
+      "odds_a": 1.32,
+      "odds_b": 3.25,
+      "updated_a": "2026-09-09T15:48:23.466Z",
+      "updated_b": "2026-09-09T15:49:40.511Z",
+      "age_a_min": 5.1,
+      "age_b_min": 3.8,
+      "timestamp_spread_min": 1.3,
+      "implied_sum": 1.06526807,
+      "raw_roi": -0.06126915,
+      "safety_buffer": 0.0025,
+      "buffered_roi": -0.063848,
+      "market_depth": 2,
+      "median_no_vig_a": 0.709607,
+      "outlier_distance": 0.00825,
+      "reasons": [
+        "MARGINE_TROPPO_BASSO",
+        "BUFFER_NON_SUPERATO"
+      ],
+      "expires_at": "2026-09-09T15:57:30.158Z",
+      "execution_window_sec": 240,
+      "same_market_verified": true,
+      "settlement_rules_verified": false,
+      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
+      "stake_100": {
+        "stake_a": 71.11,
+        "stake_b": 28.89,
+        "return_if_a": 93.87,
+        "return_if_b": 93.89,
+        "worst_return": 93.87,
+        "profit": -6.13,
+        "roi": -0.061348
+      },
+      "detected_at": "2026-09-09T15:53:30.158Z",
+      "execution_note": "Copertura matematica valida solo finché entrambe le quote restano accettabili e le regole di settlement dei due bookmaker sono equivalenti."
+    }
+  ]
 }
