@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-09T23:59:43.754Z",
+  "updated_at": "2026-09-10T00:27:56.538Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -2486,11 +2486,11 @@
       },
       "immutable_sha256": "0f74a911665807fac61e424e8754a4aefbafe477c81d77a3176fc187f9141ca1",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-10T00:21:57.207Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -2689,11 +2689,11 @@
       },
       "immutable_sha256": "f4cdf54d6a6f9b95f8f74204f5c2679d30c38871388c5c5f666499d3b00bc60a",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-10T00:21:57.207Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -2797,23 +2797,223 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "55448802155AA016B06AC0BA",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "BC0827196C31DE39FE37",
+        "source_immutable_sha256": "818faf538a9c87c2cd341e9bcf43c392a419e9f4ac1a5be7b72f9078148232c8",
+        "event_id": "74283536",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-10T00:21:57.207Z",
+        "start_at": "2026-09-10T11:30:00Z",
+        "first_observed_at": "2026-09-10T00:22:01.327Z",
+        "player_a": "Dellien, Hugo",
+        "player_b": "Dodig, Matej",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "B",
+        "candidate_name": "Dodig, Matej",
+        "candidate_odds": 2.2,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 0,
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.53367,
+        "calibrated_prob": 0.4614720256283269,
+        "calibrated_ev": 0.015238456382319354,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 1,
+        "negative_core": 1,
+        "observed_core": 2,
+        "hard_reject": [
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_LT_2PCT"
+        ],
+        "penalties": []
+      },
+      "immutable_sha256": "c97f8dd8d06b9301fa819e81d3e839b3056035f5cb4b00f36b0a35c1495be222",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "challenger_id": "5B24CC9DBDD9044877EC6A1F",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "75C4A20B0223EFB172E8",
+        "source_immutable_sha256": "2aabf905ac21ea9d86fc11be4dc8bf05f880e533427c7d6272d927221942fa14",
+        "event_id": "74294140",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-10T00:21:57.207Z",
+        "start_at": "2026-09-10T15:00:00Z",
+        "first_observed_at": "2026-09-10T00:22:01.327Z",
+        "player_a": "Trevisan, Martina",
+        "player_b": "Maristany Zuleta de Reales, Guiomar",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Maristany Zuleta de Reales, Guiomar",
+        "candidate_odds": 1.84,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 2,
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.602716,
+        "calibrated_prob": 0.5755061361825375,
+        "calibrated_ev": 0.05893129057586921,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 1,
+        "negative_core": 0,
+        "observed_core": 1,
+        "hard_reject": [
+          "WTA_NEEDS_3_CORE_POSITIVE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "972f89086a3bcee1d5f74962a186b9916225a542b909d92a3679eae5a6883368",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "challenger_id": "328FC39CB8291149A2D158CC",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "9552CFC4CBF27B158921",
+        "source_immutable_sha256": "3ff610b82ee273038fbfa1e225a6a36be35127c7f23da5c9a1334d1a8b355370",
+        "event_id": "74283546",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-10T00:21:57.207Z",
+        "start_at": "2026-09-10T19:00:00Z",
+        "first_observed_at": "2026-09-10T00:22:01.327Z",
+        "player_a": "Passaro, Francesco",
+        "player_b": "Varillas, Juan Pablo",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "B",
+        "candidate_name": "Varillas, Juan Pablo",
+        "candidate_odds": 2.37,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -1,
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.456286,
+        "calibrated_prob": 0.353385634411236,
+        "calibrated_ev": -0.16247604644537061,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 1,
+        "observed_core": 1,
+        "hard_reject": [
+          "CALIBRATED_EV_LT_2PCT"
+        ],
+        "penalties": []
+      },
+      "immutable_sha256": "4f507dc489ba9518639c1a85bdc37ac60aeea4a1ab82ade99b1f94fc7a7e5bc8",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "challenger_id": "092EE66EAFC2904CEC195EDF",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "9E28E1EF31EE0C2B798A",
+        "source_immutable_sha256": "ef99f12954fc439a9bf1d71991186a0c9c184a0d189cb45177d7428e26718ec9",
+        "event_id": "74293564",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-10T00:21:57.207Z",
+        "start_at": "2026-09-11T08:00:00Z",
+        "first_observed_at": "2026-09-10T00:22:01.327Z",
+        "player_a": "Burillo Escorihuela, Irene",
+        "player_b": "Yaneva, Elizara",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Burillo Escorihuela, Irene",
+        "candidate_odds": 2.62,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -3,
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.402254,
+        "calibrated_prob": 0.29435636849812163,
+        "calibrated_ev": -0.22878631453492126,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "NEGATIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 3,
+        "observed_core": 3,
+        "hard_reject": [
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_LT_2PCT",
+          "WTA_NEEDS_3_CORE_POSITIVE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "c08eaef51b5f97637897727e652b6b6431dca74b4ddcbbe5a79e73edcba14a12",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 56,
+    "total_decisions": 60,
     "accepted": 8,
-    "rejected": 48,
-    "open": 20,
-    "settled": 36
+    "rejected": 52,
+    "open": 22,
+    "settled": 38
   },
   "evidence": {
     "state": "COLD_START",
     "champion": {
-      "n": 36,
-      "wins": 17,
-      "hit_rate": 0.4722222222222222,
-      "profit_units": 0.660000000000001,
-      "roi": 0.01833333333333336,
+      "n": 38,
+      "wins": 18,
+      "hit_rate": 0.47368421052631576,
+      "profit_units": 1.660000000000001,
+      "roi": 0.04368421052631582,
       "max_drawdown_units": 4.64
     },
     "challenger": {
@@ -2824,7 +3024,7 @@
       "roi": -0.06999999999999999,
       "max_drawdown_units": 1.92
     },
-    "delta_roi": -0.08833333333333335,
+    "delta_roi": -0.1136842105263158,
     "review_eligible": false
   }
 }

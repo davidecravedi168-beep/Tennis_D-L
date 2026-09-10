@@ -1,33 +1,33 @@
 {
   "schema": "TEP-CALIBRATION-TRAINING-V5",
-  "generated_at": "2026-09-09T23:59:43.334Z",
-  "settled_n": 253,
+  "generated_at": "2026-09-10T00:27:56.117Z",
+  "settled_n": 255,
   "status": "REJECTED",
-  "train_n": 213,
+  "train_n": 215,
   "holdout_n": 40,
-  "new_labels_since_active": 6,
+  "new_labels_since_active": 8,
   "incumbent": {
     "n": 40,
-    "brier": 0.21011119094381905,
-    "logloss": 0.6035340545967192,
-    "ece": 0.0812574014085363
+    "brier": 0.21894187836708742,
+    "logloss": 0.6221288832741846,
+    "ece": 0.09646470101062334
   },
   "candidate": {
     "params": {
       "a": 1.5,
-      "b": -0.35000000000000003,
-      "wta_bias": 0
+      "b": -0.5,
+      "wta_bias": 0.1
     },
     "metrics": {
       "n": 40,
-      "brier": 0.21001581652265783,
-      "logloss": 0.6036631393545238,
-      "ece": 0.08914239099563126
+      "brier": 0.21558837452712948,
+      "logloss": 0.6136253311762254,
+      "ece": 0.061719210835061156
     }
   },
   "gates": {
     "min_new_labels": false,
-    "logloss_improved_0_5pct": false,
+    "logloss_improved_0_5pct": true,
     "brier_not_worse_0_5pct": true,
     "ece_not_worse_0_01": true
   }
