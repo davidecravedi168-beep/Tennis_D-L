@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-10T04:59:54.931Z",
+  "updated_at": "2026-09-10T05:21:13.688Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -3048,13 +3048,61 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "347DD45B9FBA5D832EE7332D",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "2FAD444EAFB8CA19C29C",
+        "source_immutable_sha256": "dd0854edbb562c5137415b559e0c458856db3696c8cf54ef579da5d138505e62",
+        "event_id": "74284308",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-10T05:15:25.353Z",
+        "start_at": "2026-09-11T07:00:00Z",
+        "first_observed_at": "2026-09-10T05:15:29.436Z",
+        "player_a": "Kotov, Pavel",
+        "player_b": "Galarneau, Alexis",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "A",
+        "candidate_name": "Kotov, Pavel",
+        "candidate_odds": 2,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -1,
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.499991,
+        "calibrated_prob": 0.3775279786816056,
+        "calibrated_ev": -0.24494404263678882,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 1,
+        "observed_core": 1,
+        "hard_reject": [
+          "CALIBRATED_EV_LT_2PCT"
+        ],
+        "penalties": []
+      },
+      "immutable_sha256": "ced82f3dec5ceba4d2c76dd147c4f2d501c716070af991daf6d152c1c22e1800",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 61,
+    "total_decisions": 62,
     "accepted": 8,
-    "rejected": 53,
-    "open": 20,
+    "rejected": 54,
+    "open": 21,
     "settled": 41
   },
   "evidence": {
