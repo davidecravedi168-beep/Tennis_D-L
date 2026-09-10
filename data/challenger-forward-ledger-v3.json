@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-10T20:59:48.160Z",
+  "updated_at": "2026-09-10T21:19:20.507Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -2938,11 +2938,11 @@
       },
       "immutable_sha256": "4f507dc489ba9518639c1a85bdc37ac60aeea4a1ab82ade99b1f94fc7a7e5bc8",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-10T21:14:24.453Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -3490,23 +3490,119 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "27AE93E2BE2DE92638765BDB",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "6CBFA0B1FC3D434CBA8D",
+        "source_immutable_sha256": "c703cd57aad98463585fdb720b0e73c6ea9c9780b59ca15c0a2796d00702ca60",
+        "event_id": "74286318",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-10T21:14:24.453Z",
+        "start_at": "2026-09-11T09:40:00Z",
+        "first_observed_at": "2026-09-10T21:14:31.284Z",
+        "player_a": "Budkov Kjaer, Nicolai",
+        "player_b": "Echargui, Moez",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "B",
+        "candidate_name": "Echargui, Moez",
+        "candidate_odds": 2.75,
+        "decision": "ACCEPT",
+        "pass": true,
+        "score": 2,
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.524033,
+        "calibrated_prob": 0.4120031012580877,
+        "calibrated_ev": 0.1330085284597411,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 1,
+        "negative_core": 0,
+        "observed_core": 1,
+        "hard_reject": [],
+        "penalties": []
+      },
+      "immutable_sha256": "0b1fc4415bfe50ac782c71dbc4c7612d1dc6018d0bf94d10a5d297cea8dc7824",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "challenger_id": "93D220EADBC76641C66323A0",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "86560921AD4780D5B557",
+        "source_immutable_sha256": "52d27cd323a5e7d4e8506b1c700c66270b7dd0cd952e5dba75088bc5816f679a",
+        "event_id": "74283888",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-10T21:14:24.453Z",
+        "start_at": "2026-09-11T16:00:00Z",
+        "first_observed_at": "2026-09-10T21:14:31.284Z",
+        "player_a": "Diaz Acosta, Facundo",
+        "player_b": "Ofner, Sebastian",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "B",
+        "candidate_name": "Ofner, Sebastian",
+        "candidate_odds": 2.75,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -2,
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.493683,
+        "calibrated_prob": 0.3686752959393992,
+        "calibrated_ev": 0.013857063833347727,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "NEGATIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 2,
+        "observed_core": 2,
+        "hard_reject": [
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_LT_2PCT"
+        ],
+        "penalties": []
+      },
+      "immutable_sha256": "29feecc9b38ebc00cdea881bd6bd2ffe7c9eff134fd41d597bb6c5a314fef700",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 70,
-    "accepted": 9,
-    "rejected": 61,
-    "open": 27,
-    "settled": 43
+    "total_decisions": 72,
+    "accepted": 10,
+    "rejected": 62,
+    "open": 28,
+    "settled": 44
   },
   "evidence": {
     "state": "COLD_START",
     "champion": {
-      "n": 43,
-      "wins": 20,
-      "hit_rate": 0.46511627906976744,
-      "profit_units": 0.22000000000000086,
-      "roi": 0.005116279069767462,
+      "n": 44,
+      "wins": 21,
+      "hit_rate": 0.4772727272727273,
+      "profit_units": 1.590000000000001,
+      "roi": 0.03613636363636366,
       "max_drawdown_units": 4.67
     },
     "challenger": {
@@ -3517,7 +3613,7 @@
       "roi": -0.06999999999999999,
       "max_drawdown_units": 1.92
     },
-    "delta_roi": -0.07511627906976745,
+    "delta_roi": -0.10613636363636365,
     "review_eligible": false
   }
 }
