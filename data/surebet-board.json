@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_at": "2026-09-10T02:53:21.766Z",
+    "updated_at": "2026-09-10T03:27:46.689Z",
     "status": "READY",
     "model_version": "TEP-SUREBET-1.2",
     "source": "Odds-API.io selected bookmakers · shared Tennis Edge event universe",
@@ -9,9 +9,9 @@
       "Eurobet IT"
     ],
     "bookmaker_count": 2,
-    "events_total": 183,
+    "events_total": 189,
     "events_scanned": 10,
-    "api_calls": 2,
+    "api_calls": 1,
     "api_call_budget": 3,
     "max_quote_age_min": 10,
     "max_timestamp_spread_min": 5,
@@ -23,5 +23,54 @@
     "note": "Solo arbitraggio 2-way Match Winner tra bookmaker diversi. Nessun modello predittivo viene usato."
   },
   "opportunities": [],
-  "checked": []
+  "checked": [
+    {
+      "event_id": "74294140",
+      "start_at": "2026-09-10T15:00:00Z",
+      "player_a": "Trevisan, Martina",
+      "player_b": "Maristany Zuleta de Reales, Guiomar",
+      "tournament": "WTA 125K - Montreux, Switzerland",
+      "market": "MATCH_WINNER_2WAY",
+      "status": "NON_CERTIFICATA",
+      "book_a": "Eurobet IT",
+      "book_b": "Bet365",
+      "odds_a": 1.81,
+      "odds_b": 1.9,
+      "updated_a": "2026-09-10T03:08:04.646Z",
+      "updated_b": "2026-09-10T03:25:57.03Z",
+      "age_a_min": 19.7,
+      "age_b_min": 1.8,
+      "timestamp_spread_min": 17.9,
+      "implied_sum": 1.07880198,
+      "raw_roi": -0.07304582,
+      "safety_buffer": 0.0025,
+      "buffered_roi": -0.075599,
+      "market_depth": 2,
+      "median_no_vig_a": 0.513514,
+      "outlier_distance": 0.006702,
+      "reasons": [
+        "MARGINE_TROPPO_BASSO",
+        "QUOTA_NON_FRESCA",
+        "QUOTE_NON_SINCRONE",
+        "BUFFER_NON_SUPERATO",
+        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
+      ],
+      "expires_at": "2026-09-10T03:18:04.646Z",
+      "execution_window_sec": 0,
+      "same_market_verified": true,
+      "settlement_rules_verified": false,
+      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
+      "stake_100": {
+        "stake_a": 51.21,
+        "stake_b": 48.79,
+        "return_if_a": 92.69,
+        "return_if_b": 92.7,
+        "worst_return": 92.69,
+        "profit": -7.31,
+        "roi": -0.073099
+      },
+      "detected_at": "2026-09-10T03:27:46.689Z",
+      "execution_note": "Copertura matematica valida solo finché entrambe le quote restano accettabili e le regole di settlement dei due bookmaker sono equivalenti."
+    }
+  ]
 }
