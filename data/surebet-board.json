@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_at": "2026-09-10T14:54:27.471Z",
+    "updated_at": "2026-09-10T15:27:44.931Z",
     "status": "READY",
     "model_version": "TEP-SUREBET-1.2",
     "source": "Odds-API.io selected bookmakers · shared Tennis Edge event universe",
@@ -9,9 +9,9 @@
       "Eurobet IT"
     ],
     "bookmaker_count": 2,
-    "events_total": 145,
+    "events_total": 152,
     "events_scanned": 10,
-    "api_calls": 2,
+    "api_calls": 1,
     "api_call_budget": 3,
     "max_quote_age_min": 10,
     "max_timestamp_spread_min": 5,
@@ -23,5 +23,102 @@
     "note": "Solo arbitraggio 2-way Match Winner tra bookmaker diversi. Nessun modello predittivo viene usato."
   },
   "opportunities": [],
-  "checked": []
+  "checked": [
+    {
+      "event_id": "74283534",
+      "start_at": "2026-09-10T16:00:00Z",
+      "player_a": "Seyboth Wild, Thiago",
+      "player_b": "Giunta, Massimo",
+      "tournament": "Challenger - Genoa, Italy",
+      "market": "MATCH_WINNER_2WAY",
+      "status": "NON_CERTIFICATA",
+      "book_a": "Eurobet IT",
+      "book_b": "Bet365",
+      "odds_a": 1.28,
+      "odds_b": 3.5,
+      "updated_a": "2026-09-10T13:46:55.763Z",
+      "updated_b": "2026-09-10T15:24:31.852Z",
+      "age_a_min": 100.8,
+      "age_b_min": 3.2,
+      "timestamp_spread_min": 97.6,
+      "implied_sum": 1.06696429,
+      "raw_roi": -0.06276151,
+      "safety_buffer": 0.0025,
+      "buffered_roi": -0.065284,
+      "market_depth": 2,
+      "median_no_vig_a": 0.732218,
+      "outlier_distance": 0.005722,
+      "reasons": [
+        "MARGINE_TROPPO_BASSO",
+        "QUOTA_NON_FRESCA",
+        "QUOTE_NON_SINCRONE",
+        "BUFFER_NON_SUPERATO",
+        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
+      ],
+      "expires_at": "2026-09-10T13:56:55.763Z",
+      "execution_window_sec": 0,
+      "same_market_verified": true,
+      "settlement_rules_verified": false,
+      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
+      "stake_100": {
+        "stake_a": 73.22,
+        "stake_b": 26.78,
+        "return_if_a": 93.72,
+        "return_if_b": 93.73,
+        "worst_return": 93.72,
+        "profit": -6.28,
+        "roi": -0.062784
+      },
+      "detected_at": "2026-09-10T15:27:44.931Z",
+      "execution_note": "Copertura matematica valida solo finché entrambe le quote restano accettabili e le regole di settlement dei due bookmaker sono equivalenti."
+    },
+    {
+      "event_id": "74283864",
+      "start_at": "2026-09-10T16:00:00Z",
+      "player_a": "Lagutin, Pavel",
+      "player_b": "Alcala Gurri, Max",
+      "tournament": "Challenger - Seville, Spain",
+      "market": "MATCH_WINNER_2WAY",
+      "status": "NON_CERTIFICATA",
+      "book_a": "Eurobet IT",
+      "book_b": "Bet365",
+      "odds_a": 2.65,
+      "odds_b": 1.44,
+      "updated_a": "2026-09-10T13:06:17.567Z",
+      "updated_b": "2026-09-10T15:26:23.272Z",
+      "age_a_min": 141.5,
+      "age_b_min": 1.4,
+      "timestamp_spread_min": 140.1,
+      "implied_sum": 1.07180294,
+      "raw_roi": -0.06699267,
+      "safety_buffer": 0.0025,
+      "buffered_roi": -0.069524,
+      "market_depth": 2,
+      "median_no_vig_a": 0.35468,
+      "outlier_distance": 0.005785,
+      "reasons": [
+        "MARGINE_TROPPO_BASSO",
+        "QUOTA_NON_FRESCA",
+        "QUOTE_NON_SINCRONE",
+        "BUFFER_NON_SUPERATO",
+        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
+      ],
+      "expires_at": "2026-09-10T13:16:17.567Z",
+      "execution_window_sec": 0,
+      "same_market_verified": true,
+      "settlement_rules_verified": false,
+      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
+      "stake_100": {
+        "stake_a": 35.21,
+        "stake_b": 64.79,
+        "return_if_a": 93.31,
+        "return_if_b": 93.3,
+        "worst_return": 93.3,
+        "profit": -6.7,
+        "roi": -0.067024
+      },
+      "detected_at": "2026-09-10T15:27:44.931Z",
+      "execution_note": "Copertura matematica valida solo finché entrambe le quote restano accettabili e le regole di settlement dei due bookmaker sono equivalenti."
+    }
+  ]
 }
