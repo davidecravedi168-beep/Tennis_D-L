@@ -1,9 +1,9 @@
 {
   "schema": "TEP-MODEL-DIAGNOSTICS-2",
-  "generated_at": "2026-09-10T07:48:55.025Z",
+  "generated_at": "2026-09-10T08:00:01.475Z",
   "source": {
     "ledger_schema": "TEP-FORWARD-LEDGER-1",
-    "ledger_updated_at": "2026-09-10T07:46:29.938Z"
+    "ledger_updated_at": "2026-09-10T07:59:27.213Z"
   },
   "policy": {
     "validation_only": true,
@@ -201,13 +201,26 @@
     }
   },
   "clv": {
-    "state": "SUSPECT",
-    "avg_clv": 0.0004913294573643412,
-    "clv_sample": 258,
-    "zero_share": 0.9844961240310077,
+    "state": "PARTIAL",
+    "avg_clv": 0.03169079674901498,
+    "clv_sample": 4,
+    "zero_share": 0,
     "closing_odds_sample": 4,
+    "coverage": 0.015503875968992248,
+    "provider_closing_sample": 4,
+    "proxy_closing_sample": 0,
+    "nulls_treated_as_missing": true,
+    "proxy_max_age_min": 180,
     "anomalies": [
-      "CLV_ALMOST_ALWAYS_ZERO"
+      "CLV_LOW_COVERAGE"
     ]
+  },
+  "clv_integrity": {
+    "version": "V3",
+    "updated_at": "2026-09-10T08:00:01.533Z",
+    "definition": "candidate entry odds / best available genuine closing reference - 1",
+    "provider_preferred": true,
+    "proxy_fallback": "last actually observed pre-start odds within 180 minutes",
+    "retroactive_synthesis": false
   }
 }
