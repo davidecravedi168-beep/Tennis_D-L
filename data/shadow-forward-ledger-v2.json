@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-10T10:58:58.684Z",
+  "updated_at": "2026-09-10T11:16:15.531Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -4211,13 +4211,105 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "7C9643E42F23034651D01535",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "D83BA12D2B497BB1D970",
+        "source_immutable_sha256": "ce7125a4b1ad516869e7eeeab1de51c0bfa6f021ca03bc4374e93cdd38c03781",
+        "event_id": "73992438",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-10T11:16:10.078Z",
+        "start_at": "2026-09-11T19:00:00Z",
+        "first_observed_at": "2026-09-10T11:16:15.332Z",
+        "player_a": "Zverev, Alexander",
+        "player_b": "Khachanov, Karen",
+        "tour": "atp",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Zverev, Alexander",
+        "candidate_odds": 1.17,
+        "candidate_prob": 0.825451,
+        "decision": "ACCEPT",
+        "pass": true,
+        "score": 4,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 4,
+        "negative_core": 0,
+        "observed_core": 4,
+        "hard_reject": [],
+        "penalties": []
+      },
+      "immutable_sha256": "77bcc48bc483d9162df5820fd7a3639b0fb7831b208ccba427406cc4259ce810",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "F8FFB859576E7AFC463D8948",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "3E73F3DB7BC7F396A89C",
+        "source_immutable_sha256": "f798aab7ad4c011bef3663b391122f8ff47fe8d588c988e13589959f4cefe0bd",
+        "event_id": "73992440",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-10T11:16:10.078Z",
+        "start_at": "2026-09-11T23:00:00Z",
+        "first_observed_at": "2026-09-10T11:16:15.332Z",
+        "player_a": "Tiafoe, Frances",
+        "player_b": "Shelton, Ben",
+        "tour": "atp",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Tiafoe, Frances",
+        "candidate_odds": 3.5,
+        "candidate_prob": 0.382949,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -4,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 3,
+        "observed_core": 3,
+        "hard_reject": [
+          "ODDS_3_PLUS",
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT"
+        ],
+        "penalties": [
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "15bfac170c5c0dd33d05ab8e146801f728aec1395296dbdc7f59b950db3d2f0e",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 91,
-    "accepted": 31,
-    "rejected": 60,
-    "open": 22,
+    "total_decisions": 93,
+    "accepted": 32,
+    "rejected": 61,
+    "open": 24,
     "settled": 69
   },
   "evidence": {
