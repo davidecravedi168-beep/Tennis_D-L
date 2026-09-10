@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-10T20:00:04.461Z",
+  "updated_at": "2026-09-10T20:20:33.218Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -3442,13 +3442,61 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "B1759A1F53323B27371819B7",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "03B358FC288656736760",
+        "source_immutable_sha256": "19b2039e434f0c3581a7784721136c67377de3901f6f6ebe029853004e6b6167",
+        "event_id": "74283550",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-10T20:15:19.045Z",
+        "start_at": "2026-09-11T13:10:00Z",
+        "first_observed_at": "2026-09-10T20:15:25.396Z",
+        "player_a": "Djere, Laslo",
+        "player_b": "Sakellaridis, Stefanos",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "B",
+        "candidate_name": "Sakellaridis, Stefanos",
+        "candidate_odds": 2.62,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 1,
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.523938,
+        "calibrated_prob": 0.4118647034888207,
+        "calibrated_ev": 0.07908552314071038,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "POSITIVE",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 1,
+        "negative_core": 1,
+        "observed_core": 2,
+        "hard_reject": [
+          "INSUFFICIENT_CORE_SUPPORT"
+        ],
+        "penalties": []
+      },
+      "immutable_sha256": "9085622a364bf2cf3f8cdf81b907bec53d757376632d0c565a510fb68e87e012",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 69,
+    "total_decisions": 70,
     "accepted": 9,
-    "rejected": 60,
-    "open": 26,
+    "rejected": 61,
+    "open": 27,
     "settled": 43
   },
   "evidence": {
