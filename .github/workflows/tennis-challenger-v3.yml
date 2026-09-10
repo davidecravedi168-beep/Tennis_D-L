@@ -33,8 +33,14 @@ jobs:
           node --check scripts/calibration-audit-v4.mjs
           node --check scripts/challenger-forward-ledger-v3.mjs
           node --check scripts/tennis-model-diagnostics-v2.mjs
+          node --check scripts/clv-tracker-v3.mjs
+          node --check scripts/clv-diagnostics-fix-v3.mjs
           node scripts/challenger-forward-ledger-v3.mjs --self-test
           node scripts/tennis-model-diagnostics-v2.mjs --self-test
+          node scripts/clv-tracker-v3.mjs --self-test
+          node scripts/clv-diagnostics-fix-v3.mjs --self-test
+      - name: Capture real pre-start odds for CLV
+        run: node scripts/clv-tracker-v3.mjs
       - name: Train guarded calibration candidate
         run: node scripts/auto-calibration-trainer-v5.mjs
       - name: Update Challenger V3 forward ledger
@@ -43,16 +49,17 @@ jobs:
         run: |
           node scripts/tennis-model-diagnostics-v2.mjs
           node scripts/tennis-model-diagnostics-v2.mjs --validate
+          node scripts/clv-diagnostics-fix-v3.mjs
           node scripts/calibration-audit-v4.mjs
       - name: Commit evaluation state
         shell: bash
         run: |
           set -euo pipefail
-          git add -- data/calibration-model-v5.json data/calibration-training-v5.json data/challenger-forward-ledger-v3.json data/tennis-model-diagnostics-v2.json data/calibration-audit-v4.json
+          git add -- data/calibration-model-v5.json data/calibration-training-v5.json data/clv-tracker-v3.json data/challenger-forward-ledger-v3.json data/tennis-model-diagnostics-v2.json data/calibration-audit-v4.json
           if git diff --cached --quiet; then echo "No challenger state changes"; exit 0; fi
           git config user.name "tennis-edge-challenger"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "data: update adaptive calibration and Challenger evaluation"
+          git commit -m "data: update adaptive calibration, CLV integrity and Challenger evaluation"
           for attempt in 1 2 3 4 5; do
             if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
             git rebase --abort || true
@@ -62,6 +69,6 @@ jobs:
       - name: Summary
         if: always()
         run: |
-          echo "### Tennis Edge Pro · Adaptive Calibration V5" >> "$GITHUB_STEP_SUMMARY"
+          echo "### Tennis Edge Pro · Adaptive Calibration V5 + CLV V3" >> "$GITHUB_STEP_SUMMARY"
           node -e "const fs=require('fs');if(fs.existsSync('data/calibration-training-v5.json')){const x=JSON.parse(fs.readFileSync('data/calibration-training-v5.json'));console.log('- Auto-ML: '+x.status+' · settled '+x.settled_n+' · holdout '+(x.holdout_n||0))}" >> "$GITHUB_STEP_SUMMARY"
-          node -e "const fs=require('fs');if(fs.existsSync('data/tennis-model-diagnostics-v2.json')){const x=JSON.parse(fs.readFileSync('data/tennis-model-diagnostics-v2.json'));console.log('- Drift: '+x.drift.state+' · CLV: '+x.clv.state)}" >> "$GITHUB_STEP_SUMMARY"
+          node -e "const fs=require('fs');if(fs.existsSync('data/tennis-model-diagnostics-v2.json')){const x=JSON.parse(fs.readFileSync('data/tennis-model-diagnostics-v2.json'));console.log('- Drift: '+x.drift.state+' · CLV: '+x.clv.state+' · coverage '+((x.clv.coverage||0)*100).toFixed(1)+'% · provider '+(x.clv.provider_closing_sample||0)+' · proxy '+(x.clv.proxy_closing_sample||0))}" >> "$GITHUB_STEP_SUMMARY"
