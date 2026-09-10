@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-10T10:59:36.506Z",
+  "updated_at": "2026-09-10T11:21:43.340Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -3096,13 +3096,112 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "E8FFF9F1A099C18D37E9B34A",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "D83BA12D2B497BB1D970",
+        "source_immutable_sha256": "ce7125a4b1ad516869e7eeeab1de51c0bfa6f021ca03bc4374e93cdd38c03781",
+        "event_id": "73992438",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-10T11:16:10.078Z",
+        "start_at": "2026-09-11T19:00:00Z",
+        "first_observed_at": "2026-09-10T11:16:15.332Z",
+        "player_a": "Zverev, Alexander",
+        "player_b": "Khachanov, Karen",
+        "tour": "atp",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Zverev, Alexander",
+        "candidate_odds": 1.17,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 4,
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.825451,
+        "calibrated_prob": 0.8618315925920004,
+        "calibrated_ev": 0.008342963332640396,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 4,
+        "negative_core": 0,
+        "observed_core": 4,
+        "hard_reject": [
+          "CALIBRATED_EV_LT_2PCT"
+        ],
+        "penalties": []
+      },
+      "immutable_sha256": "66a4bb2b60ecc8972cc0731427ca5d848dd0174d8667ff16b87f056a31006047",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "challenger_id": "6D35BA0138DF28D04A95063A",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "3E73F3DB7BC7F396A89C",
+        "source_immutable_sha256": "f798aab7ad4c011bef3663b391122f8ff47fe8d588c988e13589959f4cefe0bd",
+        "event_id": "73992440",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-10T11:16:10.078Z",
+        "start_at": "2026-09-11T23:00:00Z",
+        "first_observed_at": "2026-09-10T11:16:15.332Z",
+        "player_a": "Tiafoe, Frances",
+        "player_b": "Shelton, Ben",
+        "tour": "atp",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Tiafoe, Frances",
+        "candidate_odds": 3.5,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -3,
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.382949,
+        "calibrated_prob": 0.22871614343451652,
+        "calibrated_ev": -0.19949349797919225,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 3,
+        "observed_core": 3,
+        "hard_reject": [
+          "ODDS_3_PLUS",
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_LT_2PCT"
+        ],
+        "penalties": []
+      },
+      "immutable_sha256": "6fe7c212cb67ea436a9ffcee9d30f8a3400a09123cdb501d38edd22fc2b54b16",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 62,
+    "total_decisions": 64,
     "accepted": 8,
-    "rejected": 54,
-    "open": 21,
+    "rejected": 56,
+    "open": 23,
     "settled": 41
   },
   "evidence": {
