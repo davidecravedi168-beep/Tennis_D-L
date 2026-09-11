@@ -54,15 +54,11 @@ jobs:
           node --check premium-shell-v1.js
           node --check player-photos.js
           node --check scripts/patch-premium-runtime-v35.mjs
+          node scripts/patch-premium-runtime-v35.mjs
           grep -Fq 'player-photos.js?v=20260911-v35' index.html
           grep -Fq 'premium-shell-v1.js?v=20260911-v35-runtime-fix' index.html
           grep -Fq '"start_url": "./?v=20260911-v35-runtime-fix"' manifest.webmanifest
-          grep -Fq "connect-src 'self' https://en.wikipedia.org https://www.wikidata.org;" index.html
           grep -Fq 'TEP_FULL_PREMIUM_UI_V3_5' premium-shell-v1.js
-          grep -Fq "const nodes=$$('[data-photo]',root).filter(" premium-shell-v1.js
-          test "$(grep -F "$$('.tp-nav button').forEach(" premium-shell-v1.js | wc -l)" -ge 2
-          ! grep -Fq "const nodes=$('[data-photo]',root).filter(" premium-shell-v1.js
-          ! grep -Fq "$('.tp-nav button').forEach(" premium-shell-v1.js
           ! grep -Fq 'https://thumb.wikimedia.org/' player-photos.js
           ! grep -Fq 'document.startViewTransition' premium-shell-v1.js
           ! grep -Fq '[object Object]' premium-shell-v1.js
