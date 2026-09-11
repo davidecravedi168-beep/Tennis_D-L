@@ -1,0 +1,72 @@
+name: Player Photo Runtime Fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'premium-shell-v1.js'
+      - 'scripts/apply-player-photo-runtime-fix.mjs'
+      - '.github/workflows/player-photo-runtime-fix.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: player-photo-runtime-fix
+  cancel-in-progress: false
+
+jobs:
+  photo-cert:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Apply portrait runtime fix
+        run: |
+          set -euo pipefail
+          node scripts/apply-player-photo-runtime-fix.mjs
+          node scripts/apply-player-photo-runtime-fix.mjs
+          node --check premium-shell-v1.js
+          grep -Fq "loading=\"${eager}\"" scripts/apply-player-photo-runtime-fix.mjs
+          grep -Fq 'async function tryImage(el,img,src)' premium-shell-v1.js
+          grep -Fq 'await Promise.all(nodes.map(async el=>' premium-shell-v1.js
+          grep -Fq '.tp-avatar.has-photo img{opacity:1}' premium-shell-v1.js
+          ! grep -Fq 'decoding="async" hidden' premium-shell-v1.js
+          echo 'PHOTO_STATIC_CERT=PASS'
+
+      - name: Commit fix if needed
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- premium-shell-v1.js; then
+            echo 'Player portrait runtime already fixed.'
+          else
+            git config user.name 'tennis-edge-photo-certifier'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add premium-shell-v1.js
+            git commit -m 'fix(ui): load player portraits reliably'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+
+      - name: Real browser portrait smoke
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME" || { echo 'CHROME_NOT_FOUND'; exit 1; }
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tep-photo-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
+          timeout 60s "$CHROME" \
+            --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --virtual-time-budget=18000 --dump-dom \
+            'http://127.0.0.1:8765/?v=photo-runtime-fix' > /tmp/tep-photo-dom.html
+          grep -Fq 'tp-avatar hero has-photo' /tmp/tep-photo-dom.html
+          grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/tep-photo-dom.html
+          echo 'PHOTO_BROWSER_SMOKE=PASS'
