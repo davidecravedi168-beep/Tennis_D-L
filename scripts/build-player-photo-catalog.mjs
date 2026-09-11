@@ -5,6 +5,7 @@ const OUT='player-photos.js';
 const readJson=p=>{try{return JSON.parse(fs.readFileSync(p,'utf8'))}catch{return null}};
 const pretty=raw=>{const s=String(raw||'').trim();if(!s)return'';if(s.includes(',')){const [last,...rest]=s.split(',');return `${rest.join(',').trim()} ${last.trim()}`.trim()}return s};
 const invalid=n=>!n||/^(wsf|r16p|qf|sf)\d+/i.test(n)||/^tbd$/i.test(n);
+const normalizeUrl=u=>String(u||'').replace('https://thumb.wikimedia.org/','https://upload.wikimedia.org/');
 
 function currentCatalog(){
   if(!fs.existsSync(OUT))return{};
@@ -38,7 +39,7 @@ async function verifyImage(url){
       r=await fetch(url,{method:'GET',redirect:'follow',signal:c.signal,headers:{Range:'bytes=0-1023','User-Agent':'TennisEdgePro/1.0'}});
     }
     const type=String(r.headers.get('content-type')||'').toLowerCase();
-    return r.ok&&type.startsWith('image/')?r.url:'';
+    return r.ok&&type.startsWith('image/')?normalizeUrl(r.url):'';
   }catch{return''}finally{clearTimeout(t)}
 }
 
@@ -65,7 +66,7 @@ async function resolvePhoto(name){
 }
 
 const names=collectNames();
-const catalog={...currentCatalog()};
+const catalog=Object.fromEntries(Object.entries(currentCatalog()).map(([k,v])=>[k,normalizeUrl(v)]));
 const missing=names.filter(n=>!catalog[n.toLowerCase()]);
 let resolved=0;
 const queue=[...missing];
@@ -73,11 +74,11 @@ const workers=Array.from({length:Math.min(6,queue.length||1)},async()=>{
   while(queue.length){
     const name=queue.shift();
     const url=await resolvePhoto(name);
-    if(url){catalog[name.toLowerCase()]=url;resolved++;console.log('PHOTO_OK',name)}else console.log('PHOTO_MISS',name);
+    if(url){catalog[name.toLowerCase()]=normalizeUrl(url);resolved++;console.log('PHOTO_OK',name)}else console.log('PHOTO_MISS',name);
   }
 });
 await Promise.all(workers);
-const ordered=Object.fromEntries(Object.entries(catalog).sort(([a],[b])=>a.localeCompare(b)));
+const ordered=Object.fromEntries(Object.entries(catalog).map(([k,v])=>[k,normalizeUrl(v)]).sort(([a],[b])=>a.localeCompare(b)));
 fs.writeFileSync(OUT,`// Generated from public Wikimedia/Wikidata sources.\nwindow.__TEP_PLAYER_PHOTOS__=Object.freeze(${JSON.stringify(ordered,null,2)});\n`);
 console.log(`PHOTO_CATALOG names=${names.length} total=${Object.keys(ordered).length} new=${resolved}`);
 if(names.length&&Object.keys(ordered).length===0)process.exitCode=2;
