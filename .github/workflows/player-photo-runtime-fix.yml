@@ -33,7 +33,7 @@ jobs:
           node scripts/apply-player-photo-runtime-fix.mjs
           node scripts/apply-player-photo-runtime-fix.mjs
           node --check premium-shell-v1.js
-          grep -Fq "loading=\"${eager}\"" scripts/apply-player-photo-runtime-fix.mjs
+          grep -Fq 'loading="${eager}"' scripts/apply-player-photo-runtime-fix.mjs
           grep -Fq 'async function tryImage(el,img,src)' premium-shell-v1.js
           grep -Fq 'await Promise.all(nodes.map(async el=>' premium-shell-v1.js
           grep -Fq '.tp-avatar.has-photo img{opacity:1}' premium-shell-v1.js
