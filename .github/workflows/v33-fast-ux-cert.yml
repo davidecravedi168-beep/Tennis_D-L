@@ -29,11 +29,14 @@ jobs:
           ref: fix/v33-fast-nav-photo-coverage
           fetch-depth: 0
 
-      - name: Apply V3.3 candidate twice
+      - name: Apply V3.3 candidate safely
         run: |
           set -euo pipefail
-          node scripts/apply-v33-fast-ux.mjs
-          node scripts/apply-v33-fast-ux.mjs
+          if ! grep -Fq "TEP_FULL_PREMIUM_UI_V3_3" premium-shell-v1.js; then
+            node scripts/apply-v33-fast-ux.mjs
+          else
+            echo 'V3.3 shell already patched.'
+          fi
           python - <<'PY'
           from pathlib import Path
           import re
