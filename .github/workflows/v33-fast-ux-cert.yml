@@ -1,12 +1,14 @@
-name: V3.3 Fast UX Certifier
+name: V3.4 Fast UX Certifier
 
 on:
   push:
     branches: [fix/v33-fast-nav-photo-coverage]
     paths:
       - '.github/workflows/v33-fast-ux-cert.yml'
-      - 'scripts/apply-v33-fast-ux.mjs'
+      - 'scripts/apply-v34-ux.mjs'
+      - 'scripts/build-player-photo-catalog.mjs'
       - 'premium-shell-v1.js'
+      - 'player-photos.js'
       - 'index.html'
       - 'manifest.webmanifest'
   workflow_dispatch:
@@ -15,13 +17,13 @@ permissions:
   contents: write
 
 concurrency:
-  group: v33-fast-ux-certifier
+  group: v34-fast-ux-certifier
   cancel-in-progress: false
 
 jobs:
   certify:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - name: Checkout candidate
         uses: actions/checkout@v4
@@ -29,63 +31,65 @@ jobs:
           ref: fix/v33-fast-nav-photo-coverage
           fetch-depth: 0
 
-      - name: Apply V3.3 candidate safely
+      - name: Build V3.4 candidate
         run: |
           set -euo pipefail
-          if ! grep -Fq "TEP_FULL_PREMIUM_UI_V3_3" premium-shell-v1.js; then
-            node scripts/apply-v33-fast-ux.mjs
-          else
-            echo 'V3.3 shell already patched.'
-          fi
+          node scripts/apply-v34-ux.mjs
+          node scripts/build-player-photo-catalog.mjs
           python - <<'PY'
           from pathlib import Path
           import re
           p=Path('index.html')
           s=p.read_text(encoding='utf-8')
-          s=re.sub(r'premium-shell-v1\.js\?v=[^"\']+', 'premium-shell-v1.js?v=20260911-v33-fast-clear-photos', s)
+          s=re.sub(r'premium-shell-v1\.js\?v=[^"\']+', 'premium-shell-v1.js?v=20260911-v34-instant-portraits', s)
+          s=re.sub(r'\s*<script src="player-photos\.js\?v=[^"]+"></script>\s*', '\n', s)
+          photo='<script src="player-photos.js?v=20260911-v34"></script>'
+          premium='<script src="premium-shell-v1.js?v=20260911-v34-instant-portraits"></script>'
+          if premium not in s:
+              raise SystemExit('V34_PREMIUM_TAG_MISSING')
+          s=s.replace(premium, photo+'\n'+premium)
           s=s.replace("connect-src 'self' https://en.wikipedia.org;","connect-src 'self' https://en.wikipedia.org https://www.wikidata.org;")
           p.write_text(s,encoding='utf-8')
           m=Path('manifest.webmanifest')
           ms=m.read_text(encoding='utf-8')
-          ms=re.sub(r'"start_url"\s*:\s*"\.\/\?v=[^"]+"','"start_url": "./?v=20260911-v33-fast-clear-photos"',ms)
+          ms=re.sub(r'"start_url"\s*:\s*"\.\/\?v=[^"]+"','"start_url": "./?v=20260911-v34-instant-portraits"',ms)
           m.write_text(ms,encoding='utf-8')
           PY
 
-      - name: Static UX contracts
+      - name: Static contracts and portrait coverage
         run: |
           set -euo pipefail
           node --check premium-shell-v1.js
-          grep -Fq "TEP_FULL_PREMIUM_UI_V3_3" premium-shell-v1.js
-          grep -Fq 'www.wikidata.org/w/api.php?action=wbsearchentities' premium-shell-v1.js
-          grep -Fq "rootMargin:'360px 0px'" premium-shell-v1.js
-          grep -Fq "queueMicrotask(()=>hydrate(view))" premium-shell-v1.js
+          node --check player-photos.js
+          grep -Fq "TEP_FULL_PREMIUM_UI_V3_4" premium-shell-v1.js
+          grep -Fq 'function catalogPhoto(raw)' premium-shell-v1.js
           grep -Fq "root.addEventListener('pointerdown'" premium-shell-v1.js
           ! grep -Fq 'document.startViewTransition' premium-shell-v1.js
           grep -Fq '<span>Partite</span>' premium-shell-v1.js
           grep -Fq '<span>Salvati</span>' premium-shell-v1.js
-          grep -Fq '<h1>Partite</h1>' premium-shell-v1.js
-          grep -Fq '<h1>Salvati e seguiti</h1>' premium-shell-v1.js
-          grep -Fq 'premium-shell-v1.js?v=20260911-v33-fast-clear-photos' index.html
-          grep -Fq "connect-src 'self' https://en.wikipedia.org https://www.wikidata.org;" index.html
-          grep -Fq '"start_url": "./?v=20260911-v33-fast-clear-photos"' manifest.webmanifest
-          echo 'V33_STATIC_UX=PASS'
-
-      - name: Wikidata portrait fallback integration
-        run: |
-          set -euo pipefail
+          grep -Fq 'player-photos.js?v=20260911-v34' index.html
+          grep -Fq 'premium-shell-v1.js?v=20260911-v34-instant-portraits' index.html
+          grep -Fq '"start_url": "./?v=20260911-v34-instant-portraits"' manifest.webmanifest
+          test "$(grep -o 'player-photos.js?v=20260911-v34' index.html | wc -l)" -eq 1
           node - <<'NODE'
-          const search='https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Aryna%20Sabalenka&language=en&uselang=en&limit=6&format=json&origin=*';
-          const s=await fetch(search).then(r=>{if(!r.ok)throw new Error('wikidata search '+r.status);return r.json()});
-          const hit=(s.search||[]).find(x=>/tennis/i.test(String(x.description||'')));
-          if(!hit?.id)throw new Error('NO_TENNIS_ENTITY');
-          const u=`https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${encodeURIComponent(hit.id)}&props=claims&format=json&origin=*`;
-          const e=await fetch(u).then(r=>{if(!r.ok)throw new Error('wikidata entity '+r.status);return r.json()});
-          const image=e?.entities?.[hit.id]?.claims?.P18?.[0]?.mainsnak?.datavalue?.value;
-          if(!image)throw new Error('NO_P18_IMAGE');
-          console.log('WIKIDATA_PORTRAIT_FALLBACK=PASS',hit.id,image);
+          const fs=require('fs'),vm=require('vm');
+          const b=JSON.parse(fs.readFileSync('data/quant-board.json','utf8'));
+          const box={window:{}};vm.runInNewContext(fs.readFileSync('player-photos.js','utf8'),box);
+          const cat=box.window.__TEP_PLAYER_PHOTOS__||{};
+          if(!Object.keys(cat).length)throw new Error('EMPTY_PHOTO_CATALOG');
+          const xs=Array.isArray(b.upcoming)?b.upcoming:[];
+          if(!xs.length)throw new Error('NO_UPCOMING_FOR_UI');
+          const n=v=>Number.isFinite(Number(v))?Number(v):0;
+          const hero=[...xs].sort((a,c)=>n(c.priority)-n(a.priority)||n(c.data_quality)-n(a.data_quality))[0];
+          const pretty=raw=>{const s=String(raw||'').trim();if(s.includes(',')){const [last,...rest]=s.split(',');return `${rest.join(',').trim()} ${last.trim()}`.trim()}return s};
+          const names=[pretty(hero.player_a),pretty(hero.player_b)];
+          const covered=names.filter(x=>cat[x.toLowerCase()]);
+          console.log('PHOTO_CATALOG_COUNT='+Object.keys(cat).length,'HERO='+names.join(' vs '),'COVERED='+covered.join('|'));
+          if(!covered.length)throw new Error('HERO_PORTRAIT_NOT_PREBUILT');
           NODE
+          echo 'V34_STATIC=PASS'
 
-      - name: Real browser local smoke and instant bottom navigation
+      - name: Real browser UX smoke
         run: |
           set -euo pipefail
           CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
@@ -93,45 +97,39 @@ jobs:
           cat > nav-probe.html <<'HTML'
           <!doctype html><meta charset="utf-8"><div id="result">WAIT</div><iframe id="app" style="width:390px;height:844px"></iframe><script>
           const f=document.getElementById('app'),out=document.getElementById('result');
-          f.src='./?v=20260911-v33-fast-clear-photos';
+          f.src='./?v=20260911-v34-instant-portraits';
           const fail=x=>out.textContent='NAV_PROBE_FAIL '+x;
           f.onload=()=>{
             const start=performance.now();
             const wait=()=>{
               const w=f.contentWindow,d=f.contentDocument,b=d.querySelector('.tp-nav [data-route="explore"]');
-              if(!b){if(performance.now()-start<5000)return setTimeout(wait,80);return fail('no-button')}
+              if(!b){if(performance.now()-start<6000)return setTimeout(wait,60);return fail('no-button')}
               const t=performance.now();
               b.dispatchEvent(new w.PointerEvent('pointerdown',{bubbles:true,pointerType:'touch',isPrimary:true}));
-              requestAnimationFrame(()=>requestAnimationFrame(()=>{
+              requestAnimationFrame(()=>{
                 const title=d.querySelector('.tp-page-title h1')?.textContent?.trim();
                 const ms=performance.now()-t;
-                out.textContent=title==='Partite'&&ms<180?`NAV_PROBE_PASS ${ms.toFixed(1)}ms`:`NAV_PROBE_FAIL ${title} ${ms.toFixed(1)}ms`;
-              }));
-            };
-            wait();
+                out.textContent=title==='Partite'&&ms<150?`NAV_PROBE_PASS ${ms.toFixed(1)}ms`:`NAV_PROBE_FAIL ${title} ${ms.toFixed(1)}ms`;
+              });
+            };wait();
           };
           </script>
           HTML
-          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/v33-http.log 2>&1 &
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/v34-http.log 2>&1 &
           PID=$!; trap 'kill "$PID" 2>/dev/null || true' EXIT
           READY=0
-          for i in {1..40}; do
-            if curl -fsS http://127.0.0.1:8765/index.html >/dev/null; then READY=1; break; fi
-            sleep .25
-          done
-          if [ "$READY" -ne 1 ]; then cat /tmp/v33-http.log || true; exit 1; fi
-          timeout 55s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=18000 --dump-dom 'http://127.0.0.1:8765/?v=20260911-v33-fast-clear-photos' >/tmp/v33-dom.html
-          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_3"' /tmp/v33-dom.html || { echo VERSION_FAIL; exit 1; }
-          grep -Fq '>Partite<' /tmp/v33-dom.html || { echo PARTITE_LABEL_FAIL; exit 1; }
-          grep -Fq '>Salvati<' /tmp/v33-dom.html || { echo SALVATI_LABEL_FAIL; exit 1; }
-          grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/v33-dom.html || { echo HERO_PHOTO_FAIL; exit 1; }
+          for i in {1..40}; do if curl -fsS http://127.0.0.1:8765/index.html >/dev/null; then READY=1; break; fi; sleep .25; done
+          test "$READY" -eq 1 || { cat /tmp/v34-http.log; exit 1; }
+          timeout 60s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=16000 --dump-dom 'http://127.0.0.1:8765/?v=20260911-v34-instant-portraits' >/tmp/v34-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_4"' /tmp/v34-dom.html
+          grep -Fq '>Partite<' /tmp/v34-dom.html
+          grep -Fq '>Salvati<' /tmp/v34-dom.html
+          grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/v34-dom.html
+          grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/v34-dom.html
           timeout 55s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=10000 --dump-dom 'http://127.0.0.1:8765/nav-probe.html' >/tmp/nav-probe-dom.html
-          if ! grep -Fq 'NAV_PROBE_PASS' /tmp/nav-probe-dom.html; then
-            grep -o 'NAV_PROBE_[A-Z]*[^<]*' /tmp/nav-probe-dom.html | tail -3 || true
-            exit 1
-          fi
-          grep -o 'NAV_PROBE_PASS [0-9.]*ms' /tmp/nav-probe-dom.html | tail -1
-          echo 'V33_BROWSER_UX=PASS'
+          grep -o 'NAV_PROBE_[A-Z]*[^<]*' /tmp/nav-probe-dom.html | tail -3 || true
+          grep -Fq 'NAV_PROBE_PASS' /tmp/nav-probe-dom.html
+          echo 'V34_BROWSER_UX=PASS'
 
       - name: Existing quant regressions
         run: |
@@ -141,17 +139,17 @@ jobs:
           node scripts/clv-tracker-v3.mjs --self-test
           node scripts/clv-diagnostics-fix-v3.mjs --self-test
 
-      - name: Commit candidate if needed
+      - name: Commit certified candidate
         run: |
           set -euo pipefail
           rm -f nav-probe.html
-          if git diff --quiet -- premium-shell-v1.js index.html manifest.webmanifest; then
+          if git diff --quiet -- premium-shell-v1.js player-photos.js index.html manifest.webmanifest; then
             echo 'Candidate already persisted.'
             exit 0
           fi
-          git config user.name 'tennis-edge-v33-certifier'
+          git config user.name 'tennis-edge-v34-certifier'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add premium-shell-v1.js index.html manifest.webmanifest
-          git commit -m 'feat(ui): V3.3 instant navigation and broader player portraits'
+          git add premium-shell-v1.js player-photos.js index.html manifest.webmanifest
+          git commit -m 'feat(ui): V3.4 instant navigation and verified portraits'
           git pull --rebase origin fix/v33-fast-nav-photo-coverage
           git push origin HEAD:fix/v33-fast-nav-photo-coverage
