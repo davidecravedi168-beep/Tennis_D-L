@@ -1,0 +1,141 @@
+name: V3.3 Fast UX Certifier
+
+on:
+  push:
+    branches: [fix/v33-fast-nav-photo-coverage]
+    paths:
+      - '.github/workflows/v33-fast-ux-cert.yml'
+      - 'scripts/apply-v33-fast-ux.mjs'
+      - 'premium-shell-v1.js'
+      - 'index.html'
+      - 'manifest.webmanifest'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v33-fast-ux-certifier
+  cancel-in-progress: false
+
+jobs:
+  certify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+        with:
+          ref: fix/v33-fast-nav-photo-coverage
+          fetch-depth: 0
+
+      - name: Apply V3.3 candidate twice
+        run: |
+          set -euo pipefail
+          node scripts/apply-v33-fast-ux.mjs
+          node scripts/apply-v33-fast-ux.mjs
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          s=re.sub(r'premium-shell-v1\.js\?v=[^"\']+', 'premium-shell-v1.js?v=20260911-v33-fast-clear-photos', s)
+          s=s.replace("connect-src 'self' https://en.wikipedia.org;","connect-src 'self' https://en.wikipedia.org https://www.wikidata.org;")
+          p.write_text(s,encoding='utf-8')
+          m=Path('manifest.webmanifest')
+          ms=m.read_text(encoding='utf-8')
+          ms=re.sub(r'"start_url"\s*:\s*"\.\/\?v=[^"]+"','"start_url": "./?v=20260911-v33-fast-clear-photos"',ms)
+          m.write_text(ms,encoding='utf-8')
+          PY
+
+      - name: Static UX contracts
+        run: |
+          set -euo pipefail
+          node --check premium-shell-v1.js
+          grep -Fq "TEP_FULL_PREMIUM_UI_V3_3" premium-shell-v1.js
+          grep -Fq 'www.wikidata.org/w/api.php?action=wbsearchentities' premium-shell-v1.js
+          grep -Fq "rootMargin:'360px 0px'" premium-shell-v1.js
+          grep -Fq "queueMicrotask(()=>hydrate(view))" premium-shell-v1.js
+          grep -Fq "root.addEventListener('pointerdown'" premium-shell-v1.js
+          ! grep -Fq 'document.startViewTransition' premium-shell-v1.js
+          grep -Fq '<span>Partite</span>' premium-shell-v1.js
+          grep -Fq '<span>Salvati</span>' premium-shell-v1.js
+          grep -Fq '<h1>Partite</h1>' premium-shell-v1.js
+          grep -Fq '<h1>Salvati e seguiti</h1>' premium-shell-v1.js
+          grep -Fq 'premium-shell-v1.js?v=20260911-v33-fast-clear-photos' index.html
+          grep -Fq "connect-src 'self' https://en.wikipedia.org https://www.wikidata.org;" index.html
+          grep -Fq '"start_url": "./?v=20260911-v33-fast-clear-photos"' manifest.webmanifest
+          echo 'V33_STATIC_UX=PASS'
+
+      - name: Wikidata portrait fallback integration
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const search='https://www.wikidata.org/w/api.php?action=wbsearchentities&search=Aryna%20Sabalenka&language=en&uselang=en&limit=6&format=json&origin=*';
+          const s=await fetch(search).then(r=>{if(!r.ok)throw new Error('wikidata search '+r.status);return r.json()});
+          const hit=(s.search||[]).find(x=>/tennis/i.test(String(x.description||'')));
+          if(!hit?.id)throw new Error('NO_TENNIS_ENTITY');
+          const u=`https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${encodeURIComponent(hit.id)}&props=claims&format=json&origin=*`;
+          const e=await fetch(u).then(r=>{if(!r.ok)throw new Error('wikidata entity '+r.status);return r.json()});
+          const image=e?.entities?.[hit.id]?.claims?.P18?.[0]?.mainsnak?.datavalue?.value;
+          if(!image)throw new Error('NO_P18_IMAGE');
+          console.log('WIKIDATA_PORTRAIT_FALLBACK=PASS',hit.id,image);
+          NODE
+
+      - name: Real browser local smoke and instant bottom navigation
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME" || { echo CHROME_NOT_FOUND; exit 1; }
+          cat > nav-probe.html <<'HTML'
+          <!doctype html><meta charset="utf-8"><div id="result">WAIT</div><iframe id="app" style="width:390px;height:844px"></iframe><script>
+          const f=document.getElementById('app'),out=document.getElementById('result');
+          f.src='./?v=20260911-v33-fast-clear-photos';
+          f.onload=()=>setTimeout(()=>{
+            const w=f.contentWindow,d=f.contentDocument,b=d.querySelector('.tp-nav [data-route="explore"]');
+            if(!b){out.textContent='NAV_PROBE_FAIL no-button';return}
+            const t=performance.now();
+            b.dispatchEvent(new w.PointerEvent('pointerdown',{bubbles:true,pointerType:'touch',isPrimary:true}));
+            requestAnimationFrame(()=>requestAnimationFrame(()=>{
+              const title=d.querySelector('.tp-page-title h1')?.textContent?.trim();
+              const ms=performance.now()-t;
+              out.textContent=title==='Partite'&&ms<180?`NAV_PROBE_PASS ${ms.toFixed(1)}ms`:`NAV_PROBE_FAIL ${title} ${ms.toFixed(1)}ms`;
+            }));
+          },800);
+          </script>
+          HTML
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/v33-http.log 2>&1 &
+          PID=$!; trap 'kill "$PID" 2>/dev/null || true' EXIT
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
+          timeout 55s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=16000 --dump-dom 'http://127.0.0.1:8765/?v=20260911-v33-fast-clear-photos' >/tmp/v33-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_3"' /tmp/v33-dom.html
+          grep -Fq '>Partite<' /tmp/v33-dom.html
+          grep -Fq '>Salvati<' /tmp/v33-dom.html
+          grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/v33-dom.html
+          timeout 55s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=8000 --dump-dom 'http://127.0.0.1:8765/nav-probe.html' >/tmp/nav-probe-dom.html
+          grep -Fq 'NAV_PROBE_PASS' /tmp/nav-probe-dom.html
+          grep -o 'NAV_PROBE_PASS [0-9.]*ms' /tmp/nav-probe-dom.html | tail -1
+          echo 'V33_BROWSER_UX=PASS'
+
+      - name: Existing quant regressions
+        run: |
+          set -euo pipefail
+          node scripts/tennis-model-diagnostics-v2.mjs --self-test
+          node scripts/drift-controller-v6.mjs --self-test
+          node scripts/clv-tracker-v3.mjs --self-test
+          node scripts/clv-diagnostics-fix-v3.mjs --self-test
+
+      - name: Commit candidate if needed
+        run: |
+          set -euo pipefail
+          rm -f nav-probe.html
+          if git diff --quiet -- premium-shell-v1.js index.html manifest.webmanifest; then
+            echo 'Candidate already persisted.'
+            exit 0
+          fi
+          git config user.name 'tennis-edge-v33-certifier'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add premium-shell-v1.js index.html manifest.webmanifest
+          git commit -m 'feat(ui): V3.3 instant navigation and broader player portraits'
+          git pull --rebase origin fix/v33-fast-nav-photo-coverage
+          git push origin HEAD:fix/v33-fast-nav-photo-coverage
