@@ -1,44 +1,48 @@
 (()=>{
 'use strict';
-const MARK='TEP_PREMIUM_SHELL_R1';
-if(window.__TEP_PREMIUM_SHELL_R1)return;
-window.__TEP_PREMIUM_SHELL_R1=true;
+const VERSION='TEP_FULL_PREMIUM_UI_V3';
+if(window.__TEP_FULL_PREMIUM_UI_V3)return;
+window.__TEP_FULL_PREMIUM_UI_V3=true;
 
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-const num=v=>v!==null&&v!==''&&Number.isFinite(Number(v))?Number(v):null;
-const pct=v=>Number.isFinite(Number(v))?`${Math.round(Number(v)*100)}%`:'—';
+const n=v=>v!==null&&v!==''&&Number.isFinite(Number(v))?Number(v):null;
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-const byId=id=>document.getElementById(id);
-const q=(s,r=document)=>r.querySelector(s);
-const qa=(s,r=document)=>[...r.querySelectorAll(s)];
-const prettyName=raw=>{
-  const s=String(raw||'').trim();
-  if(!s)return '—';
-  if(s.includes(',')){const [last,...rest]=s.split(',');return `${rest.join(',').trim()} ${last.trim()}`.trim()}
-  return s;
-};
-const shortTournament=s=>String(s||'Tennis').replace(/^(ATP|WTA)\s*-\s*/i,'').replace(/,\s*[^,]+$/,'').trim();
-const localTime=v=>{const d=new Date(v);return Number.isFinite(+d)?d.toLocaleString('it-IT',{weekday:'short',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'Orario da definire'};
-const initials=name=>prettyName(name).split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0]?.toUpperCase()||'').join('')||'TP';
+const pct=v=>Number.isFinite(Number(v))?`${Math.round(Number(v)*100)}%`:'—';
+const pretty=raw=>{const s=String(raw||'').trim();if(!s)return '—';if(s.includes(',')){const [last,...rest]=s.split(',');return `${rest.join(',').trim()} ${last.trim()}`.trim()}return s};
+const surname=raw=>pretty(raw).split(/\s+/).filter(Boolean).at(-1)||'—';
+const initials=raw=>pretty(raw).split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0]?.toUpperCase()||'').join('')||'TP';
+const fmtDate=v=>{const d=new Date(v);return Number.isFinite(+d)?d.toLocaleString('it-IT',{weekday:'short',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'Orario N/D'};
+const fmtClock=v=>{const d=new Date(v);return Number.isFinite(+d)?d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'}):'—'};
+const shortTour=s=>String(s||'Tennis').replace(/^(ATP|WTA)\s*-\s*/i,'').replace(/,\s*[^,]+$/,'').trim();
+const getBoard=()=>{try{return typeof board!=='undefined'&&board?board:null}catch{return null}};
+const getLive=()=>{try{return typeof live!=='undefined'&&live?live:null}catch{return null}};
+const upcoming=()=>Array.isArray(getBoard()?.upcoming)?getBoard().upcoming:[];
+const historyRows=()=>Array.isArray(getBoard()?.history)?getBoard().history:[];
+const stats=()=>getBoard()?.stats||{};
+const favKey='tep:premium:favorites:v3';
+const playerKey='tep:premium:players:v3';
+const photoKey='tep:premium:photos:v3';
+const state={screen:'home',selectedId:null,query:'',tour:'ALL',surface:'ALL',menu:false};
+const readSet=k=>{try{return new Set(JSON.parse(localStorage.getItem(k)||'[]'))}catch{return new Set()}};
+const writeSet=(k,s)=>{try{localStorage.setItem(k,JSON.stringify([...s]))}catch{}};
+let favorites=readSet(favKey),followed=readSet(playerKey),photoCache={};
+try{photoCache=JSON.parse(localStorage.getItem(photoKey)||'{}')||{}}catch{}
+const savePhotos=()=>{try{localStorage.setItem(photoKey,JSON.stringify(photoCache))}catch{}};
 
-const photoStatic={
-  'jannik sinner':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Jannik%20Sinner%202025%20US%20Open.jpg?width=720',
-  'carlos alcaraz':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Carlos%20Alcaraz%20%282025%29.jpg?width=720',
-  'novak djokovic':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Novak%20Djokovic%20at%202025%20Miami%20Open%20%28cropped%29.jpg?width=720',
-  'daniil medvedev':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Daniil%20Medvedev%20%282025%20DC%20Open%29%2005%20%28cropped%29.jpg?width=720',
-  'alexander zverev':'https://commons.wikimedia.org/wiki/Special:Redirect/file/BMW%20Open%202025%20Zverev%20S%C3%B6der%20%28cropped%29.jpg?width=720',
-  'iga swiatek':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Iga%20Swiatek%20%28cropped%29.jpg?width=720',
-  'iga %C5%9Bwi%C4%85tek':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Iga%20Swiatek%20%28cropped%29.jpg?width=720',
-  'aryna sabalenka':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Aryna%20Sabalenka%20at%202025%20Miami%20Open%2005%20%28cropped%29.jpg?width=720',
-  'casper ruud':'https://commons.wikimedia.org/wiki/Special:Redirect/file/Casper%20Ruud%2C%20Norwegian%20professional%20tennis%20player%2C%20ATP%20500%20Basel%202025%20%28cropped%29.jpg?width=720'
+const staticPhotos={
+ 'jannik sinner':'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Jannik_Sinner_2025_US_Open.jpg/640px-Jannik_Sinner_2025_US_Open.jpg',
+ 'carlos alcaraz':'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Carlos_Alcaraz_%282025%29.jpg/640px-Carlos_Alcaraz_%282025%29.jpg',
+ 'novak djokovic':'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Novak_Djokovic_at_2025_Miami_Open_%28cropped%29.jpg/640px-Novak_Djokovic_at_2025_Miami_Open_%28cropped%29.jpg',
+ 'daniil medvedev':'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Daniil_Medvedev_%282025_DC_Open%29_05_%28cropped%29.jpg/640px-Daniil_Medvedev_%282025_DC_Open%29_05_%28cropped%29.jpg',
+ 'alexander zverev':'https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/BMW_Open_2025_Zverev_S%C3%B6der_%28cropped%29.jpg/640px-Alexander_Zverev_%282025%29.jpg',
+ 'iga swiatek':'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Iga_Swiatek_%28cropped%29.jpg/640px-Iga_Swiatek_%28cropped%29.jpg',
+ 'aryna sabalenka':'https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Aryna_Sabalenka_at_2025_Miami_Open_05_%28cropped%29.jpg/640px-Aryna_Sabalenka_at_2025_Miami_Open_05_%28cropped%29.jpg'
 };
-const photoCacheKey='tep:premium-player-photo:v1';
-let photoCache={};
-try{photoCache=JSON.parse(localStorage.getItem(photoCacheKey)||'{}')||{}}catch{}
-function savePhotoCache(){try{localStorage.setItem(photoCacheKey,JSON.stringify(photoCache))}catch{}}
 async function resolvePhoto(raw){
-  const name=prettyName(raw),key=name.toLowerCase();
-  if(photoStatic[key])return {src:photoStatic[key],source:`https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&search=${encodeURIComponent(name)}`};
+  const name=pretty(raw),key=name.toLowerCase();
+  if(staticPhotos[key])return staticPhotos[key];
   if(photoCache[key])return photoCache[key];
   if(!name||/^(wsf|r16p|qf|sf)\d+/i.test(name))return null;
   try{
@@ -46,232 +50,155 @@ async function resolvePhoto(raw){
     const r=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${title}`,{cache:'force-cache',headers:{Accept:'application/json'}});
     if(!r.ok)return null;
     const j=await r.json();
-    const src=j?.thumbnail?.source||j?.originalimage?.source;
-    if(!src)return null;
-    const out={src,source:j?.content_urls?.desktop?.page||`https://en.wikipedia.org/wiki/${title}`};
-    photoCache[key]=out;savePhotoCache();return out;
+    const src=j?.thumbnail?.source||j?.originalimage?.source||null;
+    if(src){photoCache[key]=src;savePhotos();}
+    return src;
   }catch{return null}
 }
-function avatarHtml(name,cls=''){
-  return `<span class="tepAvatar ${cls}" data-player-photo="${esc(name)}"><span class="tepAvatarFallback">${esc(initials(name))}</span><img alt="${esc(prettyName(name))}" loading="lazy" decoding="async"></span>`;
+function avatar(name,cls=''){
+  return `<span class="tp-avatar ${cls}" data-photo="${esc(name)}"><span>${esc(initials(name))}</span><img alt="${esc(pretty(name))}" loading="lazy" decoding="async" hidden></span>`;
 }
-async function hydratePhotos(root=document){
-  const nodes=qa('[data-player-photo]',root).filter(x=>x.dataset.photoState!=='done'&&x.dataset.photoState!=='loading');
-  for(const el of nodes){
-    el.dataset.photoState='loading';
-    const info=await resolvePhoto(el.dataset.playerPhoto);
-    if(info?.src){
-      const img=q('img',el);if(img){img.src=info.src;img.hidden=false;img.dataset.source=info.source||'';img.addEventListener('error',()=>{img.hidden=true},{once:true});}
-      el.dataset.photoSource=info.source||'';
-    }
-    el.dataset.photoState='done';
+async function hydrate(root=document){
+  for(const el of $$('[data-photo]',root).filter(x=>!x.dataset.done)){
+    el.dataset.done='1';
+    const src=await resolvePhoto(el.dataset.photo);
+    if(!src)continue;
+    const img=$('img',el);if(!img)continue;
+    img.src=src;img.hidden=false;img.addEventListener('error',()=>{img.hidden=true},{once:true});
   }
 }
-
+function countryInfo(ev,side){
+  const pi=ev?.player_intel?.[side]||{};
+  const code=String(pi.country_code||pi.country||ev?.[`country_${side}`]||'').toUpperCase().slice(0,2);
+  const flag=/^[A-Z]{2}$/.test(code)?String.fromCodePoint(...[...code].map(c=>127397+c.charCodeAt(0))):'';
+  const rank=n(pi.rank??pi.ranking??ev?.[`ranking_${side}`]??ev?.[`rank_${side}`]);
+  return {code,flag,rank:rank?`#${Math.round(rank)}`:''};
+}
+function probs(ev){
+  let a=n(ev?.p_a),b=n(ev?.p_b);
+  if(a!==null&&b===null)b=1-a;if(b!==null&&a===null)a=1-b;
+  if(a===null&&b===null){const fp=n(ev?.forecast_prob),side=String(ev?.forecast_side||'').toUpperCase();if(fp!==null){if(side==='A'){a=fp;b=1-fp}else if(side==='B'){b=fp;a=1-fp}}}
+  if(a!==null&&b!==null){const s=a+b;if(s>0){a=a/s;b=b/s}}
+  return [a,b];
+}
+function scenarios(ev){const l=ev?.market_lab||{};return [l.scenario_rows,l.scenarios,l.rows,l.priced].flatMap(x=>Array.isArray(x)?x:[])}
+function metrics(ev){
+  const lab=ev?.market_lab||{},rows=scenarios(ev);
+  const total=n(lab.mean_total_games??lab.expected_total_games??lab.median_total_games);
+  const setRows=rows.filter(r=>/SET_SCORE/i.test(String(r.market||r.type||''))&&['2-1','1-2'].includes(String(r.selection||r.label||'')));
+  const decide=setRows.length?setRows.reduce((s,r)=>s+(n(r.probability??r.p??r.model_prob)||0),0):null;
+  const tieRow=rows.find(r=>/TIEBREAK_IN_MATCH|TIE.?BREAK/i.test(String(r.market||r.type||''))&&/^YES$/i.test(String(r.selection||r.label||'')));
+  const tie=tieRow?n(tieRow.probability??tieRow.p??tieRow.model_prob):null;
+  const ia=ev?.player_intel?.a?.service||{},ib=ev?.player_intel?.b?.service||{};
+  return {total,decide,tie,aceA:n(ia.aces_per_match),aceB:n(ib.aces_per_match),dfA:n(ia.double_faults_per_match),dfB:n(ib.double_faults_per_match),sampleA:n(ev?.player_intel?.a?.sample?.prop_matches),sampleB:n(ev?.player_intel?.b?.sample?.prop_matches)};
+}
+function confidence(ev,a,b){
+  const c=n(ev?.confidence??ev?.sports_confidence);
+  if(c!==null)return {label:c>=80?'Alta':c>=65?'Buona':c>=50?'Media':'Bassa',bars:clamp(Math.round(c/20),1,5),value:`${Math.round(c)}/100`};
+  const d=a!==null&&b!==null?Math.abs(a-b):0;return {label:d>=.3?'Buona':d>=.14?'Media':'Prudente',bars:d>=.3?4:d>=.14?3:2,value:'Modello'};
+}
+function heroEvent(){
+  const xs=upcoming();if(!xs.length)return null;
+  const selected=xs.find(x=>String(x.event_id)===String(state.selectedId));if(selected)return selected;
+  return [...xs].sort((a,b)=>{const [pa,pb]=probs(a),[qa,qb]=probs(b);const av=(pa!==null&&pb!==null?1:0)*100+(n(a.data_quality)||0)+(n(a.priority)||0)/10;const bv=(qa!==null&&qb!==null?1:0)*100+(n(b.data_quality)||0)+(n(b.priority)||0)/10;return bv-av})[0]||xs[0];
+}
+function insight(ev,a,b){
+  if(a===null||b===null)return 'Il modello sta completando la lettura del match. Nessuna percentuale viene inventata.';
+  const fav=a>=b?pretty(ev.player_a):pretty(ev.player_b),p=Math.max(a,b),surface=ev.surface?` su ${String(ev.surface).toLowerCase()}`:'';
+  return `Il modello attribuisce a ${fav} il ${pct(p)} di probabilità di vittoria${surface}. La lettura resta subordinata ai controlli qualità e alla freschezza dei dati.`;
+}
+function freshness(){const b=getBoard(),v=b?.meta?.data_refreshed_at||b?.meta?.updated_at,d=new Date(v);if(!Number.isFinite(+d))return 'Dati in caricamento';const m=Math.max(0,Math.round((Date.now()-+d)/60000));return m<2?'Aggiornato ora':`Aggiornato ${m} min fa`}
+function surfaceIcon(s){const x=String(s||'').toLowerCase();return x.includes('clay')?'◫':x.includes('grass')?'▥':'▦'}
+function tourLabel(ev){return String(ev?.tour||'').toUpperCase()||(/WTA/i.test(ev?.tournament||'')?'WTA':/Challenger/i.test(ev?.tournament||'')?'CHALLENGER':'ATP')}
+function eventCard(ev,compact=false){
+  const [a,b]=probs(ev),ca=countryInfo(ev,'a'),cb=countryInfo(ev,'b');
+  return `<button class="tp-match-card ${compact?'compact':''}" data-open-event="${esc(ev.event_id)}" type="button">
+    <div class="tp-match-meta"><span class="tp-tag">🏆 ${esc(tourLabel(ev))}</span><span>${esc(shortTour(ev.tournament))}</span><span>${surfaceIcon(ev.surface)} ${esc(ev.surface||'N/D')}</span><time>${esc(fmtDate(ev.start_at))}</time></div>
+    <div class="tp-match-main"><div class="tp-match-player">${avatar(ev.player_a,'mini')}<div><small>${esc([ca.flag,ca.code,ca.rank].filter(Boolean).join(' '))}</small><strong>${esc(pretty(ev.player_a))}</strong></div></div><b class="tp-vs">VS</b><div class="tp-match-player right">${avatar(ev.player_b,'mini')}<div><small>${esc([cb.flag,cb.code,cb.rank].filter(Boolean).join(' '))}</small><strong>${esc(pretty(ev.player_b))}</strong></div></div><div class="tp-mini-prob"><strong>${pct(a)}</strong><span>${pct(b)}</span></div></div>
+  </button>`;
+}
+function heroMarkup(ev,analysis=false){
+  if(!ev)return `<section class="tp-hero empty"><h2>Tennis Edge Pro</h2><p>Sto caricando i prossimi match e le probabilità validate.</p></section>`;
+  const [a,b]=probs(ev),ci=confidence(ev,a,b),ca=countryInfo(ev,'a'),cb=countryInfo(ev,'b'),m=metrics(ev),fav=a!==null&&b!==null?(a>=b?pretty(ev.player_a):pretty(ev.player_b)):'Dato in attesa';
+  const isFav=favorites.has(String(ev.event_id));
+  return `<section class="tp-hero ${analysis?'analysis':''}" data-hero-event="${esc(ev.event_id)}">
+    <div class="tp-hero-top"><span class="tp-tag lime">🏆 ${esc(tourLabel(ev))}</span><span class="tp-tag">${surfaceIcon(ev.surface)} ${esc(ev.surface||'Superficie N/D')}</span><button class="tp-fav ${isFav?'on':''}" data-favorite="${esc(ev.event_id)}" type="button" aria-label="Salva match">☆</button></div>
+    <div class="tp-hero-tournament">${esc(shortTour(ev.tournament))}<span>·</span>${esc(fmtDate(ev.start_at))}</div>
+    <div class="tp-players">
+      <div class="tp-player left">${avatar(ev.player_a,'hero')}<div class="tp-player-copy"><small>${esc([ca.flag,ca.code,ca.rank].filter(Boolean).join(' '))}</small><strong>${esc(pretty(ev.player_a))}</strong><button type="button" data-follow="${esc(pretty(ev.player_a))}" class="tp-follow ${followed.has(pretty(ev.player_a))?'on':''}">${followed.has(pretty(ev.player_a))?'Seguito':'Segui'}</button></div></div>
+      <div class="tp-hero-vs">VS</div>
+      <div class="tp-player right">${avatar(ev.player_b,'hero')}<div class="tp-player-copy"><small>${esc([cb.flag,cb.code,cb.rank].filter(Boolean).join(' '))}</small><strong>${esc(pretty(ev.player_b))}</strong><button type="button" data-follow="${esc(pretty(ev.player_b))}" class="tp-follow ${followed.has(pretty(ev.player_b))?'on':''}">${followed.has(pretty(ev.player_b))?'Seguito':'Segui'}</button></div></div>
+    </div>
+    <div class="tp-winband"><div><strong>${pct(a)}</strong><span>${esc(surname(ev.player_a))}</span></div><div class="tp-confidence"><small>PROBABILITÀ DI VITTORIA</small><b>${esc(fav==='Dato in attesa'?fav:`${fav} in vantaggio`)}</b><span>Confidenza ${esc(ci.label)} · ${esc(ci.value)}</span><i>${[0,1,2,3,4].map(i=>`<em class="${i<ci.bars?'on':''}"></em>`).join('')}</i></div><div class="right"><strong>${pct(b)}</strong><span>${esc(surname(ev.player_b))}</span></div></div>
+    <button class="tp-insight" data-open-event="${esc(ev.event_id)}" type="button"><b>“</b><span>${esc(insight(ev,a,b))}</span><i>›</i></button>
+    ${analysis?`<div class="tp-metrics"><div class="tp-metric blue"><i>▥</i><div><strong>Giochi totali / Over-Under</strong><span>Proiezione del numero totale di giochi.</span></div><b>${m.total!==null?m.total.toFixed(1):'—'}</b></div><div class="tp-metric green"><i>⚡</i><div><strong>Profilo servizio</strong><span>Ace medi storici: ${m.aceA!==null?m.aceA.toFixed(1):'—'} vs ${m.aceB!==null?m.aceB.toFixed(1):'—'}.</span></div><b>${m.sampleA||m.sampleB?`n ${Math.max(m.sampleA||0,m.sampleB||0)}`:'—'}</b></div><div class="tp-metric amber"><i>⌁</i><div><strong>Probabilità set decisivo</strong><span>Stima modello del terzo set.</span></div><b>${m.decide!==null?pct(m.decide):'—'}</b></div><div class="tp-metric purple"><i>◎</i><div><strong>Probabilità tie-break</strong><span>Probabilità di almeno un tie-break nel match.</span></div><b>${m.tie!==null?pct(m.tie):'—'}</b></div></div>`:''}
+  </section>`;
+}
+function home(){
+  const ev=heroEvent(),xs=upcoming().filter(x=>!ev||String(x.event_id)!==String(ev.event_id)).slice(0,3),liveCount=Array.isArray(getLive()?.events)?getLive().events.length:0;
+  return `<main class="tp-screen"><div class="tp-kicker"><span>MATCH IN EVIDENZA</span><button data-open-event="${esc(ev?.event_id||'')}" type="button">Vedi dettagli ›</button></div>${heroMarkup(ev,false)}<div class="tp-quick-grid"><button data-route="explore" class="tp-quick" type="button"><i>▥</i><div><strong>Top Match</strong><span>I match più interessanti con probabilità e contesto.</span></div><b>›</b></button><button data-route="live" class="tp-quick live" type="button"><i>⚡</i><div><strong>Opportunità live</strong><span>Aggiornamenti disponibili sui match in corso.</span></div><em>${liveCount} LIVE</em><b>›</b></button></div><section class="tp-panel"><div class="tp-section-head"><div><h2>Partite in arrivo</h2><p>I prossimi match con le nostre previsioni.</p></div><button data-route="explore" type="button">Vedi tutte ›</button></div><div class="tp-list">${xs.length?xs.map(x=>eventCard(x,true)).join(''):'<div class="tp-empty">Nessun altro match disponibile.</div>'}</div></section><section class="tp-panel"><div class="tp-section-head"><div><h2>Insight rapidi</h2><p>Dati disponibili, senza riempitivi inventati.</p></div></div>${quickInsights(ev)}</section></main>`;
+}
+function quickInsights(ev){
+  if(!ev)return '<div class="tp-empty">In attesa dei dati.</div>';
+  const [a,b]=probs(ev),m=metrics(ev),ci=confidence(ev,a,b);return `<div class="tp-insight-grid"><div><i>▥</i><strong>Superficie</strong><span>${esc(ev.surface||'N/D')}</span></div><div><i>◔</i><strong>Confidence</strong><span>${esc(ci.value)}</span></div><div><i>⌁</i><strong>Set decisivo</strong><span>${m.decide!==null?pct(m.decide):'N/D'}</span></div></div>`;
+}
+function explore(){
+  let xs=upcoming();const q=state.query.trim().toLowerCase();if(q)xs=xs.filter(x=>[x.player_a,x.player_b,x.tournament,x.surface].some(v=>String(v||'').toLowerCase().includes(q)));if(state.tour!=='ALL')xs=xs.filter(x=>tourLabel(x)===state.tour);if(state.surface!=='ALL')xs=xs.filter(x=>String(x.surface||'').toUpperCase().includes(state.surface));
+  return `<main class="tp-screen"><div class="tp-page-title"><h1>Esplora</h1><p>Scopri i prossimi match, confronta probabilità e trova le analisi più interessanti.</p></div><label class="tp-search">⌕<input id="tpSearch" value="${esc(state.query)}" placeholder="Cerca giocatori, tornei o superfici…"></label><div class="tp-filter-row"><button class="${state.tour==='ALL'?'on':''}" data-tour="ALL">Tutti</button><button class="${state.tour==='ATP'?'on':''}" data-tour="ATP">🏆 ATP</button><button class="${state.tour==='WTA'?'on':''}" data-tour="WTA">🏆 WTA</button><button class="${state.tour==='CHALLENGER'?'on':''}" data-tour="CHALLENGER">Challenger</button></div><div class="tp-filter-row"><button class="${state.surface==='ALL'?'on':''}" data-surface="ALL">Tutte superfici</button><button class="${state.surface==='HARD'?'on':''}" data-surface="HARD">▦ Hard</button><button class="${state.surface==='CLAY'?'on':''}" data-surface="CLAY">◫ Clay</button><button class="${state.surface==='GRASS'?'on':''}" data-surface="GRASS">▥ Grass</button></div>${xs[0]?`<section class="tp-day-insight"><div><small>INSIGHT DEL GIORNO</small><h2>${esc(surname(xs[0].player_a))} vs ${esc(surname(xs[0].player_b))}</h2><p>${esc(insight(xs[0],...probs(xs[0])))}</p></div>${avatar(probs(xs[0])[0]>=probs(xs[0])[1]?xs[0].player_a:xs[0].player_b,'insight')}</section>`:''}<section class="tp-panel"><div class="tp-section-head"><div><h2>Prossimi match</h2><p>${xs.length} match nel filtro selezionato.</p></div></div><div class="tp-list rich">${xs.length?xs.map(x=>eventCard(x,false)).join(''):'<div class="tp-empty">Nessun match trovato con questi filtri.</div>'}</div></section></main>`;
+}
+function analysis(){const ev=heroEvent();return `<main class="tp-screen"><div class="tp-page-title compact"><button data-route="explore" type="button">‹</button><div><h1>Analisi match</h1><p>Probabilità e metriche validate, presentate senza rumore.</p></div></div>${heroMarkup(ev,true)}<button class="tp-cta" data-route="record" type="button"><span>▥</span> Vedi track record completo <b>›</b></button></main>`}
+function mine(){
+  const s=stats(),saved=upcoming().filter(x=>favorites.has(String(x.event_id))),follow=[...followed],roi=n(s.roi),acc=n(s.forecast_accuracy);return `<main class="tp-screen"><div class="tp-page-title"><h1>Le Mie Analisi</h1><p>I tuoi preferiti, i giocatori seguiti e i numeri del modello in un unico posto.</p></div><section class="tp-kpis"><div><i>☆</i><strong>${saved.length}</strong><span>Match salvati</span></div><div><i>♙</i><strong>${follow.length}</strong><span>Giocatori seguiti</span></div><div><i>◎</i><strong>${getBoard()?.meta?.locked_predictions??'—'}</strong><span>Previsioni bloccate</span></div><div><i>▥</i><strong>${roi!==null?(roi>=0?'+':'')+(roi*100).toFixed(1)+'%':'—'}</strong><span>ROI ufficiale</span></div></section><section class="tp-panel"><div class="tp-section-head"><div><h2>Giocatori seguiti</h2><p>I tuoi giocatori preferiti.</p></div></div><div class="tp-followed">${follow.length?follow.map(name=>`<button data-follow="${esc(name)}" type="button">${avatar(name,'circle')}<strong>${esc(name)}</strong><span>Seguito</span></button>`).join(''):'<div class="tp-empty">Apri un match e tocca “Segui” per aggiungere giocatori.</div>'}</div></section><section class="tp-panel"><div class="tp-section-head"><div><h2>Match salvati</h2><p>Le analisi che vuoi tenere d’occhio.</p></div></div><div class="tp-list">${saved.length?saved.map(x=>eventCard(x,true)).join(''):'<div class="tp-empty">Nessun match salvato.</div>'}</div></section><section class="tp-two"><div class="tp-stat-card"><small>ACCURATEZZA FORECAST</small><strong>${acc!==null?pct(acc):'—'}</strong><span>${s.closed_forecasts??0} match chiusi</span></div><div class="tp-stat-card"><small>CLV MEDIO</small><strong>${n(s.avg_clv)!==null?((n(s.avg_clv)>=0?'+':'')+(n(s.avg_clv)*100).toFixed(1)+'%'):'—'}</strong><span>Campione ${s.clv_sample??0}</span></div></section></main>`;
+}
+function liveScreen(){const xs=Array.isArray(getLive()?.events)?getLive().events:[];return `<main class="tp-screen"><div class="tp-page-title compact"><button data-route="home" type="button">‹</button><div><h1>Live</h1><p>Match in corso e stato dei dati in tempo reale.</p></div></div><section class="tp-panel"><div class="tp-section-head"><div><h2>In corso</h2><p>${xs.length} eventi disponibili.</p></div></div><div class="tp-live-list">${xs.length?xs.map(x=>`<div class="tp-live-card"><div><small>● LIVE</small><strong>${esc(pretty(x.player_a||x.home))} vs ${esc(pretty(x.player_b||x.away))}</strong><span>${esc(x.tournament||x.surface||'Tennis')}</span></div><b>${esc(x.score||x.current_score||'LIVE')}</b></div>`).join(''):'<div class="tp-empty">Nessun match live disponibile adesso.</div>'}</div></section></main>`}
+function recordScreen(){const s=stats(),h=historyRows().filter(x=>x.status==='SETTLED').slice(0,12);return `<main class="tp-screen"><div class="tp-page-title compact"><button data-route="analysis" type="button">‹</button><div><h1>Track Record</h1><p>Prestazioni reali e campione disponibile.</p></div></div><section class="tp-kpis"><div><i>✓</i><strong>${s.closed_forecasts??0}</strong><span>Forecast chiusi</span></div><div><i>％</i><strong>${n(s.forecast_accuracy)!==null?pct(s.forecast_accuracy):'—'}</strong><span>Accuratezza</span></div><div><i>↗</i><strong>${n(s.avg_clv)!==null?((n(s.avg_clv)>=0?'+':'')+(n(s.avg_clv)*100).toFixed(1)+'%'):'—'}</strong><span>CLV medio</span></div><div><i>▥</i><strong>${n(s.roi)!==null?((n(s.roi)>=0?'+':'')+(n(s.roi)*100).toFixed(1)+'%'):'—'}</strong><span>ROI pick ufficiali</span></div></section><section class="tp-panel"><div class="tp-section-head"><div><h2>Ultimi risultati</h2><p>Pronostici chiusi, senza nascondere gli errori.</p></div></div><div class="tp-record-list">${h.length?h.map(x=>{const fp=n(x.forecast_prob),won=typeof x.forecast_won==='boolean'?x.forecast_won:null;return `<div><span>${won===true?'✓':won===false?'×':'•'}</span><div><strong>${esc(pretty(x.player_a))} vs ${esc(pretty(x.player_b))}</strong><small>${esc(fmtDate(x.settled_at))}</small></div><b>${fp!==null?pct(fp):'—'}</b></div>`}).join(''):'<div class="tp-empty">Nessun risultato disponibile.</div>'}</div></section></main>`}
+function screenHtml(){if(state.screen==='explore')return explore();if(state.screen==='analysis')return analysis();if(state.screen==='mine')return mine();if(state.screen==='live')return liveScreen();if(state.screen==='record')return recordScreen();return home()}
+function shell(){
+  return `<div id="tpApp" data-version="${VERSION}"><header class="tp-header"><button class="tp-brand" data-route="home" type="button"><i class="tp-ball"></i><div><strong>Tennis <em>Edge</em> Pro</strong><span>DATI · ANALISI · VANTAGGIO</span></div></button><div class="tp-head-actions"><span class="tp-lang">◎ IT⌄</span><button id="tpMenuBtn" type="button">☰</button></div></header><div class="tp-fresh">${esc(freshness())}</div><div id="tpView"></div><nav class="tp-nav"><button data-route="home" class="${state.screen==='home'?'on':''}"><i>⌂</i><span>Home</span></button><button data-route="explore" class="${state.screen==='explore'?'on':''}"><i>⌕</i><span>Esplora</span></button><button data-route="analysis" class="${state.screen==='analysis'?'on':''}"><i>☆</i><span>Analisi</span></button><button data-route="mine" class="${state.screen==='mine'?'on':''}"><i>▥</i><span>Le Mie Analisi</span></button></nav><div class="tp-menu" id="tpMenu"><div class="tp-menu-card"><div class="tp-menu-head"><strong>Tennis Edge Pro</strong><button id="tpMenuClose" type="button">×</button></div><button data-route="live">Live <span>›</span></button><button data-route="record">Track record <span>›</span></button><button data-menu-sure="1">SureBet <span>↗</span></button><small>Le schermate usano i dati reali disponibili. Se una foto o una metrica manca, viene mostrato un fallback neutro.</small></div></div></div>`;
+}
 const CSS=`
-:root{--tep-lime:#caff3d;--tep-lime2:#99ff32;--tep-cyan:#39c6ff;--tep-purple:#c57cff;--tep-amber:#ffbf21;--tep-bg:#020a12;--tep-card:#071521;--tep-card2:#0a1b2a;--tep-line:#17364c;--tep-muted:#93a9c2;--tep-soft:#d8e8f8;--tep-shadow:0 24px 70px rgba(0,0,0,.42)}
-body.tepPremiumMode{background:radial-gradient(circle at 75% -10%,rgba(57,198,255,.12),transparent 28rem),radial-gradient(circle at 12% 18%,rgba(202,255,61,.055),transparent 26rem),linear-gradient(180deg,#020911,#04101a 58%,#020911);color:#f8fbff}
-body.tepPremiumMode .app{max-width:980px;padding:max(13px,env(safe-area-inset-top)) 14px calc(106px + env(safe-area-inset-bottom))}
-body.tepPremiumMode .topbar{position:sticky;top:0;z-index:45;margin:-13px -14px 12px;padding:calc(max(13px,env(safe-area-inset-top))) 14px 10px;background:linear-gradient(180deg,rgba(2,10,18,.98),rgba(2,10,18,.86),rgba(2,10,18,0));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-body.tepPremiumMode .brand{min-width:0}body.tepPremiumMode .brand h1{font-size:24px;font-weight:900;letter-spacing:-.045em;text-transform:none;font-style:italic;white-space:nowrap}body.tepPremiumMode .brand h1 .tepEdgeWord{color:var(--tep-lime)}body.tepPremiumMode .brand h1 small{display:none}body.tepPremiumMode .brand p{font-size:8px;text-transform:uppercase;letter-spacing:.34em;color:#b8c7d8;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-body.tepPremiumMode #tep-brand-inline{width:42px!important;height:42px!important;border-radius:50%!important;box-shadow:0 0 0 1px rgba(202,255,61,.25),0 0 22px rgba(202,255,61,.2)}
-body.tepPremiumMode .topActions{gap:6px}body.tepPremiumMode .statusPill{border-color:rgba(202,255,61,.24);background:rgba(6,21,32,.78)}body.tepPremiumMode .miniBtn{border-color:#21445d;background:#071724;color:#eaf4ff}body.tepPremiumMode #modeBtn{display:none}
-body.tepPremiumMode .autopilotBar{border:0;background:transparent;padding:0 3px 8px;margin:0 0 6px;font-size:8px}body.tepPremiumMode .autopilotBar b{color:var(--tep-lime)}body.tepPremiumMode .autopilotBar span{color:#6f88a0}
-body.tepPremiumMode #hero,body.tepPremiumMode .marketTape,body.tepPremiumMode .quickStrip{display:none!important}
-#tepPremiumHero{position:relative;overflow:hidden;border:1px solid #21445c;border-radius:24px;background:radial-gradient(circle at 20% 15%,rgba(57,198,255,.12),transparent 20rem),radial-gradient(circle at 80% 25%,rgba(202,255,61,.06),transparent 18rem),linear-gradient(150deg,#081a28,#030b13 62%);box-shadow:var(--tep-shadow);margin-bottom:12px;min-height:470px}
-#tepPremiumHero:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(1,8,13,.72) 72%,#030b13 100%);pointer-events:none}
-.tepHeroTop{position:relative;z-index:4;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:16px 14px 0}.tepBadge{display:inline-flex;align-items:center;gap:7px;border:1px solid #275171;background:rgba(4,18,30,.82);border-radius:999px;padding:8px 12px;color:#d9e8f6;font-size:11px;font-weight:800}.tepBadge.lime{border-color:rgba(202,255,61,.42);color:var(--tep-lime)}
-.tepHeroMeta{position:relative;z-index:4;text-align:center;color:#9cb3ca;font-size:11px;margin-top:9px}.tepHeroMeta b{color:#eaf4ff;font-weight:700}
-.tepHeroPlayers{position:relative;z-index:2;display:grid;grid-template-columns:1fr 70px 1fr;align-items:end;min-height:235px;padding:2px 18px 0}.tepPlayer{position:relative;min-width:0;display:flex;align-items:flex-end;gap:12px}.tepPlayer.right{flex-direction:row-reverse;text-align:right}.tepPlayer .tepAvatar{width:min(31vw,195px);height:230px;flex:0 0 auto;border-radius:22px 22px 8px 8px;overflow:hidden;background:linear-gradient(160deg,#102b3d,#07131f);border:0;box-shadow:none}.tepPlayer .tepAvatar img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;filter:saturate(.88) contrast(1.06);-webkit-mask-image:linear-gradient(#000 0 78%,transparent 100%);mask-image:linear-gradient(#000 0 78%,transparent 100%)}.tepPlayer .tepAvatarFallback{font-size:54px;color:#5b7890}.tepPlayerText{padding-bottom:30px;min-width:0}.tepPlayerText small{display:block;color:#8ca5bd;font-size:10px;margin-bottom:4px}.tepPlayerText strong{display:block;font-size:clamp(20px,4.8vw,34px);line-height:.98;letter-spacing:-.045em;white-space:normal}.tepPlayerText span{display:block;color:#bfd0e0;font-size:10px;margin-top:8px}.tepVs{align-self:center;text-align:center;color:#b8cae0;font-weight:900;font-size:22px;padding-bottom:36px}
-.tepWinBand{position:relative;z-index:6;margin:-14px 16px 14px;border:1.5px solid var(--tep-lime);border-radius:19px;background:linear-gradient(90deg,rgba(16,48,31,.68),rgba(5,20,25,.9) 45%,rgba(8,23,34,.94));box-shadow:0 0 24px rgba(202,255,61,.12),inset 0 0 30px rgba(202,255,61,.025);display:grid;grid-template-columns:1fr 1.2fr 1fr;align-items:center;padding:13px 15px}.tepHeroPct{font-size:clamp(42px,10vw,70px);font-weight:950;letter-spacing:-.065em;line-height:.9}.tepHeroPct.a{color:var(--tep-lime);text-shadow:0 0 22px rgba(202,255,61,.24)}.tepHeroPct.b{color:#e8f5ff;text-align:right;text-shadow:0 0 18px rgba(57,198,255,.18)}.tepPctName{display:block;font-size:11px;color:#afc5db;margin-top:6px}.tepWinBand>div:last-child .tepPctName{text-align:right}.tepWinCenter{text-align:center;border-inline:1px solid #335064;padding:0 10px}.tepWinCenter small{display:block;color:#9db6cb;font-size:9px;text-transform:uppercase;letter-spacing:.08em}.tepWinCenter strong{display:block;color:var(--tep-lime);font-size:12px;margin-top:6px}.tepConfidence{display:flex;gap:4px;justify-content:center;margin-top:8px}.tepConfidence i{width:20px;height:8px;border-radius:999px;background:#24394d}.tepConfidence i.on{background:linear-gradient(90deg,var(--tep-lime2),var(--tep-lime));box-shadow:0 0 8px rgba(202,255,61,.22)}
-.tepHeroInsight{position:relative;z-index:6;margin:0 16px 16px;border:1px solid #153349;border-radius:14px;background:rgba(5,19,30,.9);padding:11px 13px;color:#bcd0e3;font-size:10px;line-height:1.45}.tepHeroInsight b{color:var(--tep-cyan);margin-right:8px}
-#tepPremiumDashboard{display:grid;gap:10px;margin-bottom:10px}.tepDashPair{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tepDashCard,.tepUpcoming,.tepInsightStrip{border:1px solid #17364c;border-radius:18px;background:linear-gradient(145deg,rgba(8,26,40,.96),rgba(4,15,25,.97));box-shadow:0 13px 38px rgba(0,0,0,.19)}.tepDashCard{padding:15px;display:flex;gap:12px;align-items:center;min-height:105px}.tepIconBox{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-size:24px;border:1px solid rgba(57,198,255,.32);background:rgba(57,198,255,.06)}.tepIconBox.lime{border-color:rgba(202,255,61,.35);background:rgba(202,255,61,.06);color:var(--tep-lime)}.tepDashCard strong{font-size:17px}.tepDashCard p{margin:4px 0 0;color:#8fa8bf;font-size:10px;line-height:1.4}.tepLivePill{margin-left:auto;color:var(--tep-lime);font-size:9px;font-weight:900;border:1px solid rgba(202,255,61,.35);border-radius:999px;padding:6px 8px}
-.tepUpcoming{padding:14px}.tepSectionTitle{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:9px}.tepSectionTitle strong{font-size:18px}.tepSectionTitle span{font-size:10px;color:var(--tep-cyan)}.tepUpcomingRow{display:grid;grid-template-columns:58px 1fr auto;align-items:center;gap:10px;padding:9px 4px;border-top:1px solid rgba(42,74,98,.48)}.tepUpcomingRow:first-of-type{border-top:0}.tepUpcomingRow time{font-size:9px;color:#9cb3c9}.tepUpcomingNames{display:flex;align-items:center;gap:8px;min-width:0}.tepMiniAvatar{width:37px;height:37px!important;border-radius:50%!important;flex:0 0 37px!important}.tepMiniAvatar .tepAvatarFallback{font-size:12px}.tepUpcomingNames b{font-size:11px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tepUpcomingNames span{font-size:8px;color:#89a3ba}.tepUpcomingProb{font-size:16px;font-weight:950;color:var(--tep-lime);text-align:right}.tepUpcomingProb span{display:block;color:#cfe8ff;font-size:11px}.tepInsightStrip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;overflow:hidden}.tepInsightCell{padding:13px;border-left:1px solid #17364c}.tepInsightCell:first-child{border-left:0}.tepInsightCell b{display:block;font-size:12px}.tepInsightCell span{display:block;margin-top:4px;color:#8ca5bd;font-size:9px;line-height:1.35}
-body.tepPremiumMode .section{margin-top:12px}.tepPageLead{margin:8px 2px 13px}.tepPageLead h2{font-size:34px;line-height:1;margin:0;letter-spacing:-.05em}.tepPageLead p{font-size:11px;color:#8fa8bf;margin:7px 0 0;line-height:1.45}
-body.tepPremiumMode .card{background:linear-gradient(145deg,rgba(8,25,39,.98),rgba(4,15,25,.98));border-color:#17364c;border-radius:19px;box-shadow:0 14px 34px rgba(0,0,0,.16)}body.tepPremiumMode .card h2{font-size:17px;letter-spacing:-.02em}body.tepPremiumMode .sub{color:#8fa8bf;font-size:10px}body.tepPremiumMode .pill{border-color:#21445c;background:#071926}body.tepPremiumMode .pill.good{color:var(--tep-lime);border-color:rgba(202,255,61,.34);background:rgba(202,255,61,.055)}
-body.tepPremiumMode .chip{background:#071724;border-color:#21445c;color:#a7bdd2}body.tepPremiumMode .chip.active{border-color:var(--tep-lime);color:#06110a;background:linear-gradient(90deg,var(--tep-lime),#b8ff4b);box-shadow:0 0 18px rgba(202,255,61,.15)}body.tepPremiumMode .matchSearch{background:#061521;border:1px solid #21445c;color:white;border-radius:14px}
-body.tepPremiumMode #matches>.card>.cardHead{display:none}.tepPremiumMatchSummary{position:relative;overflow:hidden;border-bottom:1px solid #17364c;background:linear-gradient(105deg,rgba(10,28,43,.98),rgba(5,17,28,.98));display:grid;grid-template-columns:1fr 44px 1fr 88px;align-items:center;gap:8px;padding:11px;cursor:pointer}.tepPremiumMatchSummary:hover{background:linear-gradient(105deg,rgba(13,35,53,.98),rgba(6,20,31,.98))}.tepMatchPlayer{display:flex;align-items:center;gap:8px;min-width:0}.tepMatchPlayer.right{flex-direction:row-reverse;text-align:right}.tepMatchPlayer .tepAvatar{width:48px;height:58px;border-radius:12px;flex:0 0 48px}.tepMatchPlayer .tepAvatarFallback{font-size:15px}.tepMatchPlayer b{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tepMatchPlayer span{display:block;color:#8ba4ba;font-size:8px;margin-top:3px}.tepMatchVs{text-align:center;color:#7991a8;font-weight:900}.tepMatchProb{text-align:right}.tepMatchProb b{display:block;color:var(--tep-lime);font-size:17px}.tepMatchProb span{font-size:10px;color:#d5e9fb}.tepMatchMeta{grid-column:1/-1;display:flex;gap:7px;flex-wrap:wrap;color:#8da7be;font-size:8px;padding-top:3px}.tepMatchMeta i{font-style:normal;border:1px solid #1d4058;border-radius:999px;padding:4px 7px}.matchRow.open .tepPremiumMatchSummary{box-shadow:inset 3px 0 0 var(--tep-lime)}body.tepPremiumMode .matchSummary{display:none!important}body.tepPremiumMode .matchRow{border-color:#17364c;border-radius:17px;background:#061521}body.tepPremiumMode .matchDetail{background:#04111c;padding:12px}
-body.tepPremiumMode .tepProMetrics{border-color:#21445c!important;background:linear-gradient(150deg,#071a29,#06131f)!important}
-body.tepPremiumMode .recordKpi,body.tepPremiumMode .detailCell,body.tepPremiumMode .priceCell,body.tepPremiumMode .betCard,body.tepPremiumMode .liveCard,body.tepPremiumMode .riskBox{border-color:#1b3b52;background:linear-gradient(145deg,#081a28,#061521)}
-body.tepPremiumMode .betCard.best{border-color:rgba(202,255,61,.46);box-shadow:0 0 0 1px rgba(202,255,61,.06),0 12px 28px rgba(0,0,0,.2)}body.tepPremiumMode .betRank,body.tepPremiumMode .edgeUp,body.tepPremiumMode .priceOk,body.tepPremiumMode .win{color:var(--tep-lime)!important}body.tepPremiumMode .progressBar{background:linear-gradient(90deg,var(--tep-cyan),var(--tep-lime))}
-body.tepPremiumMode .bottomNav{display:none!important}#tepPremiumNav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:80;width:min(100%,980px);display:grid;grid-template-columns:repeat(4,1fr);padding:9px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(2,10,18,.94);border-top:1px solid #163248;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}.tepNavBtn{border:0;background:transparent;color:#8fa6c1;min-height:55px;display:grid;place-items:center;gap:2px;font-size:9px}.tepNavBtn svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8}.tepNavBtn.active{color:var(--tep-lime);text-shadow:0 0 16px rgba(202,255,61,.32)}.tepNavBtn.active svg{filter:drop-shadow(0 0 6px rgba(202,255,61,.28))}
-#tepMenuToggle{width:38px;min-width:38px;padding:0!important;font-size:18px!important}#tepPremiumMenu{position:fixed;inset:0;z-index:120;display:none;background:rgba(0,6,11,.68);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}#tepPremiumMenu.open{display:block}.tepMenuSheet{position:absolute;right:12px;top:calc(max(64px,env(safe-area-inset-top) + 60px));width:min(330px,calc(100% - 24px));border:1px solid #21445c;border-radius:20px;background:linear-gradient(160deg,#081b2a,#04101a);padding:15px;box-shadow:var(--tep-shadow)}.tepMenuSheet h3{margin:0 0 3px;font-size:18px}.tepMenuSheet p{margin:0 0 12px;color:#8ca5bd;font-size:9px;line-height:1.4}.tepMenuAction{width:100%;border:1px solid #1d3c52;background:#071724;color:#eaf5ff;border-radius:13px;padding:12px;text-align:left;margin-top:7px;font-weight:800}.tepMenuAction b{color:var(--tep-lime);float:right}.tepPhotoCredit{font-size:7px;color:#587187;line-height:1.4;margin-top:12px}
-.tepAvatar{position:relative;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle at 50% 25%,#183d55,#081725 70%);border:1px solid #21445c}.tepAvatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.tepAvatarFallback{font-weight:950;color:#89a6be;letter-spacing:-.04em}
-@media(max-width:720px){body.tepPremiumMode .app{padding-inline:10px}body.tepPremiumMode .topbar{margin-inline:-10px;padding-inline:10px}.tepDashPair{grid-template-columns:1fr 1fr}.tepHeroPlayers{grid-template-columns:1fr 38px 1fr;padding-inline:5px;min-height:205px}.tepPlayer{gap:3px}.tepPlayer.right{gap:3px}.tepPlayer .tepAvatar{width:min(30vw,145px);height:196px}.tepPlayerText{padding-bottom:20px}.tepPlayerText strong{font-size:clamp(17px,5vw,24px)}.tepPlayerText small{display:none}.tepVs{font-size:17px;padding-bottom:28px}.tepWinBand{margin-inline:8px;padding-inline:10px;grid-template-columns:.8fr 1.4fr .8fr}.tepWinCenter{padding-inline:6px}.tepHeroInsight{margin-inline:8px}.tepInsightStrip{grid-template-columns:1fr}.tepInsightCell{border-left:0;border-top:1px solid #17364c}.tepInsightCell:first-child{border-top:0}.tepPremiumMatchSummary{grid-template-columns:1fr 24px 1fr 62px}.tepMatchPlayer .tepAvatar{width:40px;height:49px;flex-basis:40px}.tepMatchProb b{font-size:15px}.tepPageLead h2{font-size:29px}}
-@media(max-width:480px){body.tepPremiumMode .brand h1{font-size:19px}body.tepPremiumMode .brand p{font-size:6.8px;letter-spacing:.25em}body.tepPremiumMode #tep-brand-inline{width:36px!important;height:36px!important}.topActions .statusPill{display:none}.tepDashPair{grid-template-columns:1fr}.tepHeroTop{padding-top:12px}.tepBadge{font-size:9px;padding:6px 9px}.tepHeroPlayers{min-height:185px}.tepPlayer .tepAvatar{width:31vw;height:175px}.tepPlayerText span{display:none}.tepPlayerText strong{font-size:17px}.tepWinBand{grid-template-columns:.8fr 1.3fr .8fr}.tepHeroPct{font-size:38px}.tepWinCenter strong{font-size:10px}.tepConfidence i{width:12px;height:6px}.tepPremiumMatchSummary{grid-template-columns:1fr 20px 1fr 55px;padding:9px 7px}.tepMatchPlayer{gap:5px}.tepMatchPlayer .tepAvatar{width:34px;height:42px;flex-basis:34px}.tepMatchPlayer b{font-size:9px}.tepMatchProb b{font-size:13px}.tepMatchProb span{font-size:8px}}
+:root{--tp-bg:#020a12;--tp-bg2:#05131f;--tp-card:#071724;--tp-card2:#0a1c2b;--tp-line:#173a52;--tp-text:#f7fbff;--tp-muted:#96abc3;--tp-lime:#caff3d;--tp-lime2:#9cff32;--tp-cyan:#39c6ff;--tp-purple:#c57cff;--tp-amber:#ffbd24;--tp-shadow:0 24px 64px rgba(0,0,0,.42)}
+body.tp-v3{margin:0;background:radial-gradient(circle at 65% -10%,rgba(57,198,255,.13),transparent 31rem),radial-gradient(circle at 10% 18%,rgba(202,255,61,.06),transparent 28rem),linear-gradient(180deg,#020911,#04111b 55%,#020911);color:var(--tp-text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+body.tp-v3>.app,body.tp-v3>#tepPremiumNav,body.tp-v3>#tepPremiumMenu{display:none!important}#tpApp{max-width:980px;margin:auto;min-height:100vh;padding:max(12px,env(safe-area-inset-top)) 14px calc(104px + env(safe-area-inset-bottom));position:relative}button,input{font:inherit}button{-webkit-tap-highlight-color:transparent}.tp-header{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:-12px -14px 0;padding:calc(max(12px,env(safe-area-inset-top))) 14px 11px;background:linear-gradient(180deg,rgba(2,10,18,.985),rgba(2,10,18,.9) 72%,rgba(2,10,18,.2));backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}.tp-brand{display:flex;align-items:center;gap:11px;border:0;background:none;color:white;text-align:left;padding:0;min-width:0}.tp-brand strong{display:block;font-size:25px;line-height:1;font-weight:900;font-style:italic;letter-spacing:-.045em;white-space:nowrap}.tp-brand em{color:var(--tp-lime);font-style:inherit}.tp-brand span{display:block;margin-top:7px;font-size:8px;letter-spacing:.32em;color:#aebed0;white-space:nowrap}.tp-ball{width:43px;height:43px;border:3px solid var(--tp-lime);border-radius:50%;display:block;position:relative;box-shadow:0 0 24px rgba(202,255,61,.18);transform:rotate(-18deg)}.tp-ball:before,.tp-ball:after{content:"";position:absolute;border:2px solid var(--tp-lime);border-radius:50%;width:26px;height:46px;top:-5px}.tp-ball:before{left:-13px}.tp-ball:after{right:-13px}.tp-head-actions{display:flex;align-items:center;gap:7px}.tp-lang,#tpMenuBtn{border:1px solid #21445d;background:rgba(7,23,36,.86);color:#eaf4ff;border-radius:13px;height:42px;display:grid;place-items:center}.tp-lang{padding:0 12px;font-size:12px}.tp-head-actions button{width:45px;font-size:22px}.tp-fresh{text-align:right;color:#668198;font-size:8px;margin:2px 3px 9px}.tp-screen{display:grid;gap:11px}.tp-kicker{display:flex;justify-content:space-between;align-items:center;padding:0 4px}.tp-kicker span{display:inline-flex;background:linear-gradient(90deg,var(--tp-lime),#b6ff47);color:#061108;border-radius:999px;padding:7px 12px;font-size:10px;font-weight:950;box-shadow:0 0 20px rgba(202,255,61,.18)}.tp-kicker button,.tp-section-head button{border:0;background:none;color:var(--tp-cyan);font-size:10px}.tp-hero{position:relative;overflow:hidden;border:1px solid #21455e;border-radius:24px;background:radial-gradient(circle at 22% 22%,rgba(57,198,255,.16),transparent 21rem),radial-gradient(circle at 78% 25%,rgba(202,255,61,.075),transparent 18rem),linear-gradient(150deg,#091d2c,#030b13 62%);box-shadow:var(--tp-shadow);padding:14px 14px 15px}.tp-hero:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 42%,rgba(2,9,14,.45) 63%,rgba(2,9,14,.9));pointer-events:none}.tp-hero.empty{min-height:340px;display:grid;place-items:center;text-align:center}.tp-hero.empty h2,.tp-hero.empty p{position:relative;z-index:2}.tp-hero-top{position:relative;z-index:4;display:flex;align-items:center;justify-content:center;gap:7px}.tp-tag{border:1px solid #275776;background:rgba(5,21,34,.82);border-radius:999px;padding:7px 10px;color:#d8e8f7;font-size:9px;font-weight:850}.tp-tag.lime{color:var(--tp-lime);border-color:rgba(202,255,61,.4)}.tp-fav{margin-left:auto;width:34px;height:34px;border-radius:50%;border:1px solid #2b526c;background:#061723;color:#94abc1;font-size:21px}.tp-fav.on{color:#061007;background:var(--tp-lime);border-color:var(--tp-lime)}.tp-hero-tournament{position:relative;z-index:4;text-align:center;margin-top:9px;color:#b5c9dc;font-size:10px}.tp-hero-tournament span{margin:0 7px;color:#547189}.tp-players{position:relative;z-index:2;display:grid;grid-template-columns:1fr 46px 1fr;align-items:end;min-height:245px;margin-top:1px}.tp-player{display:flex;align-items:flex-end;gap:8px;min-width:0}.tp-player.right{flex-direction:row-reverse;text-align:right}.tp-avatar{position:relative;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,#123149,#081522);color:#6f89a0;border:1px solid #21445c}.tp-avatar span{font-weight:900}.tp-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.tp-avatar.hero{width:min(34vw,205px);height:235px;border:0;border-radius:24px 24px 8px 8px;box-shadow:none}.tp-avatar.hero img{object-position:50% 17%;filter:saturate(.9) contrast(1.08);-webkit-mask-image:linear-gradient(#000 0 78%,transparent 100%);mask-image:linear-gradient(#000 0 78%,transparent 100%)}.tp-avatar.hero span{font-size:52px}.tp-player-copy{padding-bottom:27px;min-width:0;position:relative;z-index:3}.tp-player-copy small{display:block;color:#9cb3c9;font-size:9px;margin-bottom:5px;min-height:12px}.tp-player-copy strong{display:block;font-size:clamp(18px,4.7vw,32px);line-height:.98;letter-spacing:-.045em}.tp-follow{margin-top:8px;border:1px solid #2d526a;background:rgba(5,20,31,.86);color:#9eb5c9;border-radius:999px;padding:5px 8px;font-size:8px}.tp-follow.on{color:var(--tp-lime);border-color:rgba(202,255,61,.35)}.tp-hero-vs{text-align:center;font-weight:950;color:#aac0d5;font-size:19px;padding-bottom:55px}.tp-winband{position:relative;z-index:6;margin:-21px 0 10px;border:1.5px solid var(--tp-lime);border-radius:20px;background:linear-gradient(90deg,rgba(18,55,32,.73),rgba(5,20,25,.94) 48%,rgba(8,24,36,.95));box-shadow:0 0 25px rgba(202,255,61,.14),inset 0 0 24px rgba(202,255,61,.02);display:grid;grid-template-columns:1fr 1.2fr 1fr;align-items:center;padding:14px}.tp-winband>div>strong{display:block;font-size:clamp(42px,10vw,71px);line-height:.86;letter-spacing:-.06em}.tp-winband>div:first-child>strong{color:var(--tp-lime);text-shadow:0 0 22px rgba(202,255,61,.24)}.tp-winband>div.right>strong{color:#e9f7ff;text-align:right;text-shadow:0 0 18px rgba(57,198,255,.18)}.tp-winband>div>span{display:block;color:#b8cee1;font-size:11px;margin-top:7px}.tp-winband>div.right>span{text-align:right}.tp-confidence{text-align:center;border-inline:1px solid #33546a;padding:0 9px}.tp-confidence small{display:block;color:#98b0c5;font-size:8px;letter-spacing:.09em}.tp-confidence b{display:block;color:var(--tp-lime);font-size:11px;margin-top:6px}.tp-confidence span{display:block;color:#9fb6ca;font-size:8px;margin-top:4px}.tp-confidence i{display:flex;gap:3px;justify-content:center;margin-top:8px}.tp-confidence em{width:16px;height:7px;border-radius:999px;background:#263d50}.tp-confidence em.on{background:linear-gradient(90deg,var(--tp-lime2),var(--tp-lime));box-shadow:0 0 8px rgba(202,255,61,.18)}.tp-insight{position:relative;z-index:6;width:100%;border:1px solid #17384e;background:rgba(5,19,30,.92);border-radius:14px;padding:11px 12px;color:#bfd2e5;display:grid;grid-template-columns:22px 1fr 18px;align-items:center;gap:7px;text-align:left}.tp-insight b{font-size:29px;color:#3daef2;line-height:1}.tp-insight span{font-size:9px;line-height:1.45}.tp-insight i{font-style:normal;font-size:22px}.tp-metrics{position:relative;z-index:7;display:grid;gap:9px;margin-top:13px}.tp-metric{display:grid;grid-template-columns:48px 1fr auto;gap:11px;align-items:center;border:1px solid #1c4058;border-radius:15px;background:linear-gradient(110deg,#071a28,#05131e);padding:11px}.tp-metric>i{width:45px;height:45px;display:grid;place-items:center;border-radius:13px;font-size:22px;font-style:normal}.tp-metric.blue>i{color:var(--tp-cyan);border:1px solid rgba(57,198,255,.35);background:rgba(57,198,255,.06)}.tp-metric.green>i{color:var(--tp-lime);border:1px solid rgba(202,255,61,.32);background:rgba(202,255,61,.06)}.tp-metric.amber>i{color:var(--tp-amber);border:1px solid rgba(255,189,36,.34);background:rgba(255,189,36,.06)}.tp-metric.purple>i{color:var(--tp-purple);border:1px solid rgba(197,124,255,.34);background:rgba(197,124,255,.06)}.tp-metric div strong{display:block;font-size:12px}.tp-metric div span{display:block;color:#91a9bf;font-size:9px;margin-top:4px;line-height:1.35}.tp-metric>b{font-size:22px;color:#f2f8ff}.tp-quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.tp-quick{border:1px solid #1b425a;border-radius:17px;background:linear-gradient(135deg,#082034,#07141f);color:#eef7ff;padding:14px;display:grid;grid-template-columns:50px 1fr auto;align-items:center;gap:10px;text-align:left;position:relative;overflow:hidden}.tp-quick.live{background:linear-gradient(135deg,#102314,#07151e)}.tp-quick>i{width:48px;height:48px;border-radius:50%;border:1px solid rgba(57,198,255,.4);color:var(--tp-cyan);display:grid;place-items:center;font-size:23px;font-style:normal}.tp-quick.live>i{color:var(--tp-lime);border-color:rgba(202,255,61,.38)}.tp-quick strong{display:block;font-size:14px}.tp-quick span{display:block;color:#9bb0c5;font-size:9px;line-height:1.4;margin-top:4px}.tp-quick>b{font-size:22px}.tp-quick>em{position:absolute;top:9px;right:11px;border:1px solid rgba(202,255,61,.35);border-radius:999px;color:var(--tp-lime);font-size:8px;font-style:normal;padding:5px 7px;background:rgba(7,28,21,.75)}.tp-panel{border:1px solid #173a52;border-radius:18px;background:linear-gradient(145deg,rgba(8,25,39,.98),rgba(4,15,25,.98));padding:13px;box-shadow:0 15px 38px rgba(0,0,0,.18)}.tp-section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:9px}.tp-section-head h2{font-size:18px;margin:0;letter-spacing:-.02em}.tp-section-head p{font-size:9px;color:#8fa7bd;margin:4px 0 0}.tp-list{display:grid;gap:8px}.tp-match-card{width:100%;border:1px solid #1b4058;background:linear-gradient(105deg,#081c2b,#06131f);color:white;border-radius:14px;padding:9px;text-align:left}.tp-match-meta{display:flex;align-items:center;gap:7px;min-width:0;color:#98aec3;font-size:8px}.tp-match-meta .tp-tag{padding:4px 7px;font-size:7px}.tp-match-meta time{margin-left:auto}.tp-match-main{display:grid;grid-template-columns:1fr 28px 1fr 54px;align-items:center;gap:7px;margin-top:8px}.tp-match-player{display:flex;align-items:center;gap:7px;min-width:0}.tp-match-player.right{flex-direction:row-reverse;text-align:right}.tp-avatar.mini{width:44px;height:50px;border-radius:11px;flex:0 0 44px}.tp-avatar.mini span{font-size:13px}.tp-match-player small{display:block;color:#8ba4ba;font-size:7px;min-height:9px}.tp-match-player strong{display:block;font-size:10px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tp-vs{text-align:center;color:#7792aa;font-size:10px}.tp-mini-prob{text-align:right}.tp-mini-prob strong{display:block;color:var(--tp-lime);font-size:17px}.tp-mini-prob span{display:block;color:#cbe9ff;font-size:11px}.tp-match-card.compact .tp-avatar.mini{width:34px;height:38px;flex-basis:34px}.tp-match-card.compact .tp-match-main{grid-template-columns:1fr 22px 1fr 45px}.tp-match-card.compact .tp-match-meta span:nth-child(2){display:none}.tp-insight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tp-insight-grid>div{border:1px solid #194059;border-radius:14px;background:#061722;padding:11px}.tp-insight-grid i{font-style:normal;color:var(--tp-lime);font-size:20px}.tp-insight-grid strong{display:block;font-size:10px;margin-top:7px}.tp-insight-grid span{display:block;color:#9bb0c5;font-size:9px;margin-top:4px}.tp-page-title{padding:8px 3px 4px}.tp-page-title h1{font-size:40px;line-height:.95;letter-spacing:-.055em;margin:0}.tp-page-title p{font-size:11px;line-height:1.5;color:#9db2c8;margin:9px 0 0;max-width:620px}.tp-page-title.compact{display:flex;align-items:flex-start;gap:10px}.tp-page-title.compact>button{width:38px;height:38px;border-radius:12px;border:1px solid #21465f;background:#061622;color:white;font-size:25px}.tp-page-title.compact h1{font-size:30px}.tp-search{height:55px;border:1px solid #2a5a7a;border-radius:16px;background:#061724;display:flex;align-items:center;gap:9px;padding:0 15px;color:#9cb2c8;font-size:24px}.tp-search input{border:0;outline:0;background:transparent;color:white;width:100%;font-size:12px}.tp-filter-row{display:flex;gap:7px;overflow:auto;padding-bottom:2px}.tp-filter-row button{white-space:nowrap;border:1px solid #21475f;background:#071724;color:#b1c2d2;border-radius:999px;padding:9px 13px;font-size:9px}.tp-filter-row button.on{background:linear-gradient(90deg,var(--tp-lime),#baff4c);border-color:var(--tp-lime);color:#071008;font-weight:900}.tp-day-insight{position:relative;overflow:hidden;min-height:170px;border:1px solid var(--tp-lime);border-radius:18px;background:radial-gradient(circle at 80% 50%,rgba(202,255,61,.09),transparent 15rem),linear-gradient(120deg,#0a2319,#061723 58%);padding:18px;display:grid;grid-template-columns:1.5fr .75fr;box-shadow:0 0 22px rgba(202,255,61,.09)}.tp-day-insight small{color:var(--tp-lime);font-size:9px;letter-spacing:.08em}.tp-day-insight h2{font-size:21px;margin:11px 0 7px}.tp-day-insight p{font-size:10px;line-height:1.5;color:#b5c9da;margin:0}.tp-avatar.insight{position:absolute;right:0;bottom:-2px;width:38%;height:165px;border:0;background:none}.tp-avatar.insight img{object-position:50% 18%;-webkit-mask-image:linear-gradient(#000 0 78%,transparent 100%);mask-image:linear-gradient(#000 0 78%,transparent 100%)}.tp-kpis{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #1b4058;background:#061724;border-radius:18px;overflow:hidden}.tp-kpis>div{text-align:center;padding:16px 8px;border-left:1px solid #17364c}.tp-kpis>div:first-child{border-left:0}.tp-kpis i{display:block;color:var(--tp-lime);font-size:23px;font-style:normal}.tp-kpis strong{display:block;font-size:22px;margin-top:4px}.tp-kpis span{display:block;color:#9db1c5;font-size:8px;margin-top:5px}.tp-followed{display:flex;gap:10px;overflow:auto;padding:2px}.tp-followed>button{min-width:88px;border:0;background:none;color:white;text-align:center}.tp-avatar.circle{width:64px;height:64px;border-radius:50%;margin:auto;border-color:rgba(202,255,61,.45)}.tp-followed strong{display:block;font-size:10px;margin-top:7px}.tp-followed span{display:block;font-size:8px;color:#9ab0c4}.tp-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tp-stat-card{border:1px solid #1a4059;border-radius:17px;background:linear-gradient(145deg,#071c2b,#07141e);padding:15px}.tp-stat-card small{color:#94aabf;font-size:8px}.tp-stat-card strong{display:block;color:var(--tp-lime);font-size:31px;margin-top:8px}.tp-stat-card span{font-size:9px;color:#91a8bc}.tp-live-list,.tp-record-list{display:grid;gap:8px}.tp-live-card,.tp-record-list>div{border:1px solid #1a4058;border-radius:14px;background:#061723;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:10px}.tp-live-card small{display:block;color:#ff7676;font-size:8px}.tp-live-card strong{display:block;font-size:12px;margin-top:4px}.tp-live-card span{display:block;color:#91a7bc;font-size:8px;margin-top:4px}.tp-live-card>b{color:var(--tp-lime);font-size:18px}.tp-record-list>div>span{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#0b2230;color:var(--tp-lime)}.tp-record-list>div>div{flex:1}.tp-record-list strong{font-size:10px}.tp-record-list small{display:block;color:#8ea5b9;font-size:8px;margin-top:3px}.tp-record-list b{font-size:15px}.tp-cta{border:0;border-radius:999px;background:linear-gradient(90deg,var(--tp-lime),#c1ff4f);color:#061008;min-height:58px;font-weight:950;font-size:14px;box-shadow:0 14px 35px rgba(202,255,61,.1)}.tp-cta span{margin-right:8px}.tp-cta b{margin-left:8px}.tp-empty{padding:18px;text-align:center;color:#8fa6bb;font-size:10px}.tp-nav{position:fixed;z-index:75;left:50%;bottom:0;transform:translateX(-50%);width:min(980px,100%);display:grid;grid-template-columns:repeat(4,1fr);padding:9px 10px calc(9px + env(safe-area-inset-bottom));background:rgba(2,10,18,.97);border-top:1px solid #15384f;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}.tp-nav button{border:0;background:none;color:#9caec2;display:grid;place-items:center;gap:3px;min-height:58px}.tp-nav i{font-size:24px;font-style:normal;line-height:1}.tp-nav span{font-size:9px}.tp-nav button.on{color:var(--tp-lime);text-shadow:0 0 14px rgba(202,255,61,.2)}.tp-menu{position:fixed;z-index:90;inset:0;background:rgba(0,0,0,.48);display:none;align-items:flex-end;justify-content:center;padding:12px}.tp-menu.open{display:flex}.tp-menu-card{width:min(520px,100%);border:1px solid #224b64;border-radius:22px;background:#06141f;padding:15px;box-shadow:0 30px 90px rgba(0,0,0,.55)}.tp-menu-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.tp-menu-head strong{font-size:18px}.tp-menu-head button{border:1px solid #274c63;background:#0a1b28;color:white;border-radius:10px;width:36px;height:36px;font-size:20px}.tp-menu-card>button{width:100%;height:48px;border:0;border-top:1px solid #17364c;background:none;color:white;display:flex;align-items:center;justify-content:space-between;text-align:left}.tp-menu-card>small{display:block;color:#7890a5;font-size:8px;line-height:1.5;margin-top:9px}
+@media(max-width:620px){#tpApp{padding-left:10px;padding-right:10px}.tp-header{margin-left:-10px;margin-right:-10px;padding-left:10px;padding-right:10px}.tp-brand strong{font-size:21px}.tp-brand span{font-size:6.8px}.tp-ball{width:38px;height:38px}.tp-lang{display:none}.tp-hero{border-radius:19px;padding:10px}.tp-tag{font-size:7.5px;padding:6px 8px}.tp-players{grid-template-columns:1fr 34px 1fr;min-height:205px}.tp-avatar.hero{width:min(36vw,150px);height:195px}.tp-player{gap:4px}.tp-player-copy{padding-bottom:24px}.tp-player-copy strong{font-size:16px}.tp-player-copy small{font-size:7px}.tp-hero-vs{font-size:15px;padding-bottom:48px}.tp-winband{margin-top:-18px;padding:12px 9px}.tp-winband>div>strong{font-size:42px}.tp-confidence{padding:0 5px}.tp-confidence small{font-size:6.5px}.tp-confidence b{font-size:8px}.tp-confidence span{font-size:6.5px}.tp-confidence em{width:11px;height:6px}.tp-insight{padding:9px}.tp-insight span{font-size:8px}.tp-quick-grid{grid-template-columns:1fr}.tp-quick{min-height:95px}.tp-page-title h1{font-size:34px}.tp-day-insight{grid-template-columns:1fr .45fr;min-height:155px}.tp-day-insight p{padding-right:25px}.tp-kpis{grid-template-columns:repeat(2,1fr)}.tp-kpis>div:nth-child(3){border-top:1px solid #17364c;border-left:0}.tp-kpis>div:nth-child(4){border-top:1px solid #17364c}.tp-two{grid-template-columns:1fr}.tp-insight-grid{grid-template-columns:1fr 1fr}.tp-insight-grid>div:last-child{grid-column:1/-1}.tp-match-meta span:nth-child(2){display:none}.tp-match-meta{gap:5px}.tp-match-main{grid-template-columns:1fr 18px 1fr 44px}.tp-avatar.mini{width:36px;height:42px;flex-basis:36px}.tp-match-player strong{font-size:8.8px}.tp-mini-prob strong{font-size:15px}.tp-mini-prob span{font-size:9px}.tp-metric{grid-template-columns:42px 1fr auto;padding:10px 9px}.tp-metric>i{width:40px;height:40px}.tp-metric div strong{font-size:10px}.tp-metric div span{font-size:8px}.tp-metric>b{font-size:18px}}
+@media(min-width:760px){.tp-screen{max-width:880px;margin:auto}.tp-hero.analysis{padding-left:24px;padding-right:24px}.tp-page-title{max-width:880px;margin-left:auto;margin-right:auto}}
 `;
-
-function installStyle(){
-  if(byId('tepPremiumStyle'))return;
-  const s=document.createElement('style');s.id='tepPremiumStyle';s.textContent=CSS;document.head.appendChild(s);
+function install(){
+  document.body.classList.add('tp-v3');
+  let style=$('#tpV3Style');if(!style){style=document.createElement('style');style.id='tpV3Style';style.textContent=CSS;document.head.appendChild(style)}
+  let root=$('#tpRoot');if(!root){root=document.createElement('div');root.id='tpRoot';document.body.appendChild(root)}
+  root.innerHTML=shell();render();bindRoot();document.documentElement.dataset.tepFullUi=VERSION;
 }
-function countryLabel(name){
-  const k=prettyName(name).toLowerCase();
-  const m={
-    'jannik sinner':'🇮🇹 ITA','lorenzo musetti':'🇮🇹 ITA','carlos alcaraz':'🇪🇸 ESP','novak djokovic':'🇷🇸 SRB','daniil medvedev':'🌐','alexander zverev':'🇩🇪 GER','casper ruud':'🇳🇴 NOR','holger rune':'🇩🇰 DEN','stefanos tsitsipas':'🇬🇷 GRE','iga swiatek':'🇵🇱 POL','iga świątek':'🇵🇱 POL','aryna sabalenka':'🌐','elena rybakina':'🇰🇿 KAZ','frances tiafoe':'🇺🇸 USA','ben shelton':'🇺🇸 USA'
-  };
-  return m[k]||'';
+function render(){
+  const view=$('#tpView');if(!view)return;view.innerHTML=screenHtml();
+  $$('.tp-nav button').forEach(b=>b.classList.toggle('on',b.dataset.route===state.screen));
+  const fresh=$('.tp-fresh');if(fresh)fresh.textContent=freshness();hydrate(view);bindView();
 }
-function probPair(ev){
-  let a=num(ev?.p_a),b=num(ev?.p_b);
-  if(a!==null&&b!==null&&a>=0&&b>=0&&a+b>0){const s=a+b;return [a/s,b/s]}
-  const f=num(ev?.favorite_prob);if(f!==null&&f>0&&f<1){const fav=prettyName(ev?.favorite_name).toLowerCase(),pa=prettyName(ev?.player_a).toLowerCase();return fav===pa?[f,1-f]:[1-f,f]}
-  return [null,null];
-}
-function currentEvent(){
-  try{
-    if(typeof activeRow==='function'&&typeof eventById==='function'&&typeof rowEventId==='function'){
-      const r=activeRow();if(r){const x=eventById(rowEventId(r));if(x)return x}
-    }
-  }catch{}
-  try{if(typeof filterUpcoming==='function'){const xs=filterUpcoming();if(xs?.length)return xs[0]}}catch{}
-  try{if(typeof board!=='undefined'&&Array.isArray(board?.upcoming)&&board.upcoming.length)return board.upcoming[0]}catch{}
-  return null;
-}
-function marketRowsFor(ev){try{return typeof rowsForEvent==='function'?rowsForEvent(ev?.event_id):[]}catch{return []}}
-function rowProb(r){return num(r?.model_prob)??num(r?.forecast_prob)??num(r?.probability)??num(r?.p)}
-function advancedMetrics(ev){
-  const rows=marketRowsFor(ev),lab=ev?.market_lab||{};
-  const total=num(lab.mean_total_games)??num(lab.median_total_games);
-  const decide=rows.filter(r=>String(r?.market||'').toUpperCase()==='SET_SCORE'&&['2-1','1-2'].includes(String(r?.selection||''))).reduce((s,r)=>s+(rowProb(r)||0),0)||null;
-  const tie=rows.find(r=>String(r?.market||'').toUpperCase()==='TIEBREAK_IN_MATCH'&&String(r?.selection||'').toUpperCase()==='YES');
-  const tieP=tie?rowProb(tie):null;
-  const pa=ev?.player_intel?.a?.service||{},pb=ev?.player_intel?.b?.service||{};
-  const aceA=num(pa.aces_per_match),aceB=num(pb.aces_per_match),dfA=num(pa.double_faults_per_match),dfB=num(pb.double_faults_per_match);
-  return {total,decide,tie:tieP,aceA,aceB,dfA,dfB};
-}
-function confidenceInfo(a,b,ev){
-  const gap=a!==null&&b!==null?Math.abs(a-b):0,raw=num(ev?.confidence);const c=raw!==null?clamp(raw/100,0,1):clamp(.45+gap*.75,0,1);const bars=clamp(Math.round(c*5),1,5);return {bars,label:c>=.78?'Alta confidenza':c>=.62?'Confidenza media':'Confidenza prudente'};
-}
-function insightText(ev,a,b){
-  try{if(typeof bestRowForEvent==='function'&&typeof rowWhy==='function'){const r=bestRowForEvent(ev.event_id),t=r?rowWhy(r):'';if(t&&t.length>8)return t}}
-  catch{}
-  if(a!==null&&b!==null){const fav=a>=b?prettyName(ev.player_a):prettyName(ev.player_b),p=Math.max(a,b);return `${fav} è avanti nel modello al ${pct(p)}. La percentuale è una stima, non una garanzia di risultato.`}
-  return 'Il modello sta completando la lettura del match. Nessuna percentuale viene inventata quando il dato non è disponibile.';
-}
-function heroSignature(ev){const [a,b]=probPair(ev||{});return [ev?.event_id,ev?.player_a,ev?.player_b,a,b,ev?.confidence,ev?.start_at,ev?.surface,ev?.tournament].join('|')}
-let lastHeroSig='';
-function renderPremiumHero(){
-  const host=byId('tepPremiumHero');if(!host)return;
-  const ev=currentEvent();
-  const sig=heroSignature(ev);if(sig===lastHeroSig)return;lastHeroSig=sig;
-  if(!ev){host.innerHTML=`<div class="tepHeroTop"><span class="tepBadge lime">● MODELLO IN ATTESA</span></div><div style="padding:80px 20px;text-align:center;color:#8fa8bf"><b style="display:block;color:white;font-size:28px">Tennis Edge Pro</b><span style="display:block;margin-top:8px">Sto caricando i match e le probabilità validate.</span></div>`;return}
-  const [a,b]=probPair(ev),ci=confidenceInfo(a,b,ev),m=advancedMetrics(ev),pa=prettyName(ev.player_a),pb=prettyName(ev.player_b),tour=String(ev.tour||'').toUpperCase()||(/WTA/i.test(ev.tournament||'')?'WTA':'ATP'),fav=a!==null&&b!==null?(a>=b?pa:pb):'—';
-  const service=(m.aceA!==null||m.aceB!==null)?`${m.aceA!==null?m.aceA.toFixed(1):'—'} / ${m.aceB!==null?m.aceB.toFixed(1):'—'} ace/match`:'Storico servizio non disponibile';
-  host.innerHTML=`
-    <div class="tepHeroTop"><span class="tepBadge lime">🏆 ${esc(tour)}</span><span class="tepBadge">▦ ${esc(ev.surface||'Superficie N/D')}</span></div>
-    <div class="tepHeroMeta"><b>${esc(shortTournament(ev.tournament))}</b> · ${esc(localTime(ev.start_at))}</div>
-    <div class="tepHeroPlayers">
-      <div class="tepPlayer">${avatarHtml(ev.player_a,'hero')}<div class="tepPlayerText"><small>Giocatore A</small><strong>${esc(pa)}</strong><span>${esc(countryLabel(ev.player_a))}</span></div></div>
-      <div class="tepVs">VS</div>
-      <div class="tepPlayer right">${avatarHtml(ev.player_b,'hero')}<div class="tepPlayerText"><small>Giocatore B</small><strong>${esc(pb)}</strong><span>${esc(countryLabel(ev.player_b))}</span></div></div>
-    </div>
-    <div class="tepWinBand">
-      <div><div class="tepHeroPct a">${pct(a)}</div><span class="tepPctName">${esc(pa.split(' ').at(-1)||pa)}</span></div>
-      <div class="tepWinCenter"><small>Probabilità di vittoria</small><strong>${esc(fav!=='—'?`${fav} in vantaggio`:'Dato in attesa')}</strong><small style="margin-top:5px">${esc(ci.label)}</small><div class="tepConfidence">${[0,1,2,3,4].map(i=>`<i class="${i<ci.bars?'on':''}"></i>`).join('')}</div></div>
-      <div><div class="tepHeroPct b">${pct(b)}</div><span class="tepPctName">${esc(pb.split(' ').at(-1)||pb)}</span></div>
-    </div>
-    <div class="tepHeroInsight"><b>“</b>${esc(insightText(ev,a,b))}</div>
-    <div class="tepInsightStrip" style="margin:0 16px 16px;position:relative;z-index:6">
-      <div class="tepInsightCell"><b>${m.total!==null?m.total.toFixed(1):'—'}</b><span>Giochi attesi · modello</span></div>
-      <div class="tepInsightCell"><b>${m.decide!==null?pct(m.decide):'—'}</b><span>Probabilità set decisivo</span></div>
-      <div class="tepInsightCell"><b>${m.tie!==null?pct(m.tie):'—'}</b><span>Tie-break nel match · ${esc(service)}</span></div>
-    </div>`;
-  hydratePhotos(host);
-}
-function upcomingList(){
-  try{if(typeof filterUpcoming==='function'){const x=filterUpcoming();if(Array.isArray(x)&&x.length)return x}}
-  catch{}
-  try{return Array.isArray(board?.upcoming)?board.upcoming:[]}catch{return []}
-}
-function renderDashboard(){
-  const host=byId('tepPremiumDashboard');if(!host)return;
-  const xs=upcomingList().slice(0,3);let liveCount=0;try{liveCount=Array.isArray(live?.events)?live.events.length:0}catch{}
-  const sig=xs.map(heroSignature).join('::')+`|${liveCount}`;if(host.dataset.sig===sig)return;host.dataset.sig=sig;
-  const rows=xs.map(ev=>{const [a,b]=probPair(ev),pa=prettyName(ev.player_a),pb=prettyName(ev.player_b);return `<div class="tepUpcomingRow" data-jump-match="${esc(ev.event_id)}"><time>${esc(localTime(ev.start_at).replace(/^\w+\s*/,'').split(',').at(-1)?.trim()||localTime(ev.start_at))}</time><div class="tepUpcomingNames">${avatarHtml(ev.player_a,'tepMiniAvatar')}<div><b>${esc(pa)} vs ${esc(pb)}</b><span>${esc(shortTournament(ev.tournament))} · ${esc(ev.surface||'—')}</span></div></div><div class="tepUpcomingProb">${pct(a)}<span>${pct(b)}</span></div></div>`}).join('')||'<div style="padding:14px;color:#8fa8bf;font-size:10px">Nessun match disponibile al momento.</div>';
-  const lead=xs[0],met=lead?advancedMetrics(lead):{};
-  host.innerHTML=`
-    <div class="tepDashPair">
-      <div class="tepDashCard" data-premium-go="matches"><div class="tepIconBox">▥</div><div><strong>Top Match</strong><p>Confronto visuale, probabilità e metriche del modello.</p></div></div>
-      <div class="tepDashCard" data-premium-go="live"><div class="tepIconBox lime">⚡</div><div><strong>Live</strong><p>Match in corso e aggiornamenti disponibili.</p></div><span class="tepLivePill">${liveCount} LIVE</span></div>
-    </div>
-    <div class="tepUpcoming"><div class="tepSectionTitle"><strong>Partite in arrivo</strong><span data-premium-go="matches">Vedi tutte ›</span></div>${rows}</div>
-    <div class="tepInsightStrip">
-      <div class="tepInsightCell"><b>${lead?esc(lead.surface||'—'):'—'}</b><span>Superficie del match in evidenza</span></div>
-      <div class="tepInsightCell"><b>${lead&&met.total!==null?met.total.toFixed(1):'—'}</b><span>Giochi attesi, se disponibili dal modello</span></div>
-      <div class="tepInsightCell"><b>${lead&&met.tie!==null?pct(met.tie):'—'}</b><span>Probabilità tie-break, se validata</span></div>
-    </div>`;
-  hydratePhotos(host);wirePremiumGo(host);
-}
-function eventForRow(row){
-  const id=String(row?.dataset?.id||'');if(!id)return null;
-  try{if(typeof eventById==='function'){const x=eventById(id);if(x)return x}}catch{}
-  return upcomingList().find(x=>String(x.event_id)===id)||null;
-}
-function renderPremiumMatches(){
-  qa('#matchList .matchRow').forEach(row=>{
-    const ev=eventForRow(row);if(!ev)return;
-    const [a,b]=probPair(ev),open=row.classList.contains('open'),sig=[heroSignature(ev),open].join('|');
-    let p=q('.tepPremiumMatchSummary',row);if(p?.dataset.sig===sig)return;
-    const pa=prettyName(ev.player_a),pb=prettyName(ev.player_b);
-    const html=`<div class="tepMatchPlayer">${avatarHtml(ev.player_a,'')}<div><b>${esc(pa)}</b><span>${esc(countryLabel(ev.player_a))}</span></div></div><div class="tepMatchVs">VS</div><div class="tepMatchPlayer right">${avatarHtml(ev.player_b,'')}<div><b>${esc(pb)}</b><span>${esc(countryLabel(ev.player_b))}</span></div></div><div class="tepMatchProb"><b>${pct(a)}</b><span>${pct(b)} ${open?'⌃':'›'}</span></div><div class="tepMatchMeta"><i>${esc(shortTournament(ev.tournament))}</i><i>${esc(ev.surface||'—')}</i><i>${esc(localTime(ev.start_at))}</i></div>`;
-    if(!p){p=document.createElement('div');p.className='tepPremiumMatchSummary';row.insertBefore(p,row.firstChild);p.addEventListener('click',e=>{if(e.target.closest('a,button,input,select'))return;const b=q('.expandBtn',row);if(b)b.click()});}
-    p.dataset.sig=sig;p.innerHTML=html;hydratePhotos(p);
+function route(name){state.screen=name||'home';window.scrollTo({top:0,behavior:'smooth'});render();closeMenu()}
+function openEvent(id){if(!id)return;state.selectedId=String(id);state.screen='analysis';render();window.scrollTo({top:0,behavior:'smooth'})}
+function toggleFav(id){const k=String(id);favorites.has(k)?favorites.delete(k):favorites.add(k);writeSet(favKey,favorites);render()}
+function toggleFollow(name){const k=pretty(name);followed.has(k)?followed.delete(k):followed.add(k);writeSet(playerKey,followed);render()}
+function closeMenu(){const m=$('#tpMenu');if(m)m.classList.remove('open')}
+function bindRoot(){
+  const root=$('#tpRoot');if(!root)return;
+  root.addEventListener('click',e=>{
+    const routeBtn=e.target.closest('[data-route]');if(routeBtn){route(routeBtn.dataset.route);return}
+    const open=e.target.closest('[data-open-event]');if(open){openEvent(open.dataset.openEvent);return}
+    const fav=e.target.closest('[data-favorite]');if(fav){e.stopPropagation();toggleFav(fav.dataset.favorite);return}
+    const follow=e.target.closest('[data-follow]');if(follow){e.stopPropagation();toggleFollow(follow.dataset.follow);return}
+    if(e.target.closest('#tpMenuBtn')){$('#tpMenu')?.classList.add('open');return}
+    if(e.target.closest('#tpMenuClose')||e.target=== $('#tpMenu')){closeMenu();return}
+    if(e.target.closest('[data-menu-sure]')){const a=document.querySelector('.bottomNav .sureLink');if(a?.href)location.href=a.href;return}
   });
 }
-function insertPageLeads(){
-  const defs={
-    matches:['Esplora','Cerca i prossimi match, confronta probabilità, superficie e dettagli senza perdere il contesto.'],
-    live:['Live','Punteggio, stato del match e segnali in-play con la stessa interfaccia premium.'],
-    record:['Analisi','Track record, qualità del modello e performance leggibili a colpo d’occhio.'],
-    bankroll:['Le mie analisi','Bankroll, smart card e registro locale delle tue decisioni.']
-  };
-  Object.entries(defs).forEach(([id,[title,sub]])=>{const sec=byId(id);if(!sec||q('.tepPageLead',sec))return;const lead=document.createElement('div');lead.className='tepPageLead';lead.innerHTML=`<h2>${esc(title)}</h2><p>${esc(sub)}</p>`;sec.insertBefore(lead,sec.firstChild)});
+function bindView(){
+  const search=$('#tpSearch');if(search)search.addEventListener('input',e=>{state.query=e.target.value;const pos=e.target.selectionStart;render();const next=$('#tpSearch');if(next){next.focus();try{next.setSelectionRange(pos,pos)}catch{}}});
+  $$('[data-tour]').forEach(b=>b.addEventListener('click',()=>{state.tour=b.dataset.tour;render()}));
+  $$('[data-surface]').forEach(b=>b.addEventListener('click',()=>{state.surface=b.dataset.surface;render()}));
 }
-function installHeroAndDashboard(){
-  const main=byId('mainContent');if(!main)return;
-  if(!byId('tepPremiumHero')){const hero=document.createElement('section');hero.id='tepPremiumHero';hero.setAttribute('aria-label','Match in evidenza');const old=byId('hero');main.insertBefore(hero,old||main.firstChild)}
-  const bets=byId('bets');if(bets&&!byId('tepPremiumDashboard')){const d=document.createElement('div');d.id='tepPremiumDashboard';bets.insertBefore(d,bets.firstChild)}
-}
-function installNav(){
-  if(byId('tepPremiumNav'))return;
-  const n=document.createElement('nav');n.id='tepPremiumNav';n.setAttribute('aria-label','Navigazione premium');
-  n.innerHTML=`
-    <button class="tepNavBtn" data-target="bets" type="button"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5V21h-6v-6H9v6H3z"/></svg><span>Home</span></button>
-    <button class="tepNavBtn" data-target="matches" type="button"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg><span>Esplora</span></button>
-    <button class="tepNavBtn" data-target="record" type="button"><svg viewBox="0 0 24 24"><path d="M5 19V9m5 10V5m5 14v-7m5 7V8"/></svg><span>Analisi</span></button>
-    <button class="tepNavBtn" data-target="bankroll" type="button"><svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg><span>Le mie analisi</span></button>`;
-  document.body.appendChild(n);
-  qa('.tepNavBtn',n).forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.target)));
-}
-function navigate(target){
-  const old=q(`.bottomNav .nav[data-go="${CSS.escape(target)}"]`);if(old){old.click();window.scrollTo({top:0,behavior:'smooth'})}
-  syncNav();closeMenu();
-}
-function syncNav(){
-  const active=q('.section.active')?.id||'bets';qa('.tepNavBtn').forEach(b=>b.classList.toggle('active',b.dataset.target===active));
-}
-function wirePremiumGo(root=document){qa('[data-premium-go]',root).forEach(x=>{if(x.dataset.goWired)return;x.dataset.goWired='1';x.style.cursor='pointer';x.addEventListener('click',()=>navigate(x.dataset.premiumGo))})}
-function installMenu(){
-  const top=q('.topActions');if(!top)return;
-  if(!byId('tepMenuToggle')){const b=document.createElement('button');b.className='miniBtn';b.id='tepMenuToggle';b.type='button';b.setAttribute('aria-label','Apri menu');b.textContent='☰';b.addEventListener('click',toggleMenu);top.appendChild(b)}
-  if(!byId('tepPremiumMenu')){const m=document.createElement('div');m.id='tepPremiumMenu';m.innerHTML=`<div class="tepMenuSheet"><h3>Tennis Edge Pro</h3><p>Accesso rapido alle funzioni che restano fuori dalla barra principale.</p><button class="tepMenuAction" data-menu-go="live">Live <b>›</b></button><button class="tepMenuAction" data-menu-go="record">Track record <b>›</b></button><button class="tepMenuAction" data-menu-go="bankroll">Bankroll & My Bets <b>›</b></button><button class="tepMenuAction" data-menu-sure="1">SureBet <b>↗</b></button><div class="tepPhotoCredit">Le foto giocatore, quando disponibili, vengono caricate da Wikipedia/Wikimedia; tocca la foto nel browser per risalire alla pagina sorgente/licenza. Se una foto non è disponibile viene mostrato un avatar neutro.</div></div>`;document.body.appendChild(m);m.addEventListener('click',e=>{if(e.target===m)closeMenu()});qa('[data-menu-go]',m).forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.menuGo)));q('[data-menu-sure]',m)?.addEventListener('click',()=>{const a=q('.bottomNav .sureLink');if(a)location.href=a.href});}
-}
-function toggleMenu(){byId('tepPremiumMenu')?.classList.toggle('open')}function closeMenu(){byId('tepPremiumMenu')?.classList.remove('open')}
-function tuneBrand(){
-  const h=q('.brand h1'),p=q('.brand p');if(h&&!h.dataset.premium){h.dataset.premium='1';h.innerHTML='Tennis <span class="tepEdgeWord">Edge</span> Pro';}if(p)p.textContent='DATI · ANALISI · VANTAGGIO';
-}
-let busy=false,timer=null;
-function refresh(){
-  if(busy)return;busy=true;
-  try{tuneBrand();installHeroAndDashboard();insertPageLeads();renderPremiumHero();renderDashboard();renderPremiumMatches();syncNav();wirePremiumGo();hydratePhotos();}finally{busy=false}
-}
-function schedule(){clearTimeout(timer);timer=setTimeout(refresh,80)}
-function boot(){
-  document.body.classList.add('tepPremiumMode');installStyle();tuneBrand();installHeroAndDashboard();installNav();installMenu();insertPageLeads();refresh();
-  const root=byId('mainContent')||document.body;const mo=new MutationObserver(schedule);mo.observe(root,{subtree:true,childList:true,attributes:true,attributeFilter:['class']});
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh()});setInterval(refresh,5000);
-  document.documentElement.dataset.tepPremiumShell=MARK;
-}
+let lastSig='';
+function sig(){const b=getBoard(),l=getLive();return [b?.meta?.updated_at,b?.meta?.data_refreshed_at,b?.upcoming?.length,l?.meta?.updated_at,l?.events?.length,favorites.size,followed.size,state.selectedId].join('|')}
+function refresh(){const s=sig();if(s===lastSig)return;lastSig=s;render()}
+function boot(){install();lastSig=sig();setInterval(refresh,2500);document.addEventListener('visibilitychange',()=>{if(!document.hidden){lastSig='';refresh()}})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
