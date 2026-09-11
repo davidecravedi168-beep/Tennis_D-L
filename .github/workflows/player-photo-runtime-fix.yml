@@ -35,6 +35,7 @@ jobs:
           node --check premium-shell-v1.js
           grep -Fq "const eager=String(cls).includes('hero')?'eager':'lazy'" premium-shell-v1.js
           grep -Fq 'async function tryImage(el,img,src)' premium-shell-v1.js
+          grep -Fq "const nodes=\$\$('[data-photo]',root).filter" premium-shell-v1.js
           grep -Fq 'await Promise.all(nodes.map(async el=>' premium-shell-v1.js
           grep -Fq '.tp-avatar.has-photo img{opacity:1}' premium-shell-v1.js
           ! grep -Fq 'decoding="async" hidden' premium-shell-v1.js
@@ -67,6 +68,6 @@ jobs:
             --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
             --virtual-time-budget=18000 --dump-dom \
             'http://127.0.0.1:8765/?v=photo-runtime-fix' > /tmp/tep-photo-dom.html
-          grep -Fq 'tp-avatar hero has-photo' /tmp/tep-photo-dom.html
+          grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/tep-photo-dom.html
           grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/tep-photo-dom.html
           echo 'PHOTO_BROWSER_SMOKE=PASS'
