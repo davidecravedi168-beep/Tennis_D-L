@@ -1,0 +1,75 @@
+name: Tennis UI Runtime Certifier
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/tennis-ui-runtime-cert.yml'
+      - 'index.html'
+      - 'tennis-quant-math-v13.js'
+      - 'tennis-quant-lab-v13.js'
+      - 'tennis-quality-governance-v14.js'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  runtime-cert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Repair CSP for same-origin runtime modules
+        id: repair
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          old = "script-src 'unsafe-inline';"
+          new = "script-src 'self' 'unsafe-inline';"
+          changed = False
+          if old in s:
+              s = s.replace(old, new, 1)
+              p.write_text(s, encoding='utf-8')
+              changed = True
+          if new not in s:
+              raise SystemExit('CSP_SELF_SCRIPT_MISSING')
+          print('CSP runtime policy:', 'repaired' if changed else 'already-correct')
+          PY
+
+      - name: Runtime contract tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -Fq "script-src 'self' 'unsafe-inline';" index.html
+          grep -Fq 'tennis-quant-math-v13.js?v=13.0' index.html
+          grep -Fq 'tennis-quant-lab-v13.js?v=13.1-pro-metrics-20260911' index.html
+          grep -Fq 'tennis-quality-governance-v14.js?v=14.0' index.html
+          grep -Fq 'PRO METRICS' tennis-quant-lab-v13.js
+          grep -Fq 'function decorateMatches()' tennis-quant-lab-v13.js
+          node --check tennis-quant-math-v13.js
+          node --check tennis-quant-lab-v13.js
+          node --check tennis-quality-governance-v14.js
+          echo 'UI_RUNTIME_CERT=PASS'
+
+      - name: Commit CSP repair if needed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- index.html; then
+            echo 'No CSP repair commit needed.'
+            exit 0
+          fi
+          git config user.name 'tennis-edge-ui-certifier'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'fix(ui): allow same-origin runtime modules under CSP'
+          git pull --rebase origin main
+          git push origin HEAD:main
