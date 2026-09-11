@@ -51,13 +51,21 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          node scripts/apply-refresh-resilience.mjs
+          node scripts/apply-refresh-resilience.mjs
           grep -Fq "script-src 'self' 'unsafe-inline';" index.html
           grep -Fq 'tennis-quant-math-v13.js?v=13.0' index.html
           grep -Fq 'tennis-quant-lab-v13.js?v=13.2-pro-metrics-premium-20260911' index.html
           grep -Fq 'tennis-quality-governance-v14.js?v=14.0' index.html
-          grep -Fq 'premium-shell-v1.js?v=20260911-full-premium-v3' index.html
-          grep -Fq '"start_url":"./?v=20260911-full-premium-v3"' manifest.webmanifest
-          grep -Fq 'TEP_FULL_PREMIUM_UI_V3' premium-shell-v1.js
+          grep -Fq 'premium-shell-v1.js?v=20260911-v31-live-photo-nav' index.html
+          grep -Fq '20260911-v31-live-photo-nav' manifest.webmanifest
+          grep -Fq 'TEP_FULL_PREMIUM_UI_V3_1' premium-shell-v1.js
+          grep -Fq 'function liveScore(score)' premium-shell-v1.js
+          grep -Fq 'generator=search' premium-shell-v1.js
+          grep -Fq 'document.startViewTransition' premium-shell-v1.js
+          grep -Fq "behavior:'auto'" premium-shell-v1.js
+          ! grep -Fq "behavior:'smooth'" premium-shell-v1.js
+          ! grep -Fq "esc(x.score||x.current_score" premium-shell-v1.js
           grep -Fq 'PROBABILITÀ DI VITTORIA' premium-shell-v1.js
           grep -Fq 'Partite in arrivo' premium-shell-v1.js
           grep -Fq 'Le Mie Analisi' premium-shell-v1.js
@@ -67,6 +75,28 @@ jobs:
           node --check tennis-quant-math-v13.js
           node --check tennis-quant-lab-v13.js
           node --check tennis-quality-governance-v14.js
+          node - <<'NODE'
+          const fs=require('fs');
+          const l=JSON.parse(fs.readFileSync('data/live-board.json','utf8'));
+          if(!Array.isArray(l.events)) throw new Error('LIVE_EVENTS_INVALID');
+          const num=v=>v!==null&&v!==''&&Number.isFinite(Number(v))?Number(v):null;
+          function liveScore(score){
+            if(score===null||score===undefined)return'LIVE';
+            if(typeof score==='string'||typeof score==='number')return String(score);
+            if(typeof score!=='object')return'LIVE';
+            const sets=Array.isArray(score.sets)?score.sets.filter(s=>num(s?.home)!==null&&num(s?.away)!==null):[];
+            const parts=sets.map(s=>`${s.home}-${s.away}`);
+            const cg=score?.raw?.periods?.currentgame;
+            if(cg&&num(cg.home)!==null&&num(cg.away)!==null)parts.push(`game ${cg.home}-${cg.away}`);
+            if(parts.length)return parts.join(' · ');
+            if(num(score.sets_home)!==null&&num(score.sets_away)!==null)return`${score.sets_home}-${score.sets_away}`;
+            if(num(score?.raw?.home)!==null&&num(score?.raw?.away)!==null)return`${score.raw.home}-${score.raw.away}`;
+            return'LIVE';
+          }
+          const scores=l.events.map(e=>liveScore(e.score??e.current_score));
+          if(scores.some(x=>x.includes('[object Object]'))) throw new Error('OBJECT_SCORE_LEAK');
+          console.log(`LIVE_SCORE_CONTRACT=PASS events=${l.events.length}`);
+          NODE
           echo 'UI_RUNTIME_CERT=PASS'
 
       - name: Real browser smoke test
@@ -82,20 +112,25 @@ jobs:
             curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break
             sleep 0.25
           done
-          timeout 45s "$CHROME" \
-            --headless \
-            --no-sandbox \
-            --disable-gpu \
-            --disable-dev-shm-usage \
-            --virtual-time-budget=12000 \
-            --dump-dom \
-            'http://127.0.0.1:8765/?v=20260911-full-premium-v3' > /tmp/tep-dom.html
-          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3"' /tmp/tep-dom.html
+          timeout 50s "$CHROME" \
+            --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --virtual-time-budget=18000 --dump-dom \
+            'http://127.0.0.1:8765/?v=20260911-v31-live-photo-nav' > /tmp/tep-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_1"' /tmp/tep-dom.html
           grep -Fq 'class="tp-winband"' /tmp/tep-dom.html
           grep -Fq 'PROBABILITÀ DI VITTORIA' /tmp/tep-dom.html
           grep -Fq 'Partite in arrivo' /tmp/tep-dom.html
           grep -Fq 'Le Mie Analisi' /tmp/tep-dom.html
           grep -Fq 'tp-nav' /tmp/tep-dom.html
+          python - <<'PY'
+          import re
+          s=open('/tmp/tep-dom.html',encoding='utf-8').read()
+          imgs=re.findall(r'<img\b[^>]*>',s)
+          loaded=[x for x in imgs if 'src="http' in x and 'hidden=""' not in x]
+          if not loaded:
+              raise SystemExit('NO_PLAYER_PHOTO_LOADED_IN_BROWSER')
+          print('PLAYER_PHOTO_BROWSER=PASS',len(loaded))
+          PY
           echo 'UI_BROWSER_SMOKE=PASS'
 
       - name: Public Pages cache-busted smoke test
@@ -103,48 +138,58 @@ jobs:
         run: |
           set -euo pipefail
           PUBLIC="https://davidecravedi168-beep.github.io/Tennis_D-L/"
-          CACHE_BUST="full-premium-v3-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          CACHE_BUST="v31-live-photo-nav-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           for i in {1..48}; do
             if curl -fsSL "${PUBLIC}?v=${CACHE_BUST}" -o /tmp/public-index.html \
               && grep -Fq "script-src 'self' 'unsafe-inline';" /tmp/public-index.html \
-              && grep -Fq 'premium-shell-v1.js?v=20260911-full-premium-v3' /tmp/public-index.html; then
+              && grep -Fq 'premium-shell-v1.js?v=20260911-v31-live-photo-nav' /tmp/public-index.html; then
               echo 'PUBLIC_SHELL_FRESH=PASS'
               break
             fi
-            if [ "$i" -eq 48 ]; then
-              echo 'PUBLIC_SHELL_FRESH=FAIL'
-              exit 1
-            fi
+            if [ "$i" -eq 48 ]; then echo 'PUBLIC_SHELL_FRESH=FAIL'; exit 1; fi
             sleep 5
           done
           CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
-          timeout 55s "$CHROME" \
-            --headless \
-            --no-sandbox \
-            --disable-gpu \
-            --disable-dev-shm-usage \
-            --virtual-time-budget=16000 \
-            --dump-dom \
+          timeout 60s "$CHROME" \
+            --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --virtual-time-budget=20000 --dump-dom \
             "${PUBLIC}?v=${CACHE_BUST}" > /tmp/public-dom.html
-          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3"' /tmp/public-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_1"' /tmp/public-dom.html
           grep -Fq 'class="tp-winband"' /tmp/public-dom.html
           grep -Fq 'PROBABILITÀ DI VITTORIA' /tmp/public-dom.html
           grep -Fq 'Partite in arrivo' /tmp/public-dom.html
           grep -Fq 'Le Mie Analisi' /tmp/public-dom.html
           grep -Fq 'tp-nav' /tmp/public-dom.html
+          python - <<'PY'
+          import re
+          s=open('/tmp/public-dom.html',encoding='utf-8').read()
+          imgs=re.findall(r'<img\b[^>]*>',s)
+          loaded=[x for x in imgs if 'src="http' in x and 'hidden=""' not in x]
+          if not loaded: raise SystemExit('NO_PUBLIC_PLAYER_PHOTO_LOADED')
+          print('PUBLIC_PLAYER_PHOTO=PASS',len(loaded))
+          PY
           echo 'PUBLIC_UI_BROWSER_SMOKE=PASS'
 
-      - name: Commit CSP repair if needed
+      - name: Existing quant regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/tennis-model-diagnostics-v2.mjs --self-test
+          node scripts/drift-controller-v6.mjs --self-test
+          node scripts/clv-tracker-v3.mjs --self-test
+          node scripts/clv-diagnostics-fix-v3.mjs --self-test
+
+      - name: Commit normalization if needed
         shell: bash
         run: |
           set -euo pipefail
           if git diff --quiet -- index.html; then
-            echo 'No CSP repair commit needed.'
+            echo 'No runtime normalization commit needed.'
             exit 0
           fi
           git config user.name 'tennis-edge-ui-certifier'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
-          git commit -m 'fix(ui): allow same-origin runtime modules under CSP'
+          git commit -m 'fix(ui): normalize V3.1 runtime wiring'
           git pull --rebase origin main
           git push origin HEAD:main
