@@ -2,6 +2,19 @@ name: Tennis Edge Pro Challenger V3
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/tennis-challenger-v3.yml"
+      - "scripts/challenger-forward-ledger-v3.mjs"
+      - "scripts/calibration-policy-v4.mjs"
+      - "scripts/adaptive-calibration-v5.mjs"
+      - "scripts/auto-calibration-trainer-v5.mjs"
+      - "scripts/calibration-audit-v4.mjs"
+      - "scripts/tennis-model-diagnostics-v2.mjs"
+      - "scripts/drift-controller-v6.mjs"
+      - "scripts/clv-tracker-v3.mjs"
+      - "scripts/clv-diagnostics-fix-v3.mjs"
   schedule:
     - cron: "12,27,42,57 * * * *"
 
@@ -27,7 +40,9 @@ jobs:
         with:
           node-version: "24"
       - name: Contract tests
+        shell: bash
         run: |
+          set -euo pipefail
           node --check scripts/calibration-policy-v4.mjs
           node --check scripts/adaptive-calibration-v5.mjs
           node --check scripts/auto-calibration-trainer-v5.mjs
@@ -37,20 +52,52 @@ jobs:
           node --check scripts/drift-controller-v6.mjs
           node --check scripts/clv-tracker-v3.mjs
           node --check scripts/clv-diagnostics-fix-v3.mjs
+
+          # The classifier self-test must verify rules, not depend on the mutable
+          # production calibration model. Run it against the frozen V4 fallback,
+          # then restore the live model and smoke-test that separately.
+          restore_model=0
+          if [ -f data/calibration-model-v5.json ]; then
+            mv data/calibration-model-v5.json /tmp/calibration-model-v5.json
+            restore_model=1
+          fi
+          restore_calibration_model() {
+            if [ "$restore_model" -eq 1 ] && [ -f /tmp/calibration-model-v5.json ]; then
+              mv -f /tmp/calibration-model-v5.json data/calibration-model-v5.json
+            fi
+          }
+          trap restore_calibration_model EXIT
           node scripts/challenger-forward-ledger-v3.mjs --self-test
+          restore_calibration_model
+          restore_model=0
+          trap - EXIT
+
+          node --input-type=module <<'NODE'
+          import {activeCalibration, calibrateProb} from './scripts/adaptive-calibration-v5.mjs';
+          const state=activeCalibration();
+          const p=calibrateProb(0.65,{tour:'ATP',odds:1.8});
+          if(!Number.isFinite(p)||p<=0||p>=1) throw new Error('ACTIVE_CALIBRATION_INVALID');
+          console.log(JSON.stringify({ok:true,active_calibration:state,probe:p}));
+          NODE
+
           node scripts/tennis-model-diagnostics-v2.mjs --self-test
           node scripts/drift-controller-v6.mjs --self-test
           node scripts/clv-tracker-v3.mjs --self-test
           node scripts/clv-diagnostics-fix-v3.mjs --self-test
       - name: Capture real pre-start odds for CLV
+        if: github.event_name != 'push'
         run: node scripts/clv-tracker-v3.mjs
       - name: Train guarded calibration candidate
+        if: github.event_name != 'push'
         run: node scripts/auto-calibration-trainer-v5.mjs
       - name: Build calibrated drift policy
+        if: github.event_name != 'push'
         run: node scripts/drift-controller-v6.mjs
       - name: Update Challenger V3 forward ledger
+        if: github.event_name != 'push'
         run: node scripts/challenger-forward-ledger-v3.mjs
       - name: Build diagnostics and calibration audit
+        if: github.event_name != 'push'
         run: |
           node scripts/drift-controller-v6.mjs
           node scripts/tennis-model-diagnostics-v2.mjs
@@ -58,6 +105,7 @@ jobs:
           node scripts/clv-diagnostics-fix-v3.mjs
           node scripts/calibration-audit-v4.mjs
       - name: Commit evaluation state
+        if: github.event_name != 'push'
         shell: bash
         run: |
           set -euo pipefail
