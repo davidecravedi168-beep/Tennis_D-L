@@ -1,0 +1,138 @@
+name: UI V3.1 Live Photo Nav Certifier
+
+on:
+  push:
+    branches: [fix/ui-live-photos-nav-v31]
+    paths:
+      - 'premium-shell-v1.js'
+      - 'index.html'
+      - 'manifest.webmanifest'
+      - '.github/workflows/ui-v31-fix-cert.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  certify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+        with:
+          ref: fix/ui-live-photos-nav-v31
+          fetch-depth: 0
+
+      - name: Cache-bust V3.1 assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re, json
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          s2=re.sub(r'premium-shell-v1\.js\?v=[^"\']+', 'premium-shell-v1.js?v=20260911-v31-live-photo-nav', s, count=1)
+          if 'premium-shell-v1.js?v=20260911-v31-live-photo-nav' not in s2:
+              raise SystemExit('V31_ASSET_WIRING_MISSING')
+          if s2!=s:p.write_text(s2,encoding='utf-8')
+          m=Path('manifest.webmanifest')
+          j=json.loads(m.read_text(encoding='utf-8'))
+          j['start_url']='./?v=20260911-v31-live-photo-nav'
+          j['background_color']='#020a12';j['theme_color']='#020a12'
+          m.write_text(json.dumps(j,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          PY
+
+      - name: Test 1 · syntax and UI contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check premium-shell-v1.js
+          grep -Fq "TEP_FULL_PREMIUM_UI_V3_1" premium-shell-v1.js
+          grep -Fq "function liveScore(score)" premium-shell-v1.js
+          grep -Fq "generator=search" premium-shell-v1.js
+          grep -Fq "document.startViewTransition" premium-shell-v1.js
+          grep -Fq "behavior:'auto'" premium-shell-v1.js
+          ! grep -Fq "behavior:'smooth'" premium-shell-v1.js
+          ! grep -Fq "esc(x.score||x.current_score" premium-shell-v1.js
+          grep -Fq "premium-shell-v1.js?v=20260911-v31-live-photo-nav" index.html
+          echo UI_CONTRACT=PASS
+
+      - name: Test 2 · real live score contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const fs=require('fs');
+          const l=JSON.parse(fs.readFileSync('data/live-board.json','utf8'));
+          if(!Array.isArray(l.events)||!l.events.length) throw new Error('LIVE_EVENTS_EMPTY');
+          const num=v=>v!==null&&v!==''&&Number.isFinite(Number(v))?Number(v):null;
+          function liveScore(score){
+            if(score===null||score===undefined)return'LIVE';
+            if(typeof score==='string'||typeof score==='number')return String(score);
+            if(typeof score!=='object')return'LIVE';
+            const sets=Array.isArray(score.sets)?score.sets.filter(s=>num(s?.home)!==null&&num(s?.away)!==null):[];
+            const parts=sets.map(s=>`${s.home}-${s.away}`);
+            const cg=score?.raw?.periods?.currentgame;
+            if(cg&&num(cg.home)!==null&&num(cg.away)!==null)parts.push(`game ${cg.home}-${cg.away}`);
+            if(parts.length)return parts.join(' · ');
+            if(num(score.sets_home)!==null&&num(score.sets_away)!==null)return`${score.sets_home}-${score.sets_away}`;
+            if(num(score?.raw?.home)!==null&&num(score?.raw?.away)!==null)return`${score.raw.home}-${score.raw.away}`;
+            return'LIVE';
+          }
+          const scores=l.events.map(e=>liveScore(e.score));
+          if(scores.some(x=>x.includes('[object Object]'))) throw new Error('OBJECT_SCORE_LEAK');
+          if(!scores.some(x=>/\d+-\d+/.test(x))) throw new Error('NO_STRUCTURED_SCORE');
+          console.log(`LIVE_SCORE_CONTRACT=PASS events=${l.events.length} sample=${scores.find(x=>/\d+-\d+/.test(x))}`);
+          NODE
+
+      - name: Test 3 · browser smoke and photos
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME" || { echo CHROME_NOT_FOUND; exit 1; }
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tp-http.log 2>&1 &
+          PID=$!
+          trap 'kill "$PID" 2>/dev/null || true' EXIT
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
+          timeout 50s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=18000 --dump-dom http://127.0.0.1:8765/index.html > /tmp/tp-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_1"' /tmp/tp-dom.html
+          grep -Fq 'PROBABILITÀ DI VITTORIA' /tmp/tp-dom.html
+          grep -Fq 'class="tp-winband"' /tmp/tp-dom.html
+          grep -Fq 'class="tp-nav"' /tmp/tp-dom.html
+          python - <<'PY'
+          import re
+          s=open('/tmp/tp-dom.html',encoding='utf-8').read()
+          imgs=re.findall(r'<img\b[^>]*>',s)
+          loaded=[x for x in imgs if 'src="http' in x and 'hidden=""' not in x]
+          if not loaded:
+              raise SystemExit('NO_PLAYER_PHOTO_LOADED_IN_BROWSER')
+          print('PLAYER_PHOTO_BROWSER=PASS loaded=',len(loaded))
+          PY
+          echo BROWSER_SMOKE=PASS
+
+      - name: Test 4 · existing quant regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/tennis-model-diagnostics-v2.mjs --self-test
+          node scripts/drift-controller-v6.mjs --self-test
+          node scripts/clv-tracker-v3.mjs --self-test
+          node scripts/clv-diagnostics-fix-v3.mjs --self-test
+          echo QUANT_REGRESSIONS=PASS
+
+      - name: Commit candidate cache-bust
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- index.html manifest.webmanifest; then
+            echo 'Assets already versioned.'
+            exit 0
+          fi
+          git config user.name 'tennis-edge-ui-certifier'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html manifest.webmanifest
+          git commit -m 'fix(ui): cache-bust V3.1 shell'
+          git pull --rebase origin fix/ui-live-photos-nav-v31
+          git push origin HEAD:fix/ui-live-photos-nav-v31
