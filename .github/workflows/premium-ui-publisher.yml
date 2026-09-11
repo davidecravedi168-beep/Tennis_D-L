@@ -1,0 +1,83 @@
+name: Premium UI Publisher
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/premium-ui-publisher.yml'
+      - 'premium-shell-v1.js'
+      - 'scripts/apply-refresh-resilience.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: premium-ui-publisher
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Apply premium shell wiring
+        run: |
+          set -euo pipefail
+          node scripts/apply-refresh-resilience.mjs
+          node scripts/apply-refresh-resilience.mjs
+          node --check premium-shell-v1.js
+          grep -Fq 'premium-shell-v1.js?v=20260911-r1' index.html
+          grep -Fq "connect-src 'self' https://en.wikipedia.org;" index.html
+          grep -Fq "img-src 'self' data: https://commons.wikimedia.org https://upload.wikimedia.org;" index.html
+          test "$(grep -o 'premium-shell-v1.js?v=20260911-r1' index.html | wc -l)" -eq 1
+
+      - name: Real browser local smoke
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME" || { echo 'CHROME_NOT_FOUND'; exit 1; }
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tep-premium-prod-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
+          timeout 50s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=15000 --dump-dom 'http://127.0.0.1:8765/index.html?v=prod-premium' > /tmp/tep-premium-prod-dom.html
+          grep -Fq 'TEP_PREMIUM_SHELL_R1' /tmp/tep-premium-prod-dom.html
+          grep -Fq 'id="tepPremiumHero"' /tmp/tep-premium-prod-dom.html
+          grep -Fq 'id="tepPremiumDashboard"' /tmp/tep-premium-prod-dom.html
+          grep -Fq 'id="tepPremiumNav"' /tmp/tep-premium-prod-dom.html
+          grep -Fq 'Probabilità di vittoria' /tmp/tep-premium-prod-dom.html
+          grep -Fq 'tepPremiumMatchSummary' /tmp/tep-premium-prod-dom.html
+          echo 'PREMIUM_LOCAL_BROWSER=PASS'
+
+      - name: Existing quant regressions
+        run: |
+          set -euo pipefail
+          node scripts/tennis-model-diagnostics-v2.mjs --self-test
+          node scripts/drift-controller-v6.mjs --self-test
+          node scripts/clv-tracker-v3.mjs --self-test
+          node scripts/clv-diagnostics-fix-v3.mjs --self-test
+
+      - name: Commit wired shell
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- index.html; then
+            echo 'Premium shell already wired.'
+            exit 0
+          fi
+          git config user.name 'tennis-edge-ui-publisher'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'feat(ui): activate full premium application shell'
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
+            git rebase --abort || true
+            sleep $((attempt * 2))
+          done
+          exit 1
