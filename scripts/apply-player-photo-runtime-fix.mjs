@@ -19,6 +19,11 @@ const newHydrate=`async function hydrate(root=document){\n  const nodes=$$('[dat
 if(s.includes(oldHydrate)) s=s.replace(oldHydrate,newHydrate);
 else if(!s.includes("await Promise.all(nodes.map(async el=>")) throw new Error('hydrate contract changed; refusing blind patch');
 
+// Repair an early V3.1 migration typo that accidentally collapsed $$() to $().
+const brokenNodes="const nodes=$('[data-photo]',root).filter(x=>x.dataset.photoState!=='loading'&&x.dataset.photoState!=='done');";
+const fixedNodes="const nodes=$$('[data-photo]',root).filter(x=>x.dataset.photoState!=='loading'&&x.dataset.photoState!=='done');";
+if(s.includes(brokenNodes)) s=s.replace(brokenNodes,fixedNodes);
+
 const oldCss='.tp-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}';
 const newCss='.tp-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .16s ease}.tp-avatar.has-photo img{opacity:1}';
 if(s.includes(oldCss)) s=s.replace(oldCss,newCss);
@@ -27,6 +32,7 @@ else if(!s.includes('.tp-avatar.has-photo img{opacity:1}')) throw new Error('ava
 for(const required of [
   "loading=\"${eager}\"",
   'async function tryImage(el,img,src)',
+  fixedNodes,
   "await Promise.all(nodes.map(async el=>",
   ".tp-avatar.has-photo img{opacity:1}"
 ]) if(!s.includes(required)) throw new Error('photo runtime fix missing: '+required);
