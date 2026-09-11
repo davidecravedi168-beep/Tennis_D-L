@@ -1,9 +1,9 @@
 {
   "schema": "TEP-MODEL-DIAGNOSTICS-1",
-  "generated_at": "2026-09-11T08:51:15.910Z",
+  "generated_at": "2026-09-11T10:49:24.084Z",
   "source": {
     "ledger_schema": "TEP-FORWARD-LEDGER-1",
-    "ledger_updated_at": "2026-09-11T08:49:27.887Z"
+    "ledger_updated_at": "2026-09-11T10:47:56.472Z"
   },
   "policy": {
     "validation_only": true,
@@ -14,11 +14,11 @@
     "note": "Forward diagnostics only. Segment and factor results are descriptive associations and cannot automatically change production weights or betting thresholds."
   },
   "overall": {
-    "n": 267,
+    "n": 269,
     "wins": 100,
-    "hit_rate": 0.37453183520599254,
-    "profit_units": -26.300000000000008,
-    "roi": -0.09850187265917607,
+    "hit_rate": 0.37174721189591076,
+    "profit_units": -28.300000000000008,
+    "roi": -0.10520446096654278,
     "median_profit_units": -1,
     "max_drawdown_units": 32.86000000000001
   },
@@ -33,11 +33,11 @@
     },
     {
       "band": "<55%",
-      "n": 177,
-      "avg_predicted_prob": 0.3825692768361581,
-      "observed_win_rate": 0.2542372881355932,
-      "calibration_gap": 0.1283319887005649,
-      "brier": 0.1903630385181807
+      "n": 179,
+      "avg_predicted_prob": 0.38389001675977646,
+      "observed_win_rate": 0.25139664804469275,
+      "calibration_gap": 0.13249336871508371,
+      "brier": 0.19104240547530157
     },
     {
       "band": "60-65%",
@@ -77,12 +77,12 @@
       "factor": "ELO",
       "evidence": "SUPPORTIVE",
       "positive": {
-        "n": 89,
+        "n": 90,
         "wins": 54,
-        "hit_rate": 0.6067415730337079,
-        "profit_units": 0.36000000000000165,
-        "roi": 0.004044943820224738,
-        "median_profit_units": 0.21999999999999997,
+        "hit_rate": 0.6,
+        "profit_units": -0.6399999999999983,
+        "roi": -0.007111111111111092,
+        "median_profit_units": 0.20499999999999996,
         "max_drawdown_units": 10.379999999999999
       },
       "negative": {
@@ -103,7 +103,7 @@
         "median_profit_units": null,
         "max_drawdown_units": 0
       },
-      "unobserved_n": 56
+      "unobserved_n": 57
     },
     {
       "factor": "SURFACE",
@@ -135,7 +135,7 @@
         "median_profit_units": null,
         "max_drawdown_units": 0
       },
-      "unobserved_n": 63
+      "unobserved_n": 65
     },
     {
       "factor": "FORM",
@@ -167,19 +167,19 @@
         "median_profit_units": null,
         "max_drawdown_units": 0
       },
-      "unobserved_n": 71
+      "unobserved_n": 73
     },
     {
       "factor": "SERVE/RETURN",
       "evidence": "SUPPORTIVE",
       "positive": {
-        "n": 70,
+        "n": 72,
         "wins": 44,
-        "hit_rate": 0.6285714285714286,
-        "profit_units": 6.129999999999997,
-        "roi": 0.08757142857142854,
-        "median_profit_units": 0.20499999999999996,
-        "max_drawdown_units": 5.630000000000001
+        "hit_rate": 0.6111111111111112,
+        "profit_units": 4.129999999999997,
+        "roi": 0.05736111111111107,
+        "median_profit_units": 0.18499999999999994,
+        "max_drawdown_units": 7.220000000000001
       },
       "negative": {
         "n": 110,
@@ -231,17 +231,17 @@
         "median_profit_units": null,
         "max_drawdown_units": 0
       },
-      "unobserved_n": 181
+      "unobserved_n": 183
     },
     {
       "factor": "EV",
       "evidence": "OBSERVE",
       "positive": {
-        "n": 225,
+        "n": 226,
         "wins": 77,
-        "hit_rate": 0.3422222222222222,
-        "profit_units": -20.399999999999995,
-        "roi": -0.09066666666666665,
+        "hit_rate": 0.3407079646017699,
+        "profit_units": -21.399999999999995,
+        "roi": -0.09469026548672564,
         "median_profit_units": -1,
         "max_drawdown_units": 31.370000000000005
       },
@@ -263,7 +263,7 @@
         "median_profit_units": null,
         "max_drawdown_units": 0
       },
-      "unobserved_n": 42
+      "unobserved_n": 43
     }
   ],
   "segments": [
@@ -282,13 +282,13 @@
         },
         {
           "key": "Grass",
-          "n": 12,
+          "n": 14,
           "wins": 5,
-          "hit_rate": 0.4166666666666667,
-          "profit_units": -1.6399999999999997,
-          "roi": -0.13666666666666663,
+          "hit_rate": 0.35714285714285715,
+          "profit_units": -3.6399999999999997,
+          "roi": -0.25999999999999995,
           "median_profit_units": -1,
-          "max_drawdown_units": 4.38
+          "max_drawdown_units": 5.01
         }
       ]
     },
@@ -307,13 +307,13 @@
         },
         {
           "key": "ATP",
-          "n": 118,
+          "n": 120,
           "wins": 44,
-          "hit_rate": 0.3728813559322034,
-          "profit_units": -1.1099999999999977,
-          "roi": -0.00940677966101693,
+          "hit_rate": 0.36666666666666664,
+          "profit_units": -3.1099999999999977,
+          "roi": -0.025916666666666647,
           "median_profit_units": -1,
-          "max_drawdown_units": 16.310000000000002
+          "max_drawdown_units": 16.94
         }
       ]
     },
@@ -332,21 +332,21 @@
         },
         {
           "key": "2.20-2.99",
-          "n": 56,
+          "n": 57,
           "wins": 19,
-          "hit_rate": 0.3392857142857143,
-          "profit_units": -8.02,
-          "roi": -0.1432142857142857,
+          "hit_rate": 0.3333333333333333,
+          "profit_units": -9.02,
+          "roi": -0.15824561403508772,
           "median_profit_units": -1,
-          "max_drawdown_units": 13.27
+          "max_drawdown_units": 14.27
         },
         {
           "key": "1.80-2.19",
-          "n": 33,
+          "n": 34,
           "wins": 16,
-          "hit_rate": 0.48484848484848486,
-          "profit_units": -1.85,
-          "roi": -0.05606060606060606,
+          "hit_rate": 0.47058823529411764,
+          "profit_units": -2.85,
+          "roi": -0.08382352941176471,
           "median_profit_units": -1,
           "max_drawdown_units": 4.59
         },
@@ -397,13 +397,13 @@
         },
         {
           "key": "<60",
-          "n": 75,
+          "n": 77,
           "wins": 27,
-          "hit_rate": 0.36,
-          "profit_units": -1.2599999999999982,
-          "roi": -0.016799999999999978,
+          "hit_rate": 0.35064935064935066,
+          "profit_units": -3.259999999999998,
+          "roi": -0.04233766233766231,
           "median_profit_units": -1,
-          "max_drawdown_units": 13.59
+          "max_drawdown_units": 13.85
         },
         {
           "key": "80+",
@@ -452,13 +452,13 @@
         },
         {
           "key": "<70",
-          "n": 15,
+          "n": 17,
           "wins": 7,
-          "hit_rate": 0.4666666666666667,
-          "profit_units": 6.550000000000001,
-          "roi": 0.4366666666666667,
+          "hit_rate": 0.4117647058823529,
+          "profit_units": 4.550000000000001,
+          "roi": 0.26764705882352946,
           "median_profit_units": -1,
-          "max_drawdown_units": 3
+          "max_drawdown_units": 4
         }
       ]
     },
@@ -467,11 +467,11 @@
       "segments": [
         {
           "key": "10%+",
-          "n": 112,
+          "n": 113,
           "wins": 35,
-          "hit_rate": 0.3125,
-          "profit_units": 3.790000000000002,
-          "roi": 0.03383928571428573,
+          "hit_rate": 0.30973451327433627,
+          "profit_units": 2.790000000000002,
+          "roi": 0.02469026548672568,
           "median_profit_units": -1,
           "max_drawdown_units": 18.68
         },
@@ -497,11 +497,11 @@
         },
         {
           "key": "<2%",
-          "n": 30,
+          "n": 31,
           "wins": 11,
-          "hit_rate": 0.36666666666666664,
-          "profit_units": -4.8500000000000005,
-          "roi": -0.16166666666666668,
+          "hit_rate": 0.3548387096774194,
+          "profit_units": -5.8500000000000005,
+          "roi": -0.18870967741935485,
           "median_profit_units": -1,
           "max_drawdown_units": 11.34
         },
@@ -520,10 +520,10 @@
   ],
   "clv": {
     "state": "SUSPECT",
-    "settled_candidates": 267,
-    "clv_sample": 267,
-    "avg_clv": 0.00047476779026217234,
-    "zero_share": 0.9850187265917603,
+    "settled_candidates": 269,
+    "clv_sample": 269,
+    "avg_clv": 0.00047123791821561346,
+    "zero_share": 0.9851301115241635,
     "closing_odds_sample": 4,
     "anomalies": [
       "CLV_ALMOST_ALWAYS_ZERO"
