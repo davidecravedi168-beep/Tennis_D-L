@@ -16,13 +16,13 @@ else if(!s.includes('async function tryImage(el,img,src)')) throw new Error('try
 
 const oldHydrate=`async function hydrate(root=document){\n  for(const el of $$('[data-photo]',root).filter(x=>x.dataset.photoState!=='loading'&&x.dataset.photoState!=='done')){\n    el.dataset.photoState='loading';const img=$('img',el);if(!img){el.dataset.photoState='done';continue}\n    const name=el.dataset.photo,key=pretty(name).toLowerCase(),candidates=await wikiCandidates(name);let ok=false;\n    for(const src of candidates){if(await tryImage(img,src)){img.hidden=false;photoCache[key]=src;savePhotoCache();ok=true;break}}\n    if(!ok){img.hidden=true;delete photoCache[key];savePhotoCache()}\n    el.dataset.photoState='done';\n  }\n}`;
 const newHydrate=`async function hydrate(root=document){\n  const nodes=$$('[data-photo]',root).filter(x=>x.dataset.photoState!=='loading'&&x.dataset.photoState!=='done');\n  await Promise.all(nodes.map(async el=>{\n    el.dataset.photoState='loading';const img=$('img',el);if(!img){el.dataset.photoState='done';return}\n    const name=el.dataset.photo,key=pretty(name).toLowerCase(),candidates=await wikiCandidates(name);let ok=false;\n    for(const src of candidates){if(await tryImage(el,img,src)){photoCache[key]=src;savePhotoCache();ok=true;break}}\n    if(!ok){el.classList.remove('has-photo');img.removeAttribute('src');delete photoCache[key];savePhotoCache()}\n    el.dataset.photoState='done';\n  }));\n}`;
-if(s.includes(oldHydrate)) s=s.replace(oldHydrate,newHydrate);
+if(s.includes(oldHydrate)) s=s.replace(oldHydrate,()=>newHydrate);
 else if(!s.includes("await Promise.all(nodes.map(async el=>")) throw new Error('hydrate contract changed; refusing blind patch');
 
 // Repair an early V3.1 migration typo that accidentally collapsed $$() to $().
 const brokenNodes="const nodes=$('[data-photo]',root).filter(x=>x.dataset.photoState!=='loading'&&x.dataset.photoState!=='done');";
 const fixedNodes="const nodes=$$('[data-photo]',root).filter(x=>x.dataset.photoState!=='loading'&&x.dataset.photoState!=='done');";
-if(s.includes(brokenNodes)) s=s.replace(brokenNodes,fixedNodes);
+if(s.includes(brokenNodes)) s=s.replace(brokenNodes,()=>fixedNodes);
 
 const oldCss='.tp-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}';
 const newCss='.tp-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .16s ease}.tp-avatar.has-photo img{opacity:1}';
