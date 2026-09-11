@@ -31,11 +31,11 @@ function syncNav(){
 }
 function syncRouteHash(name){const next=ROUTES.has(name)?name:'home',hash='#tp-'+next;if(location.hash!==hash){try{history.replaceState(null,'',hash)}catch{location.hash=hash}}}
 function applyView(){const view=$('#tpView');if(!view)return;view.innerHTML=screenHtml();syncNav();const fresh=$('.tp-fresh');if(fresh)fresh.textContent=freshness();queueMicrotask(()=>hydrate(view))}`;
-shell=replaceOnce(shell,oldApply,newApply,'view/navigation sync');
+if(!shell.includes('function navRouteFromHash(){')) shell=replaceOnce(shell,oldApply,newApply,'view/navigation sync');
 
 const oldRoute="function route(name){const next=name||'home';if(next===state.screen){window.scrollTo({top:0,left:0,behavior:'auto'});return}state.scroll[state.screen]=window.scrollY;state.screen=next;closeMenu();$$('.tp-nav [data-route]').forEach(b=>b.classList.toggle('on',b.dataset.route===next));render();window.scrollTo({top:state.scroll[next]||0,left:0,behavior:'auto'})}";
 const newRoute=`function route(name,{syncHash=true,restoreScroll=true}={}){const next=ROUTES.has(name)?name:'home';if(next===state.screen){if(syncHash)syncRouteHash(next);syncNav();if(restoreScroll)window.scrollTo({top:0,left:0,behavior:'auto'});return}state.scroll[state.screen]=window.scrollY;state.screen=next;closeMenu();render();if(syncHash)syncRouteHash(next);window.scrollTo({top:restoreScroll?(state.scroll[next]||0):0,left:0,behavior:'auto'})}`;
-shell=replaceOnce(shell,oldRoute,newRoute,'route function');
+if(!shell.includes('function route(name,{syncHash=true,restoreScroll=true}={})')) shell=replaceOnce(shell,oldRoute,newRoute,'route function');
 
 const bindStart=shell.indexOf('let searchTimer=null,navPointerAt=-1e9;');
 const bindEnd=shell.indexOf("\nlet lastSig='';",bindStart);
@@ -48,7 +48,7 @@ if(bindStart<0 || bindEnd<0){
 
 const oldBoot="function boot(){install();lastSig=sig();setInterval(refresh,3000);document.addEventListener('visibilitychange',()=>{if(!document.hidden){lastSig='';refresh()}})}";
 const newBoot="function boot(){const initial=navRouteFromHash();if(initial)state.screen=initial;install();syncRouteHash(state.screen);lastSig=sig();setInterval(refresh,3000);document.addEventListener('visibilitychange',()=>{if(!document.hidden){lastSig='';refresh()}})}";
-shell=replaceOnce(shell,oldBoot,newBoot,'boot route restore');
+if(!shell.includes('function boot(){const initial=navRouteFromHash();')) shell=replaceOnce(shell,oldBoot,newBoot,'boot route restore');
 
 index=replaceOnce(index,'<link rel="manifest" href="./manifest.webmanifest">','<link rel="manifest" href="./manifest.webmanifest?v=20260911-v36-ios-nav">','manifest cache bust');
 index=replaceOnce(index,'premium-shell-v1.js?v=20260911-v35-runtime-fix','premium-shell-v1.js?v=20260911-v36-ios-nav','premium shell cache bust');
