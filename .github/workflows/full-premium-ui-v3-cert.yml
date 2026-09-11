@@ -6,6 +6,7 @@ on:
     paths:
       - 'premium-shell-v1.js'
       - 'index.html'
+      - 'manifest.webmanifest'
       - '.github/workflows/full-premium-ui-v3-cert.yml'
   workflow_dispatch:
 
@@ -49,6 +50,7 @@ jobs:
           grep -Fq "avatar(ev.player_a,'hero')" premium-shell-v1.js
           grep -Fq "body.tp-v3>.app" premium-shell-v1.js
           grep -Fq "premium-shell-v1.js?v=20260911-full-premium-v3" index.html
+          grep -Fq '"start_url":"./?v=20260911-full-premium-v3"' manifest.webmanifest
           echo 'PREMIUM_UI_PRODUCT_CONTRACT=PASS'
 
       - name: Test 2 · real data contract
