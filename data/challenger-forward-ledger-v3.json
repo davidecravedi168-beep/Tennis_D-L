@@ -2,8 +2,8 @@
   "schema": "TEP-CHALLENGER-FORWARD-LEDGER-V3",
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
-  "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-11T14:23:18.610Z",
+  "created_at": "2026-09-11T14:48:57.056Z",
+  "updated_at": "2026-09-11T14:48:57.065Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -36,9 +36,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": -4,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.374621,
-        "calibrated_prob": 0.24350365,
-        "calibrated_ev": -0.22078832000000004,
+        "calibrated_prob": 0.21948594882619732,
+        "calibrated_ev": -0.29764496375616856,
         "core_votes": {
           "ELO": "NEGATIVE",
           "SURFACE": "NEGATIVE",
@@ -52,11 +58,12 @@
           "ODDS_3_PLUS",
           "TWO_CORE_NEGATIVES",
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "29e24f044769a3a3d9d36270e71d4098b6a44a01ac61a89cea897136c8010113",
+      "immutable_sha256": "57d15cd6f429e8994f374612d6cf016cad38ec94c2b2a00ad422738eadd55461",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -86,9 +93,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": -1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.550031,
-        "calibrated_prob": 0.39602232000000004,
-        "calibrated_ev": -0.1287508959999999,
+        "calibrated_prob": 0.4504615360041898,
+        "calibrated_ev": -0.008984620790782327,
         "core_votes": {
           "ELO": "UNOBSERVED",
           "SURFACE": "UNOBSERVED",
@@ -99,11 +112,12 @@
         "negative_core": 1,
         "observed_core": 1,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "438289701da71abd791abab304c9361e623be24c39409193df8df0c270c1bcea",
+      "immutable_sha256": "410eb5d8eee7102b4bab0d0ee34ba87b5f536c26394158273d6d293eb4c0383f",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -133,9 +147,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.509756,
-        "calibrated_prob": 0.3313414,
-        "calibrated_ev": -0.39364523799999995,
+        "calibrated_prob": 0.3913939526253145,
+        "calibrated_ev": -0.28374906669567446,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "UNOBSERVED",
@@ -146,11 +166,12 @@
         "negative_core": 0,
         "observed_core": 1,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "202c3d6f0ba938d8eb7473e851727049f28f3b7511788c4ce250bb5f932b3404",
+      "immutable_sha256": "3c21c7e7397935ceec547d0954db7a90e463cb51155c1c97c064078b4440eb19",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -180,9 +201,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": -3,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.282308,
-        "calibrated_prob": 0.1835002,
-        "calibrated_ev": -0.045798959999999944,
+        "calibrated_prob": 0.14190429924098247,
+        "calibrated_ev": -0.26209764394689117,
         "core_votes": {
           "ELO": "NEGATIVE",
           "SURFACE": "NEGATIVE",
@@ -196,14 +223,15 @@
           "ODDS_3_PLUS",
           "TWO_CORE_NEGATIVES",
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "5cbbe63b19fef48812cddac6fc3f242f86067ce9a1fe775a87e705121ec100d9",
+      "immutable_sha256": "0f9e1e618f24988dbaf4fa19ad3d308a4af022ccf9696cdf22d4e61d89ba7f8c",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -233,9 +261,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": -4,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.276364,
-        "calibrated_prob": 0.1796366,
-        "calibrated_ev": -0.29941726,
+        "calibrated_prob": 0.13659606517478856,
+        "calibrated_ev": -0.46727534581832464,
         "core_votes": {
           "ELO": "NEGATIVE",
           "SURFACE": "NEGATIVE",
@@ -249,14 +283,15 @@
           "ODDS_3_PLUS",
           "TWO_CORE_NEGATIVES",
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "81b79232cd673212d0939bc38af44cf44d8171af1940202f2a210ea0bfebfb2f",
+      "immutable_sha256": "28005dbcfdb781cef386a9fcba732edc83df607259c8e5d6950b3a036977321c",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -286,9 +321,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 0,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.520496,
-        "calibrated_prob": 0.33832239999999997,
-        "calibrated_ev": -0.32335520000000006,
+        "calibrated_prob": 0.40686151144132554,
+        "calibrated_ev": -0.18627697711734892,
         "core_votes": {
           "ELO": "UNOBSERVED",
           "SURFACE": "UNOBSERVED",
@@ -299,11 +340,12 @@
         "negative_core": 0,
         "observed_core": 0,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "f1c531e9d8df8cdefe9f16c8a15490c844ac1f5f3543cbe1f7e00f4c77d2360a",
+      "immutable_sha256": "aa7c2415c4ace2e80a6a603531b6d1a87e6ee93827a8c4f68a7aef7c82512d96",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -330,12 +372,18 @@
         "candidate_side": "B",
         "candidate_name": "Landaluce, Martin",
         "candidate_odds": 1.66,
-        "decision": "ACCEPT",
-        "pass": true,
-        "score": 5,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 4,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.639984,
-        "calibrated_prob": 0.639984,
-        "calibrated_ev": 0.06237344,
+        "calibrated_prob": 0.5897524347825587,
+        "calibrated_ev": -0.021010958260952672,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -345,10 +393,13 @@
         "positive_core": 4,
         "negative_core": 0,
         "observed_core": 4,
-        "hard_reject": [],
+        "hard_reject": [
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
         "penalties": []
       },
-      "immutable_sha256": "eb27bacc2704ea435ef0c9c15dccd0bf9fca20e2580d863a10c3245288908994",
+      "immutable_sha256": "228c541799e5dfb5b6d79ad18c36ab94c7d61597a839c0d830f158791b4514b9",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -378,9 +429,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 0,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.541561,
-        "calibrated_prob": 0.35201465,
-        "calibrated_ev": -0.16572527950000004,
+        "calibrated_prob": 0.43780939684833314,
+        "calibrated_ev": 0.0376082705305496,
         "core_votes": {
           "ELO": "UNOBSERVED",
           "SURFACE": "UNOBSERVED",
@@ -392,11 +449,12 @@
         "observed_core": 2,
         "hard_reject": [
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "84c28e2ac07d65e02c1bc078aa374db0d81f55a06beffb06ec6457a772adbb2c",
+      "immutable_sha256": "63694f486c94edd85c6858e252098e36b5540ae064d17a1068f975ab9cb774b4",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -426,10 +484,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 3,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.614354,
-        "calibrated_prob": 0.614354,
-        "calibrated_ev": -0.010890060000000035,
+        "calibrated_prob": 0.5494570477004473,
+        "calibrated_ev": -0.11537415320227973,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -440,11 +503,12 @@
         "negative_core": 0,
         "observed_core": 3,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "9561cfdbfb107cfd91209d3e2234c0304b573893d73bc15f9bc6d6fe4da0d31d",
+      "immutable_sha256": "9bd69a86169b09e6620b82ae652dc5d5fa0b1e32395c07bf449884c823377f50",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -473,11 +537,16 @@
         "candidate_odds": 2.7,
         "decision": "REJECT",
         "pass": false,
-        "score": 1,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "score": 0,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.47852,
-        "calibrated_prob": 0.41969999999999996,
-        "calibrated_ev": 0.13318999999999992,
+        "calibrated_prob": 0.3477465341938548,
+        "calibrated_ev": -0.06108435767659193,
         "core_votes": {
           "ELO": "NEGATIVE",
           "SURFACE": "UNOBSERVED",
@@ -488,11 +557,13 @@
         "negative_core": 1,
         "observed_core": 2,
         "hard_reject": [
-          "INSUFFICIENT_CORE_SUPPORT"
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "c1f6bbf27af0e6580638c104102197e8a6a8e27db4cdda0298cb9faea9697343",
+      "immutable_sha256": "002ca0e8576cdc5e14cfe5ab377ef19d4a720a5556c4a7b5ce8faae8bfeafc3c",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -522,10 +593,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 1,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.562852,
-        "calibrated_prob": 0.5132213,
-        "calibrated_ev": -0.148052642,
+        "calibrated_prob": 0.46981608614354464,
+        "calibrated_ev": -0.22010529700171588,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "UNOBSERVED",
@@ -536,11 +612,12 @@
         "negative_core": 0,
         "observed_core": 1,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "7ac501a7beb2c9223f76cc830c4997da3c27fca7624078c01e5acc0d3cbe784d",
+      "immutable_sha256": "f5254a4b676516456f1f886b1b176a4cd1b11fc51ee70db889924012f6e316cb",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -570,10 +647,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 1,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.543602,
-        "calibrated_prob": 0.4685115000000001,
-        "calibrated_ev": -0.19416021999999988,
+        "calibrated_prob": 0.44084785058989195,
+        "calibrated_ev": -0.24174169698538583,
         "core_votes": {
           "ELO": "UNOBSERVED",
           "SURFACE": "UNOBSERVED",
@@ -584,11 +666,12 @@
         "negative_core": 0,
         "observed_core": 1,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "b3960264c1abe229a8f346cc63c2b3aaa614da9d039ffd98797e04cb2b9799d1",
+      "immutable_sha256": "80654d7883a6dbb8f4458dbc8388a454f2434696fb36ba224b772693d9963108",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -615,13 +698,18 @@
         "candidate_side": "B",
         "candidate_name": "Meligeni Alves, Felipe",
         "candidate_odds": 2.75,
-        "decision": "ACCEPT",
-        "pass": true,
+        "decision": "REJECT",
+        "pass": false,
         "score": 4,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.551341,
-        "calibrated_prob": 0.5057391499999999,
-        "calibrated_ev": 0.3907826624999997,
+        "calibrated_prob": 0.4524282139466067,
+        "calibrated_ev": 0.2441775883531685,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "UNOBSERVED",
@@ -631,10 +719,12 @@
         "positive_core": 3,
         "negative_core": 0,
         "observed_core": 3,
-        "hard_reject": [],
+        "hard_reject": [
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
         "penalties": []
       },
-      "immutable_sha256": "33a97910252fb7be8ce0517005546ae041c469744b767bfbce7b7c0a15038ec8",
+      "immutable_sha256": "95d9621867da96a2264c3260c90e2783c39d3cc2c16606b588927203606c8af5",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -663,11 +753,16 @@
         "candidate_odds": 2.62,
         "decision": "REJECT",
         "pass": false,
-        "score": 1,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "score": 0,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.512918,
-        "calibrated_prob": 0.4454985,
-        "calibrated_ev": 0.1672060700000002,
+        "calibrated_prob": 0.3959247166919921,
+        "calibrated_ev": 0.037322757733019296,
         "core_votes": {
           "ELO": "UNOBSERVED",
           "SURFACE": "UNOBSERVED",
@@ -677,10 +772,13 @@
         "positive_core": 0,
         "negative_core": 0,
         "observed_core": 0,
-        "hard_reject": [],
+        "hard_reject": [
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
         "penalties": []
       },
-      "immutable_sha256": "1c460723356ff19757a0fe76c5633bcde5948d1cb43ec65388523d083afb1dc8",
+      "immutable_sha256": "8ba9aebe373a3da763a4d256cb1421f667de9c98ffa0ceb09376fee3f2b83f8b",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -710,10 +808,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 2,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.583242,
-        "calibrated_prob": 0.49750308,
-        "calibrated_ev": -0.1741448872000001,
+        "calibrated_prob": 0.5260126717233813,
+        "calibrated_ev": -0.1268189649391871,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "UNOBSERVED",
@@ -724,14 +827,15 @@
         "negative_core": 0,
         "observed_core": 2,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "4239c794da97bef9d8ef10d8641e8ff0f60a97f258afc485c2f0c45263d2b512",
+      "immutable_sha256": "49a25b37dc10c8d1ce2147f64d46c586789d8c7195b415b356dcc5a81cbcf46d",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -761,10 +865,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 3,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.560775,
-        "calibrated_prob": 0.4850900625,
-        "calibrated_ev": -0.112285185625,
+        "calibrated_prob": 0.49161626531134,
+        "calibrated_ev": -0.1003422344802477,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "UNOBSERVED",
@@ -775,13 +884,15 @@
         "negative_core": 0,
         "observed_core": 3,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "3611aac8b6ac7de7f6c4111156843411a839409005abe3b58bf4aef4889af102",
+      "immutable_sha256": "3d150dfab652b5e01dd745216f09e541c302a6e017b855c129ce42041ea65d75",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -811,10 +922,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 2,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.557038,
-        "calibrated_prob": 0.48302537,
-        "calibrated_ev": 0.3766223045000001,
+        "calibrated_prob": 0.4859347640515442,
+        "calibrated_ev": 0.3849140775469009,
         "core_votes": {
           "ELO": "UNOBSERVED",
           "SURFACE": "UNOBSERVED",
@@ -825,13 +941,14 @@
         "negative_core": 0,
         "observed_core": 1,
         "hard_reject": [
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "a208da6cee92b23d70900f1c9d7541beebb51e8a31de63a1aac173a3b8f8ca8c",
+      "immutable_sha256": "ee61509a12de331273720f6bf79d5fc00239935f2aa640defffb69fc7d17c6bf",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -858,13 +975,18 @@
         "candidate_side": "B",
         "candidate_name": "Masarova, Rebeka",
         "candidate_odds": 2.1,
-        "decision": "ACCEPT",
-        "pass": true,
-        "score": 3,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "decision": "REJECT",
+        "pass": false,
+        "score": 4,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.580123,
-        "calibrated_prob": 0.4957798325,
-        "calibrated_ev": 0.0411376482500001,
+        "calibrated_prob": 0.5212166291777578,
+        "calibrated_ev": 0.09455492127329146,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -874,18 +996,21 @@
         "positive_core": 3,
         "negative_core": 0,
         "observed_core": 3,
-        "hard_reject": [],
+        "hard_reject": [
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "4009bb3ce6cf2cddbedbe0c0de831dc34f7cf11c5b0fd827704b08786bc1bd18",
+      "immutable_sha256": "cc0ee59feab8e500878b5b08bbbc0c9ba9cfee537eb03dd5ec8e1efacd90d5f7",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
         "settled_at": "2026-09-08T18:19:52.817Z",
-        "won": false,
-        "profit_units": -1
+        "won": null,
+        "profit_units": 0
       }
     },
     {
@@ -909,10 +1034,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 3,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.527726,
-        "calibrated_prob": 0.4381133250000001,
-        "calibrated_ev": -0.07996201749999976,
+        "calibrated_prob": 0.44189540579638564,
+        "calibrated_ev": -0.07201964782759007,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -923,13 +1053,15 @@
         "negative_core": 0,
         "observed_core": 3,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "087d4fe1c596a591b807f26508c52d7fd560229e255ce97e1bd370595f775a5b",
+      "immutable_sha256": "29d849f66050ba678f2a6ef3a7de9fdade63aff19fef5c96018c2c85de9f7004",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -956,13 +1088,18 @@
         "candidate_side": "A",
         "candidate_name": "Cerundolo, Francisco",
         "candidate_odds": 2.37,
-        "decision": "ACCEPT",
-        "pass": true,
-        "score": 2,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "decision": "REJECT",
+        "pass": false,
+        "score": 1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.534197,
-        "calibrated_prob": 0.46145775,
-        "calibrated_ev": 0.09365486749999996,
+        "calibrated_prob": 0.42690324366483573,
+        "calibrated_ev": 0.011760687485660615,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -972,16 +1109,19 @@
         "positive_core": 2,
         "negative_core": 1,
         "observed_core": 3,
-        "hard_reject": [],
+        "hard_reject": [
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
         "penalties": []
       },
-      "immutable_sha256": "2df4af7b68832547f163e6c1af33cfba9108eea39d3761748c7a9d00acc041d0",
+      "immutable_sha256": "8688de99d756f0aab63b7a4a07445d679cf778ca148a7bfcc43f86bb2a155e1c",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
         "settled_at": "2026-09-08T09:17:34.925Z",
-        "won": false,
-        "profit_units": -1
+        "won": null,
+        "profit_units": 0
       }
     },
     {
@@ -1002,13 +1142,18 @@
         "candidate_side": "B",
         "candidate_name": "Rybakina, Elena",
         "candidate_odds": 1.72,
-        "decision": "ACCEPT",
-        "pass": true,
+        "decision": "REJECT",
+        "pass": false,
         "score": 5,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.767719,
-        "calibrated_prob": 0.72990532,
-        "calibrated_ev": 0.2554371503999999,
+        "calibrated_prob": 0.801104828772375,
+        "calibrated_ev": 0.37790030548848486,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -1018,18 +1163,20 @@
         "positive_core": 4,
         "negative_core": 0,
         "observed_core": 4,
-        "hard_reject": [],
+        "hard_reject": [
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "2cccf053a4954002ebd01f204c235920f32ff3db190a62adfb98d3ce357c5e1d",
+      "immutable_sha256": "6f71394ec07868a36308546b1590c6a94be2c255dfe85e3e48d69bc8f511580c",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
         "settled_at": "2026-09-08T10:17:47.197Z",
-        "won": true,
-        "profit_units": 0.72
+        "won": null,
+        "profit_units": 0
       }
     },
     {
@@ -1053,10 +1200,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 3,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.633482,
-        "calibrated_prob": 0.633482,
-        "calibrated_ev": -0.005433259999999995,
+        "calibrated_prob": 0.5795133402569711,
+        "calibrated_ev": -0.09016405579655529,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -1067,11 +1219,12 @@
         "negative_core": 0,
         "observed_core": 3,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "b63fd14e6d103ad10ba1e240cbff2fd4ffcb16e57c775a56b9f838ee64366519",
+      "immutable_sha256": "8b4a86ccf8f237264ab6af49257176756cabc26e4ff0ba2957fe472197ad08b8",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -1100,11 +1253,16 @@
         "candidate_odds": 1.36,
         "decision": "REJECT",
         "pass": false,
-        "score": 4,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "score": 5,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.781123,
-        "calibrated_prob": 0.7390200400000001,
-        "calibrated_ev": 0.00506725440000011,
+        "calibrated_prob": 0.8188141818199179,
+        "calibrated_ev": 0.11358728727508849,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -1115,13 +1273,13 @@
         "negative_core": 0,
         "observed_core": 4,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "66355e961a39be05fb428ea994490f608c17520c9bb93b53efce712b39394172",
+      "immutable_sha256": "09eb04d51c0a4c3343e1046846e8aa484ff3149b3a9aec1bc397836d6bd10390",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -1151,10 +1309,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": -4,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.180549,
-        "calibrated_prob": 0.1388888888888889,
-        "calibrated_ev": 0,
+        "calibrated_prob": 0.059025383047456234,
+        "calibrated_ev": -0.5750172420583151,
         "core_votes": {
           "ELO": "NEGATIVE",
           "SURFACE": "NEGATIVE",
@@ -1168,11 +1331,12 @@
           "ODDS_3_PLUS",
           "TWO_CORE_NEGATIVES",
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "eb4c62fe1fc13b85cf5b6616b597769a89d63db264b8087d36d1d87997018261",
+      "immutable_sha256": "c91cb32ca5d4573c7e20dd99ec7a776c98db7f52dad1641a37bfa31d14cbb662",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -1202,7 +1366,12 @@
         "decision": "REJECT",
         "pass": false,
         "score": -2,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.401659,
         "calibrated_prob": 0.26666666666666666,
         "calibrated_ev": 0,
@@ -1219,14 +1388,15 @@
           "ODDS_3_PLUS",
           "TWO_CORE_NEGATIVES",
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "effcb4710e92ca43be3801c3f4f4d8700dae8918e60380064e6be2c1552a9204",
+      "immutable_sha256": "a55ee846eb53c84939660e9446f64654fb8477bc7a50a24cb5193f2419be0d8a",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -1256,10 +1426,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 3,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.560351,
-        "calibrated_prob": 0.48485580250000004,
-        "calibrated_ev": 0.09092555562500015,
+        "calibrated_prob": 0.4909709910498541,
+        "calibrated_ev": 0.10468472986217181,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "UNOBSERVED",
@@ -1270,13 +1445,14 @@
         "negative_core": 0,
         "observed_core": 2,
         "hard_reject": [
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "4c85e0e408c9d7ccadc620f068b07624ecb78cc53160dd4e42ea6fd7823863ef",
+      "immutable_sha256": "5538725ad96533ba8c73b3e7d4f33c5e8ac4a06a2f49c3fb44dae9c091472c14",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -1306,10 +1482,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 2,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.52391,
-        "calibrated_prob": 0.43568062500000004,
-        "calibrated_ev": -0.21577487499999992,
+        "calibrated_prob": 0.43624137260696594,
+        "calibrated_ev": -0.2147655293074613,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "UNOBSERVED",
@@ -1320,14 +1501,15 @@
         "negative_core": 0,
         "observed_core": 2,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "39ac340b4b5161eaed39d173581b4febbadcfe0ed9c97243c0912575258cab34",
+      "immutable_sha256": "0f08294d6080fd9f22616794aa6ab25266ada774744a6d88926c5cacbe6333a8",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -1354,13 +1536,18 @@
         "candidate_side": "B",
         "candidate_name": "Alcaraz, Carlos",
         "candidate_odds": 1.3,
-        "decision": "ACCEPT",
-        "pass": true,
+        "decision": "REJECT",
+        "pass": false,
         "score": 5,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.806368,
-        "calibrated_prob": 0.8308084000000001,
-        "calibrated_ev": 0.08005092000000014,
+        "calibrated_prob": 0.8375174033797291,
+        "calibrated_ev": 0.08877262439364797,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -1370,16 +1557,18 @@
         "positive_core": 4,
         "negative_core": 0,
         "observed_core": 4,
-        "hard_reject": [],
+        "hard_reject": [
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
         "penalties": []
       },
-      "immutable_sha256": "1ae8b2b1cea83018a35dca740540bccf83239d41d8a348a24d4327031bcc2758",
+      "immutable_sha256": "af798a8efe9eef078aee728b0f93d4bf60e34b628c8f152221d0bcfaeb7bc86b",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
         "settled_at": "2026-09-09T08:17:32.239Z",
-        "won": false,
-        "profit_units": -1
+        "won": null,
+        "profit_units": 0
       }
     },
     {
@@ -1400,13 +1589,18 @@
         "candidate_side": "A",
         "candidate_name": "Sabalenka, Aryna",
         "candidate_odds": 1.36,
-        "decision": "ACCEPT",
-        "pass": true,
+        "decision": "REJECT",
+        "pass": false,
         "score": 5,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.837379,
-        "calibrated_prob": 0.7772741200000001,
-        "calibrated_ev": 0.05709280320000021,
+        "calibrated_prob": 0.8867817627821949,
+        "calibrated_ev": 0.20602319738378516,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -1416,18 +1610,20 @@
         "positive_core": 4,
         "negative_core": 0,
         "observed_core": 4,
-        "hard_reject": [],
+        "hard_reject": [
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "6766dec0b1b75e852da7aa6ed23de2fdfca40f4931fb9e274ed958a2c103990a",
+      "immutable_sha256": "e63bd3139f39c145a49b855a4f680b04ed2308f76459ef607a67dc2f9f08d71e",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
         "settled_at": "2026-09-08T19:15:34.300Z",
-        "won": true,
-        "profit_units": 0.3600000000000001
+        "won": null,
+        "profit_units": 0
       }
     },
     {
@@ -1451,10 +1647,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 4,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.820268,
-        "calibrated_prob": 0.76563864,
-        "calibrated_ev": -0.08889001839999999,
+        "calibrated_prob": 0.867294521481088,
+        "calibrated_ev": 0.03208048056249457,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -1465,13 +1666,14 @@
         "negative_core": 0,
         "observed_core": 4,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "ecff44d611bdf11428741840fb5352d601e5044c0b2d55ecd50c40899b602088",
+      "immutable_sha256": "e1e4621392d4b4798c1f87229d0cda690fd8ad2c7fccaf0c5a05f0656868f397",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -1501,10 +1703,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 2,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.607348,
-        "calibrated_prob": 0.607348,
-        "calibrated_ev": -0.02216971999999995,
+        "calibrated_prob": 0.538490526355875,
+        "calibrated_ev": -0.13303025256704115,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "UNOBSERVED",
@@ -1515,11 +1722,12 @@
         "negative_core": 0,
         "observed_core": 2,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "58c87a86d8abc5e054bb14935a263fc786ac01de20803964828e8e207b4a401c",
+      "immutable_sha256": "7dfeafb5403ec36cc2a3d1763fa4f86ebff3defee31662c72028e00b2a4ddd7e",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -1549,10 +1757,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": -2,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.480085,
-        "calibrated_prob": 0.4077421875,
-        "calibrated_ev": -0.03365101562499995,
+        "calibrated_prob": 0.3729567052544579,
+        "calibrated_ev": -0.1160926085469347,
         "core_votes": {
           "ELO": "UNOBSERVED",
           "SURFACE": "NEGATIVE",
@@ -1565,14 +1778,15 @@
         "hard_reject": [
           "TWO_CORE_NEGATIVES",
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "b18c475172c0484eca249414e33548a6a5a19dbe182554b594b0264f74a8f84f",
+      "immutable_sha256": "f906851e3e5deeda5dd0d56c8104a54860a73a22f5c40c9e647aa22bd47768e3",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -1602,7 +1816,12 @@
         "decision": "REJECT",
         "pass": false,
         "score": -1,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.476264,
         "calibrated_prob": 0.23094688221709006,
         "calibrated_ev": 0,
@@ -1617,14 +1836,15 @@
         "observed_core": 1,
         "hard_reject": [
           "ODDS_3_PLUS",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "67e14d28fde194127e37d8a7c7d6457c4d60d4f32498f64a04696b0aff41472f",
+      "immutable_sha256": "2e79dadbe8ad2720800fde92137526bfab9222a88f6c207bf776b45821e467d3",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -1654,10 +1874,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 0,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.54729,
-        "calibrated_prob": 0.4712775,
-        "calibrated_ev": -0.05744499999999997,
+        "calibrated_prob": 0.4463549286983685,
+        "calibrated_ev": -0.10729014260326297,
         "core_votes": {
           "ELO": "UNOBSERVED",
           "SURFACE": "UNOBSERVED",
@@ -1668,11 +1893,12 @@
         "negative_core": 0,
         "observed_core": 0,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "f650a79e079f4682a428ae608d1b14f1dc48ab99aa51ed8ed2ebbb3bb5f76a8b",
+      "immutable_sha256": "2999806cbc6df0ea0910b0a44363cebcdc4a29e45fb1918d5ad1cced53d20153",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -1702,7 +1928,12 @@
         "decision": "REJECT",
         "pass": false,
         "score": 0,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.469159,
         "calibrated_prob": 0.14285714285714285,
         "calibrated_ev": 0,
@@ -1717,11 +1948,12 @@
         "observed_core": 0,
         "hard_reject": [
           "ODDS_3_PLUS",
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "97c0026b69f77663087d8803a707325344f9256341f93204448c9d83400a5ae5",
+      "immutable_sha256": "53265f17103e3961327d24667deb27d1ef201fc29d31e533abe1d128f518c9a4",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -1751,10 +1983,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 1,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.503831,
-        "calibrated_prob": 0.4386832500000001,
-        "calibrated_ev": -0.03489684999999976,
+        "calibrated_prob": 0.38295757941506836,
+        "calibrated_ev": -0.15749332528684956,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "UNOBSERVED",
@@ -1765,11 +2002,12 @@
         "negative_core": 0,
         "observed_core": 1,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "8725ef5506625858f294ac37f4ce247f8e7a122fd3b0db81f4b36d3dacb4857d",
+      "immutable_sha256": "8b9ac84458d107a1cb0472712fb283cee10534b567b7eec7a1b756cb7395f304",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -1799,7 +2037,12 @@
         "decision": "REJECT",
         "pass": false,
         "score": 2,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.562904,
         "calibrated_prob": 0.15151515151515152,
         "calibrated_ev": 0,
@@ -1814,13 +2057,15 @@
         "observed_core": 4,
         "hard_reject": [
           "ODDS_3_PLUS",
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "ed93eca082772081c65370bc432f3373261fd13bc4d737840d8f6c7abf36c352",
+      "immutable_sha256": "e34e93a45cf703769ace643769d05ae6bfefc0063ee17b7e3aba3fbab92d7043",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -1849,11 +2094,16 @@
         "candidate_odds": 1.36,
         "decision": "REJECT",
         "pass": false,
-        "score": 4,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "score": 5,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.796987,
-        "calibrated_prob": 0.74980756,
-        "calibrated_ev": 0.01973828160000002,
+        "calibrated_prob": 0.8390737644843732,
+        "calibrated_ev": 0.14114031969874774,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -1864,13 +2114,13 @@
         "negative_core": 0,
         "observed_core": 4,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "4250eaf965037dea5353b6bbb12084ac3a9d0ae297ea40c09f063b0a38afac74",
+      "immutable_sha256": "0698ec7efae8b25776c48462029aacaccd4e7cbf892b3ab8f81827e226e1563d",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -1900,10 +2150,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": -4,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.173672,
-        "calibrated_prob": 0.15384615384615385,
-        "calibrated_ev": 0,
+        "calibrated_prob": 0.05521436062016662,
+        "calibrated_ev": -0.6411066559689169,
         "core_votes": {
           "ELO": "NEGATIVE",
           "SURFACE": "NEGATIVE",
@@ -1917,11 +2172,12 @@
           "ODDS_3_PLUS",
           "TWO_CORE_NEGATIVES",
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "921f39bfc08bf876a9532d3961ba4e803aed7588e6d8059e115283bab42d80b8",
+      "immutable_sha256": "6c6e511199f9323b9a476445781e6487e7c6daed0b90eb0f0008acafab8476b0",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -1951,10 +2207,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 0,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.404988,
-        "calibrated_prob": 0.3598678500000001,
-        "calibrated_ev": -0.05714623299999966,
+        "calibrated_prob": 0.2734703268044416,
+        "calibrated_ev": -0.283507743772363,
         "core_votes": {
           "ELO": "UNOBSERVED",
           "SURFACE": "NEGATIVE",
@@ -1966,14 +2227,15 @@
         "observed_core": 2,
         "hard_reject": [
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "172078f58b4adf9508cc1a1f0fef20b736aea82e92a789e9a320d27bbc3cdcf9",
+      "immutable_sha256": "9538d28841694afe277a00157966440bbc3080d7e0ed123a32232bd17765d3ea",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -2003,10 +2265,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 0,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.47141,
-        "calibrated_prob": 0.4143675,
-        "calibrated_ev": -0.017949024999999952,
+        "calibrated_prob": 0.33811017277772476,
+        "calibrated_ev": -0.19867889051679233,
         "core_votes": {
           "ELO": "UNOBSERVED",
           "SURFACE": "NEGATIVE",
@@ -2018,11 +2285,12 @@
         "observed_core": 2,
         "hard_reject": [
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "b0f10d8b7efbd3aa3693ebeeaf2feab5976033aaed2634ac75124477ae080e66",
+      "immutable_sha256": "e92611ef1af001ce7ba7bb36f0462da88fabadbc4f9fdceb260d0412e6884bc1",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -2052,7 +2320,12 @@
         "decision": "REJECT",
         "pass": false,
         "score": -2,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.416581,
         "calibrated_prob": 0.26666666666666666,
         "calibrated_ev": 0,
@@ -2069,14 +2342,15 @@
           "ODDS_3_PLUS",
           "TWO_CORE_NEGATIVES",
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "0aa115b14270efe87d541acb01e60825243a962f75f221a678c1418953274648",
+      "immutable_sha256": "f722ab46a5ec2785e08df1f82933526dded254c604bc12de734a344fd908b311",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -2103,13 +2377,18 @@
         "candidate_side": "A",
         "candidate_name": "Aoi Ito",
         "candidate_odds": 2.5,
-        "decision": "ACCEPT",
-        "pass": true,
+        "decision": "REJECT",
+        "pass": false,
         "score": 3,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.581031,
-        "calibrated_prob": 0.4962815025,
-        "calibrated_ev": 0.24070375625000007,
+        "calibrated_prob": 0.5226122576739455,
+        "calibrated_ev": 0.30653064418486364,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -2119,18 +2398,21 @@
         "positive_core": 3,
         "negative_core": 1,
         "observed_core": 4,
-        "hard_reject": [],
+        "hard_reject": [
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "4219bfc64508c4902dda7b58122456c5560e67c07e36119e5977c60dc78d773e",
+      "immutable_sha256": "5f3fb46a52db2d3e88ca98f2f8e5d3aa508ec53917cb7c53f474033831c17e66",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
         "settled_at": "2026-09-09T21:14:31.735Z",
-        "won": true,
-        "profit_units": 1.5
+        "won": null,
+        "profit_units": 0
       }
     },
     {
@@ -2154,10 +2436,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 0,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.485958,
-        "calibrated_prob": 0.411486225,
-        "calibrated_ev": -0.07415599375000004,
+        "calibrated_prob": 0.3812433536573675,
+        "calibrated_ev": -0.14220245427092315,
         "core_votes": {
           "ELO": "NEGATIVE",
           "SURFACE": "UNOBSERVED",
@@ -2169,14 +2456,15 @@
         "observed_core": 2,
         "hard_reject": [
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "8a5ba691970d1ca60babb75781272b67984f7fce73d0514315ec88f02a795837",
+      "immutable_sha256": "e6f6f49f4cc5b0b701ad97c1a84781822ab1a84a3a3b9a6d260ea7402b1707ee",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -2206,10 +2494,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 2,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.526315,
-        "calibrated_prob": 0.4372138125,
-        "calibrated_ev": -0.1998987231249999,
+        "calibrated_prob": 0.4398024165042655,
+        "calibrated_ev": -0.19516157779719412,
         "core_votes": {
           "ELO": "UNOBSERVED",
           "SURFACE": "POSITIVE",
@@ -2220,14 +2513,15 @@
         "negative_core": 0,
         "observed_core": 2,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "ec9ba0354e8e8b5f6abab99ac99b73b27f5c93731e217e9d5db5b5227992f7e3",
+      "immutable_sha256": "6451d7d4e18e744acaa7fba8a081bba773bb78a3efd2009db4b321f80c4a6e88",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -2257,7 +2551,12 @@
         "decision": "REJECT",
         "pass": false,
         "score": 1,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.498608,
         "calibrated_prob": 0.26666666666666666,
         "calibrated_ev": 0,
@@ -2272,14 +2571,15 @@
         "observed_core": 3,
         "hard_reject": [
           "ODDS_3_PLUS",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "df304db3cd935c84f0e42afba7ee71aad825c43ba39d3226c8b7ec326ee79512",
+      "immutable_sha256": "d516b52da8b3de5a2d7312257edb2bb33985e2690e7f837d63f2f190831766a0",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -2309,10 +2609,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 2,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.551435,
-        "calibrated_prob": 0.47992971250000005,
-        "calibrated_ev": -0.1217286261249999,
+        "calibrated_prob": 0.4774417143669266,
+        "calibrated_ev": -0.12628166270852426,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -2323,14 +2628,15 @@
         "negative_core": 0,
         "observed_core": 2,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "9a2fd4c8a5f557d7236a6cb49bd9818cfcedee94b9f14282d8b7c1597098f7cb",
+      "immutable_sha256": "61d8e77c24d47bed17d6bc5357588e4e05c7ec55cbb3ac7b7532e2229bacd16a",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -2360,10 +2666,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": -1,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.383286,
-        "calibrated_prob": 0.25,
-        "calibrated_ev": 0,
+        "calibrated_prob": 0.22909367190293137,
+        "calibrated_ev": -0.08362531238827453,
         "core_votes": {
           "ELO": "NEGATIVE",
           "SURFACE": "UNOBSERVED",
@@ -2375,11 +2686,12 @@
         "observed_core": 1,
         "hard_reject": [
           "ODDS_3_PLUS",
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "977abfa7e71613f2c3ed199ec17f2d6c7f9d133ecd06c12325aea9fbd561cac0",
+      "immutable_sha256": "ba199ce6d16aed7ca709cc7ba4474194ea17f9a9d5bf7952f014282f0c058df1",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -2409,7 +2721,12 @@
         "decision": "REJECT",
         "pass": false,
         "score": 2,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.531292,
         "calibrated_prob": 0.14285714285714285,
         "calibrated_ev": 0,
@@ -2424,14 +2741,15 @@
         "observed_core": 2,
         "hard_reject": [
           "ODDS_3_PLUS",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "060338c29c5bf49f7845fa90523322138363888bc5b83c21cb0d67eb14fdbbdd",
+      "immutable_sha256": "931efc378f1a244383913294fe4e2309259c8e60db8bda0958d244dc02121ebf",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -2461,7 +2779,12 @@
         "decision": "REJECT",
         "pass": false,
         "score": 0,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.546748,
         "calibrated_prob": 0.3333333333333333,
         "calibrated_ev": 0,
@@ -2477,14 +2800,15 @@
         "hard_reject": [
           "ODDS_3_PLUS",
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "0f74a911665807fac61e424e8754a4aefbafe477c81d77a3176fc187f9141ca1",
+      "immutable_sha256": "bb64bd01cc1ebf131297d8b2c4b2dbfd3ef076a62b3c70f4352ac4d8d325d894",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -2514,10 +2838,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": -2,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.462733,
-        "calibrated_prob": 0.39668028749999995,
-        "calibrated_ev": -0.008299281250000123,
+        "calibrated_prob": 0.34886829844609724,
+        "calibrated_ev": -0.12782925388475697,
         "core_votes": {
           "ELO": "NEGATIVE",
           "SURFACE": "NEGATIVE",
@@ -2530,14 +2859,15 @@
         "hard_reject": [
           "TWO_CORE_NEGATIVES",
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "b3018d6592690c2fc646eb83bea10422a3fe6fe67d3264a5cf4b3c36718be2b2",
+      "immutable_sha256": "a487587544566d6ab4d8522cdf25c6f7023f9670ce85c72afa06d845ac514b23",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -2567,10 +2897,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 1,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.513478,
-        "calibrated_prob": 0.4459185,
-        "calibrated_ev": 0.003316625000000073,
+        "calibrated_prob": 0.396729163432595,
+        "calibrated_ev": -0.1073593822766612,
         "core_votes": {
           "ELO": "UNOBSERVED",
           "SURFACE": "UNOBSERVED",
@@ -2581,11 +2916,12 @@
         "negative_core": 0,
         "observed_core": 1,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "50772b6a8cbb6d8b510206f6705a8241b2ccbaf199714128db419352b784c8a9",
+      "immutable_sha256": "00c769950fd05a15ccd8204e66c8731b6c1f626d90ad4a570e250ba4c5bcb873",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -2615,7 +2951,12 @@
         "decision": "REJECT",
         "pass": false,
         "score": 0,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.526287,
         "calibrated_prob": 0.26666666666666666,
         "calibrated_ev": 0,
@@ -2630,14 +2971,15 @@
         "observed_core": 0,
         "hard_reject": [
           "ODDS_3_PLUS",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "c049780fc0ea9bb64f0bed6c46d98bce2df3fa3cfedaaa1146c7f41f21ffd0d8",
+      "immutable_sha256": "bf15942dfbadfdcbcdfb78459372c6b523ae2a2d9dd9967d843b4892d6b12842",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -2666,11 +3008,16 @@
         "candidate_odds": 1.66,
         "decision": "REJECT",
         "pass": false,
-        "score": 4,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "score": 5,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.653429,
-        "calibrated_prob": 0.60541415,
-        "calibrated_ev": 0.004987488999999901,
+        "calibrated_prob": 0.6344184238306315,
+        "calibrated_ev": 0.05313458355884837,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -2681,13 +3028,14 @@
         "negative_core": 0,
         "observed_core": 4,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "f4cdf54d6a6f9b95f8f74204f5c2679d30c38871388c5c5f666499d3b00bc60a",
+      "immutable_sha256": "eba3e6c0867b3e1c59e86e1e11415d9df3acd9cdc7bdb32799590ef732332a41",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -2717,10 +3065,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 0,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.556045,
-        "calibrated_prob": 0.4824767375,
-        "calibrated_ev": -0.17014001150000002,
+        "calibrated_prob": 0.48442729590232403,
+        "calibrated_ev": -0.16678505104800267,
         "core_votes": {
           "ELO": "UNOBSERVED",
           "SURFACE": "UNOBSERVED",
@@ -2732,14 +3085,15 @@
         "observed_core": 2,
         "hard_reject": [
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "a8e4b324aa5ea053d8ad317f73e24006c86723ec4437e79df4d586b0dc2efbdc",
+      "immutable_sha256": "5b85219ff13e0a73059217d23d6dc1dcfb156d908f58b244710a68bae253cb85",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -2768,11 +3122,16 @@
         "candidate_odds": 1.53,
         "decision": "REJECT",
         "pass": false,
-        "score": 3,
-        "calibration_policy": "TEP_CALIBRATION_V4_2026-09-06",
+        "score": 4,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.711511,
-        "calibrated_prob": 0.6388142625,
-        "calibrated_ev": -0.022614178375000016,
+        "calibrated_prob": 0.7219391500339297,
+        "calibrated_ev": 0.10456689955191245,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -2783,13 +3142,14 @@
         "negative_core": 0,
         "observed_core": 3,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "704f8796a6497d1617dc48770278f0ee6aba9d98b7a2b15cdb0e8600a38c253b",
+      "immutable_sha256": "f043f44ec9ca6174d368b938cb191bcc2278153fd77b78af69bbf7316f8c86f3",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -2819,10 +3179,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 0,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.53367,
-        "calibrated_prob": 0.4614720256283269,
-        "calibrated_ev": 0.015238456382319354,
+        "calibrated_prob": 0.4261262400034485,
+        "calibrated_ev": -0.06252227199241323,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "UNOBSERVED",
@@ -2834,11 +3199,12 @@
         "observed_core": 2,
         "hard_reject": [
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "c97f8dd8d06b9301fa819e81d3e839b3056035f5cb4b00f36b0a35c1495be222",
+      "immutable_sha256": "7f425b4b3bc275068237012c4c1916d1e0d54fbe45cedbdbc3253da9d7750486",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -2867,11 +3233,16 @@
         "candidate_odds": 1.84,
         "decision": "REJECT",
         "pass": false,
-        "score": 2,
+        "score": 1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.602716,
-        "calibrated_prob": 0.5755061361825375,
-        "calibrated_ev": 0.05893129057586921,
+        "calibrated_prob": 0.5560613063232277,
+        "calibrated_ev": 0.02315280363473904,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "UNOBSERVED",
@@ -2882,13 +3253,15 @@
         "negative_core": 0,
         "observed_core": 1,
         "hard_reject": [
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "972f89086a3bcee1d5f74962a186b9916225a542b909d92a3679eae5a6883368",
+      "immutable_sha256": "a59be52a898cdde5bf16c894c0239366ffcf89cf1cce19a2b16f477bbc165df4",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -2918,10 +3291,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": -1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.456286,
-        "calibrated_prob": 0.353385634411236,
-        "calibrated_ev": -0.16247604644537061,
+        "calibrated_prob": 0.3180049716713579,
+        "calibrated_ev": -0.24632821713888176,
         "core_votes": {
           "ELO": "UNOBSERVED",
           "SURFACE": "UNOBSERVED",
@@ -2932,11 +3310,12 @@
         "negative_core": 1,
         "observed_core": 1,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "4f507dc489ba9518639c1a85bdc37ac60aeea4a1ab82ade99b1f94fc7a7e5bc8",
+      "immutable_sha256": "dd658d970120ffcd3726cc70076536d37e198f8e3afc0ed9a4c9404281738770",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -2966,10 +3345,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": -3,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.402254,
-        "calibrated_prob": 0.29435636849812163,
-        "calibrated_ev": -0.22878631453492126,
+        "calibrated_prob": 0.2700984229646304,
+        "calibrated_ev": -0.29234213183266833,
         "core_votes": {
           "ELO": "NEGATIVE",
           "SURFACE": "UNOBSERVED",
@@ -2982,14 +3366,15 @@
         "hard_reject": [
           "TWO_CORE_NEGATIVES",
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "c08eaef51b5f97637897727e652b6b6431dca74b4ddcbbe5a79e73edcba14a12",
+      "immutable_sha256": "c6a783bf8790139a9b44cdd11dbf098728f0672a2aabe18e5e5b49ec61652272",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -3019,10 +3404,15 @@
         "decision": "REJECT",
         "pass": false,
         "score": 2,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.565334,
-        "calibrated_prob": 0.52026794812389,
-        "calibrated_ev": -0.011490898564609053,
+        "calibrated_prob": 0.49856454901372377,
+        "calibrated_ev": -0.052727356873924935,
         "core_votes": {
           "ELO": "POSITIVE",
           "SURFACE": "POSITIVE",
@@ -3033,14 +3423,15 @@
         "negative_core": 0,
         "observed_core": 2,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "72ebb150f0c29d99835110572b374579c1eb6401b434b5231ecb406ab28bf74f",
+      "immutable_sha256": "cce38969068fb955079331e9e017f93668a7e2fb42921d1a67d5632982159a46",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -3070,6 +3461,11 @@
         "decision": "REJECT",
         "pass": false,
         "score": -1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.499991,
         "calibrated_prob": 0.3775279786816056,
@@ -3084,11 +3480,12 @@
         "negative_core": 1,
         "observed_core": 1,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "ced82f3dec5ceba4d2c76dd147c4f2d501c716070af991daf6d152c1c22e1800",
+      "immutable_sha256": "08ac660058ce83d9efbdeed88137d19fd542beca12ae1e861295819c4f5e5080",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -3118,6 +3515,11 @@
         "decision": "REJECT",
         "pass": false,
         "score": 4,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.825451,
         "calibrated_prob": 0.8618315925920004,
@@ -3132,11 +3534,12 @@
         "negative_core": 0,
         "observed_core": 4,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "66a4bb2b60ecc8972cc0731427ca5d848dd0174d8667ff16b87f056a31006047",
+      "immutable_sha256": "ff573c22ad0398e8d2eb79ca7e3da7d24ea41899e6519cdbf6daa869022a32b5",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -3166,6 +3569,11 @@
         "decision": "REJECT",
         "pass": false,
         "score": -3,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.382949,
         "calibrated_prob": 0.22871614343451652,
@@ -3183,11 +3591,12 @@
           "ODDS_3_PLUS",
           "TWO_CORE_NEGATIVES",
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "6fe7c212cb67ea436a9ffcee9d30f8a3400a09123cdb501d38edd22fc2b54b16",
+      "immutable_sha256": "117bda7b92390e85f7e552b839d56411b103b7e4f0817dd197ae7105c4ad17a3",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -3217,6 +3626,11 @@
         "decision": "REJECT",
         "pass": false,
         "score": 0,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.437955,
         "calibrated_prob": 0.3155715591842192,
@@ -3233,14 +3647,15 @@
         "hard_reject": [
           "ODDS_3_PLUS",
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "4c66583b92f7d977d4b370ba0d0ed3d42b1a17c336092207408978990b8eebae",
+      "immutable_sha256": "5d93cc579e5cc80809e98a0b0190217e7d487a05321e3f157bee1e872acad94f",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -3267,9 +3682,14 @@
         "candidate_side": "A",
         "candidate_name": "Quevedo, Kaitlin",
         "candidate_odds": 2.25,
-        "decision": "ACCEPT",
-        "pass": true,
+        "decision": "REJECT",
+        "pass": false,
         "score": 4,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.574699,
         "calibrated_prob": 0.5128906198236138,
@@ -3283,18 +3703,21 @@
         "positive_core": 3,
         "negative_core": 0,
         "observed_core": 3,
-        "hard_reject": [],
+        "hard_reject": [
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "e9733ed458cf76b5b70413af49e7f2716236e183cbddf0bbfabb720c55c0f163",
+      "immutable_sha256": "df6469ee4e62808efc9249ca5e89f9e1c7e5de5b1e9164891249c91ff6e503ae",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
         "settled_at": "2026-09-10T22:14:53.269Z",
-        "won": false,
-        "profit_units": -1
+        "won": null,
+        "profit_units": 0
       }
     },
     {
@@ -3318,6 +3741,11 @@
         "decision": "REJECT",
         "pass": false,
         "score": 3,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.571216,
         "calibrated_prob": 0.5075547223473897,
@@ -3332,13 +3760,14 @@
         "negative_core": 0,
         "observed_core": 2,
         "hard_reject": [
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "87b9a089fee38006eac564697f53951c4bfcce73cc5f9c66d01e4f7e13557af9",
+      "immutable_sha256": "4979d046982e2b0cefbc3d0f9c12ee90b4fa83b623862f3fba6adea0c534f80a",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -3368,6 +3797,11 @@
         "decision": "REJECT",
         "pass": false,
         "score": 2,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.48102,
         "calibrated_prob": 0.35116215244335464,
@@ -3382,11 +3816,12 @@
         "negative_core": 0,
         "observed_core": 2,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "de65ed249d179a77cfbedefd1dff7ee115ffbe8a3e0df40e09b6bd587fc27f90",
+      "immutable_sha256": "f25a50a0aeb6d8d5b5e2e4281cf55407d23a394b16d12dce150c21d4b3d3c597",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
@@ -3416,6 +3851,11 @@
         "decision": "REJECT",
         "pass": false,
         "score": 1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.520531,
         "calibrated_prob": 0.4069122761786341,
@@ -3430,11 +3870,12 @@
         "negative_core": 0,
         "observed_core": 1,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "ed6b58ede3d97bc266bb71496ee85c8c21b22c8cd41cc20a747bac95cfea358c",
+      "immutable_sha256": "1dcc8831148f577a41770df90a86ef9e279f8c6f21561e59144581d957b9c1b5",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "B",
@@ -3464,6 +3905,11 @@
         "decision": "REJECT",
         "pass": false,
         "score": 1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.523938,
         "calibrated_prob": 0.4118647034888207,
@@ -3478,11 +3924,12 @@
         "negative_core": 1,
         "observed_core": 2,
         "hard_reject": [
-          "INSUFFICIENT_CORE_SUPPORT"
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "9085622a364bf2cf3f8cdf81b907bec53d757376632d0c565a510fb68e87e012",
+      "immutable_sha256": "7dd8ef69952683e8b5481ecb536ae4740ca0f5d173eee11bd2182d8a7d5635f0",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -3509,9 +3956,14 @@
         "candidate_side": "B",
         "candidate_name": "Echargui, Moez",
         "candidate_odds": 2.75,
-        "decision": "ACCEPT",
-        "pass": true,
+        "decision": "REJECT",
+        "pass": false,
         "score": 2,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.524033,
         "calibrated_prob": 0.4120031012580877,
@@ -3525,16 +3977,18 @@
         "positive_core": 1,
         "negative_core": 0,
         "observed_core": 1,
-        "hard_reject": [],
+        "hard_reject": [
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
         "penalties": []
       },
-      "immutable_sha256": "0b1fc4415bfe50ac782c71dbc4c7612d1dc6018d0bf94d10a5d297cea8dc7824",
+      "immutable_sha256": "c21e2e55241379afed4d0c12aed12ced7bcba03279a91dc3ae9f0cffb71d47e5",
       "lifecycle": {
         "status": "SETTLED",
         "actual_side": "A",
         "settled_at": "2026-09-11T14:17:05.263Z",
-        "won": false,
-        "profit_units": -1
+        "won": null,
+        "profit_units": 0
       }
     },
     {
@@ -3558,6 +4012,11 @@
         "decision": "REJECT",
         "pass": false,
         "score": -2,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.493683,
         "calibrated_prob": 0.3686752959393992,
@@ -3574,11 +4033,12 @@
         "hard_reject": [
           "TWO_CORE_NEGATIVES",
           "INSUFFICIENT_CORE_SUPPORT",
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "29feecc9b38ebc00cdea881bd6bd2ffe7c9eff134fd41d597bb6c5a314fef700",
+      "immutable_sha256": "5344f379971daeec62140424f94a7d2d70e1edb7727666233c4eaa13137e27dc",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -3608,6 +4068,11 @@
         "decision": "REJECT",
         "pass": false,
         "score": -1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.582231,
         "calibrated_prob": 0.3225806451612903,
@@ -3623,14 +4088,15 @@
         "observed_core": 1,
         "hard_reject": [
           "ODDS_3_PLUS",
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "61515366ec5774d4ef13bd28fb29d639ed3eaeffcf35e202defe3dfa7d3487be",
+      "immutable_sha256": "d8364bc2a3b706bfaaea286fd919e8ec4af87301e5d5a6f4d1a282e661a58623",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -3660,6 +4126,11 @@
         "decision": "REJECT",
         "pass": false,
         "score": -1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.451819,
         "calibrated_prob": 0.3340362319288285,
@@ -3674,14 +4145,15 @@
         "negative_core": 1,
         "observed_core": 1,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "c8b33d6c6b27f1a8981c4ce24fb88d1cfb81693cb2e530db01375acee4c22002",
+      "immutable_sha256": "02d600bfaf67b28c7cc1e85051a02ce9fda1082ca0cc664bdcb3181da7ae1474",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -3711,6 +4183,11 @@
         "decision": "REJECT",
         "pass": false,
         "score": 4,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.583309,
         "calibrated_prob": 0.501139544215963,
@@ -3725,11 +4202,12 @@
         "negative_core": 0,
         "observed_core": 4,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "74a446c158098f9e44f6d6c03ab423775dc332ef340a8558ba10f977716df9b4",
+      "immutable_sha256": "8cd68b4a08db417ffb02481c92ed05f6fc76f083c4ad36e50c1b5f12e6691fcf",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -3759,6 +4237,11 @@
         "decision": "REJECT",
         "pass": false,
         "score": -1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.43841,
         "calibrated_prob": 0.29495761551625166,
@@ -3773,11 +4256,12 @@
         "negative_core": 1,
         "observed_core": 1,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": []
       },
-      "immutable_sha256": "bffa98b49c78fb977c955b726de156f9a6c1d1a0410b07ab774d06c0ab87af34",
+      "immutable_sha256": "06ed8037cab3a86210a8faaa65aae6eb30a7d16e9b0bd1955947a00a554d3415",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -3807,6 +4291,11 @@
         "decision": "REJECT",
         "pass": false,
         "score": 2,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.573689,
         "calibrated_prob": 0.5113424203296066,
@@ -3821,14 +4310,15 @@
         "negative_core": 0,
         "observed_core": 2,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT",
-          "WTA_NEEDS_3_CORE_POSITIVE"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "6a954cbd6378038f0f0b02af8dd2c9803a54014c35a9b5e7fca18b80f89d579e",
+      "immutable_sha256": "db03a6fd1779fb157317e2b3c8dc6c161945ba2d3197130794c73c7309b4f07e",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -3858,6 +4348,11 @@
         "decision": "REJECT",
         "pass": false,
         "score": 3,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
         "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
         "raw_prob": 0.603006,
         "calibrated_prob": 0.5565097737105009,
@@ -3872,13 +4367,15 @@
         "negative_core": 0,
         "observed_core": 3,
         "hard_reject": [
-          "CALIBRATED_EV_LT_2PCT"
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
         ],
         "penalties": [
           "WTA_STRICT_MODE"
         ]
       },
-      "immutable_sha256": "e8392b54e0a9d56ab9f17140ade2070918ed5ae891c21555ccb0904d358946d8",
+      "immutable_sha256": "adf573634755acd0047bc14bf6b7ad4249754caa452d8ef5e489e99e0d058f39",
       "lifecycle": {
         "status": "OPEN",
         "actual_side": null,
@@ -3947,8 +4444,8 @@
   ],
   "stats": {
     "total_decisions": 79,
-    "accepted": 10,
-    "rejected": 69,
+    "accepted": 0,
+    "rejected": 79,
     "open": 24,
     "settled": 55
   },
@@ -3963,14 +4460,14 @@
       "max_drawdown_units": 7.029999999999999
     },
     "challenger": {
-      "n": 8,
-      "wins": 3,
-      "hit_rate": 0.375,
-      "profit_units": -2.42,
-      "roi": -0.3025,
-      "max_drawdown_units": 2.42
+      "n": 0,
+      "wins": 0,
+      "hit_rate": null,
+      "profit_units": 0,
+      "roi": null,
+      "max_drawdown_units": 0
     },
-    "delta_roi": -0.2777727272727273,
+    "delta_roi": 0.02472727272727271,
     "review_eligible": false
   }
-}\n
+}
