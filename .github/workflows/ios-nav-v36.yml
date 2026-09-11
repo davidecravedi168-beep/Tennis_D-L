@@ -1,0 +1,118 @@
+name: iOS Premium Nav V36
+
+on:
+  push:
+    branches:
+      - 'hotfix/ios-nav-v36'
+    paths:
+      - 'scripts/apply-ios-nav-v36.mjs'
+      - '.github/workflows/ios-nav-v36.yml'
+      - 'premium-shell-v1.js'
+      - 'index.html'
+      - 'manifest.webmanifest'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ios-premium-nav-v36
+  cancel-in-progress: false
+
+jobs:
+  patch-and-certify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout hotfix branch
+        uses: actions/checkout@v4
+        with:
+          ref: hotfix/ios-nav-v36
+          fetch-depth: 0
+
+      - name: Apply V36 patch twice
+        run: |
+          set -euo pipefail
+          node scripts/apply-ios-nav-v36.mjs
+          node scripts/apply-ios-nav-v36.mjs
+
+      - name: Static certification
+        run: |
+          set -euo pipefail
+          node --check premium-shell-v1.js
+          node --check scripts/apply-ios-nav-v36.mjs
+          python3 -m json.tool manifest.webmanifest >/dev/null
+          grep -Fq "TEP_FULL_PREMIUM_UI_V3_6" premium-shell-v1.js
+          grep -Fq 'href="#tp-home" data-route="home"' premium-shell-v1.js
+          grep -Fq 'href="#tp-explore" data-route="explore"' premium-shell-v1.js
+          grep -Fq 'href="#tp-analysis" data-route="analysis"' premium-shell-v1.js
+          grep -Fq 'href="#tp-mine" data-route="mine"' premium-shell-v1.js
+          grep -Fq 'window.__TEP_PREMIUM_NAV__' premium-shell-v1.js
+          ! grep -Fq 'navPointerAt' premium-shell-v1.js
+          grep -Fq 'premium-shell-v1.js?v=20260911-v36-ios-nav' index.html
+          grep -Fq 'manifest.webmanifest?v=20260911-v36-ios-nav' index.html
+          grep -Fq '"start_url": "./?v=20260911-v36-ios-nav"' manifest.webmanifest
+          echo 'IOS_NAV_STATIC_CERT=PASS'
+
+      - name: Four-route mobile browser smoke
+        run: |
+          set -euo pipefail
+          cp index.html /tmp/index-before-v36-browser-test.html
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          probe=r'''<script>
+          window.addEventListener('load',()=>setTimeout(async()=>{
+            const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+            const routes=['explore','analysis','mine','home'];
+            const results=[];
+            for(const name of routes){
+              const el=document.querySelector(`.tp-nav [data-route="${name}"]`);
+              if(!el){results.push(false);continue;}
+              el.click();
+              await sleep(180);
+              const active=el.classList.contains('on');
+              const state=window.__TEP_PREMIUM_NAV__?.screen===name;
+              const hash=location.hash===`#tp-${name}`;
+              results.push(Boolean(active&&state&&hash));
+            }
+            document.documentElement.dataset.tepNavCount=String(results.filter(Boolean).length);
+            document.documentElement.dataset.tepNavTest=results.length===4&&results.every(Boolean)?'PASS':'FAIL';
+          },900));
+          </script>'''
+          if '</body>' not in s:
+              raise SystemExit('missing body close')
+          p.write_text(s.replace('</body>',probe+'\n</body>'))
+          PY
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME" || { echo 'CHROME_NOT_FOUND'; exit 1; }
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tep-v36-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
+          timeout 60s "$CHROME" \
+            --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --window-size=390,844 \
+            --user-agent='Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1' \
+            --virtual-time-budget=12000 --dump-dom \
+            'http://127.0.0.1:8765/?v=20260911-v36-browser-smoke' > /tmp/tep-v36-dom.html
+          grep -Fq 'data-tep-nav-test="PASS"' /tmp/tep-v36-dom.html
+          grep -Fq 'data-tep-nav-count="4"' /tmp/tep-v36-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_6"' /tmp/tep-v36-dom.html
+          mv /tmp/index-before-v36-browser-test.html index.html
+          echo 'IOS_NAV_BROWSER_CERT=PASS 4/4'
+
+      - name: Commit certified patch if needed
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- premium-shell-v1.js index.html manifest.webmanifest; then
+            echo 'V36 patch already committed.'
+          else
+            git config user.name 'tennis-edge-ui-certifier'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add premium-shell-v1.js index.html manifest.webmanifest
+            git commit -m 'fix(ui): make premium bottom navigation iOS-safe'
+            git pull --rebase origin hotfix/ios-nav-v36
+            git push origin HEAD:hotfix/ios-nav-v36
+          fi
