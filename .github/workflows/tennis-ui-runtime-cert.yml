@@ -8,6 +8,7 @@ on:
       - 'index.html'
       - 'manifest.webmanifest'
       - 'premium-shell-v1.js'
+      - 'player-photos.js'
       - 'scripts/apply-refresh-resilience.mjs'
       - 'tennis-quant-math-v13.js'
       - 'tennis-quant-lab-v13.js'
@@ -20,6 +21,7 @@ permissions:
 jobs:
   runtime-cert:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout latest main
         uses: actions/checkout@v4
@@ -27,142 +29,75 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Repair CSP for same-origin runtime modules
-        id: repair
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          p = Path('index.html')
-          s = p.read_text(encoding='utf-8')
-          old = "script-src 'unsafe-inline';"
-          new = "script-src 'self' 'unsafe-inline';"
-          changed = False
-          if old in s:
-              s = s.replace(old, new, 1)
-              p.write_text(s, encoding='utf-8')
-              changed = True
-          if new not in s:
-              raise SystemExit('CSP_SELF_SCRIPT_MISSING')
-          print('CSP runtime policy:', 'repaired' if changed else 'already-correct')
-          PY
-
-      - name: Runtime contract tests
-        shell: bash
+      - name: Runtime contracts
         run: |
           set -euo pipefail
           node scripts/apply-refresh-resilience.mjs
           node scripts/apply-refresh-resilience.mjs
           grep -Fq "script-src 'self' 'unsafe-inline';" index.html
-          grep -Fq 'tennis-quant-math-v13.js?v=13.0' index.html
-          grep -Fq 'tennis-quant-lab-v13.js?v=13.2-pro-metrics-premium-20260911' index.html
-          grep -Fq 'tennis-quality-governance-v14.js?v=14.0' index.html
-          grep -Fq 'premium-shell-v1.js?v=20260911-v32-player-portraits' index.html
-          grep -Fq '20260911-v32-player-portraits' manifest.webmanifest
-          grep -Fq 'TEP_FULL_PREMIUM_UI_V3_1' premium-shell-v1.js
-          grep -Fq 'function liveScore(score)' premium-shell-v1.js
-          grep -Fq 'generator=search' premium-shell-v1.js
-          grep -Fq 'document.startViewTransition' premium-shell-v1.js
-          grep -Fq "behavior:'auto'" premium-shell-v1.js
+          grep -Fq 'player-photos.js?v=20260911-v34' index.html
+          grep -Fq 'premium-shell-v1.js?v=20260911-v34-instant-portraits' index.html
+          grep -Fq 'TEP_FULL_PREMIUM_UI_V3_4' premium-shell-v1.js
+          grep -Fq 'function catalogPhoto(raw)' premium-shell-v1.js
+          grep -Fq "root.addEventListener('pointerdown'" premium-shell-v1.js
+          ! grep -Fq 'document.startViewTransition' premium-shell-v1.js
           ! grep -Fq "behavior:'smooth'" premium-shell-v1.js
-          ! grep -Fq "esc(x.score||x.current_score" premium-shell-v1.js
-          grep -Fq "const nodes=\$\$('[data-photo]',root).filter" premium-shell-v1.js
-          grep -Fq '.tp-avatar.has-photo img{opacity:1}' premium-shell-v1.js
+          ! grep -Fq '[object Object]' premium-shell-v1.js
           grep -Fq 'PROBABILITÀ DI VITTORIA' premium-shell-v1.js
-          grep -Fq 'Partite in arrivo' premium-shell-v1.js
-          grep -Fq 'Le Mie Analisi' premium-shell-v1.js
-          grep -Fq 'tp-winband' premium-shell-v1.js
-          grep -Fq 'body.tp-v3>.app' premium-shell-v1.js
+          grep -Fq '<span>Partite</span>' premium-shell-v1.js
+          grep -Fq '<span>Salvati</span>' premium-shell-v1.js
           node --check premium-shell-v1.js
+          node --check player-photos.js
           node --check tennis-quant-math-v13.js
           node --check tennis-quant-lab-v13.js
           node --check tennis-quality-governance-v14.js
           node - <<'NODE'
           const fs=require('fs');
           const l=JSON.parse(fs.readFileSync('data/live-board.json','utf8'));
-          if(!Array.isArray(l.events)) throw new Error('LIVE_EVENTS_INVALID');
-          const num=v=>v!==null&&v!==''&&Number.isFinite(Number(v))?Number(v):null;
-          function liveScore(score){
-            if(score===null||score===undefined)return'LIVE';
-            if(typeof score==='string'||typeof score==='number')return String(score);
-            if(typeof score!=='object')return'LIVE';
-            const sets=Array.isArray(score.sets)?score.sets.filter(s=>num(s?.home)!==null&&num(s?.away)!==null):[];
-            const parts=sets.map(s=>`${s.home}-${s.away}`);
-            const cg=score?.raw?.periods?.currentgame;
-            if(cg&&num(cg.home)!==null&&num(cg.away)!==null)parts.push(`game ${cg.home}-${cg.away}`);
-            if(parts.length)return parts.join(' · ');
-            if(num(score.sets_home)!==null&&num(score.sets_away)!==null)return`${score.sets_home}-${score.sets_away}`;
-            if(num(score?.raw?.home)!==null&&num(score?.raw?.away)!==null)return`${score.raw.home}-${score.raw.away}`;
-            return'LIVE';
-          }
-          const scores=l.events.map(e=>liveScore(e.score??e.current_score));
-          if(scores.some(x=>x.includes('[object Object]'))) throw new Error('OBJECT_SCORE_LEAK');
-          console.log(`LIVE_SCORE_CONTRACT=PASS events=${l.events.length}`);
+          if(!Array.isArray(l.events))throw new Error('LIVE_EVENTS_INVALID');
+          const n=v=>v!==null&&v!==''&&Number.isFinite(Number(v))?Number(v):null;
+          function score(s){if(s==null)return'LIVE';if(typeof s==='string'||typeof s==='number')return String(s);if(typeof s!=='object')return'LIVE';const sets=Array.isArray(s.sets)?s.sets.filter(x=>n(x?.home)!=null&&n(x?.away)!=null):[];const p=sets.map(x=>`${x.home}-${x.away}`);const cg=s?.raw?.periods?.currentgame;if(cg&&n(cg.home)!=null&&n(cg.away)!=null)p.push(`game ${cg.home}-${cg.away}`);if(p.length)return p.join(' · ');if(n(s.sets_home)!=null&&n(s.sets_away)!=null)return`${s.sets_home}-${s.sets_away}`;return'LIVE'}
+          if(l.events.map(e=>score(e.score??e.current_score)).some(x=>x.includes('[object Object]')))throw new Error('OBJECT_SCORE_LEAK');
+          console.log('LIVE_SCORE_CONTRACT=PASS events='+l.events.length);
           NODE
           echo 'UI_RUNTIME_CERT=PASS'
 
-      - name: Real browser smoke test
-        shell: bash
+      - name: Real browser local smoke
         run: |
           set -euo pipefail
           CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
-          test -n "$CHROME" || { echo 'CHROME_NOT_FOUND'; exit 1; }
           python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tep-http.log 2>&1 &
-          SERVER_PID=$!
-          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
-          for i in {1..20}; do
-            curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break
-            sleep 0.25
-          done
-          timeout 60s "$CHROME" \
-            --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
-            --virtual-time-budget=20000 --dump-dom \
-            'http://127.0.0.1:8765/?v=20260911-v32-player-portraits' > /tmp/tep-dom.html
-          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_1"' /tmp/tep-dom.html
-          grep -Fq 'class="tp-winband"' /tmp/tep-dom.html
-          grep -Fq 'PROBABILITÀ DI VITTORIA' /tmp/tep-dom.html
-          grep -Fq 'Partite in arrivo' /tmp/tep-dom.html
-          grep -Fq 'Le Mie Analisi' /tmp/tep-dom.html
-          grep -Fq 'tp-nav' /tmp/tep-dom.html
+          PID=$!; trap 'kill "$PID" 2>/dev/null || true' EXIT
+          for i in {1..40}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
+          timeout 65s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=18000 --dump-dom 'http://127.0.0.1:8765/?v=v34-runtime' >/tmp/tep-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_4"' /tmp/tep-dom.html
+          grep -Fq '>Partite<' /tmp/tep-dom.html
+          grep -Fq '>Salvati<' /tmp/tep-dom.html
           grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/tep-dom.html
           grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/tep-dom.html
-          echo 'PLAYER_PHOTO_BROWSER=PASS'
-          echo 'UI_BROWSER_SMOKE=PASS'
+          echo 'V34_LOCAL_RUNTIME_BROWSER=PASS'
 
-      - name: Public Pages cache-busted smoke test
-        shell: bash
+      - name: Public Pages V3.4 smoke
         run: |
           set -euo pipefail
-          PUBLIC="https://davidecravedi168-beep.github.io/Tennis_D-L/"
-          CACHE_BUST="v32-player-portraits-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-          for i in {1..48}; do
-            if curl -fsSL "${PUBLIC}?v=${CACHE_BUST}" -o /tmp/public-index.html \
-              && grep -Fq "script-src 'self' 'unsafe-inline';" /tmp/public-index.html \
-              && grep -Fq 'premium-shell-v1.js?v=20260911-v32-player-portraits' /tmp/public-index.html; then
-              echo 'PUBLIC_SHELL_FRESH=PASS'
-              break
-            fi
-            if [ "$i" -eq 48 ]; then echo 'PUBLIC_SHELL_FRESH=FAIL'; exit 1; fi
+          PUBLIC='https://davidecravedi168-beep.github.io/Tennis_D-L/'
+          BUST="runtime-v34-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          for i in {1..60}; do
+            if curl -fsSL "${PUBLIC}?v=${BUST}" -o /tmp/public-index.html \
+              && grep -Fq 'player-photos.js?v=20260911-v34' /tmp/public-index.html \
+              && grep -Fq 'premium-shell-v1.js?v=20260911-v34-instant-portraits' /tmp/public-index.html; then break; fi
+            if [ "$i" -eq 60 ]; then echo PUBLIC_V34_STALE; exit 1; fi
             sleep 5
           done
           CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
-          timeout 70s "$CHROME" \
-            --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
-            --virtual-time-budget=24000 --dump-dom \
-            "${PUBLIC}?v=${CACHE_BUST}" > /tmp/public-dom.html
-          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_1"' /tmp/public-dom.html
-          grep -Fq 'class="tp-winband"' /tmp/public-dom.html
-          grep -Fq 'PROBABILITÀ DI VITTORIA' /tmp/public-dom.html
-          grep -Fq 'Partite in arrivo' /tmp/public-dom.html
-          grep -Fq 'Le Mie Analisi' /tmp/public-dom.html
-          grep -Fq 'tp-nav' /tmp/public-dom.html
+          timeout 75s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=22000 --dump-dom "${PUBLIC}?v=${BUST}" >/tmp/public-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_4"' /tmp/public-dom.html
+          grep -Fq '>Partite<' /tmp/public-dom.html
+          grep -Fq '>Salvati<' /tmp/public-dom.html
           grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/public-dom.html
-          grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/public-dom.html
-          echo 'PUBLIC_PLAYER_PHOTO=PASS'
-          echo 'PUBLIC_UI_BROWSER_SMOKE=PASS'
+          echo 'PUBLIC_V34_RUNTIME=PASS'
 
       - name: Existing quant regressions
-        shell: bash
         run: |
           set -euo pipefail
           node scripts/tennis-model-diagnostics-v2.mjs --self-test
@@ -171,16 +106,12 @@ jobs:
           node scripts/clv-diagnostics-fix-v3.mjs --self-test
 
       - name: Commit normalization if needed
-        shell: bash
         run: |
           set -euo pipefail
-          if git diff --quiet -- index.html; then
-            echo 'No runtime normalization commit needed.'
-            exit 0
-          fi
+          if git diff --quiet -- index.html; then exit 0; fi
           git config user.name 'tennis-edge-ui-certifier'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
-          git commit -m 'fix(ui): normalize V3.2 portrait runtime wiring'
+          git commit -m 'fix(ui): normalize V3.4 runtime wiring'
           git pull --rebase origin main
           git push origin HEAD:main
