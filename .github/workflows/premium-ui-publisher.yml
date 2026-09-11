@@ -7,6 +7,8 @@ on:
       - '.github/workflows/premium-ui-publisher.yml'
       - 'premium-shell-v1.js'
       - 'scripts/apply-refresh-resilience.mjs'
+      - 'index.html'
+      - 'manifest.webmanifest'
   workflow_dispatch:
 
 permissions:
@@ -27,16 +29,18 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Apply premium shell wiring
+      - name: Validate premium V3 wiring
         run: |
           set -euo pipefail
           node scripts/apply-refresh-resilience.mjs
           node scripts/apply-refresh-resilience.mjs
           node --check premium-shell-v1.js
-          grep -Fq 'premium-shell-v1.js?v=20260911-r1' index.html
+          grep -Fq 'premium-shell-v1.js?v=20260911-full-premium-v3' index.html
+          grep -Fq '"start_url":"./?v=20260911-full-premium-v3"' manifest.webmanifest
           grep -Fq "connect-src 'self' https://en.wikipedia.org;" index.html
           grep -Fq "img-src 'self' data: https://commons.wikimedia.org https://upload.wikimedia.org;" index.html
-          test "$(grep -o 'premium-shell-v1.js?v=20260911-r1' index.html | wc -l)" -eq 1
+          grep -Fq 'TEP_FULL_PREMIUM_UI_V3' premium-shell-v1.js
+          test "$(grep -o 'premium-shell-v1.js?v=20260911-full-premium-v3' index.html | wc -l)" -eq 1
 
       - name: Real browser local smoke
         run: |
@@ -47,14 +51,14 @@ jobs:
           SERVER_PID=$!
           trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
           for i in {1..20}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
-          timeout 50s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=15000 --dump-dom 'http://127.0.0.1:8765/index.html?v=prod-premium' > /tmp/tep-premium-prod-dom.html
-          grep -Fq 'TEP_PREMIUM_SHELL_R1' /tmp/tep-premium-prod-dom.html
-          grep -Fq 'id="tepPremiumHero"' /tmp/tep-premium-prod-dom.html
-          grep -Fq 'id="tepPremiumDashboard"' /tmp/tep-premium-prod-dom.html
-          grep -Fq 'id="tepPremiumNav"' /tmp/tep-premium-prod-dom.html
-          grep -Fq 'Probabilità di vittoria' /tmp/tep-premium-prod-dom.html
-          grep -Fq 'tepPremiumMatchSummary' /tmp/tep-premium-prod-dom.html
-          echo 'PREMIUM_LOCAL_BROWSER=PASS'
+          timeout 50s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=15000 --dump-dom 'http://127.0.0.1:8765/?v=20260911-full-premium-v3' > /tmp/tep-premium-prod-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3"' /tmp/tep-premium-prod-dom.html
+          grep -Fq 'class="tp-winband"' /tmp/tep-premium-prod-dom.html
+          grep -Fq 'PROBABILITÀ DI VITTORIA' /tmp/tep-premium-prod-dom.html
+          grep -Fq 'Partite in arrivo' /tmp/tep-premium-prod-dom.html
+          grep -Fq 'Le Mie Analisi' /tmp/tep-premium-prod-dom.html
+          grep -Fq 'tp-nav' /tmp/tep-premium-prod-dom.html
+          echo 'PREMIUM_V3_LOCAL_BROWSER=PASS'
 
       - name: Existing quant regressions
         run: |
@@ -64,16 +68,16 @@ jobs:
           node scripts/clv-tracker-v3.mjs --self-test
           node scripts/clv-diagnostics-fix-v3.mjs --self-test
 
-      - name: Commit wired shell
+      - name: Commit normalized wiring if needed
         run: |
           set -euo pipefail
           if git diff --quiet -- index.html; then
-            echo 'Premium shell already wired.'
+            echo 'Premium V3 shell already wired.'
           else
             git config user.name 'tennis-edge-ui-publisher'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git add index.html
-            git commit -m 'feat(ui): activate full premium application shell'
+            git commit -m 'fix(ui): normalize full premium v3 runtime wiring'
             for attempt in 1 2 3 4 5; do
               if git pull --rebase origin main && git push origin HEAD:main; then break; fi
               git rebase --abort || true
@@ -86,15 +90,15 @@ jobs:
         run: |
           set -euo pipefail
           PUBLIC='https://davidecravedi168-beep.github.io/Tennis_D-L/'
-          CACHE_BUST="full-premium-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          CACHE_BUST="full-premium-v3-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           for i in {1..48}; do
             if curl -fsSL "${PUBLIC}?v=${CACHE_BUST}" -o /tmp/public-premium-index.html \
-              && grep -Fq 'premium-shell-v1.js?v=20260911-r1' /tmp/public-premium-index.html; then
-              echo 'PUBLIC_PREMIUM_SHELL_FRESH=PASS'
+              && grep -Fq 'premium-shell-v1.js?v=20260911-full-premium-v3' /tmp/public-premium-index.html; then
+              echo 'PUBLIC_PREMIUM_V3_SHELL_FRESH=PASS'
               break
             fi
             if [ "$i" -eq 48 ]; then
-              echo 'PUBLIC_PREMIUM_SHELL_FRESH=FAIL'
+              echo 'PUBLIC_PREMIUM_V3_SHELL_FRESH=FAIL'
               exit 1
             fi
             sleep 5
@@ -102,10 +106,10 @@ jobs:
           CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
           test -n "$CHROME" || { echo 'CHROME_NOT_FOUND'; exit 1; }
           timeout 55s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=18000 --dump-dom "${PUBLIC}?v=${CACHE_BUST}" > /tmp/public-premium-dom.html
-          grep -Fq 'TEP_PREMIUM_SHELL_R1' /tmp/public-premium-dom.html
-          grep -Fq 'id="tepPremiumHero"' /tmp/public-premium-dom.html
-          grep -Fq 'id="tepPremiumDashboard"' /tmp/public-premium-dom.html
-          grep -Fq 'id="tepPremiumNav"' /tmp/public-premium-dom.html
-          grep -Fq 'Probabilità di vittoria' /tmp/public-premium-dom.html
-          grep -Fq 'tepPremiumMatchSummary' /tmp/public-premium-dom.html
-          echo 'PUBLIC_PREMIUM_BROWSER=PASS'
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3"' /tmp/public-premium-dom.html
+          grep -Fq 'class="tp-winband"' /tmp/public-premium-dom.html
+          grep -Fq 'PROBABILITÀ DI VITTORIA' /tmp/public-premium-dom.html
+          grep -Fq 'Partite in arrivo' /tmp/public-premium-dom.html
+          grep -Fq 'Le Mie Analisi' /tmp/public-premium-dom.html
+          grep -Fq 'tp-nav' /tmp/public-premium-dom.html
+          echo 'PUBLIC_PREMIUM_V3_BROWSER=PASS'
