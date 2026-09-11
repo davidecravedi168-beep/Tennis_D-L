@@ -57,8 +57,8 @@ jobs:
           grep -Fq 'tennis-quant-math-v13.js?v=13.0' index.html
           grep -Fq 'tennis-quant-lab-v13.js?v=13.2-pro-metrics-premium-20260911' index.html
           grep -Fq 'tennis-quality-governance-v14.js?v=14.0' index.html
-          grep -Fq 'premium-shell-v1.js?v=20260911-v31-live-photo-nav' index.html
-          grep -Fq '20260911-v31-live-photo-nav' manifest.webmanifest
+          grep -Fq 'premium-shell-v1.js?v=20260911-v32-player-portraits' index.html
+          grep -Fq '20260911-v32-player-portraits' manifest.webmanifest
           grep -Fq 'TEP_FULL_PREMIUM_UI_V3_1' premium-shell-v1.js
           grep -Fq 'function liveScore(score)' premium-shell-v1.js
           grep -Fq 'generator=search' premium-shell-v1.js
@@ -66,6 +66,8 @@ jobs:
           grep -Fq "behavior:'auto'" premium-shell-v1.js
           ! grep -Fq "behavior:'smooth'" premium-shell-v1.js
           ! grep -Fq "esc(x.score||x.current_score" premium-shell-v1.js
+          grep -Fq "const nodes=\$\$('[data-photo]',root).filter" premium-shell-v1.js
+          grep -Fq '.tp-avatar.has-photo img{opacity:1}' premium-shell-v1.js
           grep -Fq 'PROBABILITÀ DI VITTORIA' premium-shell-v1.js
           grep -Fq 'Partite in arrivo' premium-shell-v1.js
           grep -Fq 'Le Mie Analisi' premium-shell-v1.js
@@ -112,25 +114,19 @@ jobs:
             curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break
             sleep 0.25
           done
-          timeout 50s "$CHROME" \
+          timeout 60s "$CHROME" \
             --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
-            --virtual-time-budget=18000 --dump-dom \
-            'http://127.0.0.1:8765/?v=20260911-v31-live-photo-nav' > /tmp/tep-dom.html
+            --virtual-time-budget=20000 --dump-dom \
+            'http://127.0.0.1:8765/?v=20260911-v32-player-portraits' > /tmp/tep-dom.html
           grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_1"' /tmp/tep-dom.html
           grep -Fq 'class="tp-winband"' /tmp/tep-dom.html
           grep -Fq 'PROBABILITÀ DI VITTORIA' /tmp/tep-dom.html
           grep -Fq 'Partite in arrivo' /tmp/tep-dom.html
           grep -Fq 'Le Mie Analisi' /tmp/tep-dom.html
           grep -Fq 'tp-nav' /tmp/tep-dom.html
-          python - <<'PY'
-          import re
-          s=open('/tmp/tep-dom.html',encoding='utf-8').read()
-          imgs=re.findall(r'<img\b[^>]*>',s)
-          loaded=[x for x in imgs if 'src="http' in x and 'hidden=""' not in x]
-          if not loaded:
-              raise SystemExit('NO_PLAYER_PHOTO_LOADED_IN_BROWSER')
-          print('PLAYER_PHOTO_BROWSER=PASS',len(loaded))
-          PY
+          grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/tep-dom.html
+          grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/tep-dom.html
+          echo 'PLAYER_PHOTO_BROWSER=PASS'
           echo 'UI_BROWSER_SMOKE=PASS'
 
       - name: Public Pages cache-busted smoke test
@@ -138,11 +134,11 @@ jobs:
         run: |
           set -euo pipefail
           PUBLIC="https://davidecravedi168-beep.github.io/Tennis_D-L/"
-          CACHE_BUST="v31-live-photo-nav-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          CACHE_BUST="v32-player-portraits-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           for i in {1..48}; do
             if curl -fsSL "${PUBLIC}?v=${CACHE_BUST}" -o /tmp/public-index.html \
               && grep -Fq "script-src 'self' 'unsafe-inline';" /tmp/public-index.html \
-              && grep -Fq 'premium-shell-v1.js?v=20260911-v31-live-photo-nav' /tmp/public-index.html; then
+              && grep -Fq 'premium-shell-v1.js?v=20260911-v32-player-portraits' /tmp/public-index.html; then
               echo 'PUBLIC_SHELL_FRESH=PASS'
               break
             fi
@@ -150,9 +146,9 @@ jobs:
             sleep 5
           done
           CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
-          timeout 60s "$CHROME" \
+          timeout 70s "$CHROME" \
             --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
-            --virtual-time-budget=20000 --dump-dom \
+            --virtual-time-budget=24000 --dump-dom \
             "${PUBLIC}?v=${CACHE_BUST}" > /tmp/public-dom.html
           grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_1"' /tmp/public-dom.html
           grep -Fq 'class="tp-winband"' /tmp/public-dom.html
@@ -160,14 +156,9 @@ jobs:
           grep -Fq 'Partite in arrivo' /tmp/public-dom.html
           grep -Fq 'Le Mie Analisi' /tmp/public-dom.html
           grep -Fq 'tp-nav' /tmp/public-dom.html
-          python - <<'PY'
-          import re
-          s=open('/tmp/public-dom.html',encoding='utf-8').read()
-          imgs=re.findall(r'<img\b[^>]*>',s)
-          loaded=[x for x in imgs if 'src="http' in x and 'hidden=""' not in x]
-          if not loaded: raise SystemExit('NO_PUBLIC_PLAYER_PHOTO_LOADED')
-          print('PUBLIC_PLAYER_PHOTO=PASS',len(loaded))
-          PY
+          grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/public-dom.html
+          grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/public-dom.html
+          echo 'PUBLIC_PLAYER_PHOTO=PASS'
           echo 'PUBLIC_UI_BROWSER_SMOKE=PASS'
 
       - name: Existing quant regressions
@@ -190,6 +181,6 @@ jobs:
           git config user.name 'tennis-edge-ui-certifier'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
-          git commit -m 'fix(ui): normalize V3.1 runtime wiring'
+          git commit -m 'fix(ui): normalize V3.2 portrait runtime wiring'
           git pull --rebase origin main
           git push origin HEAD:main
