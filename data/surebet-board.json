@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_at": "2026-09-11T19:50:37.957Z",
+    "updated_at": "2026-09-11T22:35:30.294Z",
     "status": "READY",
     "model_version": "TEP-SUREBET-1.2",
     "source": "Odds-API.io selected bookmakers · shared Tennis Edge event universe",
@@ -9,7 +9,7 @@
       "Eurobet IT"
     ],
     "bookmaker_count": 2,
-    "events_total": 70,
+    "events_total": 74,
     "events_scanned": 10,
     "api_calls": 1,
     "api_call_budget": 3,
@@ -23,5 +23,54 @@
     "note": "Solo arbitraggio 2-way Match Winner tra bookmaker diversi. Nessun modello predittivo viene usato."
   },
   "opportunities": [],
-  "checked": []
+  "checked": [
+    {
+      "event_id": "73992440",
+      "start_at": "2026-09-11T23:00:00Z",
+      "player_a": "Tiafoe, Frances",
+      "player_b": "Shelton, Ben",
+      "tournament": "ATP - US Open, New York, USA",
+      "market": "MATCH_WINNER_2WAY",
+      "status": "NON_CERTIFICATA",
+      "book_a": "Bet365",
+      "book_b": "Eurobet IT",
+      "odds_a": 3.4,
+      "odds_b": 1.33,
+      "updated_a": "2026-09-11T22:34:50.999Z",
+      "updated_b": "2026-09-11T20:09:10.281Z",
+      "age_a_min": 0.7,
+      "age_b_min": 146.3,
+      "timestamp_spread_min": 145.7,
+      "implied_sum": 1.04599735,
+      "raw_roi": -0.04397463,
+      "safety_buffer": 0.0025,
+      "buffered_roi": -0.046496,
+      "market_depth": 2,
+      "median_no_vig_a": 0.284188,
+      "outlier_distance": 0.003004,
+      "reasons": [
+        "MARGINE_TROPPO_BASSO",
+        "QUOTA_NON_FRESCA",
+        "QUOTE_NON_SINCRONE",
+        "BUFFER_NON_SUPERATO",
+        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
+      ],
+      "expires_at": "2026-09-11T20:19:10.281Z",
+      "execution_window_sec": 0,
+      "same_market_verified": true,
+      "settlement_rules_verified": false,
+      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
+      "stake_100": {
+        "stake_a": 28.12,
+        "stake_b": 71.88,
+        "return_if_a": 95.61,
+        "return_if_b": 95.6,
+        "worst_return": 95.6,
+        "profit": -4.4,
+        "roi": -0.043996
+      },
+      "detected_at": "2026-09-11T22:35:30.294Z",
+      "execution_note": "Copertura matematica valida solo finché entrambe le quote restano accettabili e le regole di settlement dei due bookmaker sono equivalenti."
+    }
+  ]
 }
