@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-11T14:48:57.056Z",
-  "updated_at": "2026-09-11T21:44:57.374Z",
+  "updated_at": "2026-09-11T23:34:43.621Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -3541,11 +3541,11 @@
       },
       "immutable_sha256": "ff573c22ad0398e8d2eb79ca7e3da7d24ea41899e6519cdbf6daa869022a32b5",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-11T22:37:35.920Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -4263,11 +4263,11 @@
       },
       "immutable_sha256": "06ed8037cab3a86210a8faaa65aae6eb30a7d16e9b0bd1955947a00a554d3415",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-11T22:37:35.920Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -4440,23 +4440,79 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "38C12E32B635543219F3722D",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "0ED62CB8CCEB907C4145",
+        "source_immutable_sha256": "c0980c5a824ac31efdfc3ebc1871bdb8314f3f34cf6125e75c9601d8b3959297",
+        "event_id": "74283542",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-11T22:37:35.920Z",
+        "start_at": "2026-09-12T16:00:00Z",
+        "first_observed_at": "2026-09-11T22:37:39.384Z",
+        "player_a": "Djere, Laslo",
+        "player_b": "Martinez, Pedro",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "B",
+        "candidate_name": "Martinez, Pedro",
+        "candidate_odds": 2.5,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -3,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.435621,
+        "calibrated_prob": 0.2914339020631189,
+        "calibrated_ev": -0.2714152448422027,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "NEGATIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 3,
+        "observed_core": 3,
+        "hard_reject": [
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
+        "penalties": []
+      },
+      "immutable_sha256": "dee3e51185efe7685449da29df0e5e89b081b11d9a07baf913790776f7a2635b",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 79,
+    "total_decisions": 80,
     "accepted": 0,
-    "rejected": 79,
-    "open": 19,
-    "settled": 60
+    "rejected": 80,
+    "open": 18,
+    "settled": 62
   },
   "evidence": {
     "state": "COLD_START",
     "champion": {
-      "n": 60,
-      "wins": 27,
-      "hit_rate": 0.45,
-      "profit_units": -0.8899999999999988,
-      "roi": -0.014833333333333313,
+      "n": 62,
+      "wins": 28,
+      "hit_rate": 0.45161290322580644,
+      "profit_units": -1.7199999999999989,
+      "roi": -0.02774193548387095,
       "max_drawdown_units": 7.029999999999999
     },
     "challenger": {
@@ -4467,7 +4523,7 @@
       "roi": null,
       "max_drawdown_units": 0
     },
-    "delta_roi": 0.014833333333333313,
+    "delta_roi": 0.02774193548387095,
     "review_eligible": false
   }
 }
