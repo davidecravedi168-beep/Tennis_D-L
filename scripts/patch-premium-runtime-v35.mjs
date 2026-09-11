@@ -15,8 +15,9 @@ for(const [oldValue,newValue] of replacements){
 s=s.replace("const VERSION='TEP_FULL_PREMIUM_UI_V3_4';","const VERSION='TEP_FULL_PREMIUM_UI_V3_5';");
 s=s.replace(/window\.__TEP_FULL_PREMIUM_UI_V34/g,'window.__TEP_FULL_PREMIUM_UI_V35');
 
+const singleNavBug=/(?<!\$)\$\('\.tp-nav button'\)\.forEach\(/;
 if(s.includes("const nodes=$('[data-photo]',root).filter("))throw new Error('portrait selector bug still present');
-if(s.includes("$('.tp-nav button').forEach("))throw new Error('nav selector bug still present');
+if(singleNavBug.test(s))throw new Error('nav selector bug still present');
 if(!s.includes("const nodes=$$('[data-photo]',root).filter("))throw new Error('portrait selector repair missing');
 if((s.match(/\$\$\('\.tp-nav button'\)\.forEach\(/g)||[]).length<2)throw new Error('nav selector repair incomplete');
 if(!s.includes("TEP_FULL_PREMIUM_UI_V3_5"))throw new Error('V3.5 version marker missing');
