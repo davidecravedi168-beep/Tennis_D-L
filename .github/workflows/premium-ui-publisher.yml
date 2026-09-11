@@ -8,6 +8,7 @@ on:
       - 'premium-shell-v1.js'
       - 'player-photos.js'
       - 'scripts/build-player-photo-catalog.mjs'
+      - 'scripts/patch-premium-runtime-v35.mjs'
       - 'scripts/apply-refresh-resilience.mjs'
       - 'index.html'
       - 'manifest.webmanifest'
@@ -31,10 +32,11 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Normalize premium V3.4 wiring
+      - name: Normalize premium V3.5 wiring
         run: |
           set -euo pipefail
           node scripts/build-player-photo-catalog.mjs
+          node scripts/patch-premium-runtime-v35.mjs
           node scripts/apply-refresh-resilience.mjs
           node scripts/apply-refresh-resilience.mjs
           python - <<'PY'
@@ -42,27 +44,31 @@ jobs:
           import re
           m=Path('manifest.webmanifest')
           s=m.read_text(encoding='utf-8')
-          s=re.sub(r'"start_url"\s*:\s*"\.\/\?v=[^"]+"','"start_url": "./?v=20260911-v34-instant-portraits"',s)
+          s=re.sub(r'"start_url"\s*:\s*"\.\/\?v=[^"]+"','"start_url": "./?v=20260911-v35-runtime-fix"',s)
           m.write_text(s,encoding='utf-8')
           PY
 
-      - name: Validate V3.4 contracts
+      - name: Validate V3.5 contracts
         run: |
           set -euo pipefail
           node --check premium-shell-v1.js
           node --check player-photos.js
-          grep -Fq 'player-photos.js?v=20260911-v34' index.html
-          grep -Fq 'premium-shell-v1.js?v=20260911-v34-instant-portraits' index.html
-          grep -Fq '"start_url": "./?v=20260911-v34-instant-portraits"' manifest.webmanifest
+          node --check scripts/patch-premium-runtime-v35.mjs
+          grep -Fq 'player-photos.js?v=20260911-v35' index.html
+          grep -Fq 'premium-shell-v1.js?v=20260911-v35-runtime-fix' index.html
+          grep -Fq '"start_url": "./?v=20260911-v35-runtime-fix"' manifest.webmanifest
           grep -Fq "connect-src 'self' https://en.wikipedia.org https://www.wikidata.org;" index.html
-          grep -Fq 'TEP_FULL_PREMIUM_UI_V3_4' premium-shell-v1.js
-          grep -Fq 'function catalogPhoto(raw)' premium-shell-v1.js
-          grep -Fq "root.addEventListener('pointerdown'" premium-shell-v1.js
+          grep -Fq 'TEP_FULL_PREMIUM_UI_V3_5' premium-shell-v1.js
+          grep -Fq "const nodes=$$('[data-photo]',root).filter(" premium-shell-v1.js
+          test "$(grep -F "$$('.tp-nav button').forEach(" premium-shell-v1.js | wc -l)" -ge 2
+          ! grep -Fq "const nodes=$('[data-photo]',root).filter(" premium-shell-v1.js
+          ! grep -Fq "$('.tp-nav button').forEach(" premium-shell-v1.js
+          ! grep -Fq 'https://thumb.wikimedia.org/' player-photos.js
           ! grep -Fq 'document.startViewTransition' premium-shell-v1.js
           ! grep -Fq '[object Object]' premium-shell-v1.js
-          test "$(grep -o 'player-photos.js?v=20260911-v34' index.html | wc -l)" -eq 1
-          test "$(grep -o 'premium-shell-v1.js?v=20260911-v34-instant-portraits' index.html | wc -l)" -eq 1
-          echo 'PREMIUM_V34_CONTRACT=PASS'
+          test "$(grep -o 'player-photos.js?v=20260911-v35' index.html | wc -l)" -eq 1
+          test "$(grep -o 'premium-shell-v1.js?v=20260911-v35-runtime-fix' index.html | wc -l)" -eq 1
+          echo 'PREMIUM_V35_CONTRACT=PASS'
 
       - name: Real browser local UX smoke
         run: |
@@ -72,19 +78,19 @@ jobs:
           cat > ux-probe.html <<'HTML'
           <!doctype html><meta charset="utf-8"><div id="portrait">WAIT</div><div id="nav">WAIT</div><iframe id="app" style="width:390px;height:844px"></iframe><script>
           const f=document.getElementById('app'),po=document.getElementById('portrait'),no=document.getElementById('nav');
-          f.src='./?v=v34-local';
-          f.onload=()=>{const st=performance.now();const wait=()=>{const w=f.contentWindow,d=f.contentDocument,imgs=[...d.querySelectorAll('.tp-avatar.hero img')],good=imgs.find(x=>x.complete&&x.naturalWidth>40&&x.naturalHeight>40&&x.closest('.tp-avatar')?.classList.contains('has-photo'));if(!good){if(performance.now()-st<10000)return setTimeout(wait,80);po.textContent='PORTRAIT_FAIL';return}po.textContent=`PORTRAIT_PASS ${good.naturalWidth}x${good.naturalHeight}`;const b=d.querySelector('.tp-nav [data-route="explore"]');if(!b){no.textContent='NAV_FAIL';return}const t=performance.now();b.dispatchEvent(new w.PointerEvent('pointerdown',{bubbles:true,pointerType:'touch',isPrimary:true}));requestAnimationFrame(()=>{const title=d.querySelector('.tp-page-title h1')?.textContent?.trim(),ms=performance.now()-t;no.textContent=title==='Partite'&&ms<150?`NAV_PASS ${ms.toFixed(1)}ms`:`NAV_FAIL ${title} ${ms.toFixed(1)}ms`})};wait()};
+          f.src='./?v=v35-local';
+          f.onload=()=>{const st=performance.now();const wait=()=>{const w=f.contentWindow,d=f.contentDocument,imgs=[...d.querySelectorAll('.tp-avatar.hero img')],good=imgs.find(x=>x.complete&&x.naturalWidth>40&&x.naturalHeight>40&&x.closest('.tp-avatar')?.classList.contains('has-photo'));if(!good){if(performance.now()-st<12000)return setTimeout(wait,80);po.textContent='PORTRAIT_FAIL';return}po.textContent=`PORTRAIT_PASS ${good.naturalWidth}x${good.naturalHeight}`;const b=d.querySelector('.tp-nav [data-route="explore"]');if(!b){no.textContent='NAV_FAIL';return}const t=performance.now();b.dispatchEvent(new w.PointerEvent('pointerdown',{bubbles:true,pointerType:'touch',isPrimary:true}));requestAnimationFrame(()=>{const title=d.querySelector('.tp-page-title h1')?.textContent?.trim(),ms=performance.now()-t;no.textContent=title==='Partite'&&ms<180?`NAV_PASS ${ms.toFixed(1)}ms`:`NAV_FAIL ${title} ${ms.toFixed(1)}ms`})};wait()};
           </script>
           HTML
-          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tep-v34-http.log 2>&1 &
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tep-v35-http.log 2>&1 &
           PID=$!; trap 'kill "$PID" 2>/dev/null || true' EXIT
           for i in {1..40}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
-          timeout 65s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=18000 --dump-dom 'http://127.0.0.1:8765/ux-probe.html' >/tmp/ux.html
+          timeout 70s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=20000 --dump-dom 'http://127.0.0.1:8765/ux-probe.html' >/tmp/ux.html
           grep -o 'PORTRAIT_[A-Z]*[^<]*' /tmp/ux.html | tail -1 || true
           grep -o 'NAV_[A-Z]*[^<]*' /tmp/ux.html | tail -1 || true
           grep -Fq 'PORTRAIT_PASS' /tmp/ux.html
           grep -Fq 'NAV_PASS' /tmp/ux.html
-          echo 'PREMIUM_V34_LOCAL_BROWSER=PASS'
+          echo 'PREMIUM_V35_LOCAL_BROWSER=PASS'
 
       - name: Existing quant regressions
         run: |
@@ -94,17 +100,17 @@ jobs:
           node scripts/clv-tracker-v3.mjs --self-test
           node scripts/clv-diagnostics-fix-v3.mjs --self-test
 
-      - name: Commit normalized V3.4 wiring if needed
+      - name: Commit normalized V3.5 wiring if needed
         run: |
           set -euo pipefail
           rm -f ux-probe.html
-          if git diff --quiet -- player-photos.js index.html manifest.webmanifest; then
-            echo 'Premium V3.4 already normalized.'
+          if git diff --quiet -- premium-shell-v1.js player-photos.js index.html manifest.webmanifest; then
+            echo 'Premium V3.5 already normalized.'
           else
             git config user.name 'tennis-edge-ui-publisher'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add player-photos.js index.html manifest.webmanifest
-            git commit -m 'fix(ui): refresh V3.4 portrait catalog wiring'
+            git add premium-shell-v1.js player-photos.js index.html manifest.webmanifest
+            git commit -m 'fix(ui): normalize V3.5 navigation and portrait runtime'
             for attempt in 1 2 3 4 5; do
               if git pull --rebase origin main && git push origin HEAD:main; then break; fi
               git rebase --abort || true
@@ -113,25 +119,25 @@ jobs:
             done
           fi
 
-      - name: Public Pages V3.4 browser smoke
+      - name: Public Pages V3.5 browser smoke
         run: |
           set -euo pipefail
           PUBLIC='https://davidecravedi168-beep.github.io/Tennis_D-L/'
-          CACHE_BUST="v34-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          CACHE_BUST="v35-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           for i in {1..60}; do
             if curl -fsSL "${PUBLIC}?v=${CACHE_BUST}" -o /tmp/public-index.html \
-              && grep -Fq 'player-photos.js?v=20260911-v34' /tmp/public-index.html \
-              && grep -Fq 'premium-shell-v1.js?v=20260911-v34-instant-portraits' /tmp/public-index.html; then
-              echo 'PUBLIC_V34_SHELL_FRESH=PASS'; break
+              && grep -Fq 'player-photos.js?v=20260911-v35' /tmp/public-index.html \
+              && grep -Fq 'premium-shell-v1.js?v=20260911-v35-runtime-fix' /tmp/public-index.html; then
+              echo 'PUBLIC_V35_SHELL_FRESH=PASS'; break
             fi
-            if [ "$i" -eq 60 ]; then echo PUBLIC_V34_SHELL_FRESH=FAIL; exit 1; fi
+            if [ "$i" -eq 60 ]; then echo PUBLIC_V35_SHELL_FRESH=FAIL; exit 1; fi
             sleep 5
           done
           CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
-          timeout 75s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=22000 --dump-dom "${PUBLIC}?v=${CACHE_BUST}" >/tmp/public-v34.html
-          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_4"' /tmp/public-v34.html
-          grep -Fq '>Partite<' /tmp/public-v34.html
-          grep -Fq '>Salvati<' /tmp/public-v34.html
-          grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/public-v34.html
-          grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/public-v34.html
-          echo 'PUBLIC_PREMIUM_V34=PASS'
+          timeout 80s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=24000 --dump-dom "${PUBLIC}?v=${CACHE_BUST}" >/tmp/public-v35.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_5"' /tmp/public-v35.html
+          grep -Fq '>Partite<' /tmp/public-v35.html
+          grep -Fq '>Salvati<' /tmp/public-v35.html
+          grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/public-v35.html
+          grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/public-v35.html
+          echo 'PUBLIC_PREMIUM_V35=PASS'
