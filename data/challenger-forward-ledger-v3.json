@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-11T03:59:55.998Z",
+  "updated_at": "2026-09-11T04:23:13.853Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -3737,13 +3737,61 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "536D1F6A5F840727562A927E",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "CBA997172AED82428F49",
+        "source_immutable_sha256": "af17f9538fe744a5af5e0026c24e9351f890ae488d869dc595f17561b74586fb",
+        "event_id": "74283532",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-11T04:17:57.419Z",
+        "start_at": "2026-09-11T18:30:00Z",
+        "first_observed_at": "2026-09-11T04:18:02.281Z",
+        "player_a": "Varillas, Juan Pablo",
+        "player_b": "Seyboth Wild, Thiago",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "A",
+        "candidate_name": "Varillas, Juan Pablo",
+        "candidate_odds": 2.62,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -1,
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.43841,
+        "calibrated_prob": 0.29495761551625166,
+        "calibrated_ev": -0.2272110473474206,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 0,
+        "negative_core": 1,
+        "observed_core": 1,
+        "hard_reject": [
+          "CALIBRATED_EV_LT_2PCT"
+        ],
+        "penalties": []
+      },
+      "immutable_sha256": "bffa98b49c78fb977c955b726de156f9a6c1d1a0410b07ab774d06c0ab87af34",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 75,
+    "total_decisions": 76,
     "accepted": 10,
-    "rejected": 65,
-    "open": 25,
+    "rejected": 66,
+    "open": 26,
     "settled": 50
   },
   "evidence": {
