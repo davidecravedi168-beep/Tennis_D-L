@@ -1,5 +1,6 @@
 // Generated from public Wikimedia/Wikidata sources.
 window.__TEP_PLAYER_PHOTOS__=Object.freeze({
+  "alevtina ibragimova": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Alevtina_Ibragimova_%282026_US_Open%29_02_%28cropped%29.jpg/330px-Alevtina_Ibragimova_%282026_US_Open%29_02_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
   "alexander zverev": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Alexander_Zverev.jpg/330px-Alexander_Zverev.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
   "alfie hewett": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Alfie_Hewett_%2835580720080%29.jpg/330px-Alfie_Hewett_%2835580720080%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
   "anna blinkova": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Day_6_-_Transilvania_Open_Anna_Blinkova_%28cropped%29.jpg/330px-Day_6_-_Transilvania_Open_Anna_Blinkova_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",

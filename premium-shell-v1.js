@@ -56,11 +56,11 @@ async function wikiCandidates(raw){
   if(photoInflight.has(key))return photoInflight.get(key);
   const job=(async()=>{
     const out=[];
-    try{const title=encodeURIComponent(name.replace(/\s+/g,'_')),r=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${title}`,{cache:'force-cache',headers:{Accept:'application/json'}});if(r.ok){const j=await r.json();const src=j?.thumbnail?.source||j?.originalimage?.source;if(src)out.push(src)}}catch{}
+    try{const title=encodeURIComponent(name.replace(/\s+/g,'_')),r=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${title}`,{cache:'force-cache',headers:{Accept:'application/json'}});if(r.ok){const j=await r.json();const src=j?.thumbnail?.source||j?.originalimage?.source;if(src)out.push(String(src).replace('https://thumb.wikimedia.org/','https://upload.wikimedia.org/'))}}catch{}
     if(!out.length){
       try{const q=encodeURIComponent(name),u=`https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${q}&language=en&uselang=en&limit=8&format=json&origin=*`,r=await fetch(u,{cache:'force-cache'});if(r.ok){const j=await r.json(),hit=(j?.search||[]).find(x=>/tennis/i.test(String(x?.description||'')));if(hit?.id){const e=await fetch(`https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${encodeURIComponent(hit.id)}&props=claims&format=json&origin=*`,{cache:'force-cache'});if(e.ok){const ej=await e.json(),file=ej?.entities?.[hit.id]?.claims?.P18?.[0]?.mainsnak?.datavalue?.value;if(file)out.push(`https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(String(file).replace(/ /g,'_'))}?width=900`)}}}}catch{}
     }
-    try{const q=encodeURIComponent(`${name} tennis`),u=`https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrlimit=5&prop=pageimages&piprop=thumbnail&pithumbsize=900&format=json&origin=*`,r=await fetch(u,{cache:'force-cache'});if(r.ok){const j=await r.json();for(const p of Object.values(j?.query?.pages||{})){const src=p?.thumbnail?.source;if(src&&!out.includes(src))out.push(src)}}}catch{}
+    try{const q=encodeURIComponent(`${name} tennis`),u=`https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrlimit=5&prop=pageimages&piprop=thumbnail&pithumbsize=900&format=json&origin=*`,r=await fetch(u,{cache:'force-cache'});if(r.ok){const j=await r.json();for(const p of Object.values(j?.query?.pages||{})){const src=p?.thumbnail?.source;if(src&&!out.includes(src))out.push(String(src).replace('https://thumb.wikimedia.org/','https://upload.wikimedia.org/'))}}}catch{}
     if(!out.length)photoMisses.add(key);
     return out;
   })();
@@ -68,7 +68,7 @@ async function wikiCandidates(raw){
   try{return await job}finally{photoInflight.delete(key)}
 }
 function avatar(name,cls=''){const eager=String(cls).includes('hero')?'eager':'lazy',src=catalogPhoto(name),ready=!!src;return`<span class="tp-avatar ${cls}${ready?' has-photo':''}" data-photo="${esc(name)}"><span>${esc(initials(name))}</span><img alt="${esc(pretty(name))}" loading="${eager}" decoding="async" fetchpriority="${eager==='eager'?'high':'low'}"${src?` src="${esc(src)}"`:''}></span>`}
-async function tryImage(el,img,src){return new Promise(resolve=>{let done=false;const finish=ok=>{if(done)return;done=true;img.onload=null;img.onerror=null;if(ok)el.classList.add('has-photo');else el.classList.remove('has-photo');resolve(ok)};img.onload=()=>finish(img.naturalWidth>40&&img.naturalHeight>40);img.onerror=()=>finish(false);if(img.getAttribute('src')!==src)img.src=src;if(img.complete&&img.naturalWidth>40&&img.naturalHeight>40)finish(true);setTimeout(()=>finish(img.complete&&img.naturalWidth>40&&img.naturalHeight>40),6500)})}
+async function tryImage(el,img,src){src=String(src||'').replace('https://thumb.wikimedia.org/','https://upload.wikimedia.org/');return new Promise(resolve=>{let done=false;const finish=ok=>{if(done)return;done=true;img.onload=null;img.onerror=null;if(ok)el.classList.add('has-photo');else el.classList.remove('has-photo');resolve(ok)};img.onload=()=>finish(img.naturalWidth>40&&img.naturalHeight>40);img.onerror=()=>finish(false);if(img.getAttribute('src')!==src)img.src=src;if(img.complete&&img.naturalWidth>40&&img.naturalHeight>40)finish(true);setTimeout(()=>finish(img.complete&&img.naturalWidth>40&&img.naturalHeight>40),6500)})}
 async function loadAvatar(el){
   if(!el||el.dataset.photoState==='loading'||el.dataset.photoState==='done')return;
   el.dataset.photoState='loading';const img=$('img',el);if(!img){el.dataset.photoState='done';return}
@@ -133,9 +133,9 @@ function install(){
   document.body.classList.add('tp-v3');let style=$('#tpV3Style');if(!style){style=document.createElement('style');style.id='tpV3Style';document.head.appendChild(style)}style.textContent=CSS;
   let root=$('#tpRoot');if(!root){root=document.createElement('div');root.id='tpRoot';document.body.appendChild(root)}root.innerHTML=shell();render(false);bindRoot();document.documentElement.dataset.tepFullUi=VERSION;
 }
-function applyView(){const view=$('#tpView');if(!view)return;view.innerHTML=screenHtml();$$$('.tp-nav button').forEach(b=>b.classList.toggle('on',b.dataset.route===state.screen));const fresh=$('.tp-fresh');if(fresh)fresh.textContent=freshness();queueMicrotask(()=>hydrate(view))}
+function applyView(){const view=$('#tpView');if(!view)return;view.innerHTML=screenHtml();$$('.tp-nav button').forEach(b=>b.classList.toggle('on',b.dataset.route===state.screen));const fresh=$('.tp-fresh');if(fresh)fresh.textContent=freshness();queueMicrotask(()=>hydrate(view))}
 function render(){applyView()}
-function route(name){const next=name||'home';if(next===state.screen){window.scrollTo({top:0,left:0,behavior:'auto'});return}state.scroll[state.screen]=window.scrollY;state.screen=next;closeMenu();$$$('.tp-nav button').forEach(b=>b.classList.toggle('on',b.dataset.route===next));render();window.scrollTo({top:state.scroll[next]||0,left:0,behavior:'auto'})}
+function route(name){const next=name||'home';if(next===state.screen){window.scrollTo({top:0,left:0,behavior:'auto'});return}state.scroll[state.screen]=window.scrollY;state.screen=next;closeMenu();$$('.tp-nav button').forEach(b=>b.classList.toggle('on',b.dataset.route===next));render();window.scrollTo({top:state.scroll[next]||0,left:0,behavior:'auto'})}
 function openEvent(id){if(!id)return;state.scroll[state.screen]=window.scrollY;state.selectedId=String(id);state.screen='analysis';render();window.scrollTo({top:0,left:0,behavior:'auto'})}
 function toggleFav(id){const k=String(id);favorites.has(k)?favorites.delete(k):favorites.add(k);writeSet(favKey,favorites);render(false)}
 function toggleFollow(name){const k=pretty(name);followed.has(k)?followed.delete(k):followed.add(k);writeSet(followKey,followed);render(false)}
