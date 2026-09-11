@@ -35,11 +35,14 @@ jobs:
           node scripts/apply-refresh-resilience.mjs
           node scripts/apply-refresh-resilience.mjs
           grep -Fq "script-src 'self' 'unsafe-inline';" index.html
-          grep -Fq 'player-photos.js?v=20260911-v34' index.html
-          grep -Fq 'premium-shell-v1.js?v=20260911-v34-instant-portraits' index.html
-          grep -Fq 'TEP_FULL_PREMIUM_UI_V3_4' premium-shell-v1.js
+          grep -Fq 'player-photos.js?v=20260911-v35' index.html
+          grep -Fq 'premium-shell-v1.js?v=20260911-v38-nav-runtime' index.html
+          grep -Fq 'TEP_FULL_PREMIUM_UI_V3_8' premium-shell-v1.js
           grep -Fq 'function catalogPhoto(raw)' premium-shell-v1.js
-          grep -Fq "root.addEventListener('pointerdown'" premium-shell-v1.js
+          grep -Fq 'TEP_IOS_NAV_BIND_V38' premium-shell-v1.js
+          grep -Fq "\$\$('.tp-nav [data-route]').forEach" premium-shell-v1.js
+          grep -Fq "el.addEventListener('touchend'" premium-shell-v1.js
+          grep -Fq "el.addEventListener('click'" premium-shell-v1.js
           ! grep -Fq 'document.startViewTransition' premium-shell-v1.js
           ! grep -Fq "behavior:'smooth'" premium-shell-v1.js
           ! grep -Fq '[object Object]' premium-shell-v1.js
@@ -69,33 +72,35 @@ jobs:
           python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tep-http.log 2>&1 &
           PID=$!; trap 'kill "$PID" 2>/dev/null || true' EXIT
           for i in {1..40}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
-          timeout 65s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=18000 --dump-dom 'http://127.0.0.1:8765/?v=v34-runtime' >/tmp/tep-dom.html
-          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_4"' /tmp/tep-dom.html
+          timeout 65s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=18000 --dump-dom 'http://127.0.0.1:8765/?v=v38-runtime#tp-explore' >/tmp/tep-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_8"' /tmp/tep-dom.html
+          grep -Fq '<h1>Partite</h1>' /tmp/tep-dom.html
           grep -Fq '>Partite<' /tmp/tep-dom.html
           grep -Fq '>Salvati<' /tmp/tep-dom.html
           grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/tep-dom.html
           grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/tep-dom.html
-          echo 'V34_LOCAL_RUNTIME_BROWSER=PASS'
+          echo 'V38_LOCAL_RUNTIME_BROWSER=PASS'
 
-      - name: Public Pages V3.4 smoke
+      - name: Public Pages V3.8 smoke
         run: |
           set -euo pipefail
           PUBLIC='https://davidecravedi168-beep.github.io/Tennis_D-L/'
-          BUST="runtime-v34-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          BUST="runtime-v38-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           for i in {1..60}; do
             if curl -fsSL "${PUBLIC}?v=${BUST}" -o /tmp/public-index.html \
-              && grep -Fq 'player-photos.js?v=20260911-v34' /tmp/public-index.html \
-              && grep -Fq 'premium-shell-v1.js?v=20260911-v34-instant-portraits' /tmp/public-index.html; then break; fi
-            if [ "$i" -eq 60 ]; then echo PUBLIC_V34_STALE; exit 1; fi
+              && grep -Fq 'player-photos.js?v=20260911-v35' /tmp/public-index.html \
+              && grep -Fq 'premium-shell-v1.js?v=20260911-v38-nav-runtime' /tmp/public-index.html; then break; fi
+            if [ "$i" -eq 60 ]; then echo PUBLIC_V38_STALE; exit 1; fi
             sleep 5
           done
           CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
-          timeout 75s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=22000 --dump-dom "${PUBLIC}?v=${BUST}" >/tmp/public-dom.html
-          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_4"' /tmp/public-dom.html
+          timeout 75s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=22000 --dump-dom "${PUBLIC}?v=${BUST}#tp-explore" >/tmp/public-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_8"' /tmp/public-dom.html
+          grep -Fq '<h1>Partite</h1>' /tmp/public-dom.html
           grep -Fq '>Partite<' /tmp/public-dom.html
           grep -Fq '>Salvati<' /tmp/public-dom.html
           grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/public-dom.html
-          echo 'PUBLIC_V34_RUNTIME=PASS'
+          echo 'PUBLIC_V38_RUNTIME=PASS'
 
       - name: Existing quant regressions
         run: |
@@ -112,6 +117,6 @@ jobs:
           git config user.name 'tennis-edge-ui-certifier'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
-          git commit -m 'fix(ui): normalize V3.4 runtime wiring'
+          git commit -m 'fix(ui): normalize V3.8 runtime wiring'
           git pull --rebase origin main
           git push origin HEAD:main

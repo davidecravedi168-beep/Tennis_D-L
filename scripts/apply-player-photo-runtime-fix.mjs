@@ -17,7 +17,7 @@ else if(!s.includes('async function tryImage(el,img,src)')) throw new Error('try
 const oldHydrate=`async function hydrate(root=document){\n  for(const el of $$('[data-photo]',root).filter(x=>x.dataset.photoState!=='loading'&&x.dataset.photoState!=='done')){\n    el.dataset.photoState='loading';const img=$('img',el);if(!img){el.dataset.photoState='done';continue}\n    const name=el.dataset.photo,key=pretty(name).toLowerCase(),candidates=await wikiCandidates(name);let ok=false;\n    for(const src of candidates){if(await tryImage(img,src)){img.hidden=false;photoCache[key]=src;savePhotoCache();ok=true;break}}\n    if(!ok){img.hidden=true;delete photoCache[key];savePhotoCache()}\n    el.dataset.photoState='done';\n  }\n}`;
 const newHydrate=`async function hydrate(root=document){\n  const nodes=$$('[data-photo]',root).filter(x=>x.dataset.photoState!=='loading'&&x.dataset.photoState!=='done');\n  await Promise.all(nodes.map(async el=>{\n    el.dataset.photoState='loading';const img=$('img',el);if(!img){el.dataset.photoState='done';return}\n    const name=el.dataset.photo,key=pretty(name).toLowerCase(),candidates=await wikiCandidates(name);let ok=false;\n    for(const src of candidates){if(await tryImage(el,img,src)){photoCache[key]=src;savePhotoCache();ok=true;break}}\n    if(!ok){el.classList.remove('has-photo');img.removeAttribute('src');delete photoCache[key];savePhotoCache()}\n    el.dataset.photoState='done';\n  }));\n}`;
 if(s.includes(oldHydrate)) s=s.replace(oldHydrate,()=>newHydrate);
-else if(!s.includes("await Promise.all(nodes.map(async el=>")) throw new Error('hydrate contract changed; refusing blind patch');
+else if(!s.includes("await Promise.all(nodes.map(async el=>")&&!s.includes('void Promise.allSettled(immediate.map(loadAvatar))')) throw new Error('hydrate contract changed; refusing blind patch');
 
 // Repair an early V3.1 migration typo that accidentally collapsed $$() to $().
 const brokenNodes="const nodes=$('[data-photo]',root).filter(x=>x.dataset.photoState!=='loading'&&x.dataset.photoState!=='done');";
@@ -32,9 +32,9 @@ else if(!s.includes('.tp-avatar.has-photo img{opacity:1}')) throw new Error('ava
 for(const required of [
   "loading=\"${eager}\"",
   'async function tryImage(el,img,src)',
-  fixedNodes,
-  "await Promise.all(nodes.map(async el=>",
+  "const nodes=$$('[data-photo]',root).filter(",
   ".tp-avatar.has-photo img{opacity:1}"
 ]) if(!s.includes(required)) throw new Error('photo runtime fix missing: '+required);
+if(!s.includes("await Promise.all(nodes.map(async el=>")&&!s.includes('void Promise.allSettled(immediate.map(loadAvatar))')) throw new Error('photo hydration strategy missing');
 
 if(s!==original){fs.writeFileSync(file,s);console.log('PLAYER_PHOTO_RUNTIME_FIX=APPLIED')}else console.log('PLAYER_PHOTO_RUNTIME_FIX=ALREADY_APPLIED');

@@ -7,8 +7,6 @@ on:
       - '.github/workflows/premium-ui-publisher.yml'
       - 'premium-shell-v1.js'
       - 'player-photos.js'
-      - 'scripts/build-player-photo-catalog.mjs'
-      - 'scripts/patch-premium-runtime-v35.mjs'
       - 'scripts/apply-refresh-resilience.mjs'
       - 'index.html'
       - 'manifest.webmanifest'
@@ -32,45 +30,33 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Normalize premium V3.5 wiring
+      - name: Normalize premium V3.8 assets
         run: |
           set -euo pipefail
-          node scripts/build-player-photo-catalog.mjs
-          node scripts/patch-premium-runtime-v35.mjs
           node scripts/apply-refresh-resilience.mjs
           node scripts/apply-refresh-resilience.mjs
-          python - <<'PY'
-          from pathlib import Path
-          import re
-          m=Path('manifest.webmanifest')
-          s=m.read_text(encoding='utf-8')
-          s=re.sub(r'"start_url"\s*:\s*"\.\/\?v=[^"]+"','"start_url": "./?v=20260911-v35-runtime-fix"',s)
-          m.write_text(s,encoding='utf-8')
-          PY
 
-      - name: Validate V3.5 contracts
+      - name: Validate V3.8 contracts
         run: |
           set -euo pipefail
           node --check premium-shell-v1.js
           node --check player-photos.js
-          node --check scripts/patch-premium-runtime-v35.mjs
-          BEFORE="$(sha256sum premium-shell-v1.js | cut -d' ' -f1)"
-          node scripts/patch-premium-runtime-v35.mjs
-          AFTER="$(sha256sum premium-shell-v1.js | cut -d' ' -f1)"
-          test "$BEFORE" = "$AFTER"
           grep -Fq 'player-photos.js?v=20260911-v35' index.html
-          grep -Fq 'premium-shell-v1.js?v=20260911-v35-runtime-fix' index.html
-          grep -Fq '"start_url": "./?v=20260911-v35-runtime-fix"' manifest.webmanifest
-          grep -Fq 'TEP_FULL_PREMIUM_UI_V3_5' premium-shell-v1.js
+          grep -Fq 'premium-shell-v1.js?v=20260911-v38-nav-runtime' index.html
+          grep -Fq '"start_url": "./?v=20260911-v38-nav-runtime"' manifest.webmanifest
+          grep -Fq 'TEP_FULL_PREMIUM_UI_V3_8' premium-shell-v1.js
+          grep -Fq 'TEP_IOS_NAV_BIND_V38' premium-shell-v1.js
           grep -Fq "const nodes=\$\$('[data-photo]',root).filter(" premium-shell-v1.js
-          test "$(grep -Fo "\$\$('.tp-nav button').forEach(" premium-shell-v1.js | wc -l)" -ge 2
+          grep -Fq "\$\$('.tp-nav [data-route]').forEach" premium-shell-v1.js
+          grep -Fq "el.addEventListener('touchend'" premium-shell-v1.js
+          grep -Fq "el.addEventListener('click'" premium-shell-v1.js
           ! grep -Fq '$$$(' premium-shell-v1.js
           ! grep -Fq 'https://thumb.wikimedia.org/' player-photos.js
           ! grep -Fq 'document.startViewTransition' premium-shell-v1.js
           ! grep -Fq '[object Object]' premium-shell-v1.js
           test "$(grep -o 'player-photos.js?v=20260911-v35' index.html | wc -l)" -eq 1
-          test "$(grep -o 'premium-shell-v1.js?v=20260911-v35-runtime-fix' index.html | wc -l)" -eq 1
-          echo 'PREMIUM_V35_CONTRACT=PASS'
+          test "$(grep -o 'premium-shell-v1.js?v=20260911-v38-nav-runtime' index.html | wc -l)" -eq 1
+          echo 'PREMIUM_V38_CONTRACT=PASS'
 
       - name: Real browser local UX smoke
         run: |
@@ -91,7 +77,7 @@ jobs:
               const b=d.querySelector('.tp-nav [data-route="explore"]');
               if(!b){if(performance.now()-start<8000)return setTimeout(nav,80);document.documentElement.dataset.nav='fail';return}
               const t=performance.now();
-              b.dispatchEvent(new w.PointerEvent('pointerdown',{bubbles:true,pointerType:'touch',isPrimary:true}));
+              b.click();
               requestAnimationFrame(()=>requestAnimationFrame(()=>{
                 const title=d.querySelector('.tp-page-title h1')?.textContent?.trim(),ms=performance.now()-t;
                 document.documentElement.dataset.nav=title==='Partite'&&ms<180?'pass':'fail';
@@ -100,17 +86,17 @@ jobs:
             };
             portrait();nav();
           };
-          f.src='./?v=v35-local';
+          f.src='./?v=v38-local';
           </script></body></html>
           HTML
-          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tep-v35-http.log 2>&1 &
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tep-v38-http.log 2>&1 &
           PID=$!; trap 'kill "$PID" 2>/dev/null || true' EXIT
           for i in {1..40}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
           timeout 70s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=20000 --dump-dom 'http://127.0.0.1:8765/ux-probe.html' >/tmp/ux.html
           grep -Eo '<html[^>]*data-(portrait|nav)[^>]*>' /tmp/ux.html | head -1 || true
           grep -Eq '<html[^>]*data-portrait="pass"' /tmp/ux.html
           grep -Eq '<html[^>]*data-nav="pass"' /tmp/ux.html
-          echo 'PREMIUM_V35_LOCAL_BROWSER=PASS'
+          echo 'PREMIUM_V38_LOCAL_BROWSER=PASS'
 
       - name: Existing quant regressions
         run: |
@@ -120,17 +106,17 @@ jobs:
           node scripts/clv-tracker-v3.mjs --self-test
           node scripts/clv-diagnostics-fix-v3.mjs --self-test
 
-      - name: Commit normalized V3.5 wiring if needed
+      - name: Commit normalized V3.8 assets if needed
         run: |
           set -euo pipefail
           rm -f ux-probe.html
           if git diff --quiet -- premium-shell-v1.js player-photos.js index.html manifest.webmanifest; then
-            echo 'Premium V3.5 already normalized.'
+            echo 'Premium V3.8 already normalized.'
           else
             git config user.name 'tennis-edge-ui-publisher'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git add premium-shell-v1.js player-photos.js index.html manifest.webmanifest
-            git commit -m 'fix(ui): normalize V3.5 navigation and portrait runtime'
+            git commit -m 'fix(ui): normalize V3.8 navigation and portrait runtime'
             for attempt in 1 2 3 4 5; do
               if git pull --rebase origin main && git push origin HEAD:main; then break; fi
               git rebase --abort || true
@@ -139,30 +125,29 @@ jobs:
             done
           fi
 
-      - name: Public Pages V3.5 browser smoke
+      - name: Public Pages V3.8 browser smoke
         run: |
           set -euo pipefail
           PUBLIC='https://davidecravedi168-beep.github.io/Tennis_D-L/'
-          CACHE_BUST="v35-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          CACHE_BUST="v38-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           for i in {1..60}; do
             if curl -fsSL "${PUBLIC}?v=${CACHE_BUST}" -o /tmp/public-index.html \
               && grep -Fq 'player-photos.js?v=20260911-v35' /tmp/public-index.html \
-              && grep -Fq 'premium-shell-v1.js?v=20260911-v35-runtime-fix' /tmp/public-index.html; then
-              echo 'PUBLIC_V35_SHELL_FRESH=PASS'; break
+              && grep -Fq 'premium-shell-v1.js?v=20260911-v38-nav-runtime' /tmp/public-index.html; then
+              echo 'PUBLIC_V38_SHELL_FRESH=PASS'; break
             fi
-            if [ "$i" -eq 60 ]; then echo PUBLIC_V35_SHELL_FRESH=FAIL; exit 1; fi
+            if [ "$i" -eq 60 ]; then echo PUBLIC_V38_SHELL_FRESH=FAIL; exit 1; fi
             sleep 5
           done
           CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
-          timeout 80s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=24000 --dump-dom "${PUBLIC}?v=${CACHE_BUST}" >/tmp/public-v35.html
-          echo "VERSION=$(grep -c 'data-version=\"TEP_FULL_PREMIUM_UI_V3_5\"' /tmp/public-v35.html || true)"
-          echo "PARTITE=$(grep -c '>Partite<' /tmp/public-v35.html || true)"
-          echo "SALVATI=$(grep -c '>Salvati<' /tmp/public-v35.html || true)"
-          echo "PORTRAIT=$(grep -Ec 'class=\"tp-avatar hero[^\"]*has-photo|class=\"tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/public-v35.html || true)"
-          echo "WIKIMEDIA=$(grep -Ec 'src=\"https://(upload|commons)\.wikimedia\.org/' /tmp/public-v35.html || true)"
-          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_5"' /tmp/public-v35.html
-          grep -Fq '>Partite<' /tmp/public-v35.html
-          grep -Fq '>Salvati<' /tmp/public-v35.html
-          grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/public-v35.html
-          grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/public-v35.html
-          echo 'PUBLIC_PREMIUM_V35=PASS'
+          timeout 80s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=24000 --dump-dom "${PUBLIC}?v=${CACHE_BUST}#tp-explore" >/tmp/public-v38.html
+          echo "VERSION=$(grep -c 'data-version=\"TEP_FULL_PREMIUM_UI_V3_8\"' /tmp/public-v38.html || true)"
+          echo "PARTITE=$(grep -c '>Partite<' /tmp/public-v38.html || true)"
+          echo "PORTRAIT=$(grep -Ec 'class=\"tp-avatar hero[^\"]*has-photo|class=\"tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/public-v38.html || true)"
+          echo "WIKIMEDIA=$(grep -Ec 'src=\"https://(upload|commons)\.wikimedia\.org/' /tmp/public-v38.html || true)"
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_8"' /tmp/public-v38.html
+          grep -Fq '<h1>Partite</h1>' /tmp/public-v38.html
+          grep -Fq '>Partite<' /tmp/public-v38.html
+          grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/public-v38.html
+          grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/public-v38.html
+          echo 'PUBLIC_PREMIUM_V38=PASS'
