@@ -1,0 +1,113 @@
+name: Full Premium UI V3 Certifier
+
+on:
+  push:
+    branches: [feat/full-premium-ui-v3]
+    paths:
+      - 'premium-shell-v1.js'
+      - 'index.html'
+      - '.github/workflows/full-premium-ui-v3-cert.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  certify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+        with:
+          ref: feat/full-premium-ui-v3
+          fetch-depth: 0
+
+      - name: Cache-bust premium shell in candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          import re
+          s2=re.sub(r'premium-shell-v1\.js\?v=[^"\']+', 'premium-shell-v1.js?v=20260911-full-premium-v3', s, count=1)
+          if 'premium-shell-v1.js?v=20260911-full-premium-v3' not in s2:
+              raise SystemExit('PREMIUM_ASSET_WIRING_MISSING')
+          if s2!=s:p.write_text(s2,encoding='utf-8')
+          PY
+
+      - name: Test 1 · syntax and product contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check premium-shell-v1.js
+          grep -Fq "TEP_FULL_PREMIUM_UI_V3" premium-shell-v1.js
+          grep -Fq "PROBABILITÀ DI VITTORIA" premium-shell-v1.js
+          grep -Fq "Le Mie Analisi" premium-shell-v1.js
+          grep -Fq "tp-winband" premium-shell-v1.js
+          grep -Fq "tp-avatar hero" premium-shell-v1.js
+          grep -Fq "body.tp-v3>.app" premium-shell-v1.js
+          grep -Fq "premium-shell-v1.js?v=20260911-full-premium-v3" index.html
+          echo 'PREMIUM_UI_PRODUCT_CONTRACT=PASS'
+
+      - name: Test 2 · real data contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE'
+          const fs=require('fs');
+          const b=JSON.parse(fs.readFileSync('data/quant-board.json','utf8'));
+          if(!Array.isArray(b.upcoming)||b.upcoming.length===0) throw new Error('UPCOMING_EMPTY');
+          const usable=b.upcoming.filter(x=>Number.isFinite(Number(x.p_a))&&Number.isFinite(Number(x.p_b)));
+          if(!usable.length) throw new Error('NO_PROBABILITY_MATCH');
+          for(const x of usable){
+            const a=Number(x.p_a),c=Number(x.p_b);
+            if(a<0||a>1||c<0||c>1||Math.abs(a+c-1)>.03) throw new Error(`BAD_PROBS:${x.event_id}`);
+          }
+          console.log(`REAL_DATA_CONTRACT=PASS upcoming=${b.upcoming.length} usable=${usable.length}`);
+          NODE
+
+      - name: Test 3 · browser smoke on actual app shell
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME" || { echo CHROME_NOT_FOUND; exit 1; }
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tp-http.log 2>&1 &
+          PID=$!
+          trap 'kill "$PID" 2>/dev/null || true' EXIT
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
+          timeout 45s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=12000 --dump-dom http://127.0.0.1:8765/index.html > /tmp/tp-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3"' /tmp/tp-dom.html
+          grep -Fq 'class="tp-winband"' /tmp/tp-dom.html
+          grep -Fq 'PROBABILITÀ DI VITTORIA' /tmp/tp-dom.html
+          grep -Fq 'Partite in arrivo' /tmp/tp-dom.html
+          grep -Fq 'Le Mie Analisi' /tmp/tp-dom.html
+          grep -Fq 'tp-nav' /tmp/tp-dom.html
+          echo 'PREMIUM_UI_BROWSER_SMOKE=PASS'
+
+      - name: Test 4 · existing quant regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/tennis-model-diagnostics-v2.mjs --self-test
+          node scripts/drift-controller-v6.mjs --self-test
+          node scripts/clv-tracker-v3.mjs --self-test
+          node scripts/clv-diagnostics-fix-v3.mjs --self-test
+          echo 'QUANT_REGRESSIONS=PASS'
+
+      - name: Commit cache-bust on candidate if needed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- index.html; then
+            echo 'Index already versioned.'
+            exit 0
+          fi
+          git config user.name 'tennis-edge-ui-certifier'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'fix(ui): cache-bust full premium shell v3'
+          git pull --rebase origin feat/full-premium-ui-v3
+          git push origin HEAD:feat/full-premium-ui-v3
