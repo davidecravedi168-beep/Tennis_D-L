@@ -1,4 +1,4 @@
-name: iOS Premium Nav V36
+name: iOS Premium Nav V37
 
 on:
   push:
@@ -16,7 +16,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: ios-premium-nav-v36
+  group: ios-premium-nav-v37
   cancel-in-progress: false
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
           ref: hotfix/ios-nav-v36
           fetch-depth: 0
 
-      - name: Apply V36 patch twice
+      - name: Apply V37 patch twice
         run: |
           set -euo pipefail
           node scripts/apply-ios-nav-v36.mjs
@@ -42,23 +42,27 @@ jobs:
           node --check premium-shell-v1.js
           node --check scripts/apply-ios-nav-v36.mjs
           python3 -m json.tool manifest.webmanifest >/dev/null
-          grep -Fq "TEP_FULL_PREMIUM_UI_V3_6" premium-shell-v1.js
+          grep -Fq "TEP_FULL_PREMIUM_UI_V3_7" premium-shell-v1.js
+          grep -Fq 'TEP_IOS_NAV_BIND_V37' premium-shell-v1.js
+          grep -Fq 'function bindBottomNav(root)' premium-shell-v1.js
+          grep -Fq "el.addEventListener('touchend'" premium-shell-v1.js
+          grep -Fq "el.addEventListener('click'" premium-shell-v1.js
           grep -Fq 'href="#tp-home" data-route="home"' premium-shell-v1.js
           grep -Fq 'href="#tp-explore" data-route="explore"' premium-shell-v1.js
           grep -Fq 'href="#tp-analysis" data-route="analysis"' premium-shell-v1.js
           grep -Fq 'href="#tp-mine" data-route="mine"' premium-shell-v1.js
           grep -Fq 'window.__TEP_PREMIUM_NAV__' premium-shell-v1.js
           ! grep -Fq 'navPointerAt' premium-shell-v1.js
-          grep -Fq 'premium-shell-v1.js?v=20260911-v36-ios-nav' index.html
-          grep -Fq 'manifest.webmanifest?v=20260911-v36-ios-nav' index.html
-          grep -Fq '"start_url": "./?v=20260911-v36-ios-nav"' manifest.webmanifest
+          grep -Fq 'premium-shell-v1.js?v=20260911-v37-nav-direct' index.html
+          grep -Fq 'manifest.webmanifest?v=20260911-v37-nav-direct' index.html
+          grep -Fq '"start_url": "./?v=20260911-v37-nav-direct"' manifest.webmanifest
           echo 'IOS_NAV_STATIC_CERT=PASS'
 
       - name: Four-route mobile browser smoke
         run: |
           set -euo pipefail
-          cp index.html /tmp/index-before-v36-browser-test.html
-          restore_index(){ cp /tmp/index-before-v36-browser-test.html index.html; }
+          cp index.html /tmp/index-before-v37-browser-test.html
+          restore_index(){ cp /tmp/index-before-v37-browser-test.html index.html; }
           trap restore_index EXIT
           python3 - <<'PY'
           from pathlib import Path
@@ -81,6 +85,7 @@ jobs:
               results.push(Boolean(active&&state&&hash));
               trace.push(`${name}:${active?'a':'-'}${state?'s':'-'}${hash?'h':'-'}`);
             }
+            document.documentElement.dataset.tepNavApi=String(Boolean(window.__TEP_PREMIUM_NAV__));
             document.documentElement.dataset.tepNavCount=String(results.filter(Boolean).length);
             document.documentElement.dataset.tepNavTrace=trace.join(',');
             document.documentElement.dataset.tepNavTest=results.length===4&&results.every(Boolean)?'PASS':'FAIL';
@@ -92,7 +97,7 @@ jobs:
           PY
           CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
           test -n "$CHROME" || { echo 'CHROME_NOT_FOUND'; exit 1; }
-          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tep-v36-http.log 2>&1 &
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tep-v37-http.log 2>&1 &
           SERVER_PID=$!
           for i in {1..40}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
           timeout 60s "$CHROME" \
@@ -100,16 +105,18 @@ jobs:
             --window-size=390,844 \
             --user-agent='Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1' \
             --virtual-time-budget=12000 --dump-dom \
-            'http://127.0.0.1:8765/?v=20260911-v36-browser-smoke' > /tmp/tep-v36-dom.html
+            'http://127.0.0.1:8765/?v=20260911-v37-browser-smoke' > /tmp/tep-v37-dom.html
           kill "$SERVER_PID" 2>/dev/null || true
           echo '--- NAV DIAGNOSTICS ---'
-          grep -o 'data-tep-nav-test="[^"]*"' /tmp/tep-v36-dom.html || true
-          grep -o 'data-tep-nav-count="[^"]*"' /tmp/tep-v36-dom.html || true
-          grep -o 'data-tep-nav-trace="[^"]*"' /tmp/tep-v36-dom.html || true
-          grep -o 'data-version="TEP_FULL_PREMIUM_UI_[^"]*"' /tmp/tep-v36-dom.html | head -1 || true
-          grep -Fq 'data-tep-nav-test="PASS"' /tmp/tep-v36-dom.html
-          grep -Fq 'data-tep-nav-count="4"' /tmp/tep-v36-dom.html
-          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_6"' /tmp/tep-v36-dom.html
+          grep -o 'data-tep-nav-api="[^"]*"' /tmp/tep-v37-dom.html || true
+          grep -o 'data-tep-nav-test="[^"]*"' /tmp/tep-v37-dom.html || true
+          grep -o 'data-tep-nav-count="[^"]*"' /tmp/tep-v37-dom.html || true
+          grep -o 'data-tep-nav-trace="[^"]*"' /tmp/tep-v37-dom.html || true
+          grep -o 'data-version="TEP_FULL_PREMIUM_UI_[^"]*"' /tmp/tep-v37-dom.html | head -1 || true
+          grep -Fq 'data-tep-nav-api="true"' /tmp/tep-v37-dom.html
+          grep -Fq 'data-tep-nav-test="PASS"' /tmp/tep-v37-dom.html
+          grep -Fq 'data-tep-nav-count="4"' /tmp/tep-v37-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_7"' /tmp/tep-v37-dom.html
           restore_index
           trap - EXIT
           echo 'IOS_NAV_BROWSER_CERT=PASS 4/4'
@@ -118,12 +125,12 @@ jobs:
         run: |
           set -euo pipefail
           if git diff --quiet -- premium-shell-v1.js index.html manifest.webmanifest; then
-            echo 'V36 patch already committed.'
+            echo 'V37 patch already committed.'
           else
             git config user.name 'tennis-edge-ui-certifier'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git add premium-shell-v1.js index.html manifest.webmanifest
-            git commit -m 'fix(ui): make premium bottom navigation iOS-safe'
+            git commit -m 'fix(ui): make premium bottom navigation iOS-safe V37'
             git pull --rebase origin hotfix/ios-nav-v36
             git push origin HEAD:hotfix/ios-nav-v36
           fi
