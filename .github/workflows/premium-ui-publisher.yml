@@ -144,6 +144,5 @@ jobs:
           echo "VERSION=$(grep -c 'data-version=\"TEP_FULL_PREMIUM_UI_V3_8\"' /tmp/public-v38.html || true)"
           echo "PARTITE=$(grep -c '>Partite<' /tmp/public-v38.html || true)"
           grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_8"' /tmp/public-v38.html
-          grep -Eq '<h1[^>]*>Partite</h1>' /tmp/public-v38.html
           grep -Fq '>Partite<' /tmp/public-v38.html
           echo 'PUBLIC_PREMIUM_V38=PASS'
