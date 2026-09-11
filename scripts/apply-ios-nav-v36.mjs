@@ -11,7 +11,10 @@ let manifest=fs.readFileSync(manifestPath,'utf8');
 function replaceOnce(text,from,to,label){
   if(text.includes(to)) return text;
   if(!text.includes(from)) throw new Error(`Missing ${label}`);
-  return text.replace(from,to);
+  // A string replacement treats `$$` as an escape for a single dollar sign.
+  // Several generated snippets intentionally call the `$$` query-all helper,
+  // so return the replacement from a function to preserve it byte-for-byte.
+  return text.replace(from,()=>to);
 }
 
 shell=replaceOnce(shell,"const VERSION='TEP_FULL_PREMIUM_UI_V3_5';","const VERSION='TEP_FULL_PREMIUM_UI_V3_8';",'V3.5 version marker');
@@ -53,7 +56,11 @@ const bindStart=shell.indexOf('let searchTimer=null,navPointerAt=-1e9;');
 const bindEnd=shell.indexOf("\nlet lastSig='';",bindStart);
 if(bindStart<0 || bindEnd<0) throw new Error('Missing old bindRoot block');
 const newBind=`// TEP_IOS_NAV_BIND_V38\nlet searchTimer=null,lastNavTouch=-1e9;\nfunction activateBottomNav(el,e){\n  const name=el?.dataset?.route;if(!ROUTES.has(name))return;\n  if(e?.type==='click'&&performance.now()-lastNavTouch<650){e.preventDefault();return}\n  if(e?.type==='touchend')lastNavTouch=performance.now();\n  e?.preventDefault?.();route(name);\n}\nfunction bindBottomNav(root){\n  $$('.tp-nav [data-route]',root).forEach(el=>{\n    el.addEventListener('touchend',e=>activateBottomNav(el,e),{passive:false});\n    el.addEventListener('click',e=>activateBottomNav(el,e));\n  });\n}\nfunction handleRouteHash(){const next=navRouteFromHash();if(next&&next!==state.screen)route(next,{syncHash:false,restoreScroll:false})}\nfunction bindRoot(){\n  const root=$('#tpRoot');if(!root)return;bindBottomNav(root);\n  root.addEventListener('click',e=>{const target=e.target instanceof Element?e.target:null;if(!target)return;const r=target.closest('[data-route]');if(r&&root.contains(r)){if(r.closest('.tp-nav'))return;route(r.dataset.route);return}const o=target.closest('[data-open-event]');if(o){openEvent(o.dataset.openEvent);return}const f=target.closest('[data-favorite]');if(f){e.stopPropagation();toggleFav(f.dataset.favorite);return}const p=target.closest('[data-follow]');if(p){e.stopPropagation();toggleFollow(p.dataset.follow);return}if(target.closest('#tpMenuBtn')){$('#tpMenu')?.classList.add('open');return}if(target.closest('#tpMenuClose')||target===$('#tpMenu')){closeMenu();return}if(target.closest('[data-menu-sure]')){const a=document.querySelector('.bottomNav .sureLink');if(a?.href)location.href=a.href}});\n  root.addEventListener('input',e=>{if(e.target.id!=='tpSearch')return;state.query=e.target.value;clearTimeout(searchTimer);const pos=e.target.selectionStart;searchTimer=setTimeout(()=>{safeRender('search');const n=$('#tpSearch');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch{}}},120)});\n  root.addEventListener('click',e=>{const target=e.target instanceof Element?e.target:null;if(!target)return;const t=target.closest('[data-tour]');if(t){state.tour=t.dataset.tour;safeRender('tour')}const s=target.closest('[data-surface]');if(s){state.surface=s.dataset.surface;safeRender('surface')}});\n  window.addEventListener('hashchange',handleRouteHash);\n  window.__TEP_PREMIUM_NAV__={route,handleRouteHash,get screen(){return state.screen},version:VERSION};\n}\n`;
-shell=shell.slice(0,bindStart)+newBind+shell.slice(bindEnd);
+if(bindStart<0 || bindEnd<0){
+  if(!shell.includes('TEP_IOS_NAV_BIND_V38')) throw new Error('Missing old bindRoot block');
+}else{
+  shell=shell.slice(0,bindStart)+newBind+shell.slice(bindEnd);
+}
 
 const oldBoot="function boot(){install();lastSig=sig();setInterval(refresh,3000);document.addEventListener('visibilitychange',()=>{if(!document.hidden){lastSig='';refresh()}})}";
 const newBoot="function boot(){const initial=navRouteFromHash();if(initial)state.screen=initial;install();syncRouteHash(state.screen);lastSig=sig();setInterval(refresh,3000);document.addEventListener('visibilitychange',()=>{if(!document.hidden){lastSig='';refresh()}})}";

@@ -41,6 +41,8 @@ jobs:
           grep -Fq "TEP_FULL_PREMIUM_UI_V3_8" premium-shell-v1.js
           grep -Fq 'TEP_IOS_NAV_BIND_V38' premium-shell-v1.js
           grep -Fq 'function bindBottomNav(root)' premium-shell-v1.js
+          grep -Fq "\$\$('.tp-nav [data-route]').forEach" premium-shell-v1.js
+          ! grep -Fq "  \$('.tp-nav [data-route]').forEach" premium-shell-v1.js
           grep -Fq "root.innerHTML=shell();bindRoot();safeRender('install')" premium-shell-v1.js
           grep -Fq "el.addEventListener('touchend'" premium-shell-v1.js
           grep -Fq "el.addEventListener('click'" premium-shell-v1.js
@@ -129,6 +131,10 @@ jobs:
       - name: Commit certified patch
         run: |
           set -euo pipefail
+          if git diff --quiet -- premium-shell-v1.js index.html manifest.webmanifest; then
+            echo 'V38 patch already committed and certified.'
+            exit 0
+          fi
           git config user.name 'tennis-edge-ui-certifier'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add premium-shell-v1.js index.html manifest.webmanifest
