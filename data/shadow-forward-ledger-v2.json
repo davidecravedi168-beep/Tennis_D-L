@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-11T21:57:26.445Z",
+  "updated_at": "2026-09-11T22:37:39.596Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -4248,11 +4248,11 @@
       },
       "immutable_sha256": "77bcc48bc483d9162df5820fd7a3639b0fb7831b208ccba427406cc4259ce810",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
-        "won": null,
-        "profit_units": null
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-11T22:37:35.920Z",
+        "won": true,
+        "profit_units": 0.16999999999999993
       }
     },
     {
@@ -4843,11 +4843,11 @@
       },
       "immutable_sha256": "8f808bb27560ac1a7bf24f09fd06ef8d3a351d4b1de18a893a2ddafb35264002",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-11T22:37:35.920Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -4985,34 +4985,82 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "4FCE2B453072C85379F6C713",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "0ED62CB8CCEB907C4145",
+        "source_immutable_sha256": "c0980c5a824ac31efdfc3ebc1871bdb8314f3f34cf6125e75c9601d8b3959297",
+        "event_id": "74283542",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-11T22:37:35.920Z",
+        "start_at": "2026-09-12T16:00:00Z",
+        "first_observed_at": "2026-09-11T22:37:39.384Z",
+        "player_a": "Djere, Laslo",
+        "player_b": "Martinez, Pedro",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "B",
+        "candidate_name": "Martinez, Pedro",
+        "candidate_odds": 2.5,
+        "candidate_prob": 0.435621,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -4,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "NEGATIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 3,
+        "observed_core": 3,
+        "hard_reject": [
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT"
+        ],
+        "penalties": [
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "a172ffae93fa0c2d9ae3af17359d9af53100b83b3ee8603147d5dc36a65fe6d0",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 108,
+    "total_decisions": 109,
     "accepted": 38,
-    "rejected": 70,
-    "open": 20,
-    "settled": 88
+    "rejected": 71,
+    "open": 19,
+    "settled": 90
   },
   "evidence": {
     "state": "MIXED_FORWARD",
     "champion": {
-      "n": 88,
-      "wins": 36,
-      "hit_rate": 0.4090909090909091,
-      "profit_units": -5.519999999999997,
-      "roi": -0.06272727272727269,
+      "n": 90,
+      "wins": 37,
+      "hit_rate": 0.4111111111111111,
+      "profit_units": -6.349999999999997,
+      "roi": -0.07055555555555552,
       "max_drawdown_units": 14.17
     },
     "shadow": {
-      "n": 32,
-      "wins": 16,
-      "hit_rate": 0.5,
-      "profit_units": -6.85,
-      "roi": -0.2140625,
+      "n": 33,
+      "wins": 17,
+      "hit_rate": 0.5151515151515151,
+      "profit_units": -6.68,
+      "roi": -0.20242424242424242,
       "max_drawdown_units": 6.85
     },
-    "delta_roi": -0.1513352272727273,
+    "delta_roi": -0.1318686868686869,
     "review_eligible": false
   }
 }
