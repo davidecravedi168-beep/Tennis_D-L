@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-11T07:01:45.501Z",
+  "updated_at": "2026-09-11T07:22:32.756Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -3785,13 +3785,64 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "B020682A1BBC68B8834A435B",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "77E5071533A7FA9B5709",
+        "source_immutable_sha256": "69f5e5659ecf3359b445dcb225bf37e077de9615260d3f5f9d6265b60d049150",
+        "event_id": "74293742",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-11T07:16:52.829Z",
+        "start_at": "2026-09-11T21:00:00Z",
+        "first_observed_at": "2026-09-11T07:17:00.145Z",
+        "player_a": "Jeanjean, Leolia",
+        "player_b": "Liu, Claire",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Liu, Claire",
+        "candidate_odds": 1.59,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 2,
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.573689,
+        "calibrated_prob": 0.5113424203296066,
+        "calibrated_ev": -0.18696555167592543,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "POSITIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 2,
+        "negative_core": 0,
+        "observed_core": 2,
+        "hard_reject": [
+          "CALIBRATED_EV_LT_2PCT",
+          "WTA_NEEDS_3_CORE_POSITIVE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "6a954cbd6378038f0f0b02af8dd2c9803a54014c35a9b5e7fca18b80f89d579e",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 76,
+    "total_decisions": 77,
     "accepted": 10,
-    "rejected": 66,
-    "open": 26,
+    "rejected": 67,
+    "open": 27,
     "settled": 50
   },
   "evidence": {
