@@ -1,9 +1,9 @@
 {
   "schema": "TEP-MODEL-DIAGNOSTICS-2",
-  "generated_at": "2026-09-11T01:59:54.771Z",
+  "generated_at": "2026-09-11T02:22:07.541Z",
   "source": {
     "ledger_schema": "TEP-FORWARD-LEDGER-1",
-    "ledger_updated_at": "2026-09-11T01:59:01.038Z"
+    "ledger_updated_at": "2026-09-11T02:16:31.228Z"
   },
   "policy": {
     "validation_only": true,
@@ -13,15 +13,15 @@
     "note": "Diagnostics only. Drift alerts do not change production thresholds."
   },
   "overall": {
-    "n": 265,
+    "n": 266,
     "wins": 99,
-    "hit_rate": 0.37358490566037733,
-    "profit_units": -26.200000000000006,
-    "roi": -0.09886792452830191,
+    "hit_rate": 0.37218045112781956,
+    "profit_units": -27.200000000000006,
+    "roi": -0.10225563909774439,
     "max_drawdown_units": 32.86000000000001,
-    "brier": 0.19829232875120745,
-    "logloss": 0.5797386814305215,
-    "ece": 0.11294923773584914
+    "brier": 0.19877351442754124,
+    "logloss": 0.5807426788061758,
+    "ece": 0.11467204511278199
   },
   "calibration": [
     {
@@ -35,12 +35,12 @@
     },
     {
       "band": "55-60%",
-      "n": 29,
-      "avg_predicted_prob": 0.5712658275862069,
-      "observed_win_rate": 0.41379310344827586,
-      "calibration_gap": 0.15747272413793106,
-      "brier": 0.265242439899069,
-      "logloss": 0.7238522660354223
+      "n": 30,
+      "avg_predicted_prob": 0.5712641666666667,
+      "observed_win_rate": 0.4,
+      "calibration_gap": 0.17126416666666666,
+      "brier": 0.2672772825243,
+      "logloss": 0.7279505899460598
     },
     {
       "band": "60-65%",
@@ -83,15 +83,15 @@
     "tour": [
       {
         "key": "WTA",
-        "n": 147,
+        "n": 148,
         "wins": 55,
-        "hit_rate": 0.3741496598639456,
-        "profit_units": -25.09000000000001,
-        "roi": -0.17068027210884362,
+        "hit_rate": 0.3716216216216216,
+        "profit_units": -26.09000000000001,
+        "roi": -0.17628378378378384,
         "max_drawdown_units": 33.330000000000005,
-        "brier": 0.190685540669687,
-        "logloss": 0.5610615467959447,
-        "ece": 0.12269972789115646
+        "brier": 0.19160177160202696,
+        "logloss": 0.5629922254213405,
+        "ece": 0.12573024324324325
       },
       {
         "key": "ATP",
@@ -121,15 +121,15 @@
       },
       {
         "key": "2.20-2.99",
-        "n": 55,
+        "n": 56,
         "wins": 19,
-        "hit_rate": 0.34545454545454546,
-        "profit_units": -7.02,
-        "roi": -0.12763636363636363,
-        "max_drawdown_units": 12.64,
-        "brier": 0.2445103743843455,
-        "logloss": 0.6818401161117251,
-        "ece": 0.1363263090909091
+        "hit_rate": 0.3392857142857143,
+        "profit_units": -8.02,
+        "roi": -0.1432142857142857,
+        "max_drawdown_units": 13.27,
+        "brier": 0.24597068410348216,
+        "logloss": 0.6847858637410612,
+        "ece": 0.14409219642857143
       },
       {
         "key": "1.50-1.79",
@@ -172,7 +172,8 @@
   "drift": {
     "state": "WATCH",
     "reasons": [
-      "BRIER_WORSE"
+      "BRIER_WORSE",
+      "LOGLOSS_WORSE"
     ],
     "recent": {
       "n": 50,
@@ -180,37 +181,37 @@
       "hit_rate": 0.44,
       "profit_units": -2.88,
       "roi": -0.0576,
-      "max_drawdown_units": 5.460000000000001,
-      "brier": 0.22691822133758002,
-      "logloss": 0.6422444555278447,
-      "ece": 0.14369550000000006
+      "max_drawdown_units": 5.93,
+      "brier": 0.22886434790270002,
+      "logloss": 0.6461588080711844,
+      "ece": 0.14554942
     },
     "baseline": {
-      "n": 215,
+      "n": 216,
       "wins": 77,
-      "hit_rate": 0.3581395348837209,
-      "profit_units": -23.320000000000007,
-      "roi": -0.1084651162790698,
+      "hit_rate": 0.35648148148148145,
+      "profit_units": -24.320000000000007,
+      "roi": -0.11259259259259263,
       "max_drawdown_units": 32.70000000000001,
-      "brier": 0.19163514442879537,
-      "logloss": 0.5652024548962601,
-      "ece": 0.11506643255813959
+      "brier": 0.1918080437156991,
+      "logloss": 0.5656000562911272,
+      "ece": 0.11674908796296302
     },
     "delta": {
-      "brier": 0.035283076908784655,
-      "logloss": 0.07704200063158462,
-      "roi": 0.0508651162790698
+      "brier": 0.03705630418700093,
+      "logloss": 0.08055875178005723,
+      "roi": 0.054992592592592635
     }
   },
   "clv": {
     "state": "PARTIAL",
-    "avg_clv": -0.011531414152046504,
-    "clv_sample": 11,
-    "zero_share": 0.09090909090909091,
-    "closing_odds_sample": 11,
-    "coverage": 0.04150943396226415,
+    "avg_clv": -0.010570462972709296,
+    "clv_sample": 12,
+    "zero_share": 0.16666666666666666,
+    "closing_odds_sample": 12,
+    "coverage": 0.045112781954887216,
     "provider_closing_sample": 4,
-    "proxy_closing_sample": 7,
+    "proxy_closing_sample": 8,
     "nulls_treated_as_missing": true,
     "proxy_max_age_min": 180,
     "anomalies": [
@@ -219,7 +220,7 @@
   },
   "clv_integrity": {
     "version": "V3",
-    "updated_at": "2026-09-11T01:59:54.822Z",
+    "updated_at": "2026-09-11T02:22:07.596Z",
     "definition": "candidate entry odds / best available genuine closing reference - 1",
     "provider_preferred": true,
     "proxy_fallback": "last actually observed pre-start odds within 180 minutes",
