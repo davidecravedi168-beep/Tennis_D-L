@@ -36,7 +36,8 @@ jobs:
           grep -Fq "const eager=String(cls).includes('hero')?'eager':'lazy'" premium-shell-v1.js
           grep -Fq 'async function tryImage(el,img,src)' premium-shell-v1.js
           grep -Fq "const nodes=\$\$('[data-photo]',root).filter" premium-shell-v1.js
-          grep -Fq 'await Promise.all(nodes.map(async el=>' premium-shell-v1.js
+          grep -Fq 'void Promise.allSettled(immediate.map(loadAvatar))' premium-shell-v1.js
+          grep -Fq "if('IntersectionObserver'in window)" premium-shell-v1.js
           grep -Fq '.tp-avatar.has-photo img{opacity:1}' premium-shell-v1.js
           ! grep -Fq 'decoding="async" hidden' premium-shell-v1.js
           echo 'PHOTO_STATIC_CERT=PASS'
