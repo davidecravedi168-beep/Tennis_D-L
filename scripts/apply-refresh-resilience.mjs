@@ -16,7 +16,7 @@ const premiumCsp="style-src 'self' 'unsafe-inline'; img-src 'self' data: https:/
 if(s.includes(oldCsp)) s=s.replace(oldCsp,premiumCsp);
 else if(!s.includes(premiumCsp)) throw new Error('CSP contract changed; refusing blind premium patch');
 
-const premiumTag='<script src="premium-shell-v1.js?v=20260911-full-premium-v3"></script>';
+const premiumTag='<script src="premium-shell-v1.js?v=20260911-v31-live-photo-nav"></script>';
 const premiumRe=/<script src="premium-shell-v1\.js\?v=[^"]+"><\/script>/g;
 if(premiumRe.test(s)) s=s.replace(premiumRe,premiumTag);
 else if(!s.includes(premiumTag)) s=s.replace('</body>',`${premiumTag}\n</body>`);
@@ -50,4 +50,4 @@ for(const tag of [...runtimeTags,premiumTag]){
   const count=s.split(tag).length-1;
   if(count!==1) throw new Error(`runtime tag count invalid (${count}): ${tag}`);
 }
-if(s!==original){fs.writeFileSync(file,s);console.log('Tennis refresh resilience + premium shell applied and runtime wiring normalized')}else console.log('Tennis refresh resilience + premium shell already applied');
+if(s!==original){fs.writeFileSync(file,s);console.log('Tennis refresh resilience + premium V3.1 shell applied and runtime wiring normalized')}else console.log('Tennis refresh resilience + premium V3.1 shell already applied');
