@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-11T13:00:09.374Z",
+  "updated_at": "2026-09-11T13:16:50.776Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -4115,11 +4115,11 @@
       },
       "immutable_sha256": "df8e737f63fb01b230a982a431f25427efe4bfccbfbdb2a612089304c4722166",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-11T13:16:44.351Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -4939,23 +4939,69 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "39F9960AD45BA6CF51F33DC0",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "9E0602B1B1E447BCD286",
+        "source_immutable_sha256": "752fbf88711877798bf54dc9f5ad78bab4aa05104472e689a8d6ab40c5a54d19",
+        "event_id": "74293730",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-11T13:16:44.351Z",
+        "start_at": "2026-09-11T22:10:00Z",
+        "first_observed_at": "2026-09-11T13:16:50.594Z",
+        "player_a": "Jacquemot, Elsa",
+        "player_b": "Blinkova, Anna",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Jacquemot, Elsa",
+        "candidate_odds": 2.62,
+        "candidate_prob": 0.467219,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -3,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "NEGATIVE",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 0,
+        "negative_core": 1,
+        "observed_core": 1,
+        "hard_reject": [],
+        "penalties": [
+          "WTA_PENALTY",
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "245655bde244ac116cfb1a50ccf8ecd93575691d4132b43d74de35c07fe69ee9",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 107,
+    "total_decisions": 108,
     "accepted": 38,
-    "rejected": 69,
+    "rejected": 70,
     "open": 26,
-    "settled": 81
+    "settled": 82
   },
   "evidence": {
     "state": "MIXED_FORWARD",
     "champion": {
-      "n": 81,
-      "wins": 33,
-      "hit_rate": 0.4074074074074074,
-      "profit_units": -6.609999999999998,
-      "roi": -0.08160493827160491,
+      "n": 82,
+      "wins": 34,
+      "hit_rate": 0.4146341463414634,
+      "profit_units": -4.9899999999999975,
+      "roi": -0.06085365853658534,
       "max_drawdown_units": 14.17
     },
     "shadow": {
@@ -4966,7 +5012,7 @@
       "roi": -0.18870967741935482,
       "max_drawdown_units": 5.85
     },
-    "delta_roi": -0.10710473914774991,
+    "delta_roi": -0.12785601888276948,
     "review_eligible": false
   }
 }
