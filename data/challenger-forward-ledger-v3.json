@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-11T11:00:04.815Z",
+  "updated_at": "2026-09-11T14:23:18.610Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -2991,11 +2991,11 @@
       },
       "immutable_sha256": "c08eaef51b5f97637897727e652b6b6431dca74b4ddcbbe5a79e73edcba14a12",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-11T13:16:44.351Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -3090,11 +3090,11 @@
       },
       "immutable_sha256": "ced82f3dec5ceba4d2c76dd147c4f2d501c716070af991daf6d152c1c22e1800",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-11T11:15:52.073Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -3530,11 +3530,11 @@
       },
       "immutable_sha256": "0b1fc4415bfe50ac782c71dbc4c7612d1dc6018d0bf94d10a5d297cea8dc7824",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
-        "won": null,
-        "profit_units": null
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-11T14:17:05.263Z",
+        "won": false,
+        "profit_units": -1
       }
     },
     {
@@ -3886,34 +3886,91 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "B04030F56661525CBCD1DE8E",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "9E0602B1B1E447BCD286",
+        "source_immutable_sha256": "752fbf88711877798bf54dc9f5ad78bab4aa05104472e689a8d6ab40c5a54d19",
+        "event_id": "74293730",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-11T13:16:44.351Z",
+        "start_at": "2026-09-11T22:10:00Z",
+        "first_observed_at": "2026-09-11T13:16:50.594Z",
+        "player_a": "Jacquemot, Elsa",
+        "player_b": "Blinkova, Anna",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Jacquemot, Elsa",
+        "candidate_odds": 2.62,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.467219,
+        "calibrated_prob": 0.35503755008375465,
+        "calibrated_ev": -0.06980161878056279,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "NEGATIVE",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 0,
+        "negative_core": 1,
+        "observed_core": 1,
+        "hard_reject": [
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "573f002d850d265a050fd2c10f7abe9005978b212b09526e4199596dbcab61e3",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 78,
+    "total_decisions": 79,
     "accepted": 10,
-    "rejected": 68,
-    "open": 26,
-    "settled": 52
+    "rejected": 69,
+    "open": 24,
+    "settled": 55
   },
   "evidence": {
     "state": "COLD_START",
     "champion": {
-      "n": 52,
-      "wins": 23,
-      "hit_rate": 0.4423076923076923,
-      "profit_units": -2.979999999999999,
-      "roi": -0.05730769230769229,
+      "n": 55,
+      "wins": 25,
+      "hit_rate": 0.45454545454545453,
+      "profit_units": -1.359999999999999,
+      "roi": -0.02472727272727271,
       "max_drawdown_units": 7.029999999999999
     },
     "challenger": {
-      "n": 7,
+      "n": 8,
       "wins": 3,
-      "hit_rate": 0.42857142857142855,
-      "profit_units": -1.42,
-      "roi": -0.20285714285714285,
-      "max_drawdown_units": 1.92
+      "hit_rate": 0.375,
+      "profit_units": -2.42,
+      "roi": -0.3025,
+      "max_drawdown_units": 2.42
     },
-    "delta_roi": -0.14554945054945057,
+    "delta_roi": -0.2777727272727273,
     "review_eligible": false
   }
-}
+}\n
