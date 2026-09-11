@@ -1,0 +1,104 @@
+name: Pro Metrics branch certification
+
+on:
+  push:
+    branches:
+      - feat/pro-metrics-premium
+    paths:
+      - "tennis-quant-lab-v13.js"
+      - ".github/workflows/pro-metrics-branch-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  certify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/pro-metrics-premium
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Test 1 · JavaScript syntax
+        run: |
+          set -euo pipefail
+          node --check tennis-quant-lab-v13.js
+
+      - name: Test 2 · Real board data contract
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const board=JSON.parse(fs.readFileSync('data/quant-board.json','utf8'));
+          const rows=Array.isArray(board.upcoming)?board.upcoming:[];
+          if(!rows.length) throw new Error('NO_UPCOMING_ROWS');
+          let checked=0, withService=0, withScenario=0;
+          const finite=v=>v!==null&&v!==''&&Number.isFinite(Number(v));
+          const scenario=(r,m,s)=>r?.market_lab?.scenario?.find(x=>x?.market===m&&String(x?.selection)===s)?.model_prob;
+          for(const r of rows){
+            const pa=Number(r.p_a), pb=Number(r.p_b);
+            if(!Number.isFinite(pa)||!Number.isFinite(pb)||pa<0||pa>1||pb<0||pb>1) throw new Error(`BAD_WIN_PROB:${r.event_id}`);
+            if(Math.abs((pa+pb)-1)>0.002) throw new Error(`WIN_PROB_NOT_NORMALIZED:${r.event_id}`);
+            const mean=Number(r?.market_lab?.mean_total_games);
+            if(Number.isFinite(mean)&&!(mean>0&&mean<100)) throw new Error(`BAD_TOTAL_GAMES:${r.event_id}`);
+            const tb=scenario(r,'TIEBREAK_IN_MATCH','YES');
+            if(finite(tb)){
+              withScenario++;
+              const p=Number(tb); if(p<0||p>1) throw new Error(`BAD_TIEBREAK:${r.event_id}`);
+            }
+            if(Number(r?.market_lab?.best_of)===3){
+              const a=scenario(r,'SET_SCORE','2-1'), b=scenario(r,'SET_SCORE','1-2');
+              if(finite(a)&&finite(b)){
+                const p=Number(a)+Number(b); if(p<0||p>1) throw new Error(`BAD_DECIDING_SET:${r.event_id}`);
+              }
+            }
+            for(const side of ['a','b']){
+              const p=r?.player_intel?.[side];
+              const aces=p?.service?.aces_per_match, dfs=p?.service?.double_faults_per_match, n=p?.sample?.prop_matches;
+              if(finite(aces)||finite(dfs)){
+                withService++;
+                if(!finite(n)||Number(n)<=0) throw new Error(`SERVICE_WITHOUT_SAMPLE:${r.event_id}:${side}`);
+                if(finite(aces)&&Number(aces)<0) throw new Error(`NEGATIVE_ACES:${r.event_id}:${side}`);
+                if(finite(dfs)&&Number(dfs)<0) throw new Error(`NEGATIVE_DF:${r.event_id}:${side}`);
+              }
+            }
+            checked++;
+          }
+          if(!withScenario) throw new Error('NO_SCENARIO_DATA');
+          if(!withService) throw new Error('NO_SERVICE_DATA');
+          console.log(`DATA_CONTRACT_OK rows=${checked} scenario=${withScenario} service_profiles=${withService}`);
+          NODE
+
+      - name: Test 3 · DOM and product contract
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const html=fs.readFileSync('index.html','utf8');
+          const js=fs.readFileSync('tennis-quant-lab-v13.js','utf8');
+          const requiredHtml=['id="matchList"','class="matchRow" data-id=','class="matchDetail"','class="advancedBox"','tennis-quant-lab-v13.js'];
+          const requiredJs=['function decorateMatches','tepProMetrics','MODELLO · PAPER','Giochi attesi','Profilo servizio','SET DECISIVO','TIE-BREAK','medie storiche, non prop future'];
+          for(const s of requiredHtml) if(!html.includes(s)) throw new Error(`HTML_CONTRACT_MISSING:${s}`);
+          for(const s of requiredJs) if(!js.includes(s)) throw new Error(`UI_CONTRACT_MISSING:${s}`);
+          if(js.includes('Ace attesi')) throw new Error('MISLEADING_PROP_LABEL');
+          if(!js.includes("if(row.querySelector('.tepProMetrics'))return")) throw new Error('DUPLICATE_RENDER_GUARD_MISSING');
+          if(!js.includes('MutationObserver')) throw new Error('RERENDER_OBSERVER_MISSING');
+          console.log('DOM_PRODUCT_CONTRACT_OK');
+          NODE
+
+      - name: Test 4 · Existing quant regressions
+        run: |
+          set -euo pipefail
+          node scripts/tennis-model-diagnostics-v2.mjs --self-test
+          node scripts/drift-controller-v6.mjs --self-test
+          node scripts/clv-tracker-v3.mjs --self-test
+          node scripts/clv-diagnostics-fix-v3.mjs --self-test
