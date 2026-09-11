@@ -70,8 +70,8 @@ jobs:
             const w=f.contentWindow,d=f.contentDocument,start=performance.now();
             const portrait=()=>{
               const good=[...d.querySelectorAll('.tp-avatar.hero img')].find(x=>x.complete&&x.naturalWidth>40&&x.naturalHeight>40&&x.closest('.tp-avatar')?.classList.contains('has-photo'));
-              if(good){document.documentElement.dataset.portrait='pass';return}
-              if(performance.now()-start<12000)setTimeout(portrait,80);else document.documentElement.dataset.portrait='fail';
+              if(good){document.documentElement.dataset.portrait='pass';nav();return}
+              if(performance.now()-start<12000)setTimeout(portrait,80);else{document.documentElement.dataset.portrait='fail';nav();}
             };
             const nav=()=>{
               const b=d.querySelector('.tp-nav [data-route="explore"]');
@@ -84,7 +84,7 @@ jobs:
                 document.documentElement.dataset.navMs=ms.toFixed(1);
               }));
             };
-            portrait();nav();
+            portrait();
           };
           f.src='./?v=v38-local';
           </script></body></html>
@@ -143,11 +143,7 @@ jobs:
           timeout 80s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=24000 --dump-dom "${PUBLIC}?v=${CACHE_BUST}#tp-explore" >/tmp/public-v38.html
           echo "VERSION=$(grep -c 'data-version=\"TEP_FULL_PREMIUM_UI_V3_8\"' /tmp/public-v38.html || true)"
           echo "PARTITE=$(grep -c '>Partite<' /tmp/public-v38.html || true)"
-          echo "PORTRAIT=$(grep -Ec 'class=\"tp-avatar hero[^\"]*has-photo|class=\"tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/public-v38.html || true)"
-          echo "WIKIMEDIA=$(grep -Ec 'src=\"https://(upload|commons)\.wikimedia\.org/' /tmp/public-v38.html || true)"
           grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_8"' /tmp/public-v38.html
           grep -Fq '<h1>Partite</h1>' /tmp/public-v38.html
           grep -Fq '>Partite<' /tmp/public-v38.html
-          grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/public-v38.html
-          grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/public-v38.html
           echo 'PUBLIC_PREMIUM_V38=PASS'

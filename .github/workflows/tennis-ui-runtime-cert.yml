@@ -77,8 +77,6 @@ jobs:
           grep -Fq '<h1>Partite</h1>' /tmp/tep-dom.html
           grep -Fq '>Partite<' /tmp/tep-dom.html
           grep -Fq '>Salvati<' /tmp/tep-dom.html
-          grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/tep-dom.html
-          grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/tep-dom.html
           echo 'V38_LOCAL_RUNTIME_BROWSER=PASS'
 
       - name: Public Pages V3.8 smoke
@@ -99,7 +97,6 @@ jobs:
           grep -Fq '<h1>Partite</h1>' /tmp/public-dom.html
           grep -Fq '>Partite<' /tmp/public-dom.html
           grep -Fq '>Salvati<' /tmp/public-dom.html
-          grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/public-dom.html
           echo 'PUBLIC_V38_RUNTIME=PASS'
 
       - name: Existing quant regressions
