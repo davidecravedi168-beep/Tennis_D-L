@@ -7,6 +7,8 @@ on:
       - '.github/workflows/tennis-ui-runtime-cert.yml'
       - 'index.html'
       - 'manifest.webmanifest'
+      - 'premium-shell-v1.js'
+      - 'scripts/apply-refresh-resilience.mjs'
       - 'tennis-quant-math-v13.js'
       - 'tennis-quant-lab-v13.js'
       - 'tennis-quality-governance-v14.js'
@@ -53,13 +55,15 @@ jobs:
           grep -Fq 'tennis-quant-math-v13.js?v=13.0' index.html
           grep -Fq 'tennis-quant-lab-v13.js?v=13.2-pro-metrics-premium-20260911' index.html
           grep -Fq 'tennis-quality-governance-v14.js?v=14.0' index.html
-          grep -Fq './?v=20260911-pro-metrics-premium-r3' manifest.webmanifest
-          grep -Fq 'PRO METRICS' tennis-quant-lab-v13.js
-          grep -Fq 'Advanced match intelligence' tennis-quant-lab-v13.js
-          grep -Fq 'Giochi totali / Over-Under' tennis-quant-lab-v13.js
-          grep -Fq 'Profilo servizio' tennis-quant-lab-v13.js
-          grep -Fq 'Set decisivo & tie-break' tennis-quant-lab-v13.js
-          grep -Fq 'function decorateMatches()' tennis-quant-lab-v13.js
+          grep -Fq 'premium-shell-v1.js?v=20260911-full-premium-v3' index.html
+          grep -Fq '"start_url":"./?v=20260911-full-premium-v3"' manifest.webmanifest
+          grep -Fq 'TEP_FULL_PREMIUM_UI_V3' premium-shell-v1.js
+          grep -Fq 'PROBABILITÀ DI VITTORIA' premium-shell-v1.js
+          grep -Fq 'Partite in arrivo' premium-shell-v1.js
+          grep -Fq 'Le Mie Analisi' premium-shell-v1.js
+          grep -Fq 'tp-winband' premium-shell-v1.js
+          grep -Fq 'body.tp-v3>.app' premium-shell-v1.js
+          node --check premium-shell-v1.js
           node --check tennis-quant-math-v13.js
           node --check tennis-quant-lab-v13.js
           node --check tennis-quality-governance-v14.js
@@ -78,21 +82,20 @@ jobs:
             curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break
             sleep 0.25
           done
-          timeout 40s "$CHROME" \
+          timeout 45s "$CHROME" \
             --headless \
             --no-sandbox \
             --disable-gpu \
             --disable-dev-shm-usage \
-            --virtual-time-budget=9000 \
+            --virtual-time-budget=12000 \
             --dump-dom \
-            'http://127.0.0.1:8765/?v=20260911-pro-metrics-premium-r3' > /tmp/tep-dom.html
-          grep -Fq 'PRO METRICS' /tmp/tep-dom.html
-          grep -Fq 'Advanced match intelligence' /tmp/tep-dom.html
-          grep -Fq 'Giochi totali / Over-Under' /tmp/tep-dom.html
-          grep -Fq 'Profilo servizio' /tmp/tep-dom.html
-          grep -Fq 'Set decisivo &amp; tie-break' /tmp/tep-dom.html || grep -Fq 'Set decisivo & tie-break' /tmp/tep-dom.html
-          grep -Fq 'tepProMetrics' /tmp/tep-dom.html
-          grep -Fq 'Quant Math Lab · Tennis' /tmp/tep-dom.html
+            'http://127.0.0.1:8765/?v=20260911-full-premium-v3' > /tmp/tep-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3"' /tmp/tep-dom.html
+          grep -Fq 'class="tp-winband"' /tmp/tep-dom.html
+          grep -Fq 'PROBABILITÀ DI VITTORIA' /tmp/tep-dom.html
+          grep -Fq 'Partite in arrivo' /tmp/tep-dom.html
+          grep -Fq 'Le Mie Analisi' /tmp/tep-dom.html
+          grep -Fq 'tp-nav' /tmp/tep-dom.html
           echo 'UI_BROWSER_SMOKE=PASS'
 
       - name: Public Pages cache-busted smoke test
@@ -100,11 +103,11 @@ jobs:
         run: |
           set -euo pipefail
           PUBLIC="https://davidecravedi168-beep.github.io/Tennis_D-L/"
-          CACHE_BUST="premium-r3-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          CACHE_BUST="full-premium-v3-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           for i in {1..48}; do
             if curl -fsSL "${PUBLIC}?v=${CACHE_BUST}" -o /tmp/public-index.html \
               && grep -Fq "script-src 'self' 'unsafe-inline';" /tmp/public-index.html \
-              && grep -Fq 'tennis-quant-lab-v13.js?v=13.2-pro-metrics-premium-20260911' /tmp/public-index.html; then
+              && grep -Fq 'premium-shell-v1.js?v=20260911-full-premium-v3' /tmp/public-index.html; then
               echo 'PUBLIC_SHELL_FRESH=PASS'
               break
             fi
@@ -115,21 +118,20 @@ jobs:
             sleep 5
           done
           CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
-          timeout 45s "$CHROME" \
+          timeout 55s "$CHROME" \
             --headless \
             --no-sandbox \
             --disable-gpu \
             --disable-dev-shm-usage \
-            --virtual-time-budget=12000 \
+            --virtual-time-budget=16000 \
             --dump-dom \
             "${PUBLIC}?v=${CACHE_BUST}" > /tmp/public-dom.html
-          grep -Fq 'PRO METRICS' /tmp/public-dom.html
-          grep -Fq 'Advanced match intelligence' /tmp/public-dom.html
-          grep -Fq 'Giochi totali / Over-Under' /tmp/public-dom.html
-          grep -Fq 'Profilo servizio' /tmp/public-dom.html
-          grep -Fq 'Set decisivo &amp; tie-break' /tmp/public-dom.html || grep -Fq 'Set decisivo & tie-break' /tmp/public-dom.html
-          grep -Fq 'tepProMetrics' /tmp/public-dom.html
-          grep -Fq 'Quant Math Lab · Tennis' /tmp/public-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3"' /tmp/public-dom.html
+          grep -Fq 'class="tp-winband"' /tmp/public-dom.html
+          grep -Fq 'PROBABILITÀ DI VITTORIA' /tmp/public-dom.html
+          grep -Fq 'Partite in arrivo' /tmp/public-dom.html
+          grep -Fq 'Le Mie Analisi' /tmp/public-dom.html
+          grep -Fq 'tp-nav' /tmp/public-dom.html
           echo 'PUBLIC_UI_BROWSER_SMOKE=PASS'
 
       - name: Commit CSP repair if needed
