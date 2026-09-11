@@ -1,9 +1,9 @@
 {
   "schema": "TEP-MODEL-DIAGNOSTICS-2",
-  "generated_at": "2026-09-11T17:59:40.135Z",
+  "generated_at": "2026-09-11T18:24:32.213Z",
   "source": {
     "ledger_schema": "TEP-FORWARD-LEDGER-1",
-    "ledger_updated_at": "2026-09-11T17:59:00.024Z"
+    "ledger_updated_at": "2026-09-11T18:18:55.478Z"
   },
   "policy": {
     "validation_only": true,
@@ -13,25 +13,25 @@
     "note": "Diagnostics only. Drift alerts do not change production thresholds."
   },
   "overall": {
-    "n": 274,
-    "wins": 103,
-    "hit_rate": 0.3759124087591241,
-    "profit_units": -25.580000000000005,
-    "roi": -0.09335766423357666,
+    "n": 276,
+    "wins": 104,
+    "hit_rate": 0.37681159420289856,
+    "profit_units": -25.210000000000004,
+    "roi": -0.09134057971014495,
     "max_drawdown_units": 32.86000000000001,
-    "brier": 0.20035030643260573,
-    "logloss": 0.5841904955209548,
-    "ece": 0.11168648175182487
+    "brier": 0.2008703234629854,
+    "logloss": 0.585301672892055,
+    "ece": 0.11067970289855077
   },
   "calibration": [
     {
       "band": "<55%",
-      "n": 183,
-      "avg_predicted_prob": 0.3861558961748633,
-      "observed_win_rate": 0.2568306010928962,
-      "calibration_gap": 0.1293252950819671,
-      "brier": 0.19318590969185237,
-      "logloss": 0.5701764573935049
+      "n": 185,
+      "avg_predicted_prob": 0.3870920594594594,
+      "observed_win_rate": 0.2594594594594595,
+      "calibration_gap": 0.12763259999999993,
+      "brier": 0.19403917182085934,
+      "logloss": 0.5719857170187944
     },
     {
       "band": "55-60%",
@@ -83,27 +83,27 @@
     "tour": [
       {
         "key": "WTA",
-        "n": 151,
-        "wins": 58,
-        "hit_rate": 0.3841059602649007,
-        "profit_units": -21.47000000000001,
-        "roi": -0.14218543046357623,
+        "n": 152,
+        "wins": 59,
+        "hit_rate": 0.3881578947368421,
+        "profit_units": -20.10000000000001,
+        "roi": -0.1322368421052632,
         "max_drawdown_units": 33.330000000000005,
-        "brier": 0.1925683969969072,
-        "logloss": 0.5651970032204483,
-        "ece": 0.11362844370860929
+        "brier": 0.19327848917956572,
+        "logloss": 0.5667054020270657,
+        "ece": 0.11217776315789471
       },
       {
         "key": "ATP",
-        "n": 123,
+        "n": 124,
         "wins": 45,
-        "hit_rate": 0.36585365853658536,
-        "profit_units": -4.109999999999999,
-        "roi": -0.03341463414634146,
-        "max_drawdown_units": 17.94,
-        "brier": 0.20990370744716255,
-        "logloss": 0.607507709645966,
-        "ece": 0.1306856829268293
+        "hit_rate": 0.3629032258064516,
+        "profit_units": -5.109999999999999,
+        "roi": -0.041209677419354836,
+        "max_drawdown_units": 18.94,
+        "brier": 0.21017644290717738,
+        "logloss": 0.6080971016942992,
+        "ece": 0.1336130806451613
       }
     ],
     "odds": [
@@ -121,15 +121,15 @@
       },
       {
         "key": "2.20-2.99",
-        "n": 60,
-        "wins": 20,
-        "hit_rate": 0.3333333333333333,
-        "profit_units": -9.399999999999999,
-        "roi": -0.15666666666666665,
-        "max_drawdown_units": 14.649999999999999,
-        "brier": 0.24919554542008335,
-        "logloss": 0.6913061648672882,
-        "ece": 0.15066531666666666
+        "n": 62,
+        "wins": 21,
+        "hit_rate": 0.3387096774193548,
+        "profit_units": -9.029999999999998,
+        "roi": -0.14564516129032254,
+        "max_drawdown_units": 15.649999999999999,
+        "brier": 0.24993480707185486,
+        "logloss": 0.6927973522177883,
+        "ece": 0.14492614516129035
       },
       {
         "key": "1.80-2.19",
@@ -179,39 +179,39 @@
       "n": 50,
       "wins": 23,
       "hit_rate": 0.46,
-      "profit_units": 0.5100000000000002,
-      "roi": 0.010200000000000004,
+      "profit_units": 1.2700000000000011,
+      "roi": 0.025400000000000023,
       "max_drawdown_units": 7.03,
-      "brier": 0.23239275144348007,
-      "logloss": 0.6533350879518788,
-      "ece": 0.13068955999999998
+      "brier": 0.23459547226598002,
+      "logloss": 0.6578128778459216,
+      "ece": 0.1288085
     },
     "baseline": {
-      "n": 224,
-      "wins": 80,
-      "hit_rate": 0.35714285714285715,
-      "profit_units": -26.090000000000007,
-      "roi": -0.11647321428571432,
+      "n": 226,
+      "wins": 81,
+      "hit_rate": 0.3584070796460177,
+      "profit_units": -26.480000000000008,
+      "roi": -0.11716814159292038,
       "max_drawdown_units": 32.86000000000001,
-      "brier": 0.19319797495696428,
-      "logloss": 0.5687564347104805,
-      "ece": 0.11772422321428576
+      "brier": 0.19340900735612832,
+      "logloss": 0.569259370911111,
+      "ece": 0.11733972123893809
     },
     "delta": {
-      "brier": 0.03919477648651579,
-      "logloss": 0.08457865324139824,
-      "roi": 0.12667321428571432
+      "brier": 0.0411864649098517,
+      "logloss": 0.08855350693481057,
+      "roi": 0.14256814159292042
     }
   },
   "clv": {
     "state": "PARTIAL",
-    "avg_clv": -0.019375713473618644,
-    "clv_sample": 20,
-    "zero_share": 0.2,
-    "closing_odds_sample": 20,
-    "coverage": 0.072992700729927,
+    "avg_clv": -0.008531956023601376,
+    "clv_sample": 22,
+    "zero_share": 0.18181818181818182,
+    "closing_odds_sample": 22,
+    "coverage": 0.07971014492753623,
     "provider_closing_sample": 4,
-    "proxy_closing_sample": 16,
+    "proxy_closing_sample": 18,
     "nulls_treated_as_missing": true,
     "proxy_max_age_min": 180,
     "anomalies": [
@@ -220,7 +220,7 @@
   },
   "clv_integrity": {
     "version": "V3",
-    "updated_at": "2026-09-11T17:59:40.190Z",
+    "updated_at": "2026-09-11T18:24:32.276Z",
     "definition": "candidate entry odds / best available genuine closing reference - 1",
     "provider_preferred": true,
     "proxy_fallback": "last actually observed pre-start odds within 180 minutes",
