@@ -69,15 +69,43 @@ jobs:
           set -euo pipefail
           if git diff --quiet -- index.html; then
             echo 'Premium shell already wired.'
-            exit 0
+          else
+            git config user.name 'tennis-edge-ui-publisher'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add index.html
+            git commit -m 'feat(ui): activate full premium application shell'
+            for attempt in 1 2 3 4 5; do
+              if git pull --rebase origin main && git push origin HEAD:main; then break; fi
+              git rebase --abort || true
+              if [ "$attempt" -eq 5 ]; then exit 1; fi
+              sleep $((attempt * 2))
+            done
           fi
-          git config user.name 'tennis-edge-ui-publisher'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html
-          git commit -m 'feat(ui): activate full premium application shell'
-          for attempt in 1 2 3 4 5; do
-            if git pull --rebase origin main && git push origin HEAD:main; then exit 0; fi
-            git rebase --abort || true
-            sleep $((attempt * 2))
+
+      - name: Public Pages browser smoke
+        run: |
+          set -euo pipefail
+          PUBLIC='https://davidecravedi168-beep.github.io/Tennis_D-L/'
+          CACHE_BUST="full-premium-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          for i in {1..48}; do
+            if curl -fsSL "${PUBLIC}?v=${CACHE_BUST}" -o /tmp/public-premium-index.html \
+              && grep -Fq 'premium-shell-v1.js?v=20260911-r1' /tmp/public-premium-index.html; then
+              echo 'PUBLIC_PREMIUM_SHELL_FRESH=PASS'
+              break
+            fi
+            if [ "$i" -eq 48 ]; then
+              echo 'PUBLIC_PREMIUM_SHELL_FRESH=FAIL'
+              exit 1
+            fi
+            sleep 5
           done
-          exit 1
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME" || { echo 'CHROME_NOT_FOUND'; exit 1; }
+          timeout 55s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=18000 --dump-dom "${PUBLIC}?v=${CACHE_BUST}" > /tmp/public-premium-dom.html
+          grep -Fq 'TEP_PREMIUM_SHELL_R1' /tmp/public-premium-dom.html
+          grep -Fq 'id="tepPremiumHero"' /tmp/public-premium-dom.html
+          grep -Fq 'id="tepPremiumDashboard"' /tmp/public-premium-dom.html
+          grep -Fq 'id="tepPremiumNav"' /tmp/public-premium-dom.html
+          grep -Fq 'Probabilità di vittoria' /tmp/public-premium-dom.html
+          grep -Fq 'tepPremiumMatchSummary' /tmp/public-premium-dom.html
+          echo 'PUBLIC_PREMIUM_BROWSER=PASS'
