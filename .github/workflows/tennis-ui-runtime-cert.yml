@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/tennis-ui-runtime-cert.yml'
       - 'index.html'
+      - 'manifest.webmanifest'
       - 'tennis-quant-math-v13.js'
       - 'tennis-quant-lab-v13.js'
       - 'tennis-quality-governance-v14.js'
@@ -84,6 +85,39 @@ jobs:
           grep -Fq 'tepProMetrics' /tmp/tep-dom.html
           grep -Fq 'Quant Math Lab · Tennis' /tmp/tep-dom.html
           echo 'UI_BROWSER_SMOKE=PASS'
+
+      - name: Public Pages cache-busted smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          PUBLIC="https://davidecravedi168-beep.github.io/Tennis_D-L/"
+          CACHE_BUST="runtime-cert-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          for i in {1..36}; do
+            if curl -fsSL "${PUBLIC}?v=${CACHE_BUST}" -o /tmp/public-index.html \
+              && grep -Fq "script-src 'self' 'unsafe-inline';" /tmp/public-index.html \
+              && grep -Fq 'tennis-quant-lab-v13.js?v=13.1-pro-metrics-20260911' /tmp/public-index.html; then
+              echo 'PUBLIC_SHELL_FRESH=PASS'
+              break
+            fi
+            if [ "$i" -eq 36 ]; then
+              echo 'PUBLIC_SHELL_FRESH=FAIL'
+              exit 1
+            fi
+            sleep 5
+          done
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+          timeout 45s "$CHROME" \
+            --headless \
+            --no-sandbox \
+            --disable-gpu \
+            --disable-dev-shm-usage \
+            --virtual-time-budget=12000 \
+            --dump-dom \
+            "${PUBLIC}?v=${CACHE_BUST}" > /tmp/public-dom.html
+          grep -Fq 'PRO METRICS' /tmp/public-dom.html
+          grep -Fq 'tepProMetrics' /tmp/public-dom.html
+          grep -Fq 'Quant Math Lab · Tennis' /tmp/public-dom.html
+          echo 'PUBLIC_UI_BROWSER_SMOKE=PASS'
 
       - name: Commit CSP repair if needed
         shell: bash
