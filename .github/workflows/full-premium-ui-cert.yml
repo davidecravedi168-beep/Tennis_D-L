@@ -1,0 +1,78 @@
+name: Full Premium UI certification
+
+on:
+  push:
+    branches: [feat/full-premium-ui-r1]
+    paths:
+      - 'premium-shell-v1.js'
+      - 'scripts/apply-refresh-resilience.mjs'
+      - '.github/workflows/full-premium-ui-cert.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  certify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+        with:
+          ref: feat/full-premium-ui-r1
+          fetch-depth: 0
+
+      - name: Test 1 · JavaScript syntax
+        run: |
+          set -euo pipefail
+          node --check premium-shell-v1.js
+          node --check scripts/apply-refresh-resilience.mjs
+          echo 'PREMIUM_SYNTAX=PASS'
+
+      - name: Test 2 · Idempotent wiring and CSP
+        run: |
+          set -euo pipefail
+          node scripts/apply-refresh-resilience.mjs
+          node scripts/apply-refresh-resilience.mjs
+          grep -Fq 'premium-shell-v1.js?v=20260911-r1' index.html
+          grep -Fq "connect-src 'self' https://en.wikipedia.org;" index.html
+          grep -Fq "img-src 'self' data: https://commons.wikimedia.org https://upload.wikimedia.org;" index.html
+          test "$(grep -o 'premium-shell-v1.js?v=20260911-r1' index.html | wc -l)" -eq 1
+          echo 'PREMIUM_WIRING=PASS'
+
+      - name: Test 3 · Real browser render
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME" || { echo 'CHROME_NOT_FOUND'; exit 1; }
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tep-premium-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
+          timeout 50s "$CHROME" \
+            --headless \
+            --no-sandbox \
+            --disable-gpu \
+            --disable-dev-shm-usage \
+            --virtual-time-budget=15000 \
+            --dump-dom \
+            'http://127.0.0.1:8765/index.html?v=premium-cert' > /tmp/tep-premium-dom.html
+          grep -Fq 'TEP_PREMIUM_SHELL_R1' /tmp/tep-premium-dom.html
+          grep -Fq 'id="tepPremiumHero"' /tmp/tep-premium-dom.html
+          grep -Fq 'id="tepPremiumDashboard"' /tmp/tep-premium-dom.html
+          grep -Fq 'id="tepPremiumNav"' /tmp/tep-premium-dom.html
+          grep -Fq '>Esplora<' /tmp/tep-premium-dom.html
+          grep -Fq '>Le mie analisi<' /tmp/tep-premium-dom.html
+          grep -Fq 'Probabilità di vittoria' /tmp/tep-premium-dom.html
+          grep -Fq 'tepPremiumMatchSummary' /tmp/tep-premium-dom.html
+          echo 'PREMIUM_BROWSER_RENDER=PASS'
+
+      - name: Test 4 · Existing quant regressions
+        run: |
+          set -euo pipefail
+          node scripts/tennis-model-diagnostics-v2.mjs --self-test
+          node scripts/drift-controller-v6.mjs --self-test
+          node scripts/clv-tracker-v3.mjs --self-test
+          node scripts/clv-diagnostics-fix-v3.mjs --self-test
+          echo 'PREMIUM_QUANT_REGRESSION=PASS'
