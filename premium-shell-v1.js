@@ -1,8 +1,8 @@
 (()=>{
 'use strict';
-const VERSION='TEP_FULL_PREMIUM_UI_V3_4';
-if(window.__TEP_FULL_PREMIUM_UI_V34)return;
-window.__TEP_FULL_PREMIUM_UI_V34=true;
+const VERSION='TEP_FULL_PREMIUM_UI_V3_5';
+if(window.__TEP_FULL_PREMIUM_UI_V35)return;
+window.__TEP_FULL_PREMIUM_UI_V35=true;
 
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -84,7 +84,7 @@ async function loadAvatar(el){
 }
 function hydrate(root=document){
   photoObserver?.disconnect();photoObserver=null;
-  const nodes=$('[data-photo]',root).filter(x=>x.dataset.photoState!=='loading'&&x.dataset.photoState!=='done'),immediate=[],deferred=[];
+  const nodes=$$('[data-photo]',root).filter(x=>x.dataset.photoState!=='loading'&&x.dataset.photoState!=='done'),immediate=[],deferred=[];
   for(const el of nodes){const key=pretty(el.dataset.photo).toLowerCase(),r=el.getBoundingClientRect();(catalogPhoto(key)||photoCache[key]||el.classList.contains('hero')||r.top<window.innerHeight+320?immediate:deferred).push(el)}
   void Promise.allSettled(immediate.map(loadAvatar));
   if(!deferred.length)return;
@@ -133,9 +133,9 @@ function install(){
   document.body.classList.add('tp-v3');let style=$('#tpV3Style');if(!style){style=document.createElement('style');style.id='tpV3Style';document.head.appendChild(style)}style.textContent=CSS;
   let root=$('#tpRoot');if(!root){root=document.createElement('div');root.id='tpRoot';document.body.appendChild(root)}root.innerHTML=shell();render(false);bindRoot();document.documentElement.dataset.tepFullUi=VERSION;
 }
-function applyView(){const view=$('#tpView');if(!view)return;view.innerHTML=screenHtml();$('.tp-nav button').forEach(b=>b.classList.toggle('on',b.dataset.route===state.screen));const fresh=$('.tp-fresh');if(fresh)fresh.textContent=freshness();queueMicrotask(()=>hydrate(view))}
+function applyView(){const view=$('#tpView');if(!view)return;view.innerHTML=screenHtml();$$$('.tp-nav button').forEach(b=>b.classList.toggle('on',b.dataset.route===state.screen));const fresh=$('.tp-fresh');if(fresh)fresh.textContent=freshness();queueMicrotask(()=>hydrate(view))}
 function render(){applyView()}
-function route(name){const next=name||'home';if(next===state.screen){window.scrollTo({top:0,left:0,behavior:'auto'});return}state.scroll[state.screen]=window.scrollY;state.screen=next;closeMenu();$('.tp-nav button').forEach(b=>b.classList.toggle('on',b.dataset.route===next));render();window.scrollTo({top:state.scroll[next]||0,left:0,behavior:'auto'})}
+function route(name){const next=name||'home';if(next===state.screen){window.scrollTo({top:0,left:0,behavior:'auto'});return}state.scroll[state.screen]=window.scrollY;state.screen=next;closeMenu();$$$('.tp-nav button').forEach(b=>b.classList.toggle('on',b.dataset.route===next));render();window.scrollTo({top:state.scroll[next]||0,left:0,behavior:'auto'})}
 function openEvent(id){if(!id)return;state.scroll[state.screen]=window.scrollY;state.selectedId=String(id);state.screen='analysis';render();window.scrollTo({top:0,left:0,behavior:'auto'})}
 function toggleFav(id){const k=String(id);favorites.has(k)?favorites.delete(k):favorites.add(k);writeSet(favKey,favorites);render(false)}
 function toggleFollow(name){const k=pretty(name);followed.has(k)?followed.delete(k):followed.add(k);writeSet(followKey,followed);render(false)}
