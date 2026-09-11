@@ -1,0 +1,103 @@
+name: Pro Metrics cache-bust certification
+
+on:
+  push:
+    branches: ["fix/pro-metrics-cache-bust"]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/pro-metrics-cache-bust
+          fetch-depth: 0
+      - name: Patch only the Pro Metrics asset version
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          old='tennis-quant-lab-v13.js?v=13.0'
+          new='tennis-quant-lab-v13.js?v=13.1-pro-metrics-20260911'
+          if new in s:
+              print('CACHE_KEY_ALREADY_PATCHED')
+          else:
+              if s.count(old) != 1:
+                  raise SystemExit(f'EXPECTED_ONE_OLD_CACHE_KEY got={s.count(old)}')
+              p.write_text(s.replace(old,new,1))
+              print('CACHE_KEY_PATCHED')
+          PY
+          if git diff --quiet -- index.html; then
+            exit 0
+          fi
+          git config user.name "tennis-edge-ui-certifier"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "fix(ui): bust cached Pro Metrics asset on iOS"
+          git push origin HEAD:fix/pro-metrics-cache-bust
+
+  certify:
+    needs: patch
+    strategy:
+      fail-fast: false
+      matrix:
+        attempt: [1, 2, 3, 4]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest patched branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/pro-metrics-cache-bust
+          fetch-depth: 0
+      - name: Test ${{ matrix.attempt }} · cache key contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(grep -o 'tennis-quant-lab-v13.js?v=13.1-pro-metrics-20260911' index.html | wc -l)" -eq 1
+          ! grep -q 'tennis-quant-lab-v13.js?v=13.0' index.html
+      - name: Test ${{ matrix.attempt }} · Pro Metrics syntax and wiring
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check tennis-quant-lab-v13.js
+          grep -q 'tepProMetrics' tennis-quant-lab-v13.js
+          grep -q 'function decorateMatches' tennis-quant-lab-v13.js
+          grep -q 'medie storiche, non prop future' tennis-quant-lab-v13.js
+      - name: Test ${{ matrix.attempt }} · real board contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const board=JSON.parse(fs.readFileSync('data/quant-board.json','utf8'));
+          const rows=Array.isArray(board.upcoming)?board.upcoming:[];
+          if(!rows.length) throw new Error('NO_UPCOMING_ROWS');
+          let scenarios=0,service=0;
+          const finite=v=>v!==null&&v!==''&&Number.isFinite(Number(v));
+          for(const r of rows){
+            const pa=Number(r.p_a),pb=Number(r.p_b);
+            if(!Number.isFinite(pa)||!Number.isFinite(pb)||Math.abs(pa+pb-1)>0.002) throw new Error(`BAD_WIN_PROB:${r.event_id}`);
+            if(Array.isArray(r?.market_lab?.scenario)&&r.market_lab.scenario.length) scenarios++;
+            for(const side of ['a','b']){
+              const p=r?.player_intel?.[side];
+              if(finite(p?.service?.aces_per_match)||finite(p?.service?.double_faults_per_match)) service++;
+            }
+          }
+          if(!scenarios||!service) throw new Error('MISSING_PRO_METRICS_INPUTS');
+          console.log(`REAL_BOARD_OK rows=${rows.length} scenarios=${scenarios} service=${service}`);
+          NODE
+      - name: Test ${{ matrix.attempt }} · quant regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/tennis-model-diagnostics-v2.mjs --self-test
+          node scripts/drift-controller-v6.mjs --self-test
+          node scripts/clv-tracker-v3.mjs --self-test
+          node scripts/clv-diagnostics-fix-v3.mjs --self-test
