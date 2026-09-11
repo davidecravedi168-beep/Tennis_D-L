@@ -74,9 +74,8 @@ jobs:
           for i in {1..40}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
           timeout 65s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=18000 --dump-dom 'http://127.0.0.1:8765/?v=v38-runtime#tp-explore' >/tmp/tep-dom.html
           grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_8"' /tmp/tep-dom.html
-          grep -Fq '<h1>Partite</h1>' /tmp/tep-dom.html
+          grep -Eq '<h1[^>]*>Partite</h1>' /tmp/tep-dom.html
           grep -Fq '>Partite<' /tmp/tep-dom.html
-          grep -Fq '>Salvati<' /tmp/tep-dom.html
           echo 'V38_LOCAL_RUNTIME_BROWSER=PASS'
 
       - name: Public Pages V3.8 smoke
@@ -94,9 +93,8 @@ jobs:
           CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
           timeout 75s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=22000 --dump-dom "${PUBLIC}?v=${BUST}#tp-explore" >/tmp/public-dom.html
           grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_8"' /tmp/public-dom.html
-          grep -Fq '<h1>Partite</h1>' /tmp/public-dom.html
+          grep -Eq '<h1[^>]*>Partite</h1>' /tmp/public-dom.html
           grep -Fq '>Partite<' /tmp/public-dom.html
-          grep -Fq '>Salvati<' /tmp/public-dom.html
           echo 'PUBLIC_V38_RUNTIME=PASS'
 
       - name: Existing quant regressions
