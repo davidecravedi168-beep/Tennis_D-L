@@ -56,7 +56,7 @@ async function wikiCandidates(raw){
 function avatar(name,cls=''){const eager=String(cls).includes('hero')?'eager':'lazy';return`<span class="tp-avatar ${cls}" data-photo="${esc(name)}"><span>${esc(initials(name))}</span><img alt="${esc(pretty(name))}" loading="${eager}" decoding="async"></span>`}
 async function tryImage(el,img,src){return new Promise(resolve=>{let done=false;const finish=ok=>{if(done)return;done=true;img.onload=null;img.onerror=null;if(ok)el.classList.add('has-photo');else el.classList.remove('has-photo');resolve(ok)};img.onload=()=>finish(img.naturalWidth>80&&img.naturalHeight>80);img.onerror=()=>finish(false);img.src=src;if(img.complete&&img.naturalWidth>80&&img.naturalHeight>80)finish(true);setTimeout(()=>finish(img.complete&&img.naturalWidth>80&&img.naturalHeight>80),5000)})}
 async function hydrate(root=document){
-  const nodes=$('[data-photo]',root).filter(x=>x.dataset.photoState!=='loading'&&x.dataset.photoState!=='done');
+  const nodes=$$('[data-photo]',root).filter(x=>x.dataset.photoState!=='loading'&&x.dataset.photoState!=='done');
   await Promise.all(nodes.map(async el=>{
     el.dataset.photoState='loading';const img=$('img',el);if(!img){el.dataset.photoState='done';return}
     const name=el.dataset.photo,key=pretty(name).toLowerCase(),candidates=await wikiCandidates(name);let ok=false;
