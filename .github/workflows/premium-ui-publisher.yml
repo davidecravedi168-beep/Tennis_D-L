@@ -29,18 +29,44 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Validate premium V3 wiring
+      - name: Normalize premium V3.1 wiring
         run: |
           set -euo pipefail
           node scripts/apply-refresh-resilience.mjs
           node scripts/apply-refresh-resilience.mjs
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          old = 'premium-shell-v1.js?v=20260911-full-premium-v3'
+          new = 'premium-shell-v1.js?v=20260911-v31-live-photo-nav'
+          s = s.replace(old, new)
+          p.write_text(s, encoding='utf-8')
+
+          m = Path('manifest.webmanifest')
+          ms = m.read_text(encoding='utf-8')
+          ms = ms.replace('./?v=20260911-full-premium-v3', './?v=20260911-v31-live-photo-nav')
+          m.write_text(ms, encoding='utf-8')
+          PY
+
+      - name: Validate premium V3.1 wiring
+        run: |
+          set -euo pipefail
           node --check premium-shell-v1.js
-          grep -Fq 'premium-shell-v1.js?v=20260911-full-premium-v3' index.html
-          grep -Fq '"start_url":"./?v=20260911-full-premium-v3"' manifest.webmanifest
+          grep -Fq 'premium-shell-v1.js?v=20260911-v31-live-photo-nav' index.html
+          grep -Fq '"start_url": "./?v=20260911-v31-live-photo-nav"' manifest.webmanifest
           grep -Fq "connect-src 'self' https://en.wikipedia.org;" index.html
           grep -Fq "img-src 'self' data: https://commons.wikimedia.org https://upload.wikimedia.org;" index.html
-          grep -Fq 'TEP_FULL_PREMIUM_UI_V3' premium-shell-v1.js
-          test "$(grep -o 'premium-shell-v1.js?v=20260911-full-premium-v3' index.html | wc -l)" -eq 1
+          grep -Fq 'TEP_FULL_PREMIUM_UI_V3_1' premium-shell-v1.js
+          grep -Fq 'function liveScore(score)' premium-shell-v1.js
+          grep -Fq 'document.startViewTransition' premium-shell-v1.js
+          grep -Fq 'generator=search' premium-shell-v1.js
+          test "$(grep -o 'premium-shell-v1.js?v=20260911-v31-live-photo-nav' index.html | wc -l)" -eq 1
+          if grep -Fq '[object Object]' premium-shell-v1.js; then
+            echo 'OBJECT_STRING_LEAK_FOUND'
+            exit 1
+          fi
+          echo 'PREMIUM_V31_CONTRACT=PASS'
 
       - name: Real browser local smoke
         run: |
@@ -51,14 +77,14 @@ jobs:
           SERVER_PID=$!
           trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
           for i in {1..20}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
-          timeout 50s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=15000 --dump-dom 'http://127.0.0.1:8765/?v=20260911-full-premium-v3' > /tmp/tep-premium-prod-dom.html
-          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3"' /tmp/tep-premium-prod-dom.html
+          timeout 50s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=15000 --dump-dom 'http://127.0.0.1:8765/?v=20260911-v31-live-photo-nav' > /tmp/tep-premium-prod-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_1"' /tmp/tep-premium-prod-dom.html
           grep -Fq 'class="tp-winband"' /tmp/tep-premium-prod-dom.html
           grep -Fq 'PROBABILITÀ DI VITTORIA' /tmp/tep-premium-prod-dom.html
           grep -Fq 'Partite in arrivo' /tmp/tep-premium-prod-dom.html
           grep -Fq 'Le Mie Analisi' /tmp/tep-premium-prod-dom.html
           grep -Fq 'tp-nav' /tmp/tep-premium-prod-dom.html
-          echo 'PREMIUM_V3_LOCAL_BROWSER=PASS'
+          echo 'PREMIUM_V31_LOCAL_BROWSER=PASS'
 
       - name: Existing quant regressions
         run: |
@@ -71,13 +97,13 @@ jobs:
       - name: Commit normalized wiring if needed
         run: |
           set -euo pipefail
-          if git diff --quiet -- index.html; then
-            echo 'Premium V3 shell already wired.'
+          if git diff --quiet -- index.html manifest.webmanifest; then
+            echo 'Premium V3.1 shell already wired.'
           else
             git config user.name 'tennis-edge-ui-publisher'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add index.html
-            git commit -m 'fix(ui): normalize full premium v3 runtime wiring'
+            git add index.html manifest.webmanifest
+            git commit -m 'fix(ui): activate V3.1 cache-busted shell'
             for attempt in 1 2 3 4 5; do
               if git pull --rebase origin main && git push origin HEAD:main; then break; fi
               git rebase --abort || true
@@ -90,15 +116,15 @@ jobs:
         run: |
           set -euo pipefail
           PUBLIC='https://davidecravedi168-beep.github.io/Tennis_D-L/'
-          CACHE_BUST="full-premium-v3-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          CACHE_BUST="v31-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           for i in {1..48}; do
             if curl -fsSL "${PUBLIC}?v=${CACHE_BUST}" -o /tmp/public-premium-index.html \
-              && grep -Fq 'premium-shell-v1.js?v=20260911-full-premium-v3' /tmp/public-premium-index.html; then
-              echo 'PUBLIC_PREMIUM_V3_SHELL_FRESH=PASS'
+              && grep -Fq 'premium-shell-v1.js?v=20260911-v31-live-photo-nav' /tmp/public-premium-index.html; then
+              echo 'PUBLIC_PREMIUM_V31_SHELL_FRESH=PASS'
               break
             fi
             if [ "$i" -eq 48 ]; then
-              echo 'PUBLIC_PREMIUM_V3_SHELL_FRESH=FAIL'
+              echo 'PUBLIC_PREMIUM_V31_SHELL_FRESH=FAIL'
               exit 1
             fi
             sleep 5
@@ -106,10 +132,10 @@ jobs:
           CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
           test -n "$CHROME" || { echo 'CHROME_NOT_FOUND'; exit 1; }
           timeout 55s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=18000 --dump-dom "${PUBLIC}?v=${CACHE_BUST}" > /tmp/public-premium-dom.html
-          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3"' /tmp/public-premium-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_1"' /tmp/public-premium-dom.html
           grep -Fq 'class="tp-winband"' /tmp/public-premium-dom.html
           grep -Fq 'PROBABILITÀ DI VITTORIA' /tmp/public-premium-dom.html
           grep -Fq 'Partite in arrivo' /tmp/public-premium-dom.html
           grep -Fq 'Le Mie Analisi' /tmp/public-premium-dom.html
           grep -Fq 'tp-nav' /tmp/public-premium-dom.html
-          echo 'PUBLIC_PREMIUM_V3_BROWSER=PASS'
+          echo 'PUBLIC_PREMIUM_V31_BROWSER=PASS'
