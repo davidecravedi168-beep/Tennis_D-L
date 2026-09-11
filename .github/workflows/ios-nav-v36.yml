@@ -58,28 +58,33 @@ jobs:
         run: |
           set -euo pipefail
           cp index.html /tmp/index-before-v36-browser-test.html
+          restore_index(){ cp /tmp/index-before-v36-browser-test.html index.html; }
+          trap restore_index EXIT
           python3 - <<'PY'
           from pathlib import Path
           p=Path('index.html')
           s=p.read_text()
           probe=r'''<script>
-          window.addEventListener('load',()=>setTimeout(async()=>{
+          document.addEventListener('DOMContentLoaded',()=>setTimeout(async()=>{
             const sleep=ms=>new Promise(r=>setTimeout(r,ms));
             const routes=['explore','analysis','mine','home'];
             const results=[];
+            const trace=[];
             for(const name of routes){
               const el=document.querySelector(`.tp-nav [data-route="${name}"]`);
-              if(!el){results.push(false);continue;}
+              if(!el){results.push(false);trace.push(name+':missing');continue;}
               el.click();
               await sleep(180);
               const active=el.classList.contains('on');
               const state=window.__TEP_PREMIUM_NAV__?.screen===name;
               const hash=location.hash===`#tp-${name}`;
               results.push(Boolean(active&&state&&hash));
+              trace.push(`${name}:${active?'a':'-'}${state?'s':'-'}${hash?'h':'-'}`);
             }
             document.documentElement.dataset.tepNavCount=String(results.filter(Boolean).length);
+            document.documentElement.dataset.tepNavTrace=trace.join(',');
             document.documentElement.dataset.tepNavTest=results.length===4&&results.every(Boolean)?'PASS':'FAIL';
-          },900));
+          },900),{once:true});
           </script>'''
           if '</body>' not in s:
               raise SystemExit('missing body close')
@@ -89,18 +94,24 @@ jobs:
           test -n "$CHROME" || { echo 'CHROME_NOT_FOUND'; exit 1; }
           python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tep-v36-http.log 2>&1 &
           SERVER_PID=$!
-          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
-          for i in {1..20}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
+          for i in {1..40}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
           timeout 60s "$CHROME" \
             --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
             --window-size=390,844 \
             --user-agent='Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1' \
             --virtual-time-budget=12000 --dump-dom \
             'http://127.0.0.1:8765/?v=20260911-v36-browser-smoke' > /tmp/tep-v36-dom.html
+          kill "$SERVER_PID" 2>/dev/null || true
+          echo '--- NAV DIAGNOSTICS ---'
+          grep -o 'data-tep-nav-test="[^"]*"' /tmp/tep-v36-dom.html || true
+          grep -o 'data-tep-nav-count="[^"]*"' /tmp/tep-v36-dom.html || true
+          grep -o 'data-tep-nav-trace="[^"]*"' /tmp/tep-v36-dom.html || true
+          grep -o 'data-version="TEP_FULL_PREMIUM_UI_[^"]*"' /tmp/tep-v36-dom.html | head -1 || true
           grep -Fq 'data-tep-nav-test="PASS"' /tmp/tep-v36-dom.html
           grep -Fq 'data-tep-nav-count="4"' /tmp/tep-v36-dom.html
           grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_6"' /tmp/tep-v36-dom.html
-          mv /tmp/index-before-v36-browser-test.html index.html
+          restore_index
+          trap - EXIT
           echo 'IOS_NAV_BROWSER_CERT=PASS 4/4'
 
       - name: Commit certified patch if needed
