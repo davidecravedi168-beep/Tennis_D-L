@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-05T08:59:33.753Z",
-  "updated_at": "2026-09-11T07:59:41.609Z",
+  "updated_at": "2026-09-11T08:23:54.016Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -3836,13 +3836,63 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "B647A60A27121A8951EC0229",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "7D43796808068DD58EF9",
+        "source_immutable_sha256": "683a0cb7bd1cad2c322a84fb94a8ef31404b350b97a5009cfd98f7a04d2c7212",
+        "event_id": "73992564",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-11T08:17:35.095Z",
+        "start_at": "2026-09-12T20:00:00Z",
+        "first_observed_at": "2026-09-11T08:17:39.915Z",
+        "player_a": "Sabalenka, Aryna",
+        "player_b": "Rybakina, Elena",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Sabalenka, Aryna",
+        "candidate_odds": 1.72,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 3,
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.603006,
+        "calibrated_prob": 0.5565097737105009,
+        "calibrated_ev": -0.042803189217938464,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 3,
+        "negative_core": 0,
+        "observed_core": 3,
+        "hard_reject": [
+          "CALIBRATED_EV_LT_2PCT"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "e8392b54e0a9d56ab9f17140ade2070918ed5ae891c21555ccb0904d358946d8",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 77,
+    "total_decisions": 78,
     "accepted": 10,
-    "rejected": 67,
-    "open": 27,
+    "rejected": 68,
+    "open": 28,
     "settled": 50
   },
   "evidence": {
