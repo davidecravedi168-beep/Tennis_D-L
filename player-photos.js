@@ -1,6 +1,7 @@
 // Generated from public Wikimedia/Wikidata sources.
 window.__TEP_PLAYER_PHOTOS__=Object.freeze({
   "alexander zverev": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/Alexander_Zverev.jpg/330px-Alexander_Zverev.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "alfie hewett": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/Alfie_Hewett_%2835580720080%29.jpg/330px-Alfie_Hewett_%2835580720080%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
   "anna blinkova": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Day_6_-_Transilvania_Open_Anna_Blinkova_%28cropped%29.jpg/330px-Day_6_-_Transilvania_Open_Anna_Blinkova_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
   "anna pushkareva": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Anna_Pushkareva_25May24_0306.jpg/330px-Anna_Pushkareva_25May24_0306.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
   "aryna sabalenka": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Aryna_Sabalenka_Miami_Open_Final.jpg/330px-Aryna_Sabalenka_Miami_Open_Final.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
@@ -11,9 +12,13 @@ window.__TEP_PLAYER_PHOTOS__=Object.freeze({
   "elsa jacquemot": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/Elsa_Jacquemot_%282023_US_Open%29_09_%28cropped%29.jpg/330px-Elsa_Jacquemot_%282023_US_Open%29_09_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
   "fiona ferro": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Ferro_RG19_%2810%29_%2848199369072%29.jpg/330px-Ferro_RG19_%2810%29_%2848199369072%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
   "frances tiafoe": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a3/FrancesTiafo.jpg/330px-FrancesTiafo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "ilya ivashka": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/34/Ivashka_MCM22_%281%29_%2852036455488%29.jpg/330px-Ivashka_MCM22_%281%29_%2852036455488%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
   "juan pablo varillas": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Varillas_WMQ22_%2810%29.jpg/330px-Varillas_WMQ22_%2810%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
   "karen khachanov": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Karen_Khachanov_%282024_DC_Open%29_02.jpg/330px-Karen_Khachanov_%282024_DC_Open%29_02.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
   "leolia jeanjean": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Jeanjean_WMQ23_%2853061887794%29.jpg/330px-Jeanjean_WMQ23_%2853061887794%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
   "niels vink": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Niels_Vink_Paris_2024.jpg/330px-Niels_Vink_Paris_2024.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-  "thiago seyboth wild": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Thiago_Seyboth_Wild_-_2024_Olympics_%28cropped%29.jpg/330px-Thiago_Seyboth_Wild_-_2024_Olympics_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail"
+  "sam schroder": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/Sam_Schr%C3%B6der_Paris_2024.jpg/330px-Sam_Schr%C3%B6der_Paris_2024.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "thiago seyboth wild": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Thiago_Seyboth_Wild_-_2024_Olympics_%28cropped%29.jpg/330px-Thiago_Seyboth_Wild_-_2024_Olympics_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "tokito oda": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/All-Japan-Tennis-Championships-100th-Day8---2025-10-12_06704.jpg/330px-All-Japan-Tennis-Championships-100th-Day8---2025-10-12_06704.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "yui kamiji": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/Swiss_Open_Geneva_-_20140712_-_Semi_final_Women_-_Y._Kamiji_vs_K._Montjane_83.jpg/330px-Swiss_Open_Geneva_-_20140712_-_Semi_final_Women_-_Y._Kamiji_vs_K._Montjane_83.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail"
 });
