@@ -1,0 +1,143 @@
+name: iOS Premium Nav V38
+
+on:
+  push:
+    branches:
+      - 'hotfix/ios-nav-v36'
+    paths:
+      - 'scripts/apply-ios-nav-v36.mjs'
+      - '.github/workflows/ios-nav-v36.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ios-premium-nav-v38
+  cancel-in-progress: false
+
+jobs:
+  patch-and-certify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout hotfix branch
+        uses: actions/checkout@v4
+        with:
+          ref: hotfix/ios-nav-v36
+          fetch-depth: 0
+
+      - name: Apply V38 patch
+        run: |
+          set -euo pipefail
+          node scripts/apply-ios-nav-v36.mjs
+
+      - name: Static certification
+        run: |
+          set -euo pipefail
+          node --check premium-shell-v1.js
+          node --check scripts/apply-ios-nav-v36.mjs
+          python3 -m json.tool manifest.webmanifest >/dev/null
+          grep -Fq "TEP_FULL_PREMIUM_UI_V3_8" premium-shell-v1.js
+          grep -Fq 'TEP_IOS_NAV_BIND_V38' premium-shell-v1.js
+          grep -Fq 'function bindBottomNav(root)' premium-shell-v1.js
+          grep -Fq "\$\$('.tp-nav [data-route]').forEach" premium-shell-v1.js
+          ! grep -Fq "  \$('.tp-nav [data-route]').forEach" premium-shell-v1.js
+          grep -Fq "root.innerHTML=shell();bindRoot();safeRender('install')" premium-shell-v1.js
+          grep -Fq "el.addEventListener('touchend'" premium-shell-v1.js
+          grep -Fq "el.addEventListener('click'" premium-shell-v1.js
+          grep -Fq 'href="#tp-home" data-route="home"' premium-shell-v1.js
+          grep -Fq 'href="#tp-explore" data-route="explore"' premium-shell-v1.js
+          grep -Fq 'href="#tp-analysis" data-route="analysis"' premium-shell-v1.js
+          grep -Fq 'href="#tp-mine" data-route="mine"' premium-shell-v1.js
+          grep -Fq 'window.__TEP_PREMIUM_NAV__' premium-shell-v1.js
+          ! grep -Fq 'navPointerAt' premium-shell-v1.js
+          grep -Fq 'premium-shell-v1.js?v=20260911-v38-nav-runtime' index.html
+          grep -Fq 'manifest.webmanifest?v=20260911-v38-nav-runtime' index.html
+          grep -Fq '"start_url": "./?v=20260911-v38-nav-runtime"' manifest.webmanifest
+          echo 'IOS_NAV_STATIC_CERT=PASS'
+
+      - name: Four-route mobile browser smoke
+        run: |
+          set -euo pipefail
+          cp index.html /tmp/index-before-v38-browser-test.html
+          restore_index(){ cp /tmp/index-before-v38-browser-test.html index.html; }
+          trap restore_index EXIT
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          probe=r'''<script>
+          document.addEventListener('DOMContentLoaded',()=>setTimeout(async()=>{
+            const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+            const cases=[
+              ['explore',()=>document.querySelector('#tpView h1')?.textContent.trim()==='Partite'],
+              ['analysis',()=>document.querySelector('#tpView h1')?.textContent.trim()==='Analisi match'],
+              ['mine',()=>document.querySelector('#tpView h1')?.textContent.trim()==='Salvati e seguiti'],
+              ['home',()=>document.querySelector('#tpView .tp-kicker span')?.textContent.trim()==='MATCH IN EVIDENZA']
+            ];
+            const results=[];
+            const trace=[];
+            for(const [name,viewCheck] of cases){
+              const el=document.querySelector(`.tp-nav [data-route="${name}"]`);
+              if(!el){results.push(false);trace.push(name+':missing');continue;}
+              el.click();
+              await sleep(220);
+              const active=el.classList.contains('on');
+              const state=window.__TEP_PREMIUM_NAV__?.screen===name;
+              const hash=location.hash===`#tp-${name}`;
+              const view=Boolean(viewCheck());
+              results.push(Boolean(active&&state&&hash&&view));
+              trace.push(`${name}:${active?'a':'-'}${state?'s':'-'}${hash?'h':'-'}${view?'v':'-'}`);
+            }
+            document.documentElement.dataset.tepNavApi=String(Boolean(window.__TEP_PREMIUM_NAV__));
+            document.documentElement.dataset.tepNavCount=String(results.filter(Boolean).length);
+            document.documentElement.dataset.tepNavTrace=trace.join(',');
+            document.documentElement.dataset.tepNavTest=results.length===4&&results.every(Boolean)?'PASS':'FAIL';
+          },1100),{once:true});
+          </script>'''
+          if '</body>' not in s:
+              raise SystemExit('missing body close')
+          p.write_text(s.replace('</body>',probe+'\n</body>'))
+          PY
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME" || { echo 'CHROME_NOT_FOUND'; exit 1; }
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tep-v38-http.log 2>&1 &
+          SERVER_PID=$!
+          for i in {1..40}; do curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break; sleep .25; done
+          timeout 60s "$CHROME" \
+            --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --window-size=390,844 \
+            --user-agent='Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1' \
+            --virtual-time-budget=14000 --dump-dom \
+            'http://127.0.0.1:8765/?v=20260911-v38-browser-smoke' > /tmp/tep-v38-dom.html
+          kill "$SERVER_PID" 2>/dev/null || true
+          echo '--- NAV DIAGNOSTICS ---'
+          grep -o 'data-tep-nav-api="[^"]*"' /tmp/tep-v38-dom.html || true
+          grep -o 'data-tep-nav-test="[^"]*"' /tmp/tep-v38-dom.html || true
+          grep -o 'data-tep-nav-count="[^"]*"' /tmp/tep-v38-dom.html || true
+          grep -o 'data-tep-nav-trace="[^"]*"' /tmp/tep-v38-dom.html || true
+          grep -o 'data-tep-ui-error="[^"]*"' /tmp/tep-v38-dom.html || true
+          grep -o 'data-version="TEP_FULL_PREMIUM_UI_[^"]*"' /tmp/tep-v38-dom.html | head -1 || true
+          grep -Fq 'data-tep-nav-api="true"' /tmp/tep-v38-dom.html
+          grep -Fq 'data-tep-nav-test="PASS"' /tmp/tep-v38-dom.html
+          grep -Fq 'data-tep-nav-count="4"' /tmp/tep-v38-dom.html
+          grep -Fq 'data-version="TEP_FULL_PREMIUM_UI_V3_8"' /tmp/tep-v38-dom.html
+          ! grep -Fq 'data-tep-ui-error=' /tmp/tep-v38-dom.html
+          restore_index
+          trap - EXIT
+          echo 'IOS_NAV_BROWSER_CERT=PASS 4/4'
+
+      - name: Commit certified patch
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- premium-shell-v1.js index.html manifest.webmanifest; then
+            echo 'V38 patch already committed and certified.'
+            exit 0
+          fi
+          git config user.name 'tennis-edge-ui-certifier'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add premium-shell-v1.js index.html manifest.webmanifest
+          git commit -m 'fix(ui): make premium navigation reliable on iOS V38'
+          git pull --rebase origin hotfix/ios-nav-v36
+          git push origin HEAD:hotfix/ios-nav-v36
