@@ -42,6 +42,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: main
           fetch-depth: 0
 
       - name: Setup Node
@@ -201,6 +202,16 @@ jobs:
           console.log(`- Shadow Forward v2: ${x.stats?.total_decisions??0} decision · ${x.stats?.accepted??0} accepted · ${x.stats?.settled??0} settled`);
           console.log(`- Shadow evidence: ${e.state||'COLD_START'} · champion ROI ${Number.isFinite(c.roi)?(c.roi*100).toFixed(1)+'%':'—'} · shadow ROI ${Number.isFinite(s.roi)?(s.roi*100).toFixed(1)+'%':'—'}`);
           console.log(`- Shadow review eligible: ${e.review_eligible===true?'YES':'NO'}`);
+          NODE
+          fi
+          if [ -f data/legacy-forward-audit.json ]; then
+            node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
+          const fs=require('fs');
+          const x=JSON.parse(fs.readFileSync('data/legacy-forward-audit.json','utf8'));
+          const s=x.stats||{};
+          const pct=v=>Number.isFinite(v)?`${(v*100).toFixed(1)}%`:'—';
+          console.log(`- Legacy verified: ${s.verified_forecasts??0} forecast · ${s.settled_verified??0} settled · accuracy ${pct(s.accuracy)}`);
+          console.log(`- Legacy Brier: ${Number.isFinite(s.brier)?s.brier.toFixed(4):'—'} · original qualified picks ${s.qualified_picks??0} · ROI ${pct(s.roi)}`);
           NODE
           fi
           if [ -f data/legacy-forward-audit.json ]; then
