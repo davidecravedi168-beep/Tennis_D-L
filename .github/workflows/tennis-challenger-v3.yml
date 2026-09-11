@@ -45,10 +45,13 @@ jobs:
         run: node scripts/clv-tracker-v3.mjs
       - name: Train guarded calibration candidate
         run: node scripts/auto-calibration-trainer-v5.mjs
+      - name: Build calibrated drift policy
+        run: node scripts/drift-controller-v6.mjs
       - name: Update Challenger V3 forward ledger
         run: node scripts/challenger-forward-ledger-v3.mjs
       - name: Build diagnostics and calibration audit
         run: |
+          node scripts/drift-controller-v6.mjs
           node scripts/tennis-model-diagnostics-v2.mjs
           node scripts/tennis-model-diagnostics-v2.mjs --validate
           node scripts/clv-diagnostics-fix-v3.mjs
@@ -57,7 +60,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git add -- data/calibration-model-v5.json data/calibration-training-v5.json data/drift-controller-v6.json data/clv-tracker-v3.json data/challenger-forward-ledger-v3.json data/tennis-model-diagnostics-v2.json data/calibration-audit-v4.json
+          files=(data/calibration-model-v5.json data/calibration-training-v5.json data/drift-controller-v6.json data/clv-tracker-v3.json data/challenger-forward-ledger-v3.json data/tennis-model-diagnostics-v2.json data/calibration-audit-v4.json)
+          existing=()
+          for f in "${files[@]}"; do
+            [ -f "$f" ] && existing+=("$f")
+          done
+          if [ "${#existing[@]}" -eq 0 ]; then echo "No challenger state files found"; exit 0; fi
+          git add -- "${existing[@]}"
           if git diff --cached --quiet; then echo "No challenger state changes"; exit 0; fi
           git config user.name "tennis-edge-challenger"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
