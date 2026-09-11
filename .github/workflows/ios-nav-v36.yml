@@ -7,9 +7,6 @@ on:
     paths:
       - 'scripts/apply-ios-nav-v36.mjs'
       - '.github/workflows/ios-nav-v36.yml'
-      - 'premium-shell-v1.js'
-      - 'index.html'
-      - 'manifest.webmanifest'
   workflow_dispatch:
 
 permissions:
@@ -30,10 +27,9 @@ jobs:
           ref: hotfix/ios-nav-v36
           fetch-depth: 0
 
-      - name: Apply V38 patch twice
+      - name: Apply V38 patch
         run: |
           set -euo pipefail
-          node scripts/apply-ios-nav-v36.mjs
           node scripts/apply-ios-nav-v36.mjs
 
       - name: Static certification
@@ -130,16 +126,12 @@ jobs:
           trap - EXIT
           echo 'IOS_NAV_BROWSER_CERT=PASS 4/4'
 
-      - name: Commit certified patch if needed
+      - name: Commit certified patch
         run: |
           set -euo pipefail
-          if git diff --quiet -- premium-shell-v1.js index.html manifest.webmanifest; then
-            echo 'V38 patch already committed.'
-          else
-            git config user.name 'tennis-edge-ui-certifier'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add premium-shell-v1.js index.html manifest.webmanifest
-            git commit -m 'fix(ui): make premium navigation reliable on iOS V38'
-            git pull --rebase origin hotfix/ios-nav-v36
-            git push origin HEAD:hotfix/ios-nav-v36
-          fi
+          git config user.name 'tennis-edge-ui-certifier'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add premium-shell-v1.js index.html manifest.webmanifest
+          git commit -m 'fix(ui): make premium navigation reliable on iOS V38'
+          git pull --rebase origin hotfix/ios-nav-v36
+          git push origin HEAD:hotfix/ios-nav-v36
