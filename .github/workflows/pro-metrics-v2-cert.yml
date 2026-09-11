@@ -1,0 +1,69 @@
+name: Pro Metrics V2 Certifier
+
+on:
+  push:
+    branches: [feat/pro-metrics-premium-v2]
+    paths:
+      - 'tennis-quant-lab-v13.js'
+      - '.github/workflows/pro-metrics-v2-cert.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  certify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+        with:
+          ref: feat/pro-metrics-premium-v2
+          fetch-depth: 0
+
+      - name: Syntax and premium UI contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check tennis-quant-lab-v13.js
+          grep -Fq 'Advanced match intelligence' tennis-quant-lab-v13.js
+          grep -Fq 'Giochi totali / Over-Under' tennis-quant-lab-v13.js
+          grep -Fq 'Profilo servizio' tennis-quant-lab-v13.js
+          grep -Fq 'Set decisivo & tie-break' tennis-quant-lab-v13.js
+          grep -Fq 'tepPmLead' tennis-quant-lab-v13.js
+          grep -Fq 'tepPmRows' tennis-quant-lab-v13.js
+          grep -Fq 'font-size:15px' tennis-quant-lab-v13.js
+          echo 'PREMIUM_UI_CONTRACT=PASS'
+
+      - name: Real browser DOM smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME" || { echo 'CHROME_NOT_FOUND'; exit 1; }
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/tep-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for i in {1..20}; do
+            curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break
+            sleep 0.25
+          done
+          timeout 45s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=10000 --dump-dom http://127.0.0.1:8765/index.html > /tmp/tep-dom.html
+          grep -Fq 'PRO METRICS' /tmp/tep-dom.html
+          grep -Fq 'Advanced match intelligence' /tmp/tep-dom.html
+          grep -Fq 'Giochi totali / Over-Under' /tmp/tep-dom.html
+          grep -Fq 'Profilo servizio' /tmp/tep-dom.html
+          grep -Fq 'Set decisivo &amp; tie-break' /tmp/tep-dom.html || grep -Fq 'Set decisivo & tie-break' /tmp/tep-dom.html
+          echo 'PREMIUM_BROWSER_DOM=PASS'
+
+      - name: Regression contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check tennis-quant-math-v13.js
+          node --check tennis-quality-governance-v14.js
+          grep -Fq 'function decorateMatches()' tennis-quant-lab-v13.js
+          grep -Fq 'function decorateBets()' tennis-quant-lab-v13.js
+          grep -Fq 'function decorateHero()' tennis-quant-lab-v13.js
+          grep -Fq 'function ensureLab()' tennis-quant-lab-v13.js
+          echo 'REGRESSION_CONTRACT=PASS'
