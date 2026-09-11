@@ -16,7 +16,7 @@ const premiumCsp="style-src 'self' 'unsafe-inline'; img-src 'self' data: https:/
 if(s.includes(oldCsp)) s=s.replace(oldCsp,premiumCsp);
 else if(!s.includes(premiumCsp)) throw new Error('CSP contract changed; refusing blind premium patch');
 
-const premiumTag='<script src="premium-shell-v1.js?v=20260911-r1"></script>';
+const premiumTag='<script src="premium-shell-v1.js?v=20260911-full-premium-v3"></script>';
 const premiumRe=/<script src="premium-shell-v1\.js\?v=[^"]+"><\/script>/g;
 if(premiumRe.test(s)) s=s.replace(premiumRe,premiumTag);
 else if(!s.includes(premiumTag)) s=s.replace('</body>',`${premiumTag}\n</body>`);
