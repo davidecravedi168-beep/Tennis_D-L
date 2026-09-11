@@ -5,11 +5,13 @@ on:
     branches: [feat/pro-metrics-premium-v2]
     paths:
       - 'tennis-quant-lab-v13.js'
+      - 'index.html'
+      - 'manifest.webmanifest'
       - '.github/workflows/pro-metrics-v2-cert.yml'
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   certify:
@@ -20,6 +22,22 @@ jobs:
         with:
           ref: feat/pro-metrics-premium-v2
           fetch-depth: 0
+
+      - name: Prepare final cache-busted shell
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('tennis-quant-lab-v13.js?v=13.1-pro-metrics-20260911','tennis-quant-lab-v13.js?v=13.2-pro-metrics-premium-20260911')
+          p.write_text(s,encoding='utf-8')
+          p=Path('manifest.webmanifest')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('./?v=20260911-pro-metrics-r2','./?v=20260911-pro-metrics-premium-r3')
+          p.write_text(s,encoding='utf-8')
+          PY
 
       - name: Syntax and premium UI contract
         shell: bash
@@ -33,6 +51,8 @@ jobs:
           grep -Fq 'tepPmLead' tennis-quant-lab-v13.js
           grep -Fq 'tepPmRows' tennis-quant-lab-v13.js
           grep -Fq 'font-size:15px' tennis-quant-lab-v13.js
+          grep -Fq 'tennis-quant-lab-v13.js?v=13.2-pro-metrics-premium-20260911' index.html
+          grep -Fq './?v=20260911-pro-metrics-premium-r3' manifest.webmanifest
           echo 'PREMIUM_UI_CONTRACT=PASS'
 
       - name: Real browser DOM smoke
@@ -48,7 +68,7 @@ jobs:
             curl -fsS http://127.0.0.1:8765/index.html >/dev/null && break
             sleep 0.25
           done
-          timeout 45s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=10000 --dump-dom http://127.0.0.1:8765/index.html > /tmp/tep-dom.html
+          timeout 45s "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --virtual-time-budget=10000 --dump-dom 'http://127.0.0.1:8765/?v=20260911-pro-metrics-premium-r3' > /tmp/tep-dom.html
           grep -Fq 'PRO METRICS' /tmp/tep-dom.html
           grep -Fq 'Advanced match intelligence' /tmp/tep-dom.html
           grep -Fq 'Giochi totali / Over-Under' /tmp/tep-dom.html
@@ -67,3 +87,18 @@ jobs:
           grep -Fq 'function decorateHero()' tennis-quant-lab-v13.js
           grep -Fq 'function ensureLab()' tennis-quant-lab-v13.js
           echo 'REGRESSION_CONTRACT=PASS'
+
+      - name: Commit final shell version if needed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- index.html manifest.webmanifest; then
+            echo 'Shell already versioned.'
+            exit 0
+          fi
+          git config user.name 'tennis-edge-ui-certifier'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html manifest.webmanifest
+          git commit -m 'fix(pwa): cache-bust premium Pro Metrics release'
+          git pull --rebase origin feat/pro-metrics-premium-v2
+          git push origin HEAD:feat/pro-metrics-premium-v2
