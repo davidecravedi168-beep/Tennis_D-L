@@ -1,11 +1,11 @@
 {
   "schema": "TEP-PAPER-FUNNEL-2",
-  "generated_at": "2026-09-12T08:24:32.605Z",
+  "generated_at": "2026-09-12T10:13:20.903Z",
   "source": {
     "ledger_schema": "TEP-FORWARD-LEDGER-1",
     "ledger_updated_at": "2026-09-12T05:56:08.151Z",
-    "freshness_minutes": 148.40756666666667,
-    "clv_tracker_updated_at": "2026-09-12T06:28:31.173Z"
+    "freshness_minutes": 257.21253333333334,
+    "clv_tracker_updated_at": "2026-09-12T01:31:22.217Z"
   },
   "policy": {
     "validation_only": true,
@@ -14,7 +14,12 @@
     "flat_stake_units": 1,
     "strict_nulls": true,
     "clv_definition": "candidate entry odds / best available genuine closing reference - 1",
-    "note": "Observability only: tracks every locked market candidate and rejection reason without relaxing betting thresholds. Missing CLV evidence remains null and never becomes zero."
+    "shadow_thresholds": [
+      1.9,
+      1.7,
+      1.65
+    ],
+    "note": "Observability only: official thresholds and picks remain unchanged. Shadow floors 1.70 and 1.65 collect counterfactual evidence with the same locked model and quality data; they cannot authorize a bet. Missing CLV evidence remains null and never becomes zero."
   },
   "funnel": {
     "market_locks": 319,
@@ -77,6 +82,134 @@
       "clv_proxy_sample": 0
     }
   },
+  "threshold_shadow": [
+    {
+      "floor_odds": 1.9,
+      "settled_candidates": 208,
+      "watch_count": 3,
+      "qualified_count": 2,
+      "all_candidates": {
+        "settled": 208,
+        "wins": 57,
+        "hit_rate": 0.27403846153846156,
+        "profit_units": -26.969999999999988,
+        "roi": -0.12966346153846148,
+        "max_drawdown_units": 34.73,
+        "clv_sample": 20,
+        "avg_clv": -0.002171148732993178,
+        "clv_provider_sample": 2,
+        "clv_proxy_sample": 18
+      },
+      "watch": {
+        "settled": 3,
+        "wins": 0,
+        "hit_rate": 0,
+        "profit_units": -3,
+        "roi": -1,
+        "max_drawdown_units": 3,
+        "clv_sample": 0,
+        "avg_clv": null,
+        "clv_provider_sample": 0,
+        "clv_proxy_sample": 0
+      },
+      "official_qualified": {
+        "settled": 2,
+        "wins": 0,
+        "hit_rate": 0,
+        "profit_units": -2,
+        "roi": -1,
+        "max_drawdown_units": 2,
+        "clv_sample": 2,
+        "avg_clv": 0.07480916030534357,
+        "clv_provider_sample": 2,
+        "clv_proxy_sample": 0
+      }
+    },
+    {
+      "floor_odds": 1.7,
+      "settled_candidates": 233,
+      "watch_count": 5,
+      "qualified_count": 3,
+      "all_candidates": {
+        "settled": 233,
+        "wins": 71,
+        "hit_rate": 0.30472103004291845,
+        "profit_units": -27.56,
+        "roi": -0.1182832618025751,
+        "max_drawdown_units": 35.089999999999996,
+        "clv_sample": 24,
+        "avg_clv": -0.007798716633148396,
+        "clv_provider_sample": 3,
+        "clv_proxy_sample": 21
+      },
+      "watch": {
+        "settled": 5,
+        "wins": 1,
+        "hit_rate": 0.2,
+        "profit_units": -3.2800000000000002,
+        "roi": -0.656,
+        "max_drawdown_units": 3.2800000000000002,
+        "clv_sample": 0,
+        "avg_clv": null,
+        "clv_provider_sample": 0,
+        "clv_proxy_sample": 0
+      },
+      "official_qualified": {
+        "settled": 3,
+        "wins": 0,
+        "hit_rate": 0,
+        "profit_units": -3,
+        "roi": -1,
+        "max_drawdown_units": 3,
+        "clv_sample": 3,
+        "avg_clv": 0.05913203279615501,
+        "clv_provider_sample": 3,
+        "clv_proxy_sample": 0
+      }
+    },
+    {
+      "floor_odds": 1.65,
+      "settled_candidates": 241,
+      "watch_count": 6,
+      "qualified_count": 3,
+      "all_candidates": {
+        "settled": 241,
+        "wins": 75,
+        "hit_rate": 0.3112033195020747,
+        "profit_units": -28.919999999999995,
+        "roi": -0.11999999999999998,
+        "max_drawdown_units": 36.449999999999996,
+        "clv_sample": 24,
+        "avg_clv": -0.007798716633148396,
+        "clv_provider_sample": 3,
+        "clv_proxy_sample": 21
+      },
+      "watch": {
+        "settled": 6,
+        "wins": 1,
+        "hit_rate": 0.16666666666666666,
+        "profit_units": -4.28,
+        "roi": -0.7133333333333334,
+        "max_drawdown_units": 4.28,
+        "clv_sample": 0,
+        "avg_clv": null,
+        "clv_provider_sample": 0,
+        "clv_proxy_sample": 0
+      },
+      "official_qualified": {
+        "settled": 3,
+        "wins": 0,
+        "hit_rate": 0,
+        "profit_units": -3,
+        "roi": -1,
+        "max_drawdown_units": 3,
+        "clv_sample": 3,
+        "avg_clv": 0.05913203279615501,
+        "clv_provider_sample": 3,
+        "clv_proxy_sample": 0
+      }
+    }
+  ],
   "clv": {
     "state": "PARTIAL",
     "eligible_rows": 277,

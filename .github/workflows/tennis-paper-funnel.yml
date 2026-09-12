@@ -75,12 +75,13 @@ jobs:
         run: |
           if [ -f data/paper-funnel.json ]; then
             node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
-          const x=require('./data/paper-funnel.json');
-          const p=x.paper?.all_candidates||{};
+          const report=require('./data/paper-funnel.json');
+          const p=report.paper?.all_candidates||{};
           console.log(`### Tennis Edge Pro · Paper Funnel`);
-          console.log(`- Status: ${x.status}`);
-          console.log(`- Market locks: ${x.funnel.market_locks} → candidates: ${x.funnel.valid_market_candidates} → qualified: ${x.funnel.qualified_value}`);
+          console.log(`- Status: ${report.status}`);
+          console.log(`- Market locks: ${report.funnel.market_locks} → candidates: ${report.funnel.valid_market_candidates} → qualified: ${report.funnel.qualified_value}`);
           console.log(`- Paper settled: ${p.settled??0} · hit ${Number.isFinite(p.hit_rate)?(p.hit_rate*100).toFixed(1)+'%':'—'} · ROI ${Number.isFinite(p.roi)?(p.roi*100).toFixed(1)+'%':'—'} · DD ${Number.isFinite(p.max_drawdown_units)?p.max_drawdown_units.toFixed(2)+'u':'—'}`);
+          for (const x of (report.threshold_shadow||[])) console.log(`- Shadow floor ${x.floor_odds.toFixed(2)}: ${x.settled_candidates} settled · qualified ${x.qualified_count} · ROI ${Number.isFinite(x.all_candidates?.roi)?(x.all_candidates.roi*100).toFixed(1)+'%':'—'} · CLV ${x.all_candidates?.clv_sample??0}`);
           NODE
           fi
           if [ -f data/tennis-model-diagnostics.json ]; then
