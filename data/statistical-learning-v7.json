@@ -1,9 +1,9 @@
 {
   "schema": "TEP-STATISTICAL-LEARNING-V7",
-  "generated_at": "2026-09-12T06:28:32.868Z",
+  "generated_at": "2026-09-12T11:13:55.244Z",
   "source": {
     "ledger_schema": "TEP-FORWARD-LEDGER-1",
-    "ledger_updated_at": "2026-09-12T05:56:08.151Z",
+    "ledger_updated_at": "2026-09-12T09:42:59.278Z",
     "eligible_rows": 282,
     "rejected": {
       "not_market_lock": 348,
@@ -459,6 +459,21 @@
       "no_temporal_leakage": true
     }
   },
+  "selection": {
+    "champion": "CHAMPION_V12_5",
+    "challenger": "STATISTICAL_LEARNING_V7",
+    "selected_model": "CHAMPION_V12_5",
+    "status": "CHAMPION_LOCKED",
+    "review_eligible": false,
+    "auto_promote": false,
+    "reason": "Evidence is not yet strong enough to replace the production champion.",
+    "decision_quality_policy": {
+      "no_bet_below": 58,
+      "watch_only_below": 68,
+      "value_review_from": 76,
+      "strong_value_from": 86
+    }
+  },
   "model": {
     "status": "SHADOW",
     "trained_n": 282,
@@ -526,20 +541,5 @@
     "lambda": 0.04,
     "iterations": 2600,
     "training_fingerprint": "9ca05b001bcef31282ace87ee9197a711fc44498fda550714cf26f3e10ec234a"
-  },
-  "selection": {
-    "champion": "CHAMPION_V12_5",
-    "challenger": "STATISTICAL_LEARNING_V7",
-    "selected_model": "CHAMPION_V12_5",
-    "status": "CHAMPION_LOCKED",
-    "review_eligible": false,
-    "auto_promote": false,
-    "reason": "Evidence is not yet strong enough to replace the production champion.",
-    "decision_quality_policy": {
-      "no_bet_below": 58,
-      "watch_only_below": 68,
-      "value_review_from": 76,
-      "strong_value_from": 86
-    }
   }
 }
