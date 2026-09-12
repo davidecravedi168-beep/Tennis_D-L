@@ -50,6 +50,8 @@ async function run(engine,width,round){
   await page.getByRole('searchbox').fill('Maristany');await page.waitForFunction(()=>document.querySelectorAll('.tp-match-card').length===1);
   await card.click();await page.getByRole('heading',{name:'Analisi match',exact:true}).waitFor();await geometry(page);
   assert.equal(await page.locator('.tp-probability.is-predicted').getAttribute('data-player-side'),'B');
+  assert.ok(await page.locator('.tp-explain').count()===1,'match explanation is visible');
+  assert.ok((await page.locator('.tp-explain').innerText()).includes('Perché'),'explanation has supporting reasons');
   await page.getByText('Quote e confronto con il modello',{exact:true}).click();
   await page.getByRole('button',{name:'Salva match',exact:true}).click();
   assert.ok(await page.locator('.tdl15Group').first().getAttribute('open')!==null,'dossier stays open after saving');
@@ -58,6 +60,7 @@ async function run(engine,width,round){
   for(const [button,title] of [['LIVE','Live'],['RECORD','Track Record'],['BANKROLL','Bankroll'],['MATCH','Partite']]){
    await page.getByRole('button',{name:button,exact:true}).click();await page.getByRole('heading',{name:title,exact:true}).waitFor();
    assert.equal(await page.getByRole('button',{name:button,exact:true}).getAttribute('aria-current'),'page');await geometry(page);
+   if(title==='Track Record'){assert.equal(await page.locator('.tp-record-note').count(),1);assert.ok((await page.locator('.tp-record-note').innerText()).includes('campione separato'));}
   }
   await page.getByRole('button',{name:'Apri menu',exact:true}).click();
   await page.locator('#tpMenu').getByRole('button',{name:'Salvati'}).click();await page.getByRole('heading',{name:'Salvati e seguiti',exact:true}).waitFor();assert.equal(await page.locator('.tp-match-card[data-open-event="qa-long"]').count(),1);
