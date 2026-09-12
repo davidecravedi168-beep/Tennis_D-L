@@ -17,7 +17,7 @@ if(cspRe.test(s))s=s.replace(cspRe,premiumCsp);
 else if(!s.includes(premiumCsp))throw new Error('CSP contract changed; refusing blind premium patch');
 
 const photoTag='<script src="player-photos.js?v=20260912-v36-verified"></script>';
-const premiumTag='<script src="premium-shell-v1.js?v=20260912-v39-nav-fix"></script>';
+const premiumTag='<script src="premium-shell-v1.js?v=20260912-v40-visible-nav"></script>';
 s=s.replace(/\s*<script src="player-photos\.js\?v=[^"]+"><\/script>\s*/g,'\n');
 s=s.replace(/<script src="premium-shell-v1\.js\?v=[^"]+"><\/script>/g,premiumTag);
 if(!s.includes(premiumTag))s=s.replace('</body>',`${photoTag}\n${premiumTag}\n</body>`);

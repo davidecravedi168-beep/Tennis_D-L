@@ -66,9 +66,9 @@ const oldBoot="function boot(){install();lastSig=sig();setInterval(refresh,3000)
 const newBoot="function boot(){const initial=navRouteFromHash();if(initial)state.screen=initial;install();syncRouteHash(state.screen);lastSig=sig();setInterval(refresh,3000);document.addEventListener('visibilitychange',()=>{if(!document.hidden){lastSig='';refresh()}})}";
 shell=replaceOnce(shell,oldBoot,newBoot,'boot route restore');
 
-index=replaceOnce(index,'<link rel="manifest" href="./manifest.webmanifest">','<link rel="manifest" href="./manifest.webmanifest?v=20260912-v39-nav-fix">','manifest cache bust');
-index=replaceOnce(index,'premium-shell-v1.js?v=20260911-v35-runtime-fix','premium-shell-v1.js?v=20260912-v39-nav-fix','premium shell cache bust');
-manifest=replaceOnce(manifest,'"start_url": "./?v=20260911-v35-runtime-fix"','"start_url": "./?v=20260912-v39-nav-fix"','manifest start_url cache bust');
+index=replaceOnce(index,'<link rel="manifest" href="./manifest.webmanifest">','<link rel="manifest" href="./manifest.webmanifest?v=20260912-v40-visible-nav">','manifest cache bust');
+index=replaceOnce(index,'premium-shell-v1.js?v=20260911-v35-runtime-fix','premium-shell-v1.js?v=20260912-v40-visible-nav','premium shell cache bust');
+manifest=replaceOnce(manifest,'"start_url": "./?v=20260911-v35-runtime-fix"','"start_url": "./?v=20260912-v40-visible-nav"','manifest start_url cache bust');
 
 if(!shell.includes('TEP_FULL_PREMIUM_UI_V3_8')) throw new Error('V3.8 marker missing after patch');
 if(!shell.includes('TEP_IOS_NAV_BIND_V38')) throw new Error('V3.8 direct nav binder missing');
