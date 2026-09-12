@@ -10,7 +10,10 @@ const NOW=new Date();
 const MODEL='TEP-SUREBET-1.2';
 
 // Quota-first profile: one multi-odds call normally covers the whole batch.
-const MAX_EVENTS_PER_RUN=10;
+// Scan two pages per run. The free plan still caps us at two bookmakers,
+// so coverage matters more than adding looser acceptance rules.
+const MAX_EVENTS_PER_RUN=20;
+const EVENTS_PER_ODDS_CALL=10;
 const MAX_HOURS=48;
 const MAX_API_CALLS_PER_RUN=3;
 const BOOK_CACHE_HOURS=12;
@@ -158,8 +161,13 @@ async function main(){
     const total=events.length,start=total?(state.cursor||0)%total:0,batch=[];
     for(let i=0;i<Math.min(MAX_EVENTS_PER_RUN,total);i++)batch.push(events[(start+i)%total]);
     state.cursor=total?(start+batch.length)%total:0;
-    const raw=batch.length?await api('/odds/multi',{eventIds:batch.map(e=>e.id).join(','),bookmakers:books.join(',')}):[];
-    const byId=mapMulti(raw),all=[];
+    const byId=new Map();
+    for(let i=0;i<batch.length;i+=EVENTS_PER_ODDS_CALL){
+      const page=batch.slice(i,i+EVENTS_PER_ODDS_CALL);
+      const raw=page.length?await api('/odds/multi',{eventIds:page.map(e=>e.id).join(','),bookmakers:books.join(',')}):[];
+      for(const [id,value] of mapMulti(raw))byId.set(id,value);
+    }
+    const all=[];
     for(const e of batch){const x=analyze(e,byId.get(String(e.id)));if(x)all.push(x)}
     const opportunities=all.filter(x=>x.status==='SUREBET'&&new Date(x.expires_at).getTime()>NOW.getTime()).sort((a,b)=>b.buffered_roi-a.buffered_roi);
     state.detections=[...opportunities,...(state.detections||[])].slice(0,120);state.updated_at=NOW.toISOString();state.last_error=null;state.rate_limit_reset_at=null;await writeJson(STATE,state);
