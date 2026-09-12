@@ -1,9 +1,9 @@
 {
   "schema": "TEP-MODEL-DIAGNOSTICS-1",
-  "generated_at": "2026-09-11T20:49:23.513Z",
+  "generated_at": "2026-09-12T00:36:43.650Z",
   "source": {
     "ledger_schema": "TEP-FORWARD-LEDGER-1",
-    "ledger_updated_at": "2026-09-11T20:47:22.274Z"
+    "ledger_updated_at": "2026-09-12T00:18:53.817Z"
   },
   "policy": {
     "validation_only": true,
@@ -14,30 +14,30 @@
     "note": "Forward diagnostics only. Segment and factor results are descriptive associations and cannot automatically change production weights or betting thresholds."
   },
   "overall": {
-    "n": 277,
-    "wins": 104,
-    "hit_rate": 0.37545126353790614,
-    "profit_units": -26.210000000000004,
-    "roi": -0.09462093862815886,
+    "n": 280,
+    "wins": 106,
+    "hit_rate": 0.37857142857142856,
+    "profit_units": -26.450000000000003,
+    "roi": -0.09446428571428572,
     "median_profit_units": -1,
     "max_drawdown_units": 32.86000000000001
   },
   "calibration": [
     {
       "band": "55-60%",
-      "n": 33,
-      "avg_predicted_prob": 0.5717817878787879,
-      "observed_win_rate": 0.42424242424242425,
-      "calibration_gap": 0.1475393636363636,
-      "brier": 0.2643040404280909
+      "n": 34,
+      "avg_predicted_prob": 0.5718378823529412,
+      "observed_win_rate": 0.4411764705882353,
+      "calibration_gap": 0.13066141176470591,
+      "brier": 0.2618757177308235
     },
     {
       "band": "<55%",
-      "n": 185,
-      "avg_predicted_prob": 0.3870920594594594,
-      "observed_win_rate": 0.2594594594594595,
-      "calibration_gap": 0.12763259999999993,
-      "brier": 0.19403917182085934
+      "n": 186,
+      "avg_predicted_prob": 0.38736796236559135,
+      "observed_win_rate": 0.25806451612903225,
+      "calibration_gap": 0.1293034462365591,
+      "brier": 0.19402930169332785
     },
     {
       "band": "60-65%",
@@ -65,11 +65,11 @@
     },
     {
       "band": "75%+",
-      "n": 21,
-      "avg_predicted_prob": 0.8203712380952384,
-      "observed_win_rate": 0.9047619047619048,
-      "calibration_gap": -0.08439066666666639,
-      "brier": 0.09206259343828573
+      "n": 22,
+      "avg_predicted_prob": 0.8206021363636367,
+      "observed_win_rate": 0.9090909090909091,
+      "calibration_gap": -0.0884887727272724,
+      "brier": 0.08926280980022729
     }
   ],
   "attribution": [
@@ -77,20 +77,20 @@
       "factor": "ELO",
       "evidence": "SUPPORTIVE",
       "positive": {
-        "n": 92,
-        "wins": 54,
-        "hit_rate": 0.5869565217391305,
-        "profit_units": -2.6399999999999983,
-        "roi": -0.028695652173913025,
-        "median_profit_units": 0.18499999999999994,
+        "n": 93,
+        "wins": 55,
+        "hit_rate": 0.5913978494623656,
+        "profit_units": -2.4699999999999984,
+        "roi": -0.026559139784946218,
+        "median_profit_units": 0.17999999999999994,
         "max_drawdown_units": 10.379999999999999
       },
       "negative": {
-        "n": 123,
+        "n": 124,
         "wins": 23,
-        "hit_rate": 0.18699186991869918,
-        "profit_units": -31.849999999999998,
-        "roi": -0.2589430894308943,
+        "hit_rate": 0.18548387096774194,
+        "profit_units": -32.849999999999994,
+        "roi": -0.26491935483870965,
         "median_profit_units": -1,
         "max_drawdown_units": 36.22
       },
@@ -103,17 +103,17 @@
         "median_profit_units": null,
         "max_drawdown_units": 0
       },
-      "unobserved_n": 62
+      "unobserved_n": 63
     },
     {
       "factor": "SURFACE",
       "evidence": "SUPPORTIVE",
       "positive": {
-        "n": 84,
-        "wins": 51,
-        "hit_rate": 0.6071428571428571,
-        "profit_units": 1.9700000000000006,
-        "roi": 0.02345238095238096,
+        "n": 86,
+        "wins": 53,
+        "hit_rate": 0.6162790697674418,
+        "profit_units": 2.7300000000000004,
+        "roi": 0.031744186046511635,
         "median_profit_units": 0.20499999999999996,
         "max_drawdown_units": 8.41
       },
@@ -135,17 +135,17 @@
         "median_profit_units": null,
         "max_drawdown_units": 0
       },
-      "unobserved_n": 69
+      "unobserved_n": 70
     },
     {
       "factor": "FORM",
       "evidence": "SUPPORTIVE",
       "positive": {
-        "n": 96,
-        "wins": 55,
-        "hit_rate": 0.5729166666666666,
-        "profit_units": 7.379999999999999,
-        "roi": 0.07687499999999999,
+        "n": 98,
+        "wins": 57,
+        "hit_rate": 0.5816326530612245,
+        "profit_units": 8.139999999999999,
+        "roi": 0.0830612244897959,
         "median_profit_units": 0.17499999999999993,
         "max_drawdown_units": 10.370000000000001
       },
@@ -167,18 +167,18 @@
         "median_profit_units": null,
         "max_drawdown_units": 0
       },
-      "unobserved_n": 78
+      "unobserved_n": 79
     },
     {
       "factor": "SERVE/RETURN",
       "evidence": "SUPPORTIVE",
       "positive": {
-        "n": 73,
-        "wins": 44,
-        "hit_rate": 0.6027397260273972,
-        "profit_units": 3.1299999999999972,
-        "roi": 0.04287671232876709,
-        "median_profit_units": 0.17999999999999994,
+        "n": 74,
+        "wins": 45,
+        "hit_rate": 0.6081081081081081,
+        "profit_units": 3.299999999999997,
+        "roi": 0.044594594594594555,
+        "median_profit_units": 0.17499999999999993,
         "max_drawdown_units": 8.22
       },
       "negative": {
@@ -199,17 +199,17 @@
         "median_profit_units": null,
         "max_drawdown_units": 0
       },
-      "unobserved_n": 90
+      "unobserved_n": 92
     },
     {
       "factor": "H2H",
       "evidence": "SUPPORTIVE",
       "positive": {
-        "n": 52,
-        "wins": 23,
-        "hit_rate": 0.4423076923076923,
-        "profit_units": -15.430000000000001,
-        "roi": -0.29673076923076924,
+        "n": 53,
+        "wins": 24,
+        "hit_rate": 0.4528301886792453,
+        "profit_units": -15.260000000000002,
+        "roi": -0.2879245283018868,
         "median_profit_units": -1,
         "max_drawdown_units": 19.159999999999997
       },
@@ -231,17 +231,17 @@
         "median_profit_units": null,
         "max_drawdown_units": 0
       },
-      "unobserved_n": 191
+      "unobserved_n": 193
     },
     {
       "factor": "EV",
       "evidence": "OBSERVE",
       "positive": {
-        "n": 233,
+        "n": 234,
         "wins": 80,
-        "hit_rate": 0.34334763948497854,
-        "profit_units": -20.30999999999999,
-        "roi": -0.08716738197424889,
+        "hit_rate": 0.3418803418803419,
+        "profit_units": -21.30999999999999,
+        "roi": -0.09106837606837603,
         "median_profit_units": -1,
         "max_drawdown_units": 31.370000000000005
       },
@@ -263,7 +263,7 @@
         "median_profit_units": null,
         "max_drawdown_units": 0
       },
-      "unobserved_n": 44
+      "unobserved_n": 46
     }
   ],
   "segments": [
@@ -272,23 +272,23 @@
       "segments": [
         {
           "key": "Hard",
-          "n": 258,
-          "wins": 98,
-          "hit_rate": 0.3798449612403101,
-          "profit_units": -19.57,
-          "roi": -0.07585271317829458,
+          "n": 260,
+          "wins": 100,
+          "hit_rate": 0.38461538461538464,
+          "profit_units": -18.810000000000002,
+          "roi": -0.07234615384615385,
           "median_profit_units": -1,
           "max_drawdown_units": 31.6
         },
         {
           "key": "Grass",
-          "n": 19,
+          "n": 20,
           "wins": 6,
-          "hit_rate": 0.3157894736842105,
-          "profit_units": -6.64,
-          "roi": -0.3494736842105263,
+          "hit_rate": 0.3,
+          "profit_units": -7.64,
+          "roi": -0.382,
           "median_profit_units": -1,
-          "max_drawdown_units": 8.01
+          "max_drawdown_units": 9.01
         }
       ]
     },
@@ -297,23 +297,23 @@
       "segments": [
         {
           "key": "WTA",
-          "n": 152,
-          "wins": 59,
-          "hit_rate": 0.3881578947368421,
-          "profit_units": -20.099999999999994,
-          "roi": -0.13223684210526312,
+          "n": 153,
+          "wins": 60,
+          "hit_rate": 0.39215686274509803,
+          "profit_units": -19.509999999999994,
+          "roi": -0.12751633986928101,
           "median_profit_units": -1,
           "max_drawdown_units": 33.330000000000005
         },
         {
           "key": "ATP",
-          "n": 125,
-          "wins": 45,
-          "hit_rate": 0.36,
-          "profit_units": -6.109999999999998,
-          "roi": -0.04887999999999998,
+          "n": 127,
+          "wins": 46,
+          "hit_rate": 0.36220472440944884,
+          "profit_units": -6.939999999999998,
+          "roi": -0.054645669291338565,
           "median_profit_units": -1,
-          "max_drawdown_units": 19.94
+          "max_drawdown_units": 20.770000000000003
         }
       ]
     },
@@ -332,11 +332,11 @@
         },
         {
           "key": "2.20-2.99",
-          "n": 62,
+          "n": 63,
           "wins": 21,
-          "hit_rate": 0.3387096774193548,
-          "profit_units": -9.029999999999998,
-          "roi": -0.14564516129032254,
+          "hit_rate": 0.3333333333333333,
+          "profit_units": -10.029999999999998,
+          "roi": -0.15920634920634916,
           "median_profit_units": -1,
           "max_drawdown_units": 15.649999999999999
         },
@@ -352,22 +352,22 @@
         },
         {
           "key": "1.50-1.79",
-          "n": 34,
-          "wins": 21,
-          "hit_rate": 0.6176470588235294,
-          "profit_units": 1.04,
-          "roi": 0.03058823529411765,
+          "n": 35,
+          "wins": 22,
+          "hit_rate": 0.6285714285714286,
+          "profit_units": 1.6300000000000001,
+          "roi": 0.046571428571428576,
           "median_profit_units": 0.6100000000000001,
           "max_drawdown_units": 4.28
         },
         {
           "key": "<1.50",
-          "n": 28,
-          "wins": 23,
-          "hit_rate": 0.8214285714285714,
-          "profit_units": 1.27,
-          "roi": 0.04535714285714286,
-          "median_profit_units": 0.20499999999999996,
+          "n": 29,
+          "wins": 24,
+          "hit_rate": 0.8275862068965517,
+          "profit_units": 1.44,
+          "roi": 0.0496551724137931,
+          "median_profit_units": 0.18999999999999995,
           "max_drawdown_units": 1.6300000000000001
         }
       ]
@@ -377,31 +377,31 @@
       "segments": [
         {
           "key": "70-79",
-          "n": 94,
-          "wins": 37,
-          "hit_rate": 0.39361702127659576,
-          "profit_units": -19.73,
-          "roi": -0.2098936170212766,
+          "n": 95,
+          "wins": 38,
+          "hit_rate": 0.4,
+          "profit_units": -19.560000000000002,
+          "roi": -0.2058947368421053,
           "median_profit_units": -1,
           "max_drawdown_units": 27.64
         },
         {
           "key": "60-69",
-          "n": 93,
+          "n": 94,
           "wins": 34,
-          "hit_rate": 0.3655913978494624,
-          "profit_units": -2.6100000000000048,
-          "roi": -0.02806451612903231,
+          "hit_rate": 0.3617021276595745,
+          "profit_units": -3.6100000000000048,
+          "roi": -0.03840425531914899,
           "median_profit_units": -1,
           "max_drawdown_units": 24.73
         },
         {
           "key": "<60",
-          "n": 83,
-          "wins": 30,
-          "hit_rate": 0.3614457831325301,
-          "profit_units": -1.5399999999999978,
-          "roi": -0.018554216867469855,
+          "n": 84,
+          "wins": 31,
+          "hit_rate": 0.36904761904761907,
+          "profit_units": -0.9499999999999977,
+          "roi": -0.011309523809523783,
           "median_profit_units": -1,
           "max_drawdown_units": 13.85
         },
@@ -422,21 +422,21 @@
       "segments": [
         {
           "key": "90+",
-          "n": 125,
-          "wins": 53,
-          "hit_rate": 0.424,
-          "profit_units": -12.819999999999999,
-          "roi": -0.10255999999999998,
+          "n": 126,
+          "wins": 54,
+          "hit_rate": 0.42857142857142855,
+          "profit_units": -12.649999999999999,
+          "roi": -0.10039682539682539,
           "median_profit_units": -1,
           "max_drawdown_units": 28.94
         },
         {
           "key": "80-89",
-          "n": 88,
-          "wins": 27,
-          "hit_rate": 0.3068181818181818,
-          "profit_units": -10.389999999999997,
-          "roi": -0.11806818181818178,
+          "n": 90,
+          "wins": 28,
+          "hit_rate": 0.3111111111111111,
+          "profit_units": -10.799999999999997,
+          "roi": -0.11999999999999997,
           "median_profit_units": -1,
           "max_drawdown_units": 17.31
         },
@@ -477,11 +477,11 @@
         },
         {
           "key": "6-10%",
-          "n": 56,
+          "n": 57,
           "wins": 24,
-          "hit_rate": 0.42857142857142855,
-          "profit_units": -7.24,
-          "roi": -0.12928571428571428,
+          "hit_rate": 0.42105263157894735,
+          "profit_units": -8.24,
+          "roi": -0.14456140350877195,
           "median_profit_units": -1,
           "max_drawdown_units": 13.229999999999999
         },
@@ -497,11 +497,11 @@
         },
         {
           "key": "<2%",
-          "n": 31,
-          "wins": 11,
-          "hit_rate": 0.3548387096774194,
-          "profit_units": -5.8500000000000005,
-          "roi": -0.18870967741935485,
+          "n": 33,
+          "wins": 13,
+          "hit_rate": 0.3939393939393939,
+          "profit_units": -5.090000000000001,
+          "roi": -0.15424242424242426,
           "median_profit_units": -1,
           "max_drawdown_units": 11.34
         },
@@ -520,10 +520,10 @@
   ],
   "clv": {
     "state": "SUSPECT",
-    "settled_candidates": 277,
-    "clv_sample": 277,
-    "avg_clv": 0.0004576281588447654,
-    "zero_share": 0.9855595667870036,
+    "settled_candidates": 280,
+    "clv_sample": 280,
+    "avg_clv": 0.00045272500000000007,
+    "zero_share": 0.9857142857142858,
     "closing_odds_sample": 4,
     "anomalies": [
       "CLV_ALMOST_ALWAYS_ZERO"
