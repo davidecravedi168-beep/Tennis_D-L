@@ -42,8 +42,8 @@ jobs:
           node --check premium-shell-v1.js
           node --check player-photos.js
           grep -Fq 'player-photos.js?v=20260912-v36-verified' index.html
-          grep -Fq 'premium-shell-v1.js?v=20260911-v38-nav-runtime' index.html
-          grep -Fq '"start_url": "./?v=20260911-v38-nav-runtime"' manifest.webmanifest
+          grep -Fq 'premium-shell-v1.js?v=20260912-v39-nav-fix' index.html
+          grep -Fq '"start_url": "./?v=20260912-v39-nav-fix"' manifest.webmanifest
           grep -Fq 'TEP_FULL_PREMIUM_UI_V3_8' premium-shell-v1.js
           grep -Fq 'TEP_IOS_NAV_BIND_V38' premium-shell-v1.js
           grep -Fq "photoKey='tep:premium:photos:v32-verified'" premium-shell-v1.js
@@ -60,7 +60,7 @@ jobs:
           ! grep -Fq 'document.startViewTransition' premium-shell-v1.js
           ! grep -Fq '[object Object]' premium-shell-v1.js
           test "$(grep -o 'player-photos.js?v=20260912-v36-verified' index.html | wc -l)" -eq 1
-          test "$(grep -o 'premium-shell-v1.js?v=20260911-v38-nav-runtime' index.html | wc -l)" -eq 1
+          test "$(grep -o 'premium-shell-v1.js?v=20260912-v39-nav-fix' index.html | wc -l)" -eq 1
           echo 'PREMIUM_V38_CONTRACT=PASS'
 
       - name: Real browser local UX smoke
@@ -140,7 +140,7 @@ jobs:
           for i in {1..60}; do
             if curl -fsSL "${PUBLIC}?v=${CACHE_BUST}" -o /tmp/public-index.html \
               && grep -Fq 'player-photos.js?v=20260912-v36-verified' /tmp/public-index.html \
-              && grep -Fq 'premium-shell-v1.js?v=20260911-v38-nav-runtime' /tmp/public-index.html; then
+              && grep -Fq 'premium-shell-v1.js?v=20260912-v39-nav-fix' /tmp/public-index.html; then
               echo 'PUBLIC_V38_SHELL_FRESH=PASS'; break
             fi
             if [ "$i" -eq 60 ]; then echo PUBLIC_V38_SHELL_FRESH=FAIL; exit 1; fi

@@ -36,7 +36,7 @@ jobs:
           node scripts/apply-refresh-resilience.mjs
           grep -Fq "script-src 'self' 'unsafe-inline';" index.html
           grep -Fq 'player-photos.js?v=20260912-v36-verified' index.html
-          grep -Fq 'premium-shell-v1.js?v=20260911-v38-nav-runtime' index.html
+          grep -Fq 'premium-shell-v1.js?v=20260912-v39-nav-fix' index.html
           grep -Fq 'TEP_FULL_PREMIUM_UI_V3_8' premium-shell-v1.js
           grep -Fq 'function catalogPhoto(raw)' premium-shell-v1.js
           grep -Fq "photoKey='tep:premium:photos:v32-verified'" premium-shell-v1.js
@@ -92,7 +92,7 @@ jobs:
           for i in {1..60}; do
             if curl -fsSL "${PUBLIC}?v=${BUST}" -o /tmp/public-index.html \
               && grep -Fq 'player-photos.js?v=20260912-v36-verified' /tmp/public-index.html \
-              && grep -Fq 'premium-shell-v1.js?v=20260911-v38-nav-runtime' /tmp/public-index.html; then break; fi
+              && grep -Fq 'premium-shell-v1.js?v=20260912-v39-nav-fix' /tmp/public-index.html; then break; fi
             if [ "$i" -eq 60 ]; then echo PUBLIC_V38_STALE; exit 1; fi
             sleep 5
           done
