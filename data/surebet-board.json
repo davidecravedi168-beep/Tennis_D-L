@@ -1,6 +1,6 @@
 {
   "meta": {
-    "updated_at": "2026-09-12T16:20:45.741Z",
+    "updated_at": "2026-09-12T18:46:39.438Z",
     "status": "READY",
     "model_version": "TEP-SUREBET-1.2",
     "source": "Odds-API.io selected bookmakers · shared Tennis Edge event universe",
@@ -9,9 +9,9 @@
       "Eurobet IT"
     ],
     "bookmaker_count": 2,
-    "events_total": 135,
+    "events_total": 144,
     "events_scanned": 20,
-    "api_calls": 2,
+    "api_calls": 3,
     "api_call_budget": 3,
     "max_quote_age_min": 10,
     "max_timestamp_spread_min": 5,
@@ -23,5 +23,54 @@
     "note": "Solo arbitraggio 2-way Match Winner tra bookmaker diversi. Nessun modello predittivo viene usato."
   },
   "opportunities": [],
-  "checked": []
+  "checked": [
+    {
+      "event_id": "73992442",
+      "start_at": "2026-09-13T18:00:00Z",
+      "player_a": "Zverev, Alexander",
+      "player_b": "Shelton, Ben",
+      "tournament": "ATP - US Open, New York, USA",
+      "market": "MATCH_WINNER_2WAY",
+      "status": "NON_CERTIFICATA",
+      "book_a": "Eurobet IT",
+      "book_b": "Bet365",
+      "odds_a": 1.65,
+      "odds_b": 2.3,
+      "updated_a": "2026-09-12T10:25:57.404Z",
+      "updated_b": "2026-09-12T18:45:49.796Z",
+      "age_a_min": 500.7,
+      "age_b_min": 0.8,
+      "timestamp_spread_min": 499.9,
+      "implied_sum": 1.04084321,
+      "raw_roi": -0.03924051,
+      "safety_buffer": 0.0025,
+      "buffered_roi": -0.04179,
+      "market_depth": 2,
+      "median_no_vig_a": 0.580808,
+      "outlier_distance": 0.013879,
+      "reasons": [
+        "MARGINE_TROPPO_BASSO",
+        "QUOTA_NON_FRESCA",
+        "QUOTE_NON_SINCRONE",
+        "BUFFER_NON_SUPERATO",
+        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
+      ],
+      "expires_at": "2026-09-12T10:35:57.404Z",
+      "execution_window_sec": 0,
+      "same_market_verified": true,
+      "settlement_rules_verified": false,
+      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
+      "stake_100": {
+        "stake_a": 58.23,
+        "stake_b": 41.77,
+        "return_if_a": 96.08,
+        "return_if_b": 96.07,
+        "worst_return": 96.07,
+        "profit": -3.93,
+        "roi": -0.03929
+      },
+      "detected_at": "2026-09-12T18:46:39.438Z",
+      "execution_note": "Copertura matematica valida solo finché entrambe le quote restano accettabili e le regole di settlement dei due bookmaker sono equivalenti."
+    }
+  ]
 }
