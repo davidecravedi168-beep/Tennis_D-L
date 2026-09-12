@@ -8,6 +8,9 @@ on:
     paths:
       - "surebet-engine.mjs"
       - "surebet.html"
+      - "scripts/surebet*"
+      - "scripts/test-surebet*"
+      - "scripts/odds-budget.mjs"
       - "scripts/install-surebet-link.mjs"
       - "scripts/validate-surebet.mjs"
       - ".github/workflows/tennis-surebet.yml"
@@ -18,7 +21,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: tennis-surebet-autopilot
+  group: tennis-odds-feed
   cancel-in-progress: false
 
 jobs:
@@ -29,6 +32,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: main
           fetch-depth: 0
 
       - name: Setup Node
@@ -45,7 +49,16 @@ jobs:
           node --check scripts/install-surebet-link.mjs
           node --check scripts/validate-surebet.mjs
           node surebet-engine.mjs --self-test
+          node scripts/test-surebet-integration.mjs
           node scripts/validate-app.mjs
+
+      - name: Browser regression tests twice (Chromium and WebKit)
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        run: |
+          npm install --no-save --package-lock=false playwright@1.62.1
+          npx playwright install --with-deps chromium webkit
+          node scripts/test-surebet-browser.cjs
+          node scripts/test-surebet-browser.cjs
 
       - name: Run SureBet scanner
         if: github.event_name != 'push'
@@ -62,6 +75,9 @@ jobs:
         run: |
           set -euo pipefail
           git add -- index.html data/surebet-board.json
+          for file in data/odds-budget.json data/surebet-cache.json; do
+            if [ -f "$file" ]; then git add -- "$file"; fi
+          done
           if [ -f data/surebet-state.json ]; then
             git add -- data/surebet-state.json
           fi

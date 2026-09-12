@@ -13,9 +13,10 @@ const minRaw=Math.max(0,Number(x.meta?.min_raw_roi)||0);
 const minWindow=Math.max(0,Number(x.meta?.min_execution_window_sec)||0);
 for(const r of x.opportunities||[]){
   const id=String(r.event_id||'NO_ID');
-  if(seen.has(id))errors.push(`DUPLICATE:${id}`);seen.add(id);
+  const key=id+'|'+r.market+'|'+(r.line??'');if(seen.has(key))errors.push(`DUPLICATE:${key}`);seen.add(key);
   if(r.status!=='SUREBET')errors.push(`STATUS:${id}`);
-  if(r.market!=='MATCH_WINNER_2WAY')errors.push(`MARKET:${id}`);
+  if(!['MATCH_WINNER_2WAY','TOTAL_GAMES_2WAY','GAME_HANDICAP_2WAY'].includes(r.market))errors.push(`MARKET:${id}`);
+  if(r.market!=='MATCH_WINNER_2WAY'&&(!Number.isFinite(r.line)||Math.abs(r.line*2)%2!==1))errors.push(`LINE:${id}`);
   if(r.same_market_verified!==true)errors.push(`MARKET_VERIFY:${id}`);
   if(r.certainty_scope!=='MATHEMATICAL_ODDS_ONLY')errors.push(`CERTAINTY_SCOPE:${id}`);
   if(!Array.isArray(r.reasons)||r.reasons.length)errors.push(`REASONS:${id}`);
@@ -28,6 +29,9 @@ for(const r of x.opportunities||[]){
   const ta=new Date(r.updated_a||0).getTime(),tb=new Date(r.updated_b||0).getTime(),exp=new Date(r.expires_at||0).getTime();
   if(!(Number.isFinite(ta)&&Number.isFinite(tb)&&ta>0&&tb>0))errors.push(`TIMESTAMP:${id}`);
   if(Number.isFinite(boardAt)&&boardAt>0&&((boardAt-ta)/60000>maxAge+.05||(boardAt-tb)/60000>maxAge+.05))errors.push(`STALE:${id}`);
+  if(ta>boardAt+30000||tb>boardAt+30000)errors.push(`FUTURE_QUOTE:${id}`);
+  if(exp>new Date(r.start_at).getTime())errors.push(`AFTER_START:${id}`);
+  if(Math.abs(roi-Number(r.raw_roi))>1e-6)errors.push(`ROI_MISMATCH:${id}`);
   if(Math.abs(ta-tb)/60000>maxSpread+.05)errors.push(`SPREAD:${id}`);
   if(!(Number.isFinite(exp)&&exp>boardAt))errors.push(`EXPIRY:${id}`);
   if(Number.isFinite(exp)&&Number.isFinite(boardAt)&&(exp-boardAt)/1000+1<minWindow)errors.push(`WINDOW:${id}`);
@@ -38,4 +42,4 @@ for(const r of x.opportunities||[]){
 }
 if((x.opportunities||[]).length&&x.meta?.status!=='READY')errors.push('ACTIVE_WITH_NON_READY_FEED');
 if(errors.length){console.error(JSON.stringify({ok:false,errors},null,2));process.exit(1)}
-console.log(JSON.stringify({ok:true,opportunities:x.opportunities.length,status:x.meta?.status||null,contract:'TEP-SUREBET-1.2'}));
+console.log(JSON.stringify({ok:true,opportunities:x.opportunities.length,status:x.meta?.status||null,contract:'TEP-SUREBET-2.0'}));

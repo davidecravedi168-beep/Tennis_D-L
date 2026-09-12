@@ -31,7 +31,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: tennis-edge-pro-stable-autopilot
+  group: tennis-odds-feed
   cancel-in-progress: false
 
 jobs:
@@ -72,6 +72,8 @@ jobs:
           node --check scripts/clv-evidence-v4.mjs
           node quant-engine.mjs --self-test
           node live-engine.mjs --self-test
+          node surebet-engine.mjs --self-test
+          node scripts/test-surebet-integration.mjs
           node scripts/forward-ledger.mjs --self-test
           node scripts/shadow-forward-ledger-v2.mjs --self-test
           node scripts/legacy-forward-audit.mjs --self-test
@@ -108,6 +110,12 @@ jobs:
       - name: Validate Live Board
         if: steps.gate.outputs.run_live == 'true'
         run: node scripts/validate-board.mjs live
+
+      - name: Reuse downloaded quotes for SureBet (zero API calls)
+        if: steps.gate.outputs.run_quant == 'true' || steps.gate.outputs.run_live == 'true'
+        run: |
+          node surebet-engine.mjs --reuse-only
+          node scripts/validate-surebet.mjs
 
       - name: Stamp automation health
         if: github.event_name != 'push'
@@ -158,6 +166,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          for file in data/odds-budget.json data/surebet-cache.json data/surebet-state.json data/surebet-board.json; do
+            if [ -f "$file" ]; then git add -- "$file"; fi
+          done
           git add -A -- index.html data/quant-board.json data/quant-board-full.json data/quant-state.json data/live-board.json data/automation-health.json data/forward-ledger.json data/shadow-forward-ledger-v2.json data/legacy-forward-audit.json
           if git diff --cached --quiet; then
             echo "No validated state changes"

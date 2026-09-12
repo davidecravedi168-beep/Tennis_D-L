@@ -1,3 +1,5 @@
+import { budgetFetch } from './scripts/odds-budget.mjs';
+import { rememberOdds } from './scripts/surebet-cache.mjs';
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -75,10 +77,10 @@ function scoreView(e,locked){
   }
   return{raw,sets:rows,completed_sets:completed,current_set:current,sets_home:sa,sets_away:sb,integrity,live_model_p_a:liveP,live_model_p_b:Number.isFinite(liveP)?1-liveP:null,current_set_p_a:currentSetP,current_game_p_a:currentGameP};
 }
-async function fetchLive(){if(!API_KEY)throw new Error("MISSING_ODDS_API_KEY");const u=new URL(BASE+"/events/live");u.searchParams.set("apiKey",API_KEY);u.searchParams.set("sport","tennis");const r=await fetch(u,{headers:{"user-agent":"TennisEdgePro/9.0-live"}});if(!r.ok)throw new Error(`HTTP_${r.status}`);return r.json()}
+async function fetchLive(){if(!API_KEY)throw new Error("MISSING_ODDS_API_KEY");const u=new URL(BASE+"/events/live");u.searchParams.set("apiKey",API_KEY);u.searchParams.set("sport","tennis");const r=await budgetFetch(u,{headers:{"user-agent":"TennisEdgePro/9.0-live"}},"live");if(!r.ok)throw new Error(`HTTP_${r.status}`);return r.json()}
 function parseML(obj){if(!obj?.bookmakers)return null;const rows=[];for(const [book,markets] of Object.entries(obj.bookmakers)){const m=(markets||[]).find(x=>String(x?.name||"").toUpperCase()==="ML"),o=m?.odds?.[0],a=num(o?.home),b=num(o?.away);if(!(a>1&&b>1))continue;const z=1/a+1/b,margin=z-1;if(margin<-.03||margin>.3)continue;rows.push({book,a,b,pA:(1/a)/z,updated_at:m?.updatedAt||null})}if(!rows.length)return null;const sorted=rows.map(x=>x.pA).sort((a,b)=>a-b),cons=sorted[Math.floor(sorted.length/2)],bestA=Math.max(...rows.map(x=>x.a)),bestB=Math.max(...rows.map(x=>x.b));return{books:rows.length,consensus_a:cons,best_a:bestA,best_b:bestB,best_book_a:rows.find(x=>x.a===bestA)?.book||"—",best_book_b:rows.find(x=>x.b===bestB)?.book||"—",updated_at:rows.map(x=>x.updated_at).filter(Boolean).sort().at(-1)||null}}
 async function fetchLiveOdds(ids,bookmakers){
-  if(!API_KEY||!ids.length||!bookmakers.length)return new Map();const u=new URL(BASE+"/odds/multi");u.searchParams.set("apiKey",API_KEY);u.searchParams.set("eventIds",ids.slice(0,MAX_LIVE_ODDS_EVENTS).join(","));u.searchParams.set("bookmakers",bookmakers.slice(0,2).join(","));u.searchParams.set("markets","ML");const r=await fetch(u,{headers:{"user-agent":"TennisEdgePro/9.0-live-market"}});if(!r.ok)throw new Error(`LIVE_ODDS_${r.status}`);const raw=await r.json(),arr=Array.isArray(raw)?raw:(raw?.data||raw?.events||[]);return new Map(arr.map(x=>[String(x.id??x.eventId),parseML(x)]).filter(([,v])=>v));
+  if(!API_KEY||!ids.length||!bookmakers.length)return new Map();const u=new URL(BASE+"/odds/multi");u.searchParams.set("apiKey",API_KEY);u.searchParams.set("eventIds",ids.slice(0,MAX_LIVE_ODDS_EVENTS).join(","));u.searchParams.set("bookmakers",bookmakers.slice(0,2).join(","));u.searchParams.set("markets","ML");const r=await budgetFetch(u,{headers:{"user-agent":"TennisEdgePro/9.0-live-market"}},"live");if(!r.ok)throw new Error(`LIVE_ODDS_${r.status}`);const raw=await r.json(),arr=Array.isArray(raw)?raw:(raw?.data||raw?.events||[]);await rememberOdds(raw,"live");return new Map(arr.map(x=>[String(x.id??x.eventId),parseML(x)]).filter(([,v])=>v));
 }
 function selfTest(){
   const rows=scoreRows({periods:{p1:{home:6,away:4},p2:{home:3,away:6},p3:{home:3,away:2,homePoints:"30",awayPoints:"15",server:"home"}}},"A Player","B Player");if(rows.length!==3||rows.filter(x=>x.done).length!==2||!rows.find(x=>!x.done)?.point_structured)throw new Error("SELFTEST_SET_GAME_PARSE");

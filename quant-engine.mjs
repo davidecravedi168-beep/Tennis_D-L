@@ -1,3 +1,5 @@
+import { budgetFetch } from './scripts/odds-budget.mjs';
+import { rememberOdds } from './scripts/surebet-cache.mjs';
 import fs from "node:fs/promises";
 import path from "node:path";
 import crypto from "node:crypto";
@@ -190,9 +192,9 @@ async function api(endpoint,params={}){
     }
   });
 
-  const r=await fetch(u,{
+  const r=await budgetFetch(u,{
     headers:{"user-agent":"TennisEdgePro/12.5"}
-  });
+  },"quant");
 
   state.usage.calls++;
   runCalls++;
@@ -530,6 +532,7 @@ async function multiOdds(ids,bookmakers){
     const params={eventIds:batch.join(","),bookmakers:bookmakers.join(",")};if(MARKET_QUERY)params.markets=MARKET_QUERY;
     try{
       const raw=await api("/odds/multi",params);
+      await rememberOdds(raw,"quant");
       for(const [k,v] of mapMultiOdds(raw))out.set(k,v);
     }catch(e){
       if(["RATE_LIMIT_WAIT","RATE_LIMIT_429","RUN_BUDGET_GUARD","DAILY_BUDGET_GUARD"].includes(e.message)){
