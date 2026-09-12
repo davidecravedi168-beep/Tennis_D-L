@@ -25,6 +25,7 @@ function immutableForecast(p){
     candidate_side:p.candidate_side||null,candidate_name:p.candidate_name||null,candidate_prob:num(p.candidate_prob),candidate_odds:num(p.candidate_odds),candidate_book:p.candidate_book||null,candidate_ev:num(p.candidate_ev),candidate_edge:num(p.candidate_edge),
     robust_prob:num(p.robust_prob),robust_ev:num(p.robust_ev),robust_edge:num(p.robust_edge),market_consensus_a:num(p.market_consensus_a),market_depth:num(p.market_depth),
     pick_side:p.pick_side||null,pick_name:p.pick_name||null,pick_prob:num(p.pick_prob),pick_odds:num(p.pick_odds),pick_book:p.pick_book||null,pick_ev:num(p.pick_ev),pick_edge:num(p.pick_edge),
+    decision_quality_score:num(p.decision_quality_score),decision_quality_band:p.decision_quality_band||null,decision_quality_gate:p.decision_quality_gate||null,decision_quality_components:p.decision_quality_components||null,model_selection:p.model_selection||null,model_selection_status:p.model_selection_status||null,
     calibration_scope:p.calibration_scope||null,calibration_sample:num(p.calibration_sample),model_health:p.model_health||null,
     reason_codes:Array.isArray(p.reason_codes)?[...p.reason_codes]:[],no_bet_reasons:Array.isArray(p.no_bet_reasons)?[...p.no_bet_reasons]:[],warnings:Array.isArray(p.warnings)?[...p.warnings]:[]
   };

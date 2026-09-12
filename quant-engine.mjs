@@ -140,7 +140,7 @@ function publicHistory(x){
   const keys=[
     "event_id","start_at","settled_at","player_a","player_b","tournament","league_slug","surface","tour","status","model_version","locked","predicted_at","audit_id",
     "forecast_side","forecast_name","forecast_prob","forecast_won","p_a","p_b","raw_p_a","shadow_p_a","confidence","data_quality","uncertainty","actual_side","actual_winner",
-    "verdict","pick_side","pick_name","pick_prob","pick_odds","pick_book","pick_won","profit_units","brier","log_loss","shadow_brier","shadow_log_loss","closing_odds","clv",
+    "verdict","pick_side","pick_name","pick_prob","pick_odds","pick_book","pick_won","profit_units","brier","log_loss","shadow_brier","shadow_log_loss","closing_odds","clv","decision_quality_score","decision_quality_band","decision_quality_gate","model_selection","model_selection_status",
     "secondary_settled","market","pick_market","bet_score","archive_compacted"
   ];
   return Object.fromEntries(keys.filter(k=>x?.[k]!==undefined).map(k=>[k,x[k]]));
@@ -1110,6 +1110,17 @@ function sportsReasons(core,side){
   add("ELO",core.eloA-core.eloB,35,90);add("SURFACE",core.sEloA-core.sEloB,30,80);add("FORM",core.A.form-core.B.form,.035,.085);add("H2H",core.HH.edge,.18,.45);add("SERVE/RETURN",core.srA-core.srB,.025,.06);add("REST",core.fatigueEdge,.08,.20);
   return r.slice(0,6);
 }
+function decisionQualityFor(core,mkt,drift){
+  const agreement=clamp(100-(core.dis*500),0,100);
+  const market=clamp(48+(mkt.count||0)*10-(Number.isFinite(mkt.sd)?mkt.sd*260:35),0,100);
+  const calibration=core.cal?.active?100:core.cal?.cold_start?65:35;
+  const stability=drift.health==='HEALTHY'?100:drift.health==='WATCH'?68:drift.health==='LEARNING'?55:drift.health==='COLD'?45:25;
+  const sample=clamp(Math.min(core.A.n||0,core.B.n||0)*4,0,100);
+  const score=clamp(.34*core.dq+.18*agreement+.14*market+.14*calibration+.10*stability+.10*sample,0,100);
+  const band=score>=82?'HIGH':score>=68?'MEDIUM':'LOW';
+  const gate=score>=82&&core.cal?.active&&drift.health==='HEALTHY'?'VALUE_REVIEW':score>=68?'WATCH_ONLY':'NO_BET';
+  return{score,band,gate,model_selection:'CHAMPION_V12_5',model_selection_status:'CHAMPION_LOCKED',components:{data:core.dq,agreement,market,calibration,stability,sample},note:'The production champion remains locked. The statistical challenger is evaluated out of sample and cannot auto-promote.'};
+}
 function buildPreview(event,h,calSet,drift){
   const c=sportsCore(event,h,calSet,drift);
   if(!c)return null;
@@ -1135,14 +1146,16 @@ function buildPreview(event,h,calSet,drift){
 }
 function buildPrediction(event,mkt,h,calSet,drift){
   const c=sportsCore(event,h,calSet,drift);if(!c)return null;
+  const decisionQuality=decisionQualityFor(c,mkt,drift);
   // The forecast answers "who is more likely to win?" and is locked for every
   // analysed match.  The candidate answers the separate betting question
   // "which side, if any, has value at the available price?".
   const forecastSide=c.pA>=.5?"A":"B",forecastName=forecastSide==="A"?event.home:event.away,forecastProb=Math.max(c.pA,c.pB);
   const marketFavoriteSide=mkt.consensus>=.5?"A":"B",marketFavoriteName=marketFavoriteSide==="A"?event.home:event.away,marketFavoriteProb=Math.max(mkt.consensus,1-mkt.consensus);
   const edgeA=c.pA-mkt.consensus,edgeB=c.pB-(1-mkt.consensus),evA=c.pA*mkt.bestA-1,evB=c.pB*mkt.bestB-1;
+  const robustEvA=Math.max(.01,c.pA-c.uncertainty)*mkt.bestA-1,robustEvB=Math.max(.01,c.pB-c.uncertainty)*mkt.bestB-1;
   let candidateSide,candidateName,candidateOdds,candidateBook,candidateEV,candidateEdge,candidateProb,candidateAge,candidateUpdated;
-  if(evA>=evB){candidateSide="A";candidateName=event.home;candidateOdds=mkt.bestA;candidateBook=mkt.bestBookA;candidateEV=evA;candidateEdge=edgeA;candidateProb=c.pA;candidateAge=mkt.bestAgeA;candidateUpdated=mkt.bestUpdatedA}
+  if(robustEvA>=robustEvB){candidateSide="A";candidateName=event.home;candidateOdds=mkt.bestA;candidateBook=mkt.bestBookA;candidateEV=evA;candidateEdge=edgeA;candidateProb=c.pA;candidateAge=mkt.bestAgeA;candidateUpdated=mkt.bestUpdatedA}
   else{candidateSide="B";candidateName=event.away;candidateOdds=mkt.bestB;candidateBook=mkt.bestBookB;candidateEV=evB;candidateEdge=edgeB;candidateProb=c.pB;candidateAge=mkt.bestAgeB;candidateUpdated=mkt.bestUpdatedB}
 
   let dq=clamp(c.dq+(mkt.updated_books?4:0)+(mkt.count>=2?3:0),30,98);
@@ -1163,11 +1176,12 @@ function buildPrediction(event,mkt,h,calSet,drift){
   if(Math.abs(c.pA-mkt.consensus)>.17)hard.push("SCOSTAMENTO_ESTREMO");
   if(drift.health==="DRIFT")hard.push("MODEL_DRIFT");
   if((drift.sample||0)<20&&!c.cal.cold_start)hard.push("MODELLO_COLD");
+  if(decisionQuality.score<58)hard.push("DECISION_QUALITY_LOW");
 
   let verdict="NO BET";
-  if(!hard.length&&c.majority===candidateSide&&conf>=66&&dq>=66&&evp>=4&&ep>=2&&revp>=1&&rep>=.8)verdict="WATCH";
-  if(!hard.length&&c.unanimous&&c.cal.active&&drift.health==="HEALTHY"&&conf>=75&&dq>=72&&evp>=6.5&&ep>=3.2&&revp>=2.2&&rep>=1.2&&c.dis<.095)verdict="VALUE";
-  if(!hard.length&&c.unanimous&&c.cal.active&&(drift.sample||0)>=120&&drift.health==="HEALTHY"&&conf>=84&&dq>=84&&evp>=10&&ep>=5&&revp>=4&&rep>=2&&c.dis<.065&&Number.isFinite(candidateAge)&&candidateAge<=30)verdict="STRONG VALUE";
+  if(!hard.length&&decisionQuality.score>=68&&c.majority===candidateSide&&conf>=66&&dq>=66&&evp>=4&&ep>=2&&revp>=1&&rep>=.8)verdict="WATCH";
+  if(!hard.length&&decisionQuality.score>=76&&c.unanimous&&c.cal.active&&drift.health==="HEALTHY"&&conf>=75&&dq>=72&&evp>=6.5&&ep>=3.2&&revp>=2.2&&rep>=1.2&&c.dis<.095)verdict="VALUE";
+  if(!hard.length&&decisionQuality.score>=86&&c.unanimous&&c.cal.active&&(drift.sample||0)>=120&&drift.health==="HEALTHY"&&conf>=84&&dq>=84&&evp>=10&&ep>=5&&revp>=4&&rep>=2&&c.dis<.065&&Number.isFinite(candidateAge)&&candidateAge<=30)verdict="STRONG VALUE";
   if(drift.health==="LEARNING"&&verdict==="VALUE")verdict="WATCH";
 
   const marketLab=marketLabFor(event,c,mkt,conf,dq,drift,verdict,candidateSide);
@@ -1185,7 +1199,7 @@ function buildPrediction(event,mkt,h,calSet,drift){
     watch_side:watch?candidateSide:null,watch_name:watch?candidateName:null,verdict,confidence:conf,sports_confidence:c.sportsConf,data_quality:dq,market_depth:mkt.count,market_consensus_a:mkt.consensus,market_sd:mkt.sd,market_margin:mkt.margin,market_updated_at:candidateUpdated,market_age_minutes:Number.isFinite(candidateAge)?candidateAge:null,
     rank_a:c.A.rank,rank_b:c.B.rank,elo_a:c.eloA,elo_b:c.eloB,surface_elo_a:c.sEloA,surface_elo_b:c.sEloB,form_a:c.A.form,form_b:c.B.form,surface_form_a:c.A.surface,surface_form_b:c.B.surface,surface_sample_a:c.A.surfaceN,surface_sample_b:c.B.surfaceN,h2h_n:c.HH.n,h2h_edge:c.HH.edge,serve_return_delta:c.srA-c.srB,workload7_a:c.A.workload7,workload7_b:c.B.workload7,matches7_a:c.A.matches7,matches7_b:c.B.matches7,rest_days_a:c.A.last_match_days,rest_days_b:c.B.last_match_days,last_surface_a:c.A.last_surface,last_surface_b:c.B.last_surface,surface_transition_a:c.adaptation.a.surfaceChange,surface_transition_b:c.adaptation.b.surfaceChange,dense_load_a:c.adaptation.a.denseLoad,dense_load_b:c.adaptation.b.denseLoad,adaptation_risk:c.adaptation.riskMax,
     player_intel:{candidate_side:candidateSide,candidate_name:candidateName,a:publicPlayerIntel(c.A,event.home,c.tour,c.surface),b:publicPlayerIntel(c.B,event.away,c.tour,c.surface)},
-    market_lab:marketLab,market_best:marketLab.best_priced,multi_market_version:"MM-4.0-PREDICTION-FIRST",
+    market_lab:marketLab,market_best:marketLab.best_priced,multi_market_version:"MM-4.0-PREDICTION-FIRST",decision_quality_score:decisionQuality.score,decision_quality_band:decisionQuality.band,decision_quality_gate:decisionQuality.gate,decision_quality_components:decisionQuality.components,model_selection:decisionQuality.model_selection,model_selection_status:decisionQuality.model_selection_status,
     reason_codes:reasons.slice(0,7),no_bet_reasons:hard,warnings:[...new Set(warnings)],calibration_sample:c.cal.sample,calibration_scope:c.cal.scope,calibration_active:!!c.cal.active,model_health:drift.health,model_version:MODEL_VERSION,predicted_at:NOW.toISOString(),locked:true,status:"LOCKED"
   };
   payload.audit_id=hash(payload);return payload;
@@ -1394,7 +1408,7 @@ async function main(){
     bookmakers,locked_predictions:state.upcoming.length,radar_events:state.radar.length,pre_analyzed:state.radar.filter(x=>x.pre_status!=="DATA GAP").length,early_watch:state.radar.filter(x=>x.pre_status==="EARLY WATCH").length,data_gap:state.radar.filter(x=>x.pre_status==="DATA GAP").length,market_checked:state.radar.filter(x=>x.market_checked).length,calibration_sample:calibration.sample||0,calibration_active:!!calibration.active,calibration_origin:calibration.origin||"FORWARD_COLD",forward_calibration_sample:forwardCalibration.sample||0,historical_seed_records:coldStart.records||0,historical_seed_holdout_n:coldStart.holdout_n||0,historical_seed_holdout_brier:coldStart.holdout_brier??null,cold_start_paper_mode:!!calibration.cold_start,
     model_health:drift.health,operating_mode:(drift.sample||0)<50?"PAPER VALIDATION":"LIVE RESEARCH",api_usage_today:state.usage.calls,api_daily_guard:DAILY_CAP,api_hourly_remaining:state.rate_limit?.remaining??null,rate_limit_reset_at:state.rate_limit?.reset_at??null,rate_limit_minutes:minutesUntil(state.rate_limit?.reset_at),run_calls:runCalls,
     pending_prediction_batch:pendingBatch,processed_this_run:newEvents.length,market_refresh_count:refreshedMarkets,quote_refresh_limit:QUOTE_REFRESH_LIMIT,quote_refresh_policy:"Hourly priority refresh of locked matches; Prediction Lock remains immutable. All bookmaker market names are parsed defensively; unsupported schemas are ignored.",
-    priority_policy:"Grand Slam > 1000/Finals > 500 > 250 > Challenger > ITF; then Top 10/25/50/100 + Elo + ranking points",benchmark:{version:"2026-08",no_vig_reference:true,automatic_settlement:true,clv_tracking:true,beginner_pro_modes:true,multi_market_paper:true,multi_market_settlement:true,quote_tape:true,live_score_worker:true,sharp_liquidity:false,sharp_liquidity_note:"Not available in the current zero-cost data plan; never inferred."},
+    priority_policy:"Grand Slam > 1000/Finals > 500 > 250 > Challenger > ITF; then Top 10/25/50/100 + Elo + ranking points",model_selection:"CHAMPION_V12_5",model_selection_status:"CHAMPION_LOCKED",decision_quality_policy:{no_bet_below:58,watch_only_below:68,value_review_from:76,strong_value_from:86},benchmark:{version:"2026-08",no_vig_reference:true,automatic_settlement:true,clv_tracking:true,beginner_pro_modes:true,multi_market_paper:true,multi_market_settlement:true,quote_tape:true,live_score_worker:true,sharp_liquidity:false,sharp_liquidity_note:"Not available in the current zero-cost data plan; never inferred."},
     history_matches_loaded:quant.atp.rows.length+quant.wta.rows.length,
     sport_specific_guard:"Surface sample + surface-transition adaptation + recent workload/fatigue uncertainty",
     cross_app_learning:"Shared validation, audit, fail-closed and challenger discipline; sport model remains tennis-specific.",

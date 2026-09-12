@@ -20,7 +20,7 @@ const upcoming=()=>Array.isArray(getBoard()?.upcoming)?getBoard().upcoming:[];
 const historyRows=()=>Array.isArray(getBoard()?.history)?getBoard().history:[];
 const stats=()=>getBoard()?.stats||{};
 const state={screen:'home',selectedId:null,query:'',tour:'ALL',surface:'ALL',scroll:{}};
-const favKey='tep:premium:favorites:v31',followKey='tep:premium:players:v31',photoKey='tep:premium:photos:v31';
+const favKey='tep:premium:favorites:v31',followKey='tep:premium:players:v31',photoKey='tep:premium:photos:v32-verified';
 const readSet=k=>{try{return new Set(JSON.parse(localStorage.getItem(k)||'[]'))}catch{return new Set()}};
 const writeSet=(k,s)=>{try{localStorage.setItem(k,JSON.stringify([...s]))}catch{}};
 let favorites=readSet(favKey),followed=readSet(followKey),photoCache={};
@@ -50,22 +50,11 @@ async function wikiCandidates(raw){
   const name=pretty(raw),key=name.toLowerCase();
   if(!name||/^(wsf|r16p|qf|sf)\d+/i.test(name))return[];
   const bundled=catalogPhoto(name);
-  if(photoCache[key])return[...new Set([photoCache[key],bundled].filter(Boolean))];
-  if(bundled)return[bundled];
-  if(photoMisses.has(key))return[];
-  if(photoInflight.has(key))return photoInflight.get(key);
-  const job=(async()=>{
-    const out=[];
-    try{const title=encodeURIComponent(name.replace(/\s+/g,'_')),r=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${title}`,{cache:'force-cache',headers:{Accept:'application/json'}});if(r.ok){const j=await r.json();const src=j?.thumbnail?.source||j?.originalimage?.source;if(src)out.push(String(src).replace('https://thumb.wikimedia.org/','https://upload.wikimedia.org/'))}}catch{}
-    if(!out.length){
-      try{const q=encodeURIComponent(name),u=`https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${q}&language=en&uselang=en&limit=8&format=json&origin=*`,r=await fetch(u,{cache:'force-cache'});if(r.ok){const j=await r.json(),hit=(j?.search||[]).find(x=>/tennis/i.test(String(x?.description||'')));if(hit?.id){const e=await fetch(`https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${encodeURIComponent(hit.id)}&props=claims&format=json&origin=*`,{cache:'force-cache'});if(e.ok){const ej=await e.json(),file=ej?.entities?.[hit.id]?.claims?.P18?.[0]?.mainsnak?.datavalue?.value;if(file)out.push(`https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(String(file).replace(/ /g,'_'))}?width=900`)}}}}catch{}
-    }
-    try{const q=encodeURIComponent(`${name} tennis`),u=`https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrlimit=5&prop=pageimages&piprop=thumbnail&pithumbsize=900&format=json&origin=*`,r=await fetch(u,{cache:'force-cache'});if(r.ok){const j=await r.json();for(const p of Object.values(j?.query?.pages||{})){const src=p?.thumbnail?.source;if(src&&!out.includes(src))out.push(String(src).replace('https://thumb.wikimedia.org/','https://upload.wikimedia.org/'))}}}catch{}
-    if(!out.length)photoMisses.add(key);
-    return out;
-  })();
-  photoInflight.set(key,job);
-  try{return await job}finally{photoInflight.delete(key)}
+  // Fail closed: a portrait is shown only when the curated catalog explicitly
+  // maps this exact normalized player name. Unknown names keep their initials.
+  if(bundled)return[...new Set([photoCache[key],bundled].filter(Boolean))];
+  photoMisses.add(key);
+  return[];
 }
 function avatar(name,cls=''){const eager=String(cls).includes('hero')?'eager':'lazy',src=catalogPhoto(name),ready=!!src;return`<span class="tp-avatar ${cls}${ready?' has-photo':''}" data-photo="${esc(name)}"><span>${esc(initials(name))}</span><img alt="${esc(pretty(name))}" loading="${eager}" decoding="async" fetchpriority="${eager==='eager'?'high':'low'}"${src?` src="${esc(src)}"`:''}></span>`}
 async function tryImage(el,img,src){src=String(src||'').replace('https://thumb.wikimedia.org/','https://upload.wikimedia.org/');return new Promise(resolve=>{let done=false;const finish=ok=>{if(done)return;done=true;img.onload=null;img.onerror=null;if(ok)el.classList.add('has-photo');else el.classList.remove('has-photo');resolve(ok)};img.onload=()=>finish(img.naturalWidth>40&&img.naturalHeight>40);img.onerror=()=>finish(false);if(img.getAttribute('src')!==src)img.src=src;if(img.complete&&img.naturalWidth>40&&img.naturalHeight>40)finish(true);setTimeout(()=>finish(img.complete&&img.naturalWidth>40&&img.naturalHeight>40),6500)})}
@@ -79,7 +68,8 @@ async function loadAvatar(el){
     const candidates=(await wikiCandidates(name)).filter(src=>src&&src!==seed);
     for(const src of candidates){if(await tryImage(el,img,src)){photoCache[key]=src;savePhotoCache();ok=true;break}}
   }
-  if(!ok){el.classList.remove('has-photo');img.removeAttribute('src');delete photoCache[key];photoMisses.add(key);savePhotoCache()}
+  if(!ok){el.classList.remove('has-photo');img.removeAttribute('src');delete photoCache[key];photoMisses.add(key);el.dataset.avatarFallback='initials';savePhotoCache()}
+  else delete el.dataset.avatarFallback;
   el.dataset.photoState='done';
 }
 function hydrate(root=document){

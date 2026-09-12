@@ -69,11 +69,13 @@ jobs:
           node --check scripts/forward-ledger.mjs
           node --check scripts/shadow-forward-ledger-v2.mjs
           node --check scripts/legacy-forward-audit.mjs
+          node --check scripts/clv-evidence-v4.mjs
           node quant-engine.mjs --self-test
           node live-engine.mjs --self-test
           node scripts/forward-ledger.mjs --self-test
           node scripts/shadow-forward-ledger-v2.mjs --self-test
           node scripts/legacy-forward-audit.mjs --self-test
+          node scripts/clv-evidence-v4.mjs --self-test
           node scripts/validate-app.mjs
 
       - name: Run Quant Engine

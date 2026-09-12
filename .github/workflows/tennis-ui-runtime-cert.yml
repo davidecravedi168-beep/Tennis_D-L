@@ -35,10 +35,15 @@ jobs:
           node scripts/apply-refresh-resilience.mjs
           node scripts/apply-refresh-resilience.mjs
           grep -Fq "script-src 'self' 'unsafe-inline';" index.html
-          grep -Fq 'player-photos.js?v=20260911-v35' index.html
+          grep -Fq 'player-photos.js?v=20260912-v36-verified' index.html
           grep -Fq 'premium-shell-v1.js?v=20260911-v38-nav-runtime' index.html
           grep -Fq 'TEP_FULL_PREMIUM_UI_V3_8' premium-shell-v1.js
           grep -Fq 'function catalogPhoto(raw)' premium-shell-v1.js
+          grep -Fq "photoKey='tep:premium:photos:v32-verified'" premium-shell-v1.js
+          grep -Fq 'Fail closed: a portrait is shown only when the curated catalog' premium-shell-v1.js
+          ! grep -Fq 'wikipedia.org/api' premium-shell-v1.js
+          ! grep -Fq 'wikidata.org/w/api' premium-shell-v1.js
+          ! grep -Fq '"xinran sun"' player-photos.js
           grep -Fq 'TEP_IOS_NAV_BIND_V38' premium-shell-v1.js
           grep -Fq "\$\$('.tp-nav [data-route]').forEach" premium-shell-v1.js
           grep -Fq "el.addEventListener('touchend'" premium-shell-v1.js
@@ -54,6 +59,7 @@ jobs:
           node --check tennis-quant-math-v13.js
           node --check tennis-quant-lab-v13.js
           node --check tennis-quality-governance-v14.js
+          node --check scripts/clv-evidence-v4.mjs
           node - <<'NODE'
           const fs=require('fs');
           const l=JSON.parse(fs.readFileSync('data/live-board.json','utf8'));
@@ -85,7 +91,7 @@ jobs:
           BUST="runtime-v38-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           for i in {1..60}; do
             if curl -fsSL "${PUBLIC}?v=${BUST}" -o /tmp/public-index.html \
-              && grep -Fq 'player-photos.js?v=20260911-v35' /tmp/public-index.html \
+              && grep -Fq 'player-photos.js?v=20260912-v36-verified' /tmp/public-index.html \
               && grep -Fq 'premium-shell-v1.js?v=20260911-v38-nav-runtime' /tmp/public-index.html; then break; fi
             if [ "$i" -eq 60 ]; then echo PUBLIC_V38_STALE; exit 1; fi
             sleep 5

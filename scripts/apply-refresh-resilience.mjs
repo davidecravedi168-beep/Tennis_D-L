@@ -11,12 +11,12 @@ else if(!s.includes("const fresh=url+sep+'v='+Date.now()"))throw new Error('fetc
 const marker='TENNIS_REFRESH_RESILIENCE_R1';
 if(!s.includes(marker))s=s.replace('</script>\n</body>','// TENNIS_REFRESH_RESILIENCE_R1\n</script>\n</body>');
 
-const premiumCsp="style-src 'self' 'unsafe-inline'; img-src 'self' data: https://commons.wikimedia.org https://upload.wikimedia.org; connect-src 'self' https://en.wikipedia.org https://www.wikidata.org;";
+const premiumCsp="style-src 'self' 'unsafe-inline'; img-src 'self' data: https://commons.wikimedia.org https://upload.wikimedia.org; connect-src 'self';";
 const cspRe=/style-src (?:'self' )?'unsafe-inline'; img-src 'self' data:(?: https:\/\/commons\.wikimedia\.org https:\/\/upload\.wikimedia\.org)?; connect-src 'self'(?: https:\/\/en\.wikipedia\.org)?(?: https:\/\/www\.wikidata\.org)?;/;
 if(cspRe.test(s))s=s.replace(cspRe,premiumCsp);
 else if(!s.includes(premiumCsp))throw new Error('CSP contract changed; refusing blind premium patch');
 
-const photoTag='<script src="player-photos.js?v=20260911-v35"></script>';
+const photoTag='<script src="player-photos.js?v=20260912-v36-verified"></script>';
 const premiumTag='<script src="premium-shell-v1.js?v=20260911-v38-nav-runtime"></script>';
 s=s.replace(/\s*<script src="player-photos\.js\?v=[^"]+"><\/script>\s*/g,'\n');
 s=s.replace(/<script src="premium-shell-v1\.js\?v=[^"]+"><\/script>/g,premiumTag);

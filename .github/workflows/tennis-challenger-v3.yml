@@ -15,6 +15,7 @@ on:
       - "scripts/drift-controller-v6.mjs"
       - "scripts/clv-tracker-v3.mjs"
       - "scripts/clv-diagnostics-fix-v3.mjs"
+      - "scripts/clv-evidence-v4.mjs"
       - "scripts/statistical-learning-v7.mjs"
   schedule:
     - cron: "12,27,42,57 * * * *"
@@ -53,6 +54,7 @@ jobs:
           node --check scripts/drift-controller-v6.mjs
           node --check scripts/clv-tracker-v3.mjs
           node --check scripts/clv-diagnostics-fix-v3.mjs
+          node --check scripts/clv-evidence-v4.mjs
           node --check scripts/statistical-learning-v7.mjs
 
           # The classifier self-test must verify rules, not depend on the mutable
@@ -86,6 +88,7 @@ jobs:
           node scripts/drift-controller-v6.mjs --self-test
           node scripts/clv-tracker-v3.mjs --self-test
           node scripts/clv-diagnostics-fix-v3.mjs --self-test
+          node scripts/clv-evidence-v4.mjs --self-test
           node scripts/statistical-learning-v7.mjs --self-test
       - name: Capture real pre-start odds for CLV
         if: github.event_name != 'push'

@@ -41,11 +41,16 @@ jobs:
           set -euo pipefail
           node --check premium-shell-v1.js
           node --check player-photos.js
-          grep -Fq 'player-photos.js?v=20260911-v35' index.html
+          grep -Fq 'player-photos.js?v=20260912-v36-verified' index.html
           grep -Fq 'premium-shell-v1.js?v=20260911-v38-nav-runtime' index.html
           grep -Fq '"start_url": "./?v=20260911-v38-nav-runtime"' manifest.webmanifest
           grep -Fq 'TEP_FULL_PREMIUM_UI_V3_8' premium-shell-v1.js
           grep -Fq 'TEP_IOS_NAV_BIND_V38' premium-shell-v1.js
+          grep -Fq "photoKey='tep:premium:photos:v32-verified'" premium-shell-v1.js
+          grep -Fq 'Fail closed: a portrait is shown only when the curated catalog' premium-shell-v1.js
+          ! grep -Fq 'wikipedia.org/api' premium-shell-v1.js
+          ! grep -Fq 'wikidata.org/w/api' premium-shell-v1.js
+          ! grep -Fq '"xinran sun"' player-photos.js
           grep -Fq "const nodes=\$\$('[data-photo]',root).filter(" premium-shell-v1.js
           grep -Fq "\$\$('.tp-nav [data-route]').forEach" premium-shell-v1.js
           grep -Fq "el.addEventListener('touchend'" premium-shell-v1.js
@@ -54,7 +59,7 @@ jobs:
           ! grep -Fq 'https://thumb.wikimedia.org/' player-photos.js
           ! grep -Fq 'document.startViewTransition' premium-shell-v1.js
           ! grep -Fq '[object Object]' premium-shell-v1.js
-          test "$(grep -o 'player-photos.js?v=20260911-v35' index.html | wc -l)" -eq 1
+          test "$(grep -o 'player-photos.js?v=20260912-v36-verified' index.html | wc -l)" -eq 1
           test "$(grep -o 'premium-shell-v1.js?v=20260911-v38-nav-runtime' index.html | wc -l)" -eq 1
           echo 'PREMIUM_V38_CONTRACT=PASS'
 
@@ -70,7 +75,8 @@ jobs:
             const w=f.contentWindow,d=f.contentDocument,start=performance.now();
             const portrait=()=>{
               const good=[...d.querySelectorAll('.tp-avatar.hero img')].find(x=>x.complete&&x.naturalWidth>40&&x.naturalHeight>40&&x.closest('.tp-avatar')?.classList.contains('has-photo'));
-              if(good){document.documentElement.dataset.portrait='pass';nav();return}
+              const fallback=[...d.querySelectorAll('.tp-avatar.hero[data-avatar-fallback=initials]')].some(x=>(x.querySelector('span')?.textContent||'').trim().length>=2);
+              if(good||fallback){document.documentElement.dataset.portrait=good?'photo':'initials';nav();return}
               if(performance.now()-start<12000)setTimeout(portrait,80);else{document.documentElement.dataset.portrait='fail';nav();}
             };
             const nav=()=>{
@@ -105,6 +111,7 @@ jobs:
           node scripts/drift-controller-v6.mjs --self-test
           node scripts/clv-tracker-v3.mjs --self-test
           node scripts/clv-diagnostics-fix-v3.mjs --self-test
+          node scripts/clv-evidence-v4.mjs --self-test
 
       - name: Commit normalized V3.8 assets if needed
         run: |
@@ -132,7 +139,7 @@ jobs:
           CACHE_BUST="v38-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           for i in {1..60}; do
             if curl -fsSL "${PUBLIC}?v=${CACHE_BUST}" -o /tmp/public-index.html \
-              && grep -Fq 'player-photos.js?v=20260911-v35' /tmp/public-index.html \
+              && grep -Fq 'player-photos.js?v=20260912-v36-verified' /tmp/public-index.html \
               && grep -Fq 'premium-shell-v1.js?v=20260911-v38-nav-runtime' /tmp/public-index.html; then
               echo 'PUBLIC_V38_SHELL_FRESH=PASS'; break
             fi

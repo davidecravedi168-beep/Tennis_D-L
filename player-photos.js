@@ -28,6 +28,5 @@ window.__TEP_PLAYER_PHOTOS__=Object.freeze({
   "sam schroder": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Sam_Schr%C3%B6der_Paris_2024.jpg/330px-Sam_Schr%C3%B6der_Paris_2024.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
   "thiago seyboth wild": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Thiago_Seyboth_Wild_-_2024_Olympics_%28cropped%29.jpg/330px-Thiago_Seyboth_Wild_-_2024_Olympics_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
   "tokito oda": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/All-Japan-Tennis-Championships-100th-Day8---2025-10-12_06704.jpg/330px-All-Japan-Tennis-Championships-100th-Day8---2025-10-12_06704.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
-  "xinran sun": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Anna_Pushkareva_25May24_0306.jpg/960px-Anna_Pushkareva_25May24_0306.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
   "yui kamiji": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Swiss_Open_Geneva_-_20140712_-_Semi_final_Women_-_Y._Kamiji_vs_K._Montjane_83.jpg/330px-Swiss_Open_Geneva_-_20140712_-_Semi_final_Women_-_Y._Kamiji_vs_K._Montjane_83.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail"
 });

@@ -39,6 +39,11 @@ jobs:
           grep -Fq 'void Promise.allSettled(immediate.map(loadAvatar))' premium-shell-v1.js
           grep -Fq "if('IntersectionObserver'in window)" premium-shell-v1.js
           grep -Fq '.tp-avatar.has-photo img{opacity:1}' premium-shell-v1.js
+          grep -Fq "photoKey='tep:premium:photos:v32-verified'" premium-shell-v1.js
+          grep -Fq 'Fail closed: a portrait is shown only when the curated catalog' premium-shell-v1.js
+          ! grep -Fq 'wikipedia.org/api' premium-shell-v1.js
+          ! grep -Fq 'wikidata.org/w/api' premium-shell-v1.js
+          ! grep -Fq '"xinran sun"' player-photos.js
           ! grep -Fq 'decoding="async" hidden' premium-shell-v1.js
           echo 'PHOTO_STATIC_CERT=PASS'
 
@@ -69,6 +74,10 @@ jobs:
             --headless --no-sandbox --disable-gpu --disable-dev-shm-usage \
             --virtual-time-budget=18000 --dump-dom \
             'http://127.0.0.1:8765/?v=photo-runtime-fix' > /tmp/tep-photo-dom.html
-          grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/tep-photo-dom.html
-          grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/tep-photo-dom.html
+          grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero|class="tp-avatar hero[^\"]*"[^>]*data-avatar-fallback="initials"' /tmp/tep-photo-dom.html
+          if grep -Eq 'class="tp-avatar hero[^\"]*has-photo|class="tp-avatar[^\"]*has-photo[^\"]*hero' /tmp/tep-photo-dom.html; then
+            grep -Eq 'src="https://(upload|commons)\.wikimedia\.org/' /tmp/tep-photo-dom.html
+          else
+            echo 'PHOTO_BROWSER_SMOKE=INITIALS_FALLBACK'
+          fi
           echo 'PHOTO_BROWSER_SMOKE=PASS'
