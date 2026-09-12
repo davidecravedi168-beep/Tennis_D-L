@@ -17,17 +17,19 @@ if(cspRe.test(s))s=s.replace(cspRe,premiumCsp);
 else if(!s.includes(premiumCsp))throw new Error('CSP contract changed; refusing blind premium patch');
 
 const photoTag='<script src="player-photos.js?v=20260912-v36-verified"></script>';
-const premiumTag='<script src="premium-shell-v1.js?v=20260912-v40-visible-nav"></script>';
+const premiumTag='<script src="premium-shell-v1.js?v=20260912-v41-player-details"></script>';
 s=s.replace(/\s*<script src="player-photos\.js\?v=[^"]+"><\/script>\s*/g,'\n');
 s=s.replace(/<script src="premium-shell-v1\.js\?v=[^"]+"><\/script>/g,premiumTag);
 if(!s.includes(premiumTag))s=s.replace('</body>',`${photoTag}\n${premiumTag}\n</body>`);
 else s=s.replace(premiumTag,`${photoTag}\n${premiumTag}`);
 
 const runtimeTags=[
+  '<script src="tennis-data-lens-v15.js?v=15.2"></script>',
   '<script src="tennis-quant-math-v13.js?v=13.0"></script>',
   '<script src="tennis-quant-lab-v13.js?v=13.2-pro-metrics-premium-20260911"></script>',
   '<script src="tennis-quality-governance-v14.js?v=14.0"></script>'
 ];
+s=s.replace(/<script src="tennis-data-lens-v15\.js\?v=[^"]+"><\/script>\s*/g,'');
 s=s.replace(/<script src="tennis-quant-math-v13\.js\?v=[^"]+"><\/script>\s*/g,'');
 s=s.replace(/<script src="tennis-quant-lab-v13\.js\?v=[^"]+"><\/script>\s*/g,'');
 s=s.replace(/<script src="tennis-quality-governance-v14\.js\?v=[^"]+"><\/script>\s*/g,'');
