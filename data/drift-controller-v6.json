@@ -1,10 +1,10 @@
 {
   "schema": "TEP-DRIFT-CONTROLLER-V6",
-  "generated_at": "2026-09-12T17:17:29.443Z",
+  "generated_at": "2026-09-12T19:28:52.990Z",
   "sample": {
-    "total": 284,
+    "total": 285,
     "recent": 50,
-    "baseline": 234
+    "baseline": 235
   },
   "active_calibration": {
     "policy": "TEP_ADAPTIVE_CALIBRATION_V5",
@@ -54,48 +54,51 @@
   "raw": {
     "recent": {
       "n": 50,
-      "brier": 0.23046466413024,
-      "logloss": 0.650724710757449,
-      "ece": 0.14357491999999994
+      "brier": 0.23389475727853998,
+      "logloss": 0.6589478571975301,
+      "ece": 0.15572566
     },
     "baseline": {
-      "n": 234,
-      "brier": 0.19434950971789314,
-      "logloss": 0.5709730864951961,
-      "ece": 0.11517738888888893
+      "n": 235,
+      "brier": 0.1936350249516085,
+      "logloss": 0.5692986414604624,
+      "ece": 0.11537927659574472
     },
     "state": "WATCH",
     "reasons": [
-      "BRIER_WORSE"
+      "BRIER_WORSE",
+      "LOGLOSS_WORSE",
+      "ECE_WORSE"
     ],
     "delta": {
-      "brier": 0.03611515441234686,
-      "logloss": 0.07975162426225291,
-      "ece": 0.028397531111111013
+      "brier": 0.040259732326931474,
+      "logloss": 0.08964921573706774,
+      "ece": 0.04034638340425527
     }
   },
   "calibrated": {
     "recent": {
       "n": 50,
-      "brier": 0.21082946664191543,
-      "logloss": 0.60518937654949,
-      "ece": 0.0941877300464269
+      "brier": 0.21268285305598428,
+      "logloss": 0.610640840775098,
+      "ece": 0.08995632108960927
     },
     "baseline": {
-      "n": 234,
-      "brier": 0.1778537762338991,
-      "logloss": 0.5288373475242142,
-      "ece": 0.02188693623744054
+      "n": 235,
+      "brier": 0.17715149790626,
+      "logloss": 0.5270982795204928,
+      "ece": 0.02227558007139954
     },
     "state": "WATCH",
     "reasons": [
       "BRIER_WORSE",
+      "LOGLOSS_WORSE",
       "ECE_WORSE"
     ],
     "delta": {
-      "brier": 0.03297569040801632,
-      "logloss": 0.07635202902527582,
-      "ece": 0.07230079380898637
+      "brier": 0.035531355149724275,
+      "logloss": 0.08354256125460513,
+      "ece": 0.06768074101820973
     }
   },
   "interpretation": "Active calibrated probabilities are drifting. Tighten Challenger acceptance until metrics normalize."
