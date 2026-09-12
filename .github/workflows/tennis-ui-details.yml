@@ -1,0 +1,44 @@
+name: Tennis UI Details Regression
+on:
+  push:
+    branches: [main, 'codex/ui-details-*']
+    paths:
+      - 'premium-shell-v1.js'
+      - 'tennis-data-lens-v15.js'
+      - 'index.html'
+      - 'tests/**'
+      - '.github/workflows/tennis-ui-details.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  details:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated browser test dependencies
+        run: |
+          npm install --prefix /tmp/tep-ui-tests --no-audit --no-fund playwright@1.63.0
+          /tmp/tep-ui-tests/node_modules/.bin/playwright install --with-deps chromium webkit
+      - name: Two passes of data, probability and quote regressions
+        run: |
+          node --test tests/*.test.cjs
+          node --test tests/*.test.cjs
+      - name: Two browser passes on phone and desktop, Chromium and WebKit
+        env:
+          NODE_PATH: /tmp/tep-ui-tests/node_modules
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/tep-ui-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          node tests/premium-details-browser.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tennis-ui-details-${{ github.sha }}
+          path: test-results/
+          retention-days: 7
