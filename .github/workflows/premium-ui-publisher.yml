@@ -82,14 +82,13 @@ jobs:
               if(good||fallback){document.documentElement.dataset.portrait='pass';document.documentElement.dataset.portraitKind=good?'photo':'initials';nav();return}
               if(performance.now()-start<12000)setTimeout(portrait,80);else{document.documentElement.dataset.portrait='fail';nav();}
             };
-            const legacyNav=async()=>{
+            const legacyNav=()=>{
               const cases=[['live','Live'],['matches','Partite'],['record','Track Record'],['bankroll','Bankroll'],['bets','']];
-              const waitFrame=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
               const checks=[];
               for(const [go,title] of cases){
                 const el=d.querySelector(`.bottomNav .nav[data-go="${go}"]`);
                 if(!el){checks.push(false);continue}
-                el.click();await waitFrame();
+                el.click();
                 const current=d.querySelector('#tpView h1')?.textContent?.trim()||'';
                 const home=go==='bets'?(d.querySelector('#tpView .tp-kicker span')?.textContent?.trim()==='MATCH IN EVIDENZA'):current===title;
                 checks.push(Boolean(home&&el.classList.contains('active')));
