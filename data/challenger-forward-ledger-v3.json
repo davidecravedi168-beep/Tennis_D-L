@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-11T14:48:57.056Z",
-  "updated_at": "2026-09-12T21:36:45.700Z",
+  "updated_at": "2026-09-12T23:17:58.168Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -4377,11 +4377,11 @@
       },
       "immutable_sha256": "adf573634755acd0047bc14bf6b7ad4249754caa452d8ef5e489e99e0d058f39",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-12T22:38:11.182Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -4763,11 +4763,11 @@
       },
       "immutable_sha256": "7e9ed3ab96a7551063ba7ba3f7d013a01083fa685516baf9cfafd16195d2bd89",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-12T22:38:11.182Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -5107,24 +5107,83 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "693B7EAFFC0BF834A46D9A25",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "0C9D6934A15F36623D0A",
+        "source_immutable_sha256": "9fdc16a3d97b5e1ed40a2b61cfe9f58152ea66afcf86541263f599f846139b1b",
+        "event_id": "74627544",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-12T22:38:11.182Z",
+        "start_at": "2026-09-13T12:20:00Z",
+        "first_observed_at": "2026-09-12T22:38:16.545Z",
+        "player_a": "Cherubini, Diletta",
+        "player_b": "Shinikova, Isabella",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Shinikova, Isabella",
+        "candidate_odds": 2.25,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -3,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.472948,
+        "calibrated_prob": 0.36297599093702787,
+        "calibrated_ev": -0.18330402039168725,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 3,
+        "observed_core": 3,
+        "hard_reject": [
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "3d51437900a18a57ce54835fc14166a4d0f7f7e1e53a0507a41b41e3ea86127e",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 91,
+    "total_decisions": 92,
     "accepted": 2,
-    "rejected": 89,
-    "open": 21,
-    "settled": 70
+    "rejected": 90,
+    "open": 20,
+    "settled": 72
   },
   "evidence": {
     "state": "COLD_START",
     "champion": {
-      "n": 70,
-      "wins": 30,
-      "hit_rate": 0.42857142857142855,
-      "profit_units": -5.629999999999999,
-      "roi": -0.08042857142857142,
-      "max_drawdown_units": 10.18
+      "n": 72,
+      "wins": 31,
+      "hit_rate": 0.4305555555555556,
+      "profit_units": -5.799999999999999,
+      "roi": -0.08055555555555555,
+      "max_drawdown_units": 10.68
     },
     "challenger": {
       "n": 1,
@@ -5134,7 +5193,7 @@
       "roi": -1,
       "max_drawdown_units": 1
     },
-    "delta_roi": -0.9195714285714286,
+    "delta_roi": -0.9194444444444445,
     "review_eligible": false
   }
 }
