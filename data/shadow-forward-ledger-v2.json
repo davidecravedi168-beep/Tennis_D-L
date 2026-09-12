@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-12T20:58:07.182Z",
+  "updated_at": "2026-09-12T22:38:16.802Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -4933,11 +4933,11 @@
       },
       "immutable_sha256": "a0f8e83ab5fc83e8036b98c0a65895804b2ca9d084a06d551d668128463807fb",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
-        "won": null,
-        "profit_units": null
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-12T22:38:11.182Z",
+        "won": false,
+        "profit_units": -1
       }
     },
     {
@@ -5257,11 +5257,11 @@
       },
       "immutable_sha256": "8d5f1e40255cc02c59e623087d6657003086312e458ca9bce4d8f655555848a0",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-12T22:38:11.182Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -5543,34 +5543,83 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "48B0926C604E5D2D29F3E078",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "0C9D6934A15F36623D0A",
+        "source_immutable_sha256": "9fdc16a3d97b5e1ed40a2b61cfe9f58152ea66afcf86541263f599f846139b1b",
+        "event_id": "74627544",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-12T22:38:11.182Z",
+        "start_at": "2026-09-13T12:20:00Z",
+        "first_observed_at": "2026-09-12T22:38:16.545Z",
+        "player_a": "Cherubini, Diletta",
+        "player_b": "Shinikova, Isabella",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Shinikova, Isabella",
+        "candidate_odds": 2.25,
+        "candidate_prob": 0.472948,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -5,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 3,
+        "observed_core": 3,
+        "hard_reject": [
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT"
+        ],
+        "penalties": [
+          "WTA_PENALTY",
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "64e0474ac98df95855105a634e850bd3362e904478a7d2daeacaff21b03b6f4e",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 120,
+    "total_decisions": 121,
     "accepted": 41,
-    "rejected": 79,
-    "open": 22,
-    "settled": 98
+    "rejected": 80,
+    "open": 21,
+    "settled": 100
   },
   "evidence": {
     "state": "MIXED_FORWARD",
     "champion": {
-      "n": 98,
-      "wins": 39,
-      "hit_rate": 0.3979591836734694,
-      "profit_units": -10.259999999999998,
-      "roi": -0.10469387755102039,
-      "max_drawdown_units": 17.299999999999997
+      "n": 100,
+      "wins": 40,
+      "hit_rate": 0.4,
+      "profit_units": -10.429999999999998,
+      "roi": -0.10429999999999998,
+      "max_drawdown_units": 17.799999999999997
     },
     "shadow": {
-      "n": 35,
+      "n": 36,
       "wins": 18,
-      "hit_rate": 0.5142857142857142,
-      "profit_units": -7.09,
-      "roi": -0.20257142857142857,
-      "max_drawdown_units": 7.09
+      "hit_rate": 0.5,
+      "profit_units": -8.09,
+      "roi": -0.2247222222222222,
+      "max_drawdown_units": 8.09
     },
-    "delta_roi": -0.09787755102040818,
+    "delta_roi": -0.12042222222222224,
     "review_eligible": false
   }
 }
