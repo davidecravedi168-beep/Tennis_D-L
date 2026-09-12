@@ -1,17 +1,20 @@
 {
-  "schema": "TEP-PAPER-FUNNEL-1",
-  "generated_at": "2026-09-12T04:59:46.148Z",
+  "schema": "TEP-PAPER-FUNNEL-2",
+  "generated_at": "2026-09-12T08:24:32.605Z",
   "source": {
     "ledger_schema": "TEP-FORWARD-LEDGER-1",
-    "ledger_updated_at": "2026-09-12T04:52:43.671Z",
-    "freshness_minutes": 7.041283333333333
+    "ledger_updated_at": "2026-09-12T05:56:08.151Z",
+    "freshness_minutes": 148.40756666666667,
+    "clv_tracker_updated_at": "2026-09-12T06:28:31.173Z"
   },
   "policy": {
     "validation_only": true,
     "thresholds_changed": false,
     "official_pick_logic_changed": false,
     "flat_stake_units": 1,
-    "note": "Observability only: tracks every locked market candidate and rejection reason without relaxing betting thresholds."
+    "strict_nulls": true,
+    "clv_definition": "candidate entry odds / best available genuine closing reference - 1",
+    "note": "Observability only: tracks every locked market candidate and rejection reason without relaxing betting thresholds. Missing CLV evidence remains null and never becomes zero."
   },
   "funnel": {
     "market_locks": 319,
@@ -32,8 +35,10 @@
       "profit_units": -28.450000000000006,
       "roi": -0.10088652482269506,
       "max_drawdown_units": 32.99000000000001,
-      "clv_sample": 282,
-      "avg_clv": 0.00044951418439716315
+      "clv_sample": 28,
+      "avg_clv": -0.008686712983976183,
+      "clv_provider_sample": 4,
+      "clv_proxy_sample": 24
     },
     "watch": {
       "settled": 8,
@@ -42,8 +47,10 @@
       "profit_units": -4.92,
       "roi": -0.615,
       "max_drawdown_units": 5.28,
-      "clv_sample": 8,
-      "avg_clv": 0
+      "clv_sample": 0,
+      "avg_clv": null,
+      "clv_provider_sample": 0,
+      "clv_proxy_sample": 0
     },
     "no_bet": {
       "settled": 270,
@@ -52,8 +59,10 @@
       "profit_units": -21.02999999999999,
       "roi": -0.07788888888888885,
       "max_drawdown_units": 30.42,
-      "clv_sample": 270,
-      "avg_clv": 0
+      "clv_sample": 24,
+      "avg_clv": -0.01541629793947471,
+      "clv_provider_sample": 0,
+      "clv_proxy_sample": 24
     },
     "official_qualified": {
       "settled": 4,
@@ -63,8 +72,30 @@
       "roi": -0.625,
       "max_drawdown_units": 3,
       "clv_sample": 4,
-      "avg_clv": 0.031690750000000004
+      "avg_clv": 0.03169079674901498,
+      "clv_provider_sample": 4,
+      "clv_proxy_sample": 0
     }
+  },
+  "clv": {
+    "state": "PARTIAL",
+    "eligible_rows": 277,
+    "avg_clv": -0.008686712983976183,
+    "clv_sample": 28,
+    "zero_share": 0.17857142857142858,
+    "closing_odds_sample": 28,
+    "coverage": 0.10108303249097472,
+    "provider_closing_sample": 4,
+    "proxy_closing_sample": 24,
+    "proxy_max_age_min": 180,
+    "missing_closing": 249,
+    "missing_reasons": {
+      "NO_PRESTART_OBSERVATION": 249
+    },
+    "nulls_treated_as_missing": true,
+    "anomalies": [
+      "CLV_LOW_COVERAGE"
+    ]
   },
   "coverage": {
     "candidate_odds": 1,
@@ -295,6 +326,12 @@
       "share": 0.1111111111111111
     }
   ],
-  "anomalies": [],
-  "status": "HEALTHY"
+  "anomalies": [
+    {
+      "code": "CLV_LOW_COVERAGE",
+      "severity": "attention",
+      "detail": "Genuine CLV evidence covers 10.1% of settled paper candidates (28/277); missing values remain unavailable."
+    }
+  ],
+  "status": "ATTENTION"
 }

@@ -1,9 +1,9 @@
 {
   "schema": "TEP-MODEL-DIAGNOSTICS-1",
-  "generated_at": "2026-09-12T04:59:46.325Z",
+  "generated_at": "2026-09-12T08:24:32.816Z",
   "source": {
     "ledger_schema": "TEP-FORWARD-LEDGER-1",
-    "ledger_updated_at": "2026-09-12T04:52:43.671Z"
+    "ledger_updated_at": "2026-09-12T05:56:08.151Z"
   },
   "policy": {
     "validation_only": true,
@@ -519,15 +519,25 @@
     }
   ],
   "clv": {
-    "state": "SUSPECT",
-    "settled_candidates": 282,
-    "clv_sample": 282,
-    "avg_clv": 0.00044951418439716315,
-    "zero_share": 0.9858156028368794,
-    "closing_odds_sample": 4,
+    "state": "PARTIAL",
+    "eligible_rows": 277,
+    "avg_clv": -0.008686712983976183,
+    "clv_sample": 28,
+    "zero_share": 0.17857142857142858,
+    "closing_odds_sample": 28,
+    "coverage": 0.10108303249097472,
+    "provider_closing_sample": 4,
+    "proxy_closing_sample": 24,
+    "proxy_max_age_min": 180,
+    "missing_closing": 249,
+    "missing_reasons": {
+      "NO_PRESTART_OBSERVATION": 249
+    },
+    "nulls_treated_as_missing": true,
     "anomalies": [
-      "CLV_ALMOST_ALWAYS_ZERO"
+      "CLV_LOW_COVERAGE"
     ],
-    "policy": "CLV is accepted only when an actual closing-price observation is present; zero-filled placeholders are treated as suspect, not evidence."
+    "settled_candidates": 277,
+    "policy": "CLV is accepted only when an actual closing-price observation is present; zero-filled or missing placeholders remain unavailable evidence."
   }
 }
