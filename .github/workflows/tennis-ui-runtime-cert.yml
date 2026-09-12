@@ -48,6 +48,9 @@ jobs:
           grep -Fq "\$\$('.tp-nav [data-route]').forEach" premium-shell-v1.js
           grep -Fq "el.addEventListener('touchend'" premium-shell-v1.js
           grep -Fq "el.addEventListener('click'" premium-shell-v1.js
+          grep -Fq 'TEP_LEGACY_NAV_BRIDGE_V39' premium-shell-v1.js
+          grep -Fq 'const LEGACY_ROUTE=' premium-shell-v1.js
+          grep -Fq "state.screen==='bankroll'?bankrollScreen()" premium-shell-v1.js
           ! grep -Fq 'document.startViewTransition' premium-shell-v1.js
           ! grep -Fq "behavior:'smooth'" premium-shell-v1.js
           ! grep -Fq '[object Object]' premium-shell-v1.js

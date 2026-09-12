@@ -55,6 +55,9 @@ jobs:
           grep -Fq "\$\$('.tp-nav [data-route]').forEach" premium-shell-v1.js
           grep -Fq "el.addEventListener('touchend'" premium-shell-v1.js
           grep -Fq "el.addEventListener('click'" premium-shell-v1.js
+          grep -Fq 'TEP_LEGACY_NAV_BRIDGE_V39' premium-shell-v1.js
+          grep -Fq 'const LEGACY_ROUTE=' premium-shell-v1.js
+          grep -Fq "state.screen==='bankroll'?bankrollScreen()" premium-shell-v1.js
           ! grep -Fq '$$$(' premium-shell-v1.js
           ! grep -Fq 'https://thumb.wikimedia.org/' player-photos.js
           ! grep -Fq 'document.startViewTransition' premium-shell-v1.js
@@ -79,6 +82,20 @@ jobs:
               if(good||fallback){document.documentElement.dataset.portrait='pass';document.documentElement.dataset.portraitKind=good?'photo':'initials';nav();return}
               if(performance.now()-start<12000)setTimeout(portrait,80);else{document.documentElement.dataset.portrait='fail';nav();}
             };
+            const legacyNav=async()=>{
+              const cases=[['live','Live'],['matches','Partite'],['record','Track Record'],['bankroll','Bankroll'],['bets','']];
+              const waitFrame=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+              const checks=[];
+              for(const [go,title] of cases){
+                const el=d.querySelector(`.bottomNav .nav[data-go="${go}"]`);
+                if(!el){checks.push(false);continue}
+                el.click();await waitFrame();
+                const current=d.querySelector('#tpView h1')?.textContent?.trim()||'';
+                const home=go==='bets'?(d.querySelector('#tpView .tp-kicker span')?.textContent?.trim()==='MATCH IN EVIDENZA'):current===title;
+                checks.push(Boolean(home&&el.classList.contains('active')));
+              }
+              document.documentElement.dataset.legacyNav=checks.every(Boolean)?'pass':'fail';
+            };
             const nav=()=>{
               const b=d.querySelector('.tp-nav [data-route="explore"]');
               if(!b){if(performance.now()-start<8000)return setTimeout(nav,80);document.documentElement.dataset.nav='fail';return}
@@ -88,6 +105,7 @@ jobs:
                 const title=d.querySelector('.tp-page-title h1')?.textContent?.trim(),ms=performance.now()-t;
                 document.documentElement.dataset.nav=title==='Partite'&&ms<180?'pass':'fail';
                 document.documentElement.dataset.navMs=ms.toFixed(1);
+                legacyNav();
               }));
             };
             portrait();
@@ -102,6 +120,7 @@ jobs:
           grep -Eo '<html[^>]*data-(portrait|nav)[^>]*>' /tmp/ux.html | head -1 || true
           grep -Eq '<html[^>]*data-portrait="pass"' /tmp/ux.html
           grep -Eq '<html[^>]*data-nav="pass"' /tmp/ux.html
+          grep -Eq '<html[^>]*data-legacy-nav="pass"' /tmp/ux.html
           echo 'PREMIUM_V38_LOCAL_BROWSER=PASS'
 
       - name: Existing quant regressions
