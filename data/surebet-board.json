@@ -1,18 +1,33 @@
 {
   "meta": {
-    "updated_at": "2026-09-12T18:46:39.438Z",
+    "updated_at": "2026-09-12T20:51:44.985Z",
     "status": "READY",
-    "model_version": "TEP-SUREBET-1.2",
-    "source": "Odds-API.io selected bookmakers · shared Tennis Edge event universe",
+    "error": null,
+    "model_version": "TEP-SUREBET-2.0",
+    "source": "Quote condivise Quant / Live · nessuna chiamata aggiuntiva",
     "bookmakers": [
       "Bet365",
       "Eurobet IT"
     ],
     "bookmaker_count": 2,
-    "events_total": 144,
-    "events_scanned": 20,
-    "api_calls": 3,
+    "events_total": 142,
+    "events_scanned": 0,
+    "events_compared": 2,
+    "events_with_quotes": 31,
+    "markets_compared": 2,
+    "api_calls": 0,
     "api_call_budget": 3,
+    "shared_requests_24h": 7,
+    "shared_budget_24h": 480,
+    "scanner_budget_24h": 60,
+    "rejection_counts": {
+      "MARGINE_TROPPO_BASSO": 2,
+      "QUOTA_NON_FRESCA": 2,
+      "QUOTE_NON_SINCRONE": 2,
+      "BUFFER_NON_SUPERATO": 2,
+      "FINESTRA_ESECUZIONE_TROPPO_CORTA": 2,
+      "COPERTURA_INSUFFICIENTE": 33
+    },
     "max_quote_age_min": 10,
     "max_timestamp_spread_min": 5,
     "execution_ttl_min": 4,
@@ -20,7 +35,7 @@
     "min_raw_roi": 0.005,
     "safety_buffer": 0.0025,
     "fail_closed": true,
-    "note": "Solo arbitraggio 2-way Match Winner tra bookmaker diversi. Nessun modello predittivo viene usato."
+    "note": "ML, totali e handicap game a mezze linee identiche. Le regole di ritiro e annullamento richiedono verifica presso i bookmaker."
   },
   "opportunities": [],
   "checked": [
@@ -31,23 +46,28 @@
       "player_b": "Shelton, Ben",
       "tournament": "ATP - US Open, New York, USA",
       "market": "MATCH_WINNER_2WAY",
-      "status": "NON_CERTIFICATA",
-      "book_a": "Eurobet IT",
-      "book_b": "Bet365",
-      "odds_a": 1.65,
-      "odds_b": 2.3,
-      "updated_a": "2026-09-12T10:25:57.404Z",
-      "updated_b": "2026-09-12T18:45:49.796Z",
-      "age_a_min": 500.7,
-      "age_b_min": 0.8,
-      "timestamp_spread_min": 499.9,
-      "implied_sum": 1.04084321,
-      "raw_roi": -0.03924051,
-      "safety_buffer": 0.0025,
-      "buffered_roi": -0.04179,
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Zverev, Alexander",
+      "selection_b": "Shelton, Ben",
       "market_depth": 2,
-      "median_no_vig_a": 0.580808,
-      "outlier_distance": 0.013879,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.66,
+          "b": 2.3,
+          "updated_at": "2026-09-12T20:51:04.686Z",
+          "age_min": 0.67165
+        },
+        {
+          "book": "Eurobet IT",
+          "a": 1.65,
+          "b": 2.16,
+          "updated_at": "2026-09-12T10:25:57.404Z",
+          "age_min": 625.7930166666666
+        }
+      ],
+      "status": "NON_CERTIFICATA",
       "reasons": [
         "MARGINE_TROPPO_BASSO",
         "QUOTA_NON_FRESCA",
@@ -55,22 +75,1019 @@
         "BUFFER_NON_SUPERATO",
         "FINESTRA_ESECUZIONE_TROPPO_CORTA"
       ],
+      "raw_roi": -0.03924050632911402,
+      "book_a": "Eurobet IT",
+      "book_b": "Bet365",
+      "odds_a": 1.65,
+      "odds_b": 2.3,
+      "updated_a": "2026-09-12T10:25:57.404Z",
+      "updated_b": "2026-09-12T20:51:04.686Z",
+      "buffered_roi": -0.041800000000000004,
+      "safety_buffer": 0.0025,
+      "timestamp_spread_min": 625.1213666666666,
       "expires_at": "2026-09-12T10:35:57.404Z",
       "execution_window_sec": 0,
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
+      "detected_at": "2026-09-12T20:51:44.985Z",
       "stake_100": {
         "stake_a": 58.23,
         "stake_b": 41.77,
-        "return_if_a": 96.08,
+        "return_if_a": 96.07,
         "return_if_b": 96.07,
         "worst_return": 96.07,
         "profit": -3.93,
-        "roi": -0.03929
+        "roi": -0.0393
       },
-      "detected_at": "2026-09-12T18:46:39.438Z",
-      "execution_note": "Copertura matematica valida solo finché entrambe le quote restano accettabili e le regole di settlement dei due bookmaker sono equivalenti."
+      "source": "quant"
+    },
+    {
+      "event_id": "74293732",
+      "start_at": "2026-09-12T21:30:00Z",
+      "player_a": "Liu, Claire",
+      "player_b": "Blinkova, Anna",
+      "tournament": "WTA 125K - Barranquilla, Colombia",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Liu, Claire",
+      "selection_b": "Blinkova, Anna",
+      "market_depth": 2,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.83,
+          "b": 1.83,
+          "updated_at": "2026-09-12T20:48:49.794Z",
+          "age_min": 2.91985
+        },
+        {
+          "book": "Eurobet IT",
+          "a": 1.81,
+          "b": 1.89,
+          "updated_at": "2026-09-12T18:39:35.668Z",
+          "age_min": 132.15528333333333
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "MARGINE_TROPPO_BASSO",
+        "QUOTA_NON_FRESCA",
+        "QUOTE_NON_SINCRONE",
+        "BUFFER_NON_SUPERATO",
+        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
+      ],
+      "raw_roi": -0.07024193548387092,
+      "book_a": "Bet365",
+      "book_b": "Eurobet IT",
+      "odds_a": 1.83,
+      "odds_b": 1.89,
+      "updated_a": "2026-09-12T20:48:49.794Z",
+      "updated_b": "2026-09-12T18:39:35.668Z",
+      "buffered_roi": -0.0729,
+      "safety_buffer": 0.0025,
+      "timestamp_spread_min": 129.23543333333333,
+      "expires_at": "2026-09-12T18:49:35.668Z",
+      "execution_window_sec": 0,
+      "same_market_verified": true,
+      "settlement_rules_verified": false,
+      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
+      "detected_at": "2026-09-12T20:51:44.985Z",
+      "stake_100": {
+        "stake_a": 50.8,
+        "stake_b": 49.2,
+        "return_if_a": 92.96,
+        "return_if_b": 92.98,
+        "worst_return": 92.96,
+        "profit": -7.04,
+        "roi": -0.0704
+      },
+      "source": "quant"
+    },
+    {
+      "event_id": "74293732",
+      "start_at": "2026-09-12T21:30:00Z",
+      "player_a": "Liu, Claire",
+      "player_b": "Blinkova, Anna",
+      "tournament": "WTA 125K - Barranquilla, Colombia",
+      "market": "TOTAL_GAMES_2WAY",
+      "line": 21.5,
+      "market_key": "TOTAL_GAMES_2WAY|21.5",
+      "selection_a": "Over 21.5",
+      "selection_b": "Under 21.5",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.8,
+          "b": 1.9,
+          "updated_at": "2026-09-12T06:45:33.333Z",
+          "age_min": 846.1942
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74293732",
+      "start_at": "2026-09-12T21:30:00Z",
+      "player_a": "Liu, Claire",
+      "player_b": "Blinkova, Anna",
+      "tournament": "WTA 125K - Barranquilla, Colombia",
+      "market": "GAME_HANDICAP_2WAY",
+      "line": -0.5,
+      "market_key": "GAME_HANDICAP_2WAY|-0.5",
+      "selection_a": "Liu, Claire -0.5",
+      "selection_b": "Blinkova, Anna +0.5",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.83,
+          "b": 1.83,
+          "updated_at": "2026-09-12T06:45:33.333Z",
+          "age_min": 846.1942
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74609192",
+      "start_at": "2026-09-13T16:00:00Z",
+      "player_a": "Bucsa, Cristina",
+      "player_b": "Andreescu, Bianca",
+      "tournament": "WTA - Guadalajara, Mexico",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Bucsa, Cristina",
+      "selection_b": "Andreescu, Bianca",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Eurobet IT",
+          "a": 2.22,
+          "b": 1.62,
+          "updated_at": "2026-09-12T17:25:38.504Z",
+          "age_min": 206.10801666666666
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74609198",
+      "start_at": "2026-09-13T16:00:00Z",
+      "player_a": "Jacquemot, Elsa",
+      "player_b": "Samsonova, Liudmila",
+      "tournament": "WTA - Guadalajara, Mexico",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Jacquemot, Elsa",
+      "selection_b": "Samsonova, Liudmila",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Eurobet IT",
+          "a": 3.9,
+          "b": 1.23,
+          "updated_at": "2026-09-12T16:55:00.738Z",
+          "age_min": 236.73745
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74609190",
+      "start_at": "2026-09-13T16:00:00Z",
+      "player_a": "Udvardy, Panna",
+      "player_b": "Boisson, Lois",
+      "tournament": "WTA - Guadalajara, Mexico",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Udvardy, Panna",
+      "selection_b": "Boisson, Lois",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Eurobet IT",
+          "a": 2.31,
+          "b": 1.57,
+          "updated_at": "2026-09-12T20:48:52.445Z",
+          "age_min": 2.8756666666666666
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74609200",
+      "start_at": "2026-09-13T16:00:00Z",
+      "player_a": "Kalieva, Elvina",
+      "player_b": "Day, Kayla",
+      "tournament": "WTA - Guadalajara, Mexico",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Kalieva, Elvina",
+      "selection_b": "Day, Kayla",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Eurobet IT",
+          "a": 2.5,
+          "b": 1.49,
+          "updated_at": "2026-09-12T15:53:49.911Z",
+          "age_min": 297.9179
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "73992442",
+      "start_at": "2026-09-13T18:00:00Z",
+      "player_a": "Zverev, Alexander",
+      "player_b": "Shelton, Ben",
+      "tournament": "ATP - US Open, New York, USA",
+      "market": "TOTAL_GAMES_2WAY",
+      "line": 42.5,
+      "market_key": "TOTAL_GAMES_2WAY|42.5",
+      "selection_a": "Over 42.5",
+      "selection_b": "Under 42.5",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.83,
+          "b": 1.83,
+          "updated_at": "2026-09-12T04:25:15.744Z",
+          "age_min": 986.48735
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "73992442",
+      "start_at": "2026-09-13T18:00:00Z",
+      "player_a": "Zverev, Alexander",
+      "player_b": "Shelton, Ben",
+      "tournament": "ATP - US Open, New York, USA",
+      "market": "GAME_HANDICAP_2WAY",
+      "line": -1.5,
+      "market_key": "GAME_HANDICAP_2WAY|-1.5",
+      "selection_a": "Zverev, Alexander -1.5",
+      "selection_b": "Shelton, Ben +1.5",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.83,
+          "b": 1.83,
+          "updated_at": "2026-09-12T06:19:33.525Z",
+          "age_min": 872.191
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74626398",
+      "start_at": "2026-09-13T03:00:00Z",
+      "player_a": "Kawahashi, Yuta",
+      "player_b": "Borisiouk, Martin",
+      "tournament": "Challenger - Phan Thiet 4, Vietnam, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Kawahashi, Yuta",
+      "selection_b": "Borisiouk, Martin",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 3,
+          "b": 1.36,
+          "updated_at": "2026-09-12T20:29:50.531Z",
+          "age_min": 21.907566666666668
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74626384",
+      "start_at": "2026-09-13T03:00:00Z",
+      "player_a": "Vishal Balsekar, Aditya",
+      "player_b": "Charlton, Joshua",
+      "tournament": "Challenger - Phan Thiet 4, Vietnam, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Vishal Balsekar, Aditya",
+      "selection_b": "Charlton, Joshua",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 3.75,
+          "b": 1.25,
+          "updated_at": "2026-09-12T20:43:35.292Z",
+          "age_min": 8.16155
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74285090",
+      "start_at": "2026-09-13T03:00:00Z",
+      "player_a": "Weber, Arthur",
+      "player_b": "Simakin, Ilia",
+      "tournament": "Challenger - Phan Thiet 3, Vietnam",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Weber, Arthur",
+      "selection_b": "Simakin, Ilia",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Eurobet IT",
+          "a": 3.75,
+          "b": 1.21,
+          "updated_at": "2026-09-12T15:07:39.304Z",
+          "age_min": 344.0946833333333
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74626392",
+      "start_at": "2026-09-13T04:10:00Z",
+      "player_a": "Nguyen, Minh Phat",
+      "player_b": "Matsuda, Ryuki",
+      "tournament": "Challenger - Phan Thiet 4, Vietnam, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Nguyen, Minh Phat",
+      "selection_b": "Matsuda, Ryuki",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 10.5,
+          "b": 1.02,
+          "updated_at": "2026-09-12T20:43:20.129Z",
+          "age_min": 8.414266666666666
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74626400",
+      "start_at": "2026-09-13T04:10:00Z",
+      "player_a": "Cook, Ethan",
+      "player_b": "Heck, Hunter",
+      "tournament": "Challenger - Phan Thiet 4, Vietnam, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Cook, Ethan",
+      "selection_b": "Heck, Hunter",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 4,
+          "b": 1.22,
+          "updated_at": "2026-09-12T20:34:50.121Z",
+          "age_min": 16.9144
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74626406",
+      "start_at": "2026-09-13T04:10:00Z",
+      "player_a": "Peliwo, Filip",
+      "player_b": "Rathi, Arjun",
+      "tournament": "Challenger - Phan Thiet 4, Vietnam, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Peliwo, Filip",
+      "selection_b": "Rathi, Arjun",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.25,
+          "b": 3.75,
+          "updated_at": "2026-09-12T20:46:49.889Z",
+          "age_min": 4.918266666666667
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74626394",
+      "start_at": "2026-09-13T05:20:00Z",
+      "player_a": "Agafonov, Egor",
+      "player_b": "Yamanaka, Taiyo",
+      "tournament": "Challenger - Phan Thiet 4, Vietnam, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Agafonov, Egor",
+      "selection_b": "Yamanaka, Taiyo",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.83,
+          "b": 1.83,
+          "updated_at": "2026-09-12T19:34:19.173Z",
+          "age_min": 77.4302
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74626390",
+      "start_at": "2026-09-13T05:20:00Z",
+      "player_a": "Derepasko, Timofei",
+      "player_b": "Storch, Stefan",
+      "tournament": "Challenger - Phan Thiet 4, Vietnam, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Derepasko, Timofei",
+      "selection_b": "Storch, Stefan",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.2,
+          "b": 4.33,
+          "updated_at": "2026-09-12T19:26:34.655Z",
+          "age_min": 85.17216666666667
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74625528",
+      "start_at": "2026-09-13T08:00:00Z",
+      "player_a": "Trongcharoenchaikul, Wishaya",
+      "player_b": "Flores, Jesse",
+      "tournament": "Challenger - Guangzhou, China, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Trongcharoenchaikul, Wishaya",
+      "selection_b": "Flores, Jesse",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 2,
+          "b": 1.72,
+          "updated_at": "2026-09-12T20:47:35.889Z",
+          "age_min": 4.1516
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74625530",
+      "start_at": "2026-09-13T08:00:00Z",
+      "player_a": "Honda, Naoya",
+      "player_b": "Duan, Hao",
+      "tournament": "Challenger - Guangzhou, China, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Honda, Naoya",
+      "selection_b": "Duan, Hao",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.01,
+          "b": 13,
+          "updated_at": "2026-09-12T20:49:05.529Z",
+          "age_min": 2.6576
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74625540",
+      "start_at": "2026-09-13T08:00:00Z",
+      "player_a": "Liu, Hanyi",
+      "player_b": "Demin, Yaroslav",
+      "tournament": "Challenger - Guangzhou, China, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Liu, Hanyi",
+      "selection_b": "Demin, Yaroslav",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 3,
+          "b": 1.36,
+          "updated_at": "2026-09-12T20:45:49.804Z",
+          "age_min": 5.919683333333333
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74625542",
+      "start_at": "2026-09-13T08:00:00Z",
+      "player_a": "Leong, Mitsuki Wei Kang",
+      "player_b": "Hongyu, Ye",
+      "tournament": "Challenger - Guangzhou, China, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Leong, Mitsuki Wei Kang",
+      "selection_b": "Hongyu, Ye",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.05,
+          "b": 8.5,
+          "updated_at": "2026-09-12T20:11:35.168Z",
+          "age_min": 40.16361666666667
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74628088",
+      "start_at": "2026-09-13T08:00:00Z",
+      "player_a": "Bosio, Gabriele",
+      "player_b": "Campana Lee, Gerard",
+      "tournament": "Challenger - Biella, Italy, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Bosio, Gabriele",
+      "selection_b": "Campana Lee, Gerard",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 4.5,
+          "b": 1.16,
+          "updated_at": "2026-09-12T20:39:36.003Z",
+          "age_min": 12.1497
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74627948",
+      "start_at": "2026-09-13T08:30:00Z",
+      "player_a": "Pereira, Tiago",
+      "player_b": "Lopez Morillo, Imanol",
+      "tournament": "Challenger - Szczecin, Poland, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Pereira, Tiago",
+      "selection_b": "Lopez Morillo, Imanol",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.36,
+          "b": 3,
+          "updated_at": "2026-09-12T20:47:05.247Z",
+          "age_min": 4.6623
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74627960",
+      "start_at": "2026-09-13T08:30:00Z",
+      "player_a": "Galan, Daniel Elahi",
+      "player_b": "Vrbensky, Michael",
+      "tournament": "Challenger - Szczecin, Poland, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Galan, Daniel Elahi",
+      "selection_b": "Vrbensky, Michael",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.14,
+          "b": 5,
+          "updated_at": "2026-09-12T20:28:35.5Z",
+          "age_min": 23.158083333333334
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74625532",
+      "start_at": "2026-09-13T09:10:00Z",
+      "player_a": "Haliak, Mikalai",
+      "player_b": "Kikuchi, Yuta",
+      "tournament": "Challenger - Guangzhou, China, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Haliak, Mikalai",
+      "selection_b": "Kikuchi, Yuta",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.57,
+          "b": 2.25,
+          "updated_at": "2026-09-12T20:46:05.582Z",
+          "age_min": 5.656716666666667
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74625534",
+      "start_at": "2026-09-13T09:10:00Z",
+      "player_a": "Huang, Tsung-Hao",
+      "player_b": "Chen, Xing Dao",
+      "tournament": "Challenger - Guangzhou, China, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Huang, Tsung-Hao",
+      "selection_b": "Chen, Xing Dao",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.28,
+          "b": 3.5,
+          "updated_at": "2026-09-12T20:36:51.887Z",
+          "age_min": 14.884966666666667
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74625536",
+      "start_at": "2026-09-13T09:10:00Z",
+      "player_a": "Sumizawa, Daisuke",
+      "player_b": "Ogura, Kosuke",
+      "tournament": "Challenger - Guangzhou, China, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Sumizawa, Daisuke",
+      "selection_b": "Ogura, Kosuke",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 2.75,
+          "b": 1.4,
+          "updated_at": "2026-09-12T20:46:20.575Z",
+          "age_min": 5.406833333333333
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74628286",
+      "start_at": "2026-09-13T09:10:00Z",
+      "player_a": "Brady, Patrick",
+      "player_b": "Sahtali, Toufik",
+      "tournament": "Challenger - Rennes, France, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Brady, Patrick",
+      "selection_b": "Sahtali, Toufik",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.28,
+          "b": 3.5,
+          "updated_at": "2026-09-12T20:50:35.477Z",
+          "age_min": 1.1584666666666668
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74628288",
+      "start_at": "2026-09-13T09:10:00Z",
+      "player_a": "Schoenhaus, Max",
+      "player_b": "Ganesan, Adhithya",
+      "tournament": "Challenger - Rennes, France, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Schoenhaus, Max",
+      "selection_b": "Ganesan, Adhithya",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.25,
+          "b": 3.75,
+          "updated_at": "2026-09-12T20:03:19.153Z",
+          "age_min": 48.43053333333334
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74627950",
+      "start_at": "2026-09-13T09:40:00Z",
+      "player_a": "Mashtakov, Nikita",
+      "player_b": "Gonzalez Fernandez, Mario",
+      "tournament": "Challenger - Szczecin, Poland, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Mashtakov, Nikita",
+      "selection_b": "Gonzalez Fernandez, Mario",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.5,
+          "b": 2.5,
+          "updated_at": "2026-09-12T20:48:49.794Z",
+          "age_min": 2.91985
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74627952",
+      "start_at": "2026-09-13T09:40:00Z",
+      "player_a": "Sanchez Jover, Carlos",
+      "player_b": "Pieczonka, Filip",
+      "tournament": "Challenger - Szczecin, Poland, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Sanchez Jover, Carlos",
+      "selection_b": "Pieczonka, Filip",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.28,
+          "b": 3.5,
+          "updated_at": "2026-09-12T20:35:20.773Z",
+          "age_min": 16.403533333333332
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74625544",
+      "start_at": "2026-09-13T10:20:00Z",
+      "player_a": "Delaney, Jesse",
+      "player_b": "Takahashi, Yusuke",
+      "tournament": "Challenger - Guangzhou, China, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Delaney, Jesse",
+      "selection_b": "Takahashi, Yusuke",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 8,
+          "b": 1.06,
+          "updated_at": "2026-09-12T20:48:20.183Z",
+          "age_min": 3.4133666666666667
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74625546",
+      "start_at": "2026-09-13T10:20:00Z",
+      "player_a": "Zhukov, Maxim",
+      "player_b": "Loof, Thijmen",
+      "tournament": "Challenger - Guangzhou, China, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Zhukov, Maxim",
+      "selection_b": "Loof, Thijmen",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.61,
+          "b": 2.2,
+          "updated_at": "2026-09-12T19:36:04.871Z",
+          "age_min": 75.66856666666666
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
+    },
+    {
+      "event_id": "74625548",
+      "start_at": "2026-09-13T10:20:00Z",
+      "player_a": "Yang, Zijiang",
+      "player_b": "Fancutt, Thomas",
+      "tournament": "Challenger - Guangzhou, China, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Yang, Zijiang",
+      "selection_b": "Fancutt, Thomas",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 7.5,
+          "b": 1.07,
+          "updated_at": "2026-09-12T20:50:05.115Z",
+          "age_min": 1.6645
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "quant"
     }
   ]
 }
