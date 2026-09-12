@@ -76,7 +76,7 @@ jobs:
             const portrait=()=>{
               const good=[...d.querySelectorAll('.tp-avatar.hero img')].find(x=>x.complete&&x.naturalWidth>40&&x.naturalHeight>40&&x.closest('.tp-avatar')?.classList.contains('has-photo'));
               const fallback=[...d.querySelectorAll('.tp-avatar.hero[data-avatar-fallback=initials]')].some(x=>(x.querySelector('span')?.textContent||'').trim().length>=2);
-              if(good||fallback){document.documentElement.dataset.portrait=good?'photo':'initials';nav();return}
+              if(good||fallback){document.documentElement.dataset.portrait='pass';document.documentElement.dataset.portraitKind=good?'photo':'initials';nav();return}
               if(performance.now()-start<12000)setTimeout(portrait,80);else{document.documentElement.dataset.portrait='fail';nav();}
             };
             const nav=()=>{
