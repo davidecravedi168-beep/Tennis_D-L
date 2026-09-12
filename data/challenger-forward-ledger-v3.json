@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-11T14:48:57.056Z",
-  "updated_at": "2026-09-11T23:34:43.621Z",
+  "updated_at": "2026-09-12T01:31:22.665Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -4320,11 +4320,11 @@
       },
       "immutable_sha256": "db03a6fd1779fb157317e2b3c8dc6c161945ba2d3197130794c73c7309b4f07e",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-12T00:18:46.204Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -4434,11 +4434,11 @@
       },
       "immutable_sha256": "573f002d850d265a050fd2c10f7abe9005978b212b09526e4199596dbcab61e3",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-12T01:15:17.594Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -4496,23 +4496,243 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "223CAF1FBE7522B0C1695AAA",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "682A6205F068E210969D",
+        "source_immutable_sha256": "ad68b6f982a7d17c2ef3ccc214efeed7d780d8dd3de6a2f78b78ef1bdd642e64",
+        "event_id": "74286324",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-12T00:18:46.204Z",
+        "start_at": "2026-09-12T12:00:00Z",
+        "first_observed_at": "2026-09-12T00:18:53.817Z",
+        "player_a": "Droguet, Titouan",
+        "player_b": "Budkov Kjaer, Nicolai",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "B",
+        "candidate_name": "Budkov Kjaer, Nicolai",
+        "candidate_odds": 2.25,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -2,
+        "drift_policy": {
+          "min_calibrated_ev": 0.04,
+          "pause_accepts": false,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.447263,
+        "calibrated_prob": 0.30627265621696487,
+        "calibrated_ev": -0.310886523511829,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 2,
+        "observed_core": 2,
+        "hard_reject": [
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE"
+        ],
+        "penalties": []
+      },
+      "immutable_sha256": "2ad18cf83da83cb87446eb27514b1dfddb7f57238c5233222e5a5efa5d873ef3",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "challenger_id": "8DA15780C372BB815EABC537",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "9C4C9A81C8AB31A5385A",
+        "source_immutable_sha256": "f12311ef05255614946654e9375b9b8a914f2e11d25d19e5d28e5899d63c0706",
+        "event_id": "74294136",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-12T01:15:17.594Z",
+        "start_at": "2026-09-12T12:30:00Z",
+        "first_observed_at": "2026-09-12T01:15:24.444Z",
+        "player_a": "Noha Akugue, Noma",
+        "player_b": "Maristany Zuleta de Reales, Guiomar",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Maristany Zuleta de Reales, Guiomar",
+        "candidate_odds": 1.85,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.04,
+          "pause_accepts": false,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.501159,
+        "calibrated_prob": 0.4029842567634047,
+        "calibrated_ev": -0.2544791249877012,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 1,
+        "observed_core": 1,
+        "hard_reject": [
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "6c30c4eae72c1ac1808d9c2ab85c44f844a8a9455c79ccbd527683501ae7e4d6",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "challenger_id": "CE506C5E1D5DEE8AFED3C654",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "E65F540FE00E3ECEA14F",
+        "source_immutable_sha256": "4499f3e214574266f2df71a745794632d54ba38d1b1c637320273deb5b4215bc",
+        "event_id": "74294134",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-12T01:15:17.594Z",
+        "start_at": "2026-09-12T13:40:00Z",
+        "first_observed_at": "2026-09-12T01:15:24.444Z",
+        "player_a": "Galfi, Dalma",
+        "player_b": "Ferro, Fiona",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Galfi, Dalma",
+        "candidate_odds": 2.2,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -3,
+        "drift_policy": {
+          "min_calibrated_ev": 0.04,
+          "pause_accepts": false,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.444916,
+        "calibrated_prob": 0.32478868505868747,
+        "calibrated_ev": -0.2854648928708875,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "NEGATIVE",
+          "FORM": "NEGATIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 3,
+        "observed_core": 3,
+        "hard_reject": [
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "78972e1d3a656531ee24c78d6e5fbcc2be9f859dcbd3d5f6b2b5c86b9dd74eaf",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "challenger_id": "DF5699AD455C889F801A0237",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "FA7C6EEB1509A8CDB11F",
+        "source_immutable_sha256": "e808b9ad5f1d87d35cde28e92486cc59a828f8ca5aa6d7d898d0d924ceb03ba0",
+        "event_id": "74283878",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-12T01:15:17.594Z",
+        "start_at": "2026-09-12T17:00:00Z",
+        "first_observed_at": "2026-09-12T01:15:24.444Z",
+        "player_a": "Munar, Jaume",
+        "player_b": "Diaz Acosta, Facundo",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "A",
+        "candidate_name": "Munar, Jaume",
+        "candidate_odds": 2,
+        "decision": "ACCEPT",
+        "pass": true,
+        "score": 3,
+        "drift_policy": {
+          "min_calibrated_ev": 0.04,
+          "pause_accepts": false,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.613636,
+        "calibrated_prob": 0.5483318603230295,
+        "calibrated_ev": 0.09666372064605899,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 2,
+        "negative_core": 0,
+        "observed_core": 2,
+        "hard_reject": [],
+        "penalties": []
+      },
+      "immutable_sha256": "2bc5a4b158ba3fa7befe8dd3b4900e39cc3a75b5e204bf7fb0e1a977a4c2c134",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 80,
-    "accepted": 0,
-    "rejected": 80,
-    "open": 18,
-    "settled": 62
+    "total_decisions": 84,
+    "accepted": 1,
+    "rejected": 83,
+    "open": 20,
+    "settled": 64
   },
   "evidence": {
     "state": "COLD_START",
     "champion": {
-      "n": 62,
-      "wins": 28,
-      "hit_rate": 0.45161290322580644,
-      "profit_units": -1.7199999999999989,
-      "roi": -0.02774193548387095,
+      "n": 64,
+      "wins": 29,
+      "hit_rate": 0.453125,
+      "profit_units": -2.129999999999999,
+      "roi": -0.033281249999999984,
       "max_drawdown_units": 7.029999999999999
     },
     "challenger": {
@@ -4523,7 +4743,7 @@
       "roi": null,
       "max_drawdown_units": 0
     },
-    "delta_roi": 0.02774193548387095,
+    "delta_roi": 0.033281249999999984,
     "review_eligible": false
   }
 }
