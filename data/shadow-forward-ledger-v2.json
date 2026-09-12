@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-12T01:15:24.628Z",
+  "updated_at": "2026-09-12T04:52:43.918Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -4297,11 +4297,11 @@
       },
       "immutable_sha256": "15bfac170c5c0dd33d05ab8e146801f728aec1395296dbdc7f59b950db3d2f0e",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-12T04:52:37.878Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -5218,24 +5218,69 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "8DED56C503D6FE0F1449E1F3",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "0AD38F644CC00F3016A5",
+        "source_immutable_sha256": "b81898fdbe05264c705a1e3cfd72d200ebe31db82456329326b7f933493af9dd",
+        "event_id": "74283554",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-12T04:52:37.878Z",
+        "start_at": "2026-09-12T18:00:00Z",
+        "first_observed_at": "2026-09-12T04:52:43.671Z",
+        "player_a": "Seyboth Wild, Thiago",
+        "player_b": "Dodig, Matej",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "A",
+        "candidate_name": "Seyboth Wild, Thiago",
+        "candidate_odds": 1.83,
+        "candidate_prob": 0.522343,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 0,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 1,
+        "negative_core": 0,
+        "observed_core": 1,
+        "hard_reject": [],
+        "penalties": [
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "8d5f1e40255cc02c59e623087d6657003086312e458ca9bce4d8f655555848a0",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 113,
+    "total_decisions": 114,
     "accepted": 39,
-    "rejected": 74,
+    "rejected": 75,
     "open": 21,
-    "settled": 92
+    "settled": 93
   },
   "evidence": {
     "state": "MIXED_FORWARD",
     "champion": {
-      "n": 92,
+      "n": 93,
       "wins": 38,
-      "hit_rate": 0.41304347826086957,
-      "profit_units": -6.759999999999997,
-      "roi": -0.07347826086956519,
-      "max_drawdown_units": 14.17
+      "hit_rate": 0.40860215053763443,
+      "profit_units": -7.759999999999997,
+      "roi": -0.08344086021505373,
+      "max_drawdown_units": 14.299999999999997
     },
     "shadow": {
       "n": 34,
@@ -5245,7 +5290,7 @@
       "roi": -0.17911764705882352,
       "max_drawdown_units": 6.85
     },
-    "delta_roi": -0.10563938618925833,
+    "delta_roi": -0.09567678684376979,
     "review_eligible": false
   }
 }
