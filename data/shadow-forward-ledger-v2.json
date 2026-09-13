@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-13T16:17:48.390Z",
+  "updated_at": "2026-09-13T17:27:50.811Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -5911,13 +5911,390 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "52E0B7F32FDE4578A06DEB64",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "285766C64112C6DF758D",
+        "source_immutable_sha256": "39bea64085a49cbbeb8b8e8c2a7f9d89e3a4c2e8a848ba295be4e6ad8a7dd9cb",
+        "event_id": "74609194",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-13T17:27:43.378Z",
+        "start_at": "2026-09-13T19:10:00Z",
+        "first_observed_at": "2026-09-13T17:27:50.594Z",
+        "player_a": "Vidmanova, Darja",
+        "player_b": "Tjen, Janice",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Tjen, Janice",
+        "candidate_odds": 1.69,
+        "candidate_prob": 0.632377,
+        "decision": "ACCEPT",
+        "pass": true,
+        "score": 2,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 3,
+        "negative_core": 0,
+        "observed_core": 3,
+        "hard_reject": [],
+        "penalties": [
+          "WTA_PENALTY"
+        ]
+      },
+      "immutable_sha256": "063e0414c90ea8d8e3e9253a49608c6262140148a5870c0e7b8e29d9285f7e0d",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "06993EBA64845CB041400187",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "8DE563F9CE0C1733CEB5",
+        "source_immutable_sha256": "0aff7e77a74c3a5962f7ade4988f56ebb0c5d5bbb2f9592042f7ffa9c6c1297d",
+        "event_id": "74628462",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-13T17:27:43.378Z",
+        "start_at": "2026-09-14T13:00:00Z",
+        "first_observed_at": "2026-09-13T17:27:50.594Z",
+        "player_a": "Bouzas Maneiro, Jessica",
+        "player_b": "Salkova, Dominika",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Salkova, Dominika",
+        "candidate_odds": 3.5,
+        "candidate_prob": 0.528566,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 1,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "POSITIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 3,
+        "negative_core": 0,
+        "observed_core": 3,
+        "hard_reject": [
+          "ODDS_3_PLUS"
+        ],
+        "penalties": [
+          "WTA_PENALTY",
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "ad5ebfcfa7cad89f17303d7cd867445df0edc369c45847480aff10f8f4288e60",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "8C506E3A273983AFCA77B5DC",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "E4B83FA757C2A7FCA67E",
+        "source_immutable_sha256": "279af845537bd6379b65bc0859f2f890200197b4524c6162344ec6589039691d",
+        "event_id": "74628458",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-13T17:27:43.378Z",
+        "start_at": "2026-09-14T13:00:00Z",
+        "first_observed_at": "2026-09-13T17:27:50.594Z",
+        "player_a": "Semenistaja, Darja",
+        "player_b": "Badosa, Paula",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Semenistaja, Darja",
+        "candidate_odds": 5.4,
+        "candidate_prob": 0.415452,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -4,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 1,
+        "negative_core": 3,
+        "observed_core": 4,
+        "hard_reject": [
+          "ODDS_3_PLUS",
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT"
+        ],
+        "penalties": [
+          "WTA_PENALTY",
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "d0c5435f7e366b620bcb6074b69bd274f997890db36e9d6d72c7477dee12952b",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "39EE8F3E6162536016D9EEE4",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "496E79B59BA9CBF18069",
+        "source_immutable_sha256": "ada2ee70835cf8457437a65961c3d19941e07fa71f8009da397fabc5d3e75088",
+        "event_id": "74628466",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-13T17:27:43.378Z",
+        "start_at": "2026-09-14T13:00:00Z",
+        "first_observed_at": "2026-09-13T17:27:50.594Z",
+        "player_a": "Stefanini, Lucrezia",
+        "player_b": "Podoroska, Nadia",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Podoroska, Nadia",
+        "candidate_odds": 2.6,
+        "candidate_prob": 0.519935,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -3,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "NEGATIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 1,
+        "negative_core": 2,
+        "observed_core": 3,
+        "hard_reject": [
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT"
+        ],
+        "penalties": [
+          "WTA_PENALTY",
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "8d6292a3eaaf08a0e45491e04806cb4ffb76da602763e6204d72843cf63ff35c",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "07C9A258D757633313E6C816",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "DA5300BB672651402A28",
+        "source_immutable_sha256": "31e6b20c98ecf3a44c903dfe4e5053d6b7f013bbb260c16ddf44e3bf5cc193f3",
+        "event_id": "74655922",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-13T17:27:43.378Z",
+        "start_at": "2026-09-14T14:30:00Z",
+        "first_observed_at": "2026-09-13T17:27:50.594Z",
+        "player_a": "Brancaccio, Nuria",
+        "player_b": "Papamichail, Despina",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Papamichail, Despina",
+        "candidate_odds": 4.5,
+        "candidate_prob": 0.5103,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 0,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 3,
+        "negative_core": 1,
+        "observed_core": 4,
+        "hard_reject": [
+          "ODDS_3_PLUS"
+        ],
+        "penalties": [
+          "WTA_PENALTY",
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "189b586b3af47902cff67958a1d3c5f28085a28d20297869b6be42080817a6f4",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "4B0F2F5A7FD37122B84B44A2",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "C658BB93D6F74FCDB8EC",
+        "source_immutable_sha256": "5ab55cd9b0d63a2d89a6a6b7d9b42203a776dca02816624a9ff884769a449b54",
+        "event_id": "74609202",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-13T17:27:43.378Z",
+        "start_at": "2026-09-14T16:00:00Z",
+        "first_observed_at": "2026-09-13T17:27:50.594Z",
+        "player_a": "Maria, Tatjana",
+        "player_b": "Townsend, Taylor",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Townsend, Taylor",
+        "candidate_odds": 1.36,
+        "candidate_prob": 0.764746,
+        "decision": "ACCEPT",
+        "pass": true,
+        "score": 3,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 4,
+        "negative_core": 0,
+        "observed_core": 4,
+        "hard_reject": [],
+        "penalties": [
+          "WTA_PENALTY"
+        ]
+      },
+      "immutable_sha256": "6e0c8866680e2257d30f51d62f9251b938499293697a8080b18d0f4ed569cf7a",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "FA6718BC2EF954A67C891805",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "7D8B9AF61030ECB4EF86",
+        "source_immutable_sha256": "2bf0bf4b92ed0f9498671e4a39500f1a645c389b5c1ee0027ceeb8662b0ce606",
+        "event_id": "74655910",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-13T17:27:43.378Z",
+        "start_at": "2026-09-14T16:00:00Z",
+        "first_observed_at": "2026-09-13T17:27:50.594Z",
+        "player_a": "Curmi, Francesca",
+        "player_b": "Erjavec, Veronika",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Curmi, Francesca",
+        "candidate_odds": 2.5,
+        "candidate_prob": 0.535772,
+        "decision": "ACCEPT",
+        "pass": true,
+        "score": 2,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 4,
+        "negative_core": 0,
+        "observed_core": 4,
+        "hard_reject": [],
+        "penalties": [
+          "WTA_PENALTY",
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "941c44c5aaba575bae4086eb4a556cde91e58a0ab94d853b83dacefed0a40994",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "shadow_id": "D7D231C0E1B319317B2EDAAC",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "37D7AF4A73C7F2C293FB",
+        "source_immutable_sha256": "2567ccdbf8074474a5ae386caf9b2e6de339d83b224489184e5785171ebf2fae",
+        "event_id": "74657186",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-13T17:27:43.378Z",
+        "start_at": "2026-09-14T16:00:00Z",
+        "first_observed_at": "2026-09-13T17:27:50.594Z",
+        "player_a": "Andreeva, Erika",
+        "player_b": "Hruncakova, Viktoria",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Hruncakova, Viktoria",
+        "candidate_odds": 2,
+        "candidate_prob": 0.53067,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 0,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 2,
+        "negative_core": 0,
+        "observed_core": 2,
+        "hard_reject": [],
+        "penalties": [
+          "WTA_PENALTY",
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "5d81b3721851d856efdd49b90eca5384c9e44ccb5947cd3632188b4fddb8c403",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 128,
-    "accepted": 43,
-    "rejected": 85,
-    "open": 26,
+    "total_decisions": 136,
+    "accepted": 46,
+    "rejected": 90,
+    "open": 34,
     "settled": 102
   },
   "evidence": {
