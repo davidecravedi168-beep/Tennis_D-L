@@ -1,11 +1,11 @@
 {
   "schema": "TEP-PAPER-FUNNEL-2",
-  "generated_at": "2026-09-13T18:56:18.922Z",
+  "generated_at": "2026-09-13T22:36:11.873Z",
   "source": {
     "ledger_schema": "TEP-FORWARD-LEDGER-1",
-    "ledger_updated_at": "2026-09-13T18:53:31.862Z",
-    "freshness_minutes": 2.7843333333333335,
-    "clv_tracker_updated_at": "2026-09-13T18:08:07.052Z"
+    "ledger_updated_at": "2026-09-13T21:44:16.856Z",
+    "freshness_minutes": 51.91695,
+    "clv_tracker_updated_at": "2026-09-13T20:44:02.541Z"
   },
   "policy": {
     "validation_only": true,
@@ -27,23 +27,23 @@
     "watch": 9,
     "no_bet": 326,
     "qualified_value": 6,
-    "settled_market_locks": 293,
-    "settled_paper_candidates": 293,
+    "settled_market_locks": 294,
+    "settled_paper_candidates": 294,
     "missing_candidate_side": 0,
     "missing_candidate_odds": 0
   },
   "paper": {
     "all_candidates": {
-      "settled": 293,
-      "wins": 109,
-      "hit_rate": 0.3720136518771331,
-      "profit_units": -33.63,
-      "roi": -0.11477815699658704,
+      "settled": 294,
+      "wins": 110,
+      "hit_rate": 0.3741496598639456,
+      "profit_units": -33.02,
+      "roi": -0.11231292517006804,
       "max_drawdown_units": 38.660000000000004,
-      "clv_sample": 37,
-      "avg_clv": -0.0015822469274234898,
+      "clv_sample": 38,
+      "avg_clv": -0.0015406088503860296,
       "clv_provider_sample": 4,
-      "clv_proxy_sample": 33
+      "clv_proxy_sample": 34
     },
     "watch": {
       "settled": 8,
@@ -58,16 +58,16 @@
       "clv_proxy_sample": 0
     },
     "no_bet": {
-      "settled": 281,
-      "wins": 106,
-      "hit_rate": 0.37722419928825623,
-      "profit_units": -26.20999999999999,
-      "roi": -0.09327402135231314,
+      "settled": 282,
+      "wins": 107,
+      "hit_rate": 0.37943262411347517,
+      "profit_units": -25.59999999999999,
+      "roi": -0.0907801418439716,
       "max_drawdown_units": 32.23999999999999,
-      "clv_sample": 33,
-      "avg_clv": -0.005615343130628153,
+      "clv_sample": 34,
+      "avg_clv": -0.005450185979727325,
       "clv_provider_sample": 0,
-      "clv_proxy_sample": 33
+      "clv_proxy_sample": 34
     },
     "official_qualified": {
       "settled": 4,
@@ -212,14 +212,14 @@
   ],
   "clv": {
     "state": "PARTIAL",
-    "eligible_rows": 288,
-    "avg_clv": -0.0015822469274234898,
-    "clv_sample": 37,
-    "zero_share": 0.21621621621621623,
-    "closing_odds_sample": 37,
-    "coverage": 0.1284722222222222,
+    "eligible_rows": 289,
+    "avg_clv": -0.0015406088503860296,
+    "clv_sample": 38,
+    "zero_share": 0.23684210526315788,
+    "closing_odds_sample": 38,
+    "coverage": 0.1314878892733564,
     "provider_closing_sample": 4,
-    "proxy_closing_sample": 33,
+    "proxy_closing_sample": 34,
     "proxy_max_age_min": 180,
     "missing_closing": 251,
     "missing_reasons": {
@@ -474,7 +474,7 @@
     {
       "code": "CLV_LOW_COVERAGE",
       "severity": "attention",
-      "detail": "Genuine CLV evidence covers 12.8% of settled paper candidates (37/288); missing values remain unavailable."
+      "detail": "Genuine CLV evidence covers 13.1% of settled paper candidates (38/289); missing values remain unavailable."
     }
   ],
   "status": "ATTENTION"
