@@ -1,10 +1,10 @@
 {
   "schema": "TEP-DRIFT-CONTROLLER-V6",
-  "generated_at": "2026-09-13T18:08:07.711Z",
+  "generated_at": "2026-09-13T20:44:03.197Z",
   "sample": {
-    "total": 291,
+    "total": 293,
     "recent": 50,
-    "baseline": 241
+    "baseline": 243
   },
   "active_calibration": {
     "policy": "TEP_ADAPTIVE_CALIBRATION_V5",
@@ -54,40 +54,15 @@
   "raw": {
     "recent": {
       "n": 50,
-      "brier": 0.24650229837697998,
-      "logloss": 0.685601919722571,
-      "ece": 0.18473989999999998
+      "brier": 0.2342084402761,
+      "logloss": 0.6579605041513422,
+      "ece": 0.18872830000000002
     },
     "baseline": {
-      "n": 241,
-      "brier": 0.19381600128959744,
-      "logloss": 0.5696800696001116,
-      "ece": 0.11189939004149381
-    },
-    "state": "WATCH",
-    "reasons": [
-      "BRIER_WORSE",
-      "LOGLOSS_WORSE",
-      "ECE_WORSE"
-    ],
-    "delta": {
-      "brier": 0.05268629708738254,
-      "logloss": 0.11592185012245937,
-      "ece": 0.07284050995850617
-    }
-  },
-  "calibrated": {
-    "recent": {
-      "n": 50,
-      "brier": 0.22953215008667427,
-      "logloss": 0.6488192489131318,
-      "ece": 0.13668518017019696
-    },
-    "baseline": {
-      "n": 241,
-      "brier": 0.17691785563597384,
-      "logloss": 0.5263456007753362,
-      "ece": 0.01907424693512593
+      "n": 243,
+      "brier": 0.19629738021307813,
+      "logloss": 0.5753513043648626,
+      "ece": 0.10525911934156383
     },
     "state": "ALERT",
     "reasons": [
@@ -97,9 +72,34 @@
       "MATERIAL_PROBABILITY_DRIFT"
     ],
     "delta": {
-      "brier": 0.05261429445070043,
-      "logloss": 0.1224736481377956,
-      "ece": 0.11761093323507102
+      "brier": 0.03791106006302186,
+      "logloss": 0.08260919978647963,
+      "ece": 0.08346918065843618
+    }
+  },
+  "calibrated": {
+    "recent": {
+      "n": 50,
+      "brier": 0.21163467763213503,
+      "logloss": 0.6074091278181873,
+      "ece": 0.11505692955227356
+    },
+    "baseline": {
+      "n": 243,
+      "brier": 0.18056138430868887,
+      "logloss": 0.534930987685216,
+      "ece": 0.021746673563368322
+    },
+    "state": "ALERT",
+    "reasons": [
+      "BRIER_WORSE",
+      "ECE_WORSE",
+      "MATERIAL_PROBABILITY_DRIFT"
+    ],
+    "delta": {
+      "brier": 0.03107329332344616,
+      "logloss": 0.07247814013297138,
+      "ece": 0.09331025598890524
     }
   },
   "interpretation": "Material calibrated drift. Pause new Challenger accepts; keep collecting shadow data."
