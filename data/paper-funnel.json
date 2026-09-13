@@ -1,11 +1,11 @@
 {
   "schema": "TEP-PAPER-FUNNEL-2",
-  "generated_at": "2026-09-12T20:57:34.593Z",
+  "generated_at": "2026-09-13T00:17:40.588Z",
   "source": {
     "ledger_schema": "TEP-FORWARD-LEDGER-1",
-    "ledger_updated_at": "2026-09-12T20:55:05.399Z",
-    "freshness_minutes": 2.4865666666666666,
-    "clv_tracker_updated_at": "2026-09-12T19:28:52.352Z"
+    "ledger_updated_at": "2026-09-12T23:03:35.498Z",
+    "freshness_minutes": 74.08483333333334,
+    "clv_tracker_updated_at": "2026-09-12T23:17:57.712Z"
   },
   "policy": {
     "validation_only": true,
@@ -22,28 +22,28 @@
     "note": "Observability only: official thresholds and picks remain unchanged. Shadow floors 1.70 and 1.65 collect counterfactual evidence with the same locked model and quality data; they cannot authorize a bet. Missing CLV evidence remains null and never becomes zero."
   },
   "funnel": {
-    "market_locks": 325,
-    "valid_market_candidates": 325,
+    "market_locks": 326,
+    "valid_market_candidates": 326,
     "watch": 9,
-    "no_bet": 310,
+    "no_bet": 311,
     "qualified_value": 6,
-    "settled_market_locks": 287,
-    "settled_paper_candidates": 287,
+    "settled_market_locks": 289,
+    "settled_paper_candidates": 289,
     "missing_candidate_side": 0,
     "missing_candidate_odds": 0
   },
   "paper": {
     "all_candidates": {
-      "settled": 287,
-      "wins": 107,
-      "hit_rate": 0.37282229965156793,
-      "profit_units": -30.950000000000006,
-      "roi": -0.10783972125435543,
-      "max_drawdown_units": 35.99000000000001,
-      "clv_sample": 31,
-      "avg_clv": -0.004293076539727798,
+      "settled": 289,
+      "wins": 108,
+      "hit_rate": 0.3737024221453287,
+      "profit_units": -31.120000000000005,
+      "roi": -0.10768166089965399,
+      "max_drawdown_units": 36.49000000000001,
+      "clv_sample": 33,
+      "avg_clv": -0.003171333338864916,
       "clv_provider_sample": 4,
-      "clv_proxy_sample": 27
+      "clv_proxy_sample": 29
     },
     "watch": {
       "settled": 8,
@@ -58,16 +58,16 @@
       "clv_proxy_sample": 0
     },
     "no_bet": {
-      "settled": 275,
-      "wins": 104,
-      "hit_rate": 0.3781818181818182,
-      "profit_units": -23.52999999999999,
-      "roi": -0.08556363636363633,
+      "settled": 277,
+      "wins": 105,
+      "hit_rate": 0.37906137184115524,
+      "profit_units": -23.69999999999999,
+      "roi": -0.08555956678700356,
       "max_drawdown_units": 30.42,
-      "clv_sample": 27,
-      "avg_clv": -0.009624020730652653,
+      "clv_sample": 29,
+      "avg_clv": -0.007979903006158695,
       "clv_provider_sample": 0,
-      "clv_proxy_sample": 27
+      "clv_proxy_sample": 29
     },
     "official_qualified": {
       "settled": 4,
@@ -127,20 +127,20 @@
     },
     {
       "floor_odds": 1.7,
-      "settled_candidates": 238,
+      "settled_candidates": 240,
       "watch_count": 5,
       "qualified_count": 3,
       "all_candidates": {
-        "settled": 238,
-        "wins": 72,
-        "hit_rate": 0.3025210084033613,
-        "profit_units": -30.06,
-        "roi": -0.12630252100840336,
-        "max_drawdown_units": 38.089999999999996,
-        "clv_sample": 27,
-        "avg_clv": -0.002852837347251486,
+        "settled": 240,
+        "wins": 73,
+        "hit_rate": 0.30416666666666664,
+        "profit_units": -30.229999999999997,
+        "roi": -0.1259583333333333,
+        "max_drawdown_units": 38.589999999999996,
+        "clv_sample": 29,
+        "avg_clv": -0.001675697787130021,
         "clv_provider_sample": 3,
-        "clv_proxy_sample": 24
+        "clv_proxy_sample": 26
       },
       "watch": {
         "settled": 5,
@@ -169,20 +169,20 @@
     },
     {
       "floor_odds": 1.65,
-      "settled_candidates": 246,
+      "settled_candidates": 248,
       "watch_count": 6,
       "qualified_count": 3,
       "all_candidates": {
-        "settled": 246,
-        "wins": 76,
-        "hit_rate": 0.3089430894308943,
-        "profit_units": -31.419999999999995,
-        "roi": -0.12772357723577232,
-        "max_drawdown_units": 39.449999999999996,
-        "clv_sample": 27,
-        "avg_clv": -0.002852837347251486,
+        "settled": 248,
+        "wins": 77,
+        "hit_rate": 0.31048387096774194,
+        "profit_units": -31.589999999999996,
+        "roi": -0.1273790322580645,
+        "max_drawdown_units": 39.949999999999996,
+        "clv_sample": 29,
+        "avg_clv": -0.001675697787130021,
         "clv_provider_sample": 3,
-        "clv_proxy_sample": 24
+        "clv_proxy_sample": 26
       },
       "watch": {
         "settled": 6,
@@ -212,14 +212,14 @@
   ],
   "clv": {
     "state": "PARTIAL",
-    "eligible_rows": 282,
-    "avg_clv": -0.004293076539727798,
-    "clv_sample": 31,
-    "zero_share": 0.1935483870967742,
-    "closing_odds_sample": 31,
-    "coverage": 0.1099290780141844,
+    "eligible_rows": 284,
+    "avg_clv": -0.003171333338864916,
+    "clv_sample": 33,
+    "zero_share": 0.18181818181818182,
+    "closing_odds_sample": 33,
+    "coverage": 0.11619718309859155,
     "provider_closing_sample": 4,
-    "proxy_closing_sample": 27,
+    "proxy_closing_sample": 29,
     "proxy_max_age_min": 180,
     "missing_closing": 251,
     "missing_reasons": {
@@ -238,169 +238,174 @@
     "market_consensus": 1,
     "data_quality": 1,
     "confidence": 1,
-    "avg_data_quality": 85.24299700923078,
-    "avg_confidence": 64.2227816461538
+    "avg_data_quality": 85.18384989877302,
+    "avg_confidence": 64.17373974233126
   },
   "rejection_reasons": [
     {
       "reason": "ROBUST_EV_NON_POSITIVO",
-      "count": 196,
-      "share": 0.632258064516129
+      "count": 197,
+      "share": 0.6334405144694534
     },
     {
       "reason": "EV ++",
       "count": 192,
-      "share": 0.6193548387096774
+      "share": 0.617363344051447
     },
     {
       "reason": "EDGE_NON_RESISTE_INCERTEZZA",
-      "count": 168,
-      "share": 0.5419354838709678
+      "count": 169,
+      "share": 0.5434083601286174
     },
     {
       "reason": "MODELLI_IN_DISACCORDO",
       "count": 137,
-      "share": 0.44193548387096776
+      "share": 0.4405144694533762
     },
     {
       "reason": "CONSENSUS_2_SU_3",
       "count": 117,
-      "share": 0.3774193548387097
+      "share": 0.3762057877813505
     },
     {
       "reason": "ELO --",
       "count": 95,
-      "share": 0.3064516129032258
+      "share": 0.3054662379421222
     },
     {
       "reason": "SURFACE --",
       "count": 95,
-      "share": 0.3064516129032258
+      "share": 0.3054662379421222
     },
     {
       "reason": "SURFACE_SAMPLE_LIMITATO",
-      "count": 66,
-      "share": 0.2129032258064516
+      "count": 67,
+      "share": 0.21543408360128619
     },
     {
       "reason": "FORM --",
       "count": 65,
-      "share": 0.20967741935483872
+      "share": 0.2090032154340836
     },
     {
       "reason": "SERVE/RETURN -",
-      "count": 63,
-      "share": 0.2032258064516129
+      "count": 64,
+      "share": 0.2057877813504823
     },
     {
       "reason": "EV +",
-      "count": 63,
-      "share": 0.2032258064516129
+      "count": 64,
+      "share": 0.2057877813504823
     },
     {
       "reason": "SERVE/RETURN --",
       "count": 62,
-      "share": 0.2
+      "share": 0.19935691318327975
+    },
+    {
+      "reason": "STORICO_GIOCATORE_LIMITATO",
+      "count": 58,
+      "share": 0.1864951768488746
     },
     {
       "reason": "SCOSTAMENTO_ESTREMO",
       "count": 57,
-      "share": 0.18387096774193548
-    },
-    {
-      "reason": "STORICO_GIOCATORE_LIMITATO",
-      "count": 57,
-      "share": 0.18387096774193548
+      "share": 0.1832797427652733
     },
     {
       "reason": "EV_NON_POSITIVO",
       "count": 55,
-      "share": 0.1774193548387097
+      "share": 0.17684887459807075
     },
     {
       "reason": "SURFACE ++",
       "count": 53,
-      "share": 0.17096774193548386
+      "share": 0.17041800643086816
     },
     {
       "reason": "FORM -",
       "count": 52,
-      "share": 0.16774193548387098
+      "share": 0.16720257234726688
     },
     {
       "reason": "FORM +",
       "count": 51,
-      "share": 0.16451612903225807
+      "share": 0.1639871382636656
     },
     {
       "reason": "FORM ++",
       "count": 51,
-      "share": 0.16451612903225807
+      "share": 0.1639871382636656
     },
     {
       "reason": "ELO ++",
       "count": 50,
-      "share": 0.16129032258064516
+      "share": 0.1607717041800643
     },
     {
       "reason": "ELO +",
       "count": 50,
-      "share": 0.16129032258064516
+      "share": 0.1607717041800643
     },
     {
       "reason": "H2H ++",
       "count": 46,
-      "share": 0.14838709677419354
+      "share": 0.14790996784565916
     },
     {
       "reason": "SERVE/RETURN +",
       "count": 45,
-      "share": 0.14516129032258066
+      "share": 0.14469453376205788
     },
     {
       "reason": "ELO -",
-      "count": 44,
-      "share": 0.14193548387096774
+      "count": 45,
+      "share": 0.14469453376205788
     },
     {
       "reason": "SURFACE -",
-      "count": 40,
-      "share": 0.12903225806451613
+      "count": 41,
+      "share": 0.13183279742765272
     },
     {
       "reason": "H2H --",
       "count": 38,
-      "share": 0.12258064516129032
+      "share": 0.12218649517684887
     },
     {
       "reason": "QUOTA_NON_FRESCA",
       "count": 38,
-      "share": 0.12258064516129032
+      "share": 0.12218649517684887
     },
     {
       "reason": "EDGE_TROPPO_BASSO",
       "count": 36,
-      "share": 0.11612903225806452
+      "share": 0.1157556270096463
     },
     {
       "reason": "SURFACE +",
       "count": 33,
-      "share": 0.1064516129032258
+      "share": 0.10610932475884244
     },
     {
       "reason": "SERVE/RETURN ++",
       "count": 32,
-      "share": 0.1032258064516129
+      "share": 0.10289389067524116
     },
     {
       "reason": "H2H +",
       "count": 4,
-      "share": 0.012903225806451613
+      "share": 0.012861736334405145
     },
     {
       "reason": "H2H -",
       "count": 1,
-      "share": 0.0032258064516129032
+      "share": 0.003215434083601286
+    },
+    {
+      "reason": "MODEL_DRIFT",
+      "count": 1,
+      "share": 0.003215434083601286
     }
   ],
   "watch_reasons": [
@@ -464,7 +469,7 @@
     {
       "code": "CLV_LOW_COVERAGE",
       "severity": "attention",
-      "detail": "Genuine CLV evidence covers 11.0% of settled paper candidates (31/282); missing values remain unavailable."
+      "detail": "Genuine CLV evidence covers 11.6% of settled paper candidates (33/284); missing values remain unavailable."
     }
   ],
   "status": "ATTENTION"
