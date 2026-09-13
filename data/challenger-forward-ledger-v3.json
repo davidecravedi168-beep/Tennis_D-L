@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-11T14:48:57.056Z",
-  "updated_at": "2026-09-13T06:06:07.601Z",
+  "updated_at": "2026-09-13T11:43:27.197Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -5166,13 +5166,127 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "AEC67FABE6433859C0BA657D",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "D7F731E4B6B64FCF629D",
+        "source_immutable_sha256": "b6666bbbe0c1ec8609b685e2fd37cb2492962301ec6d837fed0457b230459858",
+        "event_id": "74628952",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-13T10:10:44.344Z",
+        "start_at": "2026-09-13T16:00:00Z",
+        "first_observed_at": "2026-09-13T10:10:49.661Z",
+        "player_a": "Sorribes Tormo, Sara",
+        "player_b": "Dolehide, Caroline",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Sorribes Tormo, Sara",
+        "candidate_odds": 2.05,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 0,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.468625,
+        "calibrated_prob": 0.35697963335137567,
+        "calibrated_ev": -0.2681917516296799,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 0,
+        "negative_core": 0,
+        "observed_core": 0,
+        "hard_reject": [
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "3f867cbaddb1dd31c427a7305549c89ed1c8b14252c113d1efe031effeeb7b98",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "challenger_id": "7F5A5594518A4C834A5EE256",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "65EBA032307D2A75064B",
+        "source_immutable_sha256": "ef36eaf03b188b77dcc92895e3ef45d60f32279f6dda88a6dc4937ab450d330b",
+        "event_id": "74639922",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-13T10:10:44.344Z",
+        "start_at": "2026-09-13T16:10:00Z",
+        "first_observed_at": "2026-09-13T10:10:49.661Z",
+        "player_a": "Osuigwe, Whitney",
+        "player_b": "Tikhonova, Anastasia",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Tikhonova, Anastasia",
+        "candidate_odds": 2.1,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.471861,
+        "calibrated_prob": 0.3614646971623183,
+        "calibrated_ev": -0.24092413595913154,
+        "core_votes": {
+          "ELO": "UNOBSERVED",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 0,
+        "negative_core": 1,
+        "observed_core": 1,
+        "hard_reject": [
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "fcd8f543616079aced23d02c35e07fff3dfe2d3bbd8aaa7543f5648d5ee12699",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 92,
+    "total_decisions": 94,
     "accepted": 2,
-    "rejected": 90,
-    "open": 19,
+    "rejected": 92,
+    "open": 21,
     "settled": 73
   },
   "evidence": {
