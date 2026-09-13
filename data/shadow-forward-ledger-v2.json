@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-13T21:44:17.074Z",
+  "updated_at": "2026-09-13T23:24:25.627Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -5446,11 +5446,11 @@
       },
       "immutable_sha256": "a7e5de06b01a3e820d2b0eb04b594c61bc04794c85c3b87795c33e49e4ee1aee",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-13T23:24:18.594Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -5537,11 +5537,11 @@
       },
       "immutable_sha256": "34b2d42950563a121e0b2eacb184c68326e338f671ef6e01f8979219a90b2e37",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
-        "won": null,
-        "profit_units": null
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-13T23:24:18.594Z",
+        "won": true,
+        "profit_units": 0.6599999999999999
       }
     },
     {
@@ -5678,11 +5678,11 @@
       },
       "immutable_sha256": "03b7cbcd60a5f3f5bf77052d1609ce81d5583051623be18d5375a3fc0e698d43",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-13T23:24:18.594Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -6288,34 +6288,79 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "113F3A2FB6199DEC4A850BD3",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "AA7F293FF105F29B7D84",
+        "source_immutable_sha256": "a0029f59b5344ec723fb63f82a5e0cbbed84b214b49b6e57cf7e7334729b667e",
+        "event_id": "74657470",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-13T23:24:18.594Z",
+        "start_at": "2026-09-15T08:00:00Z",
+        "first_observed_at": "2026-09-13T23:24:25.402Z",
+        "player_a": "Carle, Maria",
+        "player_b": "Gorgodze, Ekaterine",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Gorgodze, Ekaterine",
+        "candidate_odds": 2.5,
+        "candidate_prob": 0.552872,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 0,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 2,
+        "negative_core": 1,
+        "observed_core": 3,
+        "hard_reject": [],
+        "penalties": [
+          "WTA_PENALTY"
+        ]
+      },
+      "immutable_sha256": "252fd6572683584c616b26332d65bd623f5d6fd778d7c40f4460e0ceec53b346",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 136,
+    "total_decisions": 137,
     "accepted": 46,
-    "rejected": 90,
-    "open": 31,
-    "settled": 105
+    "rejected": 91,
+    "open": 29,
+    "settled": 108
   },
   "evidence": {
     "state": "MIXED_FORWARD",
     "champion": {
-      "n": 105,
-      "wins": 42,
-      "hit_rate": 0.4,
-      "profit_units": -12.329999999999998,
-      "roi": -0.11742857142857141,
+      "n": 108,
+      "wins": 44,
+      "hit_rate": 0.4074074074074074,
+      "profit_units": -11.209999999999997,
+      "roi": -0.10379629629629628,
       "max_drawdown_units": 19.97
     },
     "shadow": {
-      "n": 39,
-      "wins": 20,
-      "hit_rate": 0.5128205128205128,
-      "profit_units": -7.989999999999999,
-      "roi": -0.20487179487179485,
+      "n": 40,
+      "wins": 21,
+      "hit_rate": 0.525,
+      "profit_units": -7.329999999999999,
+      "roi": -0.18324999999999997,
       "max_drawdown_units": 9.09
     },
-    "delta_roi": -0.08744322344322344,
+    "delta_roi": -0.0794537037037037,
     "review_eligible": false
   }
 }
