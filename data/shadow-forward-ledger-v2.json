@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-13T17:34:45.237Z",
+  "updated_at": "2026-09-13T18:53:32.070Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -5632,11 +5632,11 @@
       },
       "immutable_sha256": "b3fe4a5a83df2259d17643348ef3d33e317f26be17002e1ad1155c537bfa5f42",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-13T18:53:27.613Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -5721,11 +5721,11 @@
       },
       "immutable_sha256": "17769f228cb5842707b42bddfb443ae413a3c5a7507e49e53d84d9b7d3350a80",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
-        "won": null,
-        "profit_units": null
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-13T18:53:27.613Z",
+        "won": true,
+        "profit_units": 0.49
       }
     },
     {
@@ -6294,28 +6294,28 @@
     "total_decisions": 136,
     "accepted": 46,
     "rejected": 90,
-    "open": 34,
-    "settled": 102
+    "open": 32,
+    "settled": 104
   },
   "evidence": {
     "state": "MIXED_FORWARD",
     "champion": {
-      "n": 102,
-      "wins": 40,
-      "hit_rate": 0.39215686274509803,
-      "profit_units": -12.429999999999998,
-      "roi": -0.1218627450980392,
-      "max_drawdown_units": 18.97
+      "n": 104,
+      "wins": 41,
+      "hit_rate": 0.3942307692307692,
+      "profit_units": -12.939999999999998,
+      "roi": -0.1244230769230769,
+      "max_drawdown_units": 19.97
     },
     "shadow": {
-      "n": 37,
-      "wins": 18,
-      "hit_rate": 0.4864864864864865,
-      "profit_units": -9.09,
-      "roi": -0.24567567567567566,
+      "n": 38,
+      "wins": 19,
+      "hit_rate": 0.5,
+      "profit_units": -8.6,
+      "roi": -0.2263157894736842,
       "max_drawdown_units": 9.09
     },
-    "delta_roi": -0.12381293057763647,
+    "delta_roi": -0.10189271255060729,
     "review_eligible": false
   }
 }
