@@ -1,31 +1,31 @@
 {
   "meta": {
-    "updated_at": "2026-09-13T06:10:51.173Z",
+    "updated_at": "2026-09-13T06:46:42.667Z",
     "status": "READY",
     "error": null,
     "model_version": "TEP-SUREBET-2.0",
-    "source": "Quote condivise Quant / Live · nessuna chiamata aggiuntiva",
+    "source": "Odds-API.io · quote condivise e scansione mirata",
     "bookmakers": [
       "Bet365",
       "Eurobet IT"
     ],
     "bookmaker_count": 2,
-    "events_total": 181,
-    "events_scanned": 0,
-    "events_compared": 19,
-    "events_with_quotes": 71,
-    "markets_compared": 19,
-    "api_calls": 0,
+    "events_total": 178,
+    "events_scanned": 20,
+    "events_compared": 17,
+    "events_with_quotes": 69,
+    "markets_compared": 17,
+    "api_calls": 3,
     "api_call_budget": 3,
-    "shared_requests_24h": 45,
+    "shared_requests_24h": 48,
     "shared_budget_24h": 480,
     "scanner_budget_24h": 60,
     "rejection_counts": {
-      "MARGINE_TROPPO_BASSO": 19,
-      "QUOTE_NON_SINCRONE": 19,
-      "BUFFER_NON_SUPERATO": 19,
-      "QUOTA_NON_FRESCA": 18,
-      "FINESTRA_ESECUZIONE_TROPPO_CORTA": 18,
+      "MARGINE_TROPPO_BASSO": 17,
+      "QUOTA_NON_FRESCA": 17,
+      "QUOTE_NON_SINCRONE": 17,
+      "BUFFER_NON_SUPERATO": 17,
+      "FINESTRA_ESECUZIONE_TROPPO_CORTA": 17,
       "COPERTURA_INSUFFICIENTE": 110
     },
     "max_quote_age_min": 10,
@@ -56,22 +56,24 @@
           "book": "Bet365",
           "a": 1.66,
           "b": 2.3,
-          "updated_at": "2026-09-13T06:10:14.524Z",
-          "age_min": 0.6108166666666667
+          "updated_at": "2026-09-13T06:45:27.971Z",
+          "age_min": 1.2449333333333332
         },
         {
           "book": "Eurobet IT",
           "a": 1.66,
           "b": 2.18,
           "updated_at": "2026-09-13T06:02:34.375Z",
-          "age_min": 8.279966666666667
+          "age_min": 44.1382
         }
       ],
       "status": "NON_CERTIFICATA",
       "reasons": [
         "MARGINE_TROPPO_BASSO",
+        "QUOTA_NON_FRESCA",
         "QUOTE_NON_SINCRONE",
-        "BUFFER_NON_SUPERATO"
+        "BUFFER_NON_SUPERATO",
+        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
       ],
       "raw_roi": -0.03585858585858592,
       "book_a": "Eurobet IT",
@@ -79,16 +81,16 @@
       "odds_a": 1.66,
       "odds_b": 2.3,
       "updated_a": "2026-09-13T06:02:34.375Z",
-      "updated_b": "2026-09-13T06:10:14.524Z",
+      "updated_b": "2026-09-13T06:45:27.971Z",
       "buffered_roi": -0.038400000000000004,
       "safety_buffer": 0.0025,
-      "timestamp_spread_min": 7.66915,
+      "timestamp_spread_min": 42.89326666666667,
       "expires_at": "2026-09-13T06:12:34.375Z",
-      "execution_window_sec": 103,
+      "execution_window_sec": 0,
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
+      "detected_at": "2026-09-13T06:46:42.667Z",
       "stake_100": {
         "stake_a": 58.08,
         "stake_b": 41.92,
@@ -98,7 +100,7 @@
         "profit": -3.59,
         "roi": -0.0359
       },
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "74609192",
@@ -117,15 +119,15 @@
           "book": "Bet365",
           "a": 2.2,
           "b": 1.66,
-          "updated_at": "2026-09-13T06:03:42.823Z",
-          "age_min": 7.139166666666667
+          "updated_at": "2026-09-13T06:39:14.213Z",
+          "age_min": 7.474233333333333
         },
         {
           "book": "Eurobet IT",
           "a": 2.22,
           "b": 1.62,
           "updated_at": "2026-09-12T17:25:38.504Z",
-          "age_min": 765.21115
+          "age_min": 801.0693833333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -142,16 +144,16 @@
       "odds_a": 2.22,
       "odds_b": 1.66,
       "updated_a": "2026-09-12T17:25:38.504Z",
-      "updated_b": "2026-09-13T06:03:42.823Z",
+      "updated_b": "2026-09-13T06:39:14.213Z",
       "buffered_roi": -0.05280000000000001,
       "safety_buffer": 0.0025,
-      "timestamp_spread_min": 758.0719833333334,
+      "timestamp_spread_min": 793.59515,
       "expires_at": "2026-09-12T17:35:38.504Z",
       "execution_window_sec": 0,
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
+      "detected_at": "2026-09-13T06:46:42.667Z",
       "stake_100": {
         "stake_a": 42.78,
         "stake_b": 57.22,
@@ -161,7 +163,7 @@
         "profit": -5.03,
         "roi": -0.050300000000000004
       },
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "74609198",
@@ -181,14 +183,14 @@
           "a": 4,
           "b": 1.25,
           "updated_at": "2026-09-13T06:10:43.987Z",
-          "age_min": 0.11976666666666666
+          "age_min": 35.978
         },
         {
           "book": "Eurobet IT",
           "a": 3.9,
           "b": 1.23,
           "updated_at": "2026-09-13T04:17:59.247Z",
-          "age_min": 112.86543333333333
+          "age_min": 148.72366666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -214,7 +216,7 @@
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
+      "detected_at": "2026-09-13T06:46:42.667Z",
       "stake_100": {
         "stake_a": 24.27,
         "stake_b": 75.73,
@@ -243,15 +245,15 @@
           "book": "Bet365",
           "a": 2.2,
           "b": 1.66,
-          "updated_at": "2026-09-13T06:10:31.973Z",
-          "age_min": 0.32
+          "updated_at": "2026-09-13T06:45:43.029Z",
+          "age_min": 0.9939666666666667
         },
         {
           "book": "Eurobet IT",
           "a": 2.2,
           "b": 1.62,
           "updated_at": "2026-09-12T22:36:36.335Z",
-          "age_min": 454.2473
+          "age_min": 490.1055333333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -268,16 +270,16 @@
       "odds_a": 2.2,
       "odds_b": 1.66,
       "updated_a": "2026-09-12T22:36:36.335Z",
-      "updated_b": "2026-09-13T06:10:31.973Z",
+      "updated_b": "2026-09-13T06:45:43.029Z",
       "buffered_roi": -0.05650000000000001,
       "safety_buffer": 0.0025,
-      "timestamp_spread_min": 453.9273,
+      "timestamp_spread_min": 489.11156666666665,
       "expires_at": "2026-09-12T22:46:36.335Z",
       "execution_window_sec": 0,
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
+      "detected_at": "2026-09-13T06:46:42.667Z",
       "stake_100": {
         "stake_a": 43,
         "stake_b": 57,
@@ -287,7 +289,7 @@
         "profit": -5.4,
         "roi": -0.054000000000000006
       },
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "74609200",
@@ -307,14 +309,14 @@
           "a": 2.5,
           "b": 1.53,
           "updated_at": "2026-09-13T06:06:28.04Z",
-          "age_min": 4.38555
+          "age_min": 40.24378333333333
         },
         {
           "book": "Eurobet IT",
           "a": 2.47,
           "b": 1.5,
           "updated_at": "2026-09-12T21:53:25.056Z",
-          "age_min": 497.43528333333336
+          "age_min": 533.2935166666666
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -340,7 +342,7 @@
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
+      "detected_at": "2026-09-13T06:46:42.667Z",
       "stake_100": {
         "stake_a": 38.25,
         "stake_b": 61.75,
@@ -351,6 +353,69 @@
         "roi": -0.0553
       },
       "source": "quant"
+    },
+    {
+      "event_id": "74628226",
+      "start_at": "2026-09-13T10:10:00Z",
+      "player_a": "Da Silva Fick, Gabriella",
+      "player_b": "Visscher, Stephanie Judith",
+      "tournament": "WTA 125K - Caldas da Rainha, Portugal, Qualifying",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Da Silva Fick, Gabriella",
+      "selection_b": "Visscher, Stephanie Judith",
+      "market_depth": 2,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 2.1,
+          "b": 1.66,
+          "updated_at": "2026-09-13T06:41:29.866Z",
+          "age_min": 5.21335
+        },
+        {
+          "book": "Eurobet IT",
+          "a": 2.16,
+          "b": 1.59,
+          "updated_at": "2026-09-13T03:34:17.69Z",
+          "age_min": 192.41628333333333
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "MARGINE_TROPPO_BASSO",
+        "QUOTA_NON_FRESCA",
+        "QUOTE_NON_SINCRONE",
+        "BUFFER_NON_SUPERATO",
+        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
+      ],
+      "raw_roi": -0.06136125654450264,
+      "book_a": "Eurobet IT",
+      "book_b": "Bet365",
+      "odds_a": 2.16,
+      "odds_b": 1.66,
+      "updated_a": "2026-09-13T03:34:17.69Z",
+      "updated_b": "2026-09-13T06:41:29.866Z",
+      "buffered_roi": -0.064,
+      "safety_buffer": 0.0025,
+      "timestamp_spread_min": 187.20293333333333,
+      "expires_at": "2026-09-13T03:44:17.690Z",
+      "execution_window_sec": 0,
+      "same_market_verified": true,
+      "settlement_rules_verified": false,
+      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
+      "detected_at": "2026-09-13T06:46:42.667Z",
+      "stake_100": {
+        "stake_a": 43.45,
+        "stake_b": 56.55,
+        "return_if_a": 93.85,
+        "return_if_b": 93.87,
+        "worst_return": 93.85,
+        "profit": -6.15,
+        "roi": -0.061500000000000006
+      },
+      "source": "surebet"
     },
     {
       "event_id": "74627544",
@@ -369,15 +434,15 @@
           "book": "Bet365",
           "a": 1.57,
           "b": 2.25,
-          "updated_at": "2026-09-13T06:07:28.093Z",
-          "age_min": 3.3846666666666665
+          "updated_at": "2026-09-13T06:40:43.306Z",
+          "age_min": 5.98935
         },
         {
           "book": "Eurobet IT",
           "a": 1.6,
           "b": 2.16,
           "updated_at": "2026-09-13T05:28:21.929Z",
-          "age_min": 42.4874
+          "age_min": 78.34563333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -394,16 +459,16 @@
       "odds_a": 1.6,
       "odds_b": 2.25,
       "updated_a": "2026-09-13T05:28:21.929Z",
-      "updated_b": "2026-09-13T06:07:28.093Z",
+      "updated_b": "2026-09-13T06:40:43.306Z",
       "buffered_roi": -0.0675,
       "safety_buffer": 0.0025,
-      "timestamp_spread_min": 39.10273333333333,
+      "timestamp_spread_min": 72.35628333333334,
       "expires_at": "2026-09-13T05:38:21.929Z",
       "execution_window_sec": 0,
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
+      "detected_at": "2026-09-13T06:46:42.667Z",
       "stake_100": {
         "stake_a": 58.44,
         "stake_b": 41.56,
@@ -413,34 +478,34 @@
         "profit": -6.5,
         "roi": -0.065
       },
-      "source": "quant"
+      "source": "surebet"
     },
     {
-      "event_id": "15132590126",
-      "start_at": "2026-09-13T06:30:00Z",
-      "player_a": "Ignacio Monzon",
-      "player_b": "Dmitry Popko",
-      "tournament": "Tennis - ITF Men Tsaghkadzor - Final",
+      "event_id": "12517808446",
+      "start_at": "2026-09-13T09:30:00Z",
+      "player_a": "Imogen Haddad",
+      "player_b": "Andre Lukosiute",
+      "tournament": "Tennis - ITF Women Monastir - Final",
       "market": "MATCH_WINNER_2WAY",
       "line": null,
       "market_key": "MATCH_WINNER_2WAY|",
-      "selection_a": "Ignacio Monzon",
-      "selection_b": "Dmitry Popko",
+      "selection_a": "Imogen Haddad",
+      "selection_b": "Andre Lukosiute",
       "market_depth": 2,
       "quotes": [
         {
           "book": "Bet365",
           "a": 3.4,
           "b": 1.3,
-          "updated_at": "2026-09-13T01:23:32.797Z",
-          "age_min": 287.30626666666666
+          "updated_at": "2026-09-13T06:44:43.414Z",
+          "age_min": 1.98755
         },
         {
           "book": "Eurobet IT",
           "a": 3.25,
           "b": 1.23,
-          "updated_at": "2026-09-12T21:04:59.951Z",
-          "age_min": 545.8537
+          "updated_at": "2026-09-13T05:59:13.992Z",
+          "age_min": 47.477916666666665
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -456,17 +521,17 @@
       "book_b": "Bet365",
       "odds_a": 3.25,
       "odds_b": 1.3,
-      "updated_a": "2026-09-12T21:04:59.951Z",
-      "updated_b": "2026-09-13T01:23:32.797Z",
+      "updated_a": "2026-09-13T05:59:13.992Z",
+      "updated_b": "2026-09-13T06:44:43.414Z",
       "buffered_roi": -0.07400000000000001,
       "safety_buffer": 0.0025,
-      "timestamp_spread_min": 258.54743333333334,
-      "expires_at": "2026-09-12T21:14:59.951Z",
+      "timestamp_spread_min": 45.49036666666667,
+      "expires_at": "2026-09-13T06:09:13.992Z",
       "execution_window_sec": 0,
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
+      "detected_at": "2026-09-13T06:46:42.667Z",
       "stake_100": {
         "stake_a": 28.57,
         "stake_b": 71.43,
@@ -495,15 +560,15 @@
           "book": "Bet365",
           "a": 4.33,
           "b": 1.2,
-          "updated_at": "2026-09-13T01:21:32.479Z",
-          "age_min": 289.3115666666667
+          "updated_at": "2026-09-13T06:39:27.969Z",
+          "age_min": 7.2449666666666666
         },
         {
           "book": "Eurobet IT",
           "a": 4.1,
           "b": 1.14,
-          "updated_at": "2026-09-12T23:46:50.345Z",
-          "age_min": 384.0138
+          "updated_at": "2026-09-13T05:24:20.293Z",
+          "age_min": 82.3729
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -519,17 +584,17 @@
       "book_b": "Bet365",
       "odds_a": 4.1,
       "odds_b": 1.2,
-      "updated_a": "2026-09-12T23:46:50.345Z",
-      "updated_b": "2026-09-13T01:21:32.479Z",
+      "updated_a": "2026-09-13T05:24:20.293Z",
+      "updated_b": "2026-09-13T06:39:27.969Z",
       "buffered_roi": -0.0743,
       "safety_buffer": 0.0025,
-      "timestamp_spread_min": 94.70223333333334,
-      "expires_at": "2026-09-12T23:56:50.345Z",
+      "timestamp_spread_min": 75.12793333333333,
+      "expires_at": "2026-09-13T05:34:20.293Z",
       "execution_window_sec": 0,
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
+      "detected_at": "2026-09-13T06:46:42.667Z",
       "stake_100": {
         "stake_a": 22.64,
         "stake_b": 77.36,
@@ -538,69 +603,6 @@
         "worst_return": 92.82,
         "profit": -7.18,
         "roi": -0.0718
-      },
-      "source": "surebet"
-    },
-    {
-      "event_id": "12517808446",
-      "start_at": "2026-09-13T09:30:00Z",
-      "player_a": "Imogen Haddad",
-      "player_b": "Andre Lukosiute",
-      "tournament": "Tennis - ITF Women Monastir - Final",
-      "market": "MATCH_WINNER_2WAY",
-      "line": null,
-      "market_key": "MATCH_WINNER_2WAY|",
-      "selection_a": "Imogen Haddad",
-      "selection_b": "Andre Lukosiute",
-      "market_depth": 2,
-      "quotes": [
-        {
-          "book": "Bet365",
-          "a": 3.25,
-          "b": 1.33,
-          "updated_at": "2026-09-13T01:19:44.81Z",
-          "age_min": 291.10605
-        },
-        {
-          "book": "Eurobet IT",
-          "a": 3.05,
-          "b": 1.27,
-          "updated_at": "2026-09-12T23:35:45.438Z",
-          "age_min": 395.0955833333333
-        }
-      ],
-      "status": "NON_CERTIFICATA",
-      "reasons": [
-        "MARGINE_TROPPO_BASSO",
-        "QUOTA_NON_FRESCA",
-        "QUOTE_NON_SINCRONE",
-        "BUFFER_NON_SUPERATO",
-        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
-      ],
-      "raw_roi": -0.07385844748858461,
-      "book_a": "Eurobet IT",
-      "book_b": "Bet365",
-      "odds_a": 3.05,
-      "odds_b": 1.33,
-      "updated_a": "2026-09-12T23:35:45.438Z",
-      "updated_b": "2026-09-13T01:19:44.81Z",
-      "buffered_roi": -0.07650000000000001,
-      "safety_buffer": 0.0025,
-      "timestamp_spread_min": 103.98953333333333,
-      "expires_at": "2026-09-12T23:45:45.438Z",
-      "execution_window_sec": 0,
-      "same_market_verified": true,
-      "settlement_rules_verified": false,
-      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
-      "stake_100": {
-        "stake_a": 30.37,
-        "stake_b": 69.63,
-        "return_if_a": 92.62,
-        "return_if_b": 92.6,
-        "worst_return": 92.6,
-        "profit": -7.4,
-        "roi": -0.07400000000000001
       },
       "source": "surebet"
     },
@@ -621,15 +623,15 @@
           "book": "Bet365",
           "a": 11,
           "b": 1.02,
-          "updated_at": "2026-09-12T23:18:34.744Z",
-          "age_min": 412.2738166666667
+          "updated_at": "2026-09-13T06:42:28.578Z",
+          "age_min": 4.234816666666666
         },
         {
           "book": "Eurobet IT",
-          "a": 10,
+          "a": 9.8,
           "b": 1.01,
-          "updated_at": "2026-09-12T22:14:51.043Z",
-          "age_min": 476.00216666666665
+          "updated_at": "2026-09-13T01:34:11.035Z",
+          "age_min": 312.5272
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -640,93 +642,30 @@
         "BUFFER_NON_SUPERATO",
         "FINESTRA_ESECUZIONE_TROPPO_CORTA"
       ],
-      "raw_roi": -0.07441016333938288,
-      "book_a": "Eurobet IT",
-      "book_b": "Bet365",
-      "odds_a": 10,
-      "odds_b": 1.02,
-      "updated_a": "2026-09-12T22:14:51.043Z",
-      "updated_b": "2026-09-12T23:18:34.744Z",
-      "buffered_roi": -0.077,
-      "safety_buffer": 0.0025,
-      "timestamp_spread_min": 63.72835,
-      "expires_at": "2026-09-12T22:24:51.043Z",
-      "execution_window_sec": 0,
-      "same_market_verified": true,
-      "settlement_rules_verified": false,
-      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
-      "stake_100": {
-        "stake_a": 9.26,
-        "stake_b": 90.74,
-        "return_if_a": 92.6,
-        "return_if_b": 92.55,
-        "worst_return": 92.55,
-        "profit": -7.45,
-        "roi": -0.0745
-      },
-      "source": "surebet"
-    },
-    {
-      "event_id": "74628226",
-      "start_at": "2026-09-13T10:10:00Z",
-      "player_a": "Da Silva Fick, Gabriella",
-      "player_b": "Visscher, Stephanie Judith",
-      "tournament": "WTA 125K - Caldas da Rainha, Portugal, Qualifying",
-      "market": "MATCH_WINNER_2WAY",
-      "line": null,
-      "market_key": "MATCH_WINNER_2WAY|",
-      "selection_a": "Da Silva Fick, Gabriella",
-      "selection_b": "Visscher, Stephanie Judith",
-      "market_depth": 2,
-      "quotes": [
-        {
-          "book": "Bet365",
-          "a": 2.1,
-          "b": 1.66,
-          "updated_at": "2026-09-12T23:19:19.314Z",
-          "age_min": 411.5309833333333
-        },
-        {
-          "book": "Eurobet IT",
-          "a": 2.07,
-          "b": 1.65,
-          "updated_at": "2026-09-12T22:20:09.647Z",
-          "age_min": 470.6921
-        }
-      ],
-      "status": "NON_CERTIFICATA",
-      "reasons": [
-        "MARGINE_TROPPO_BASSO",
-        "QUOTA_NON_FRESCA",
-        "QUOTE_NON_SINCRONE",
-        "BUFFER_NON_SUPERATO",
-        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
-      ],
-      "raw_roi": -0.07599999999999996,
+      "raw_roi": -0.07493755203996666,
       "book_a": "Bet365",
       "book_b": "Eurobet IT",
-      "odds_a": 2.1,
-      "odds_b": 1.65,
-      "updated_a": "2026-09-12T23:19:19.314Z",
-      "updated_b": "2026-09-12T22:20:09.647Z",
-      "buffered_roi": -0.0785,
+      "odds_a": 11,
+      "odds_b": 1.01,
+      "updated_a": "2026-09-13T06:42:28.578Z",
+      "updated_b": "2026-09-13T01:34:11.035Z",
+      "buffered_roi": -0.0775,
       "safety_buffer": 0.0025,
-      "timestamp_spread_min": 59.161116666666665,
-      "expires_at": "2026-09-12T22:30:09.647Z",
+      "timestamp_spread_min": 308.2923833333333,
+      "expires_at": "2026-09-13T01:44:11.035Z",
       "execution_window_sec": 0,
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
+      "detected_at": "2026-09-13T06:46:42.667Z",
       "stake_100": {
-        "stake_a": 44,
-        "stake_b": 56,
-        "return_if_a": 92.4,
-        "return_if_b": 92.4,
-        "worst_return": 92.4,
-        "profit": -7.6,
-        "roi": -0.076
+        "stake_a": 8.41,
+        "stake_b": 91.59,
+        "return_if_a": 92.51,
+        "return_if_b": 92.5,
+        "worst_return": 92.5,
+        "profit": -7.5,
+        "roi": -0.075
       },
       "source": "surebet"
     },
@@ -747,15 +686,15 @@
           "book": "Bet365",
           "a": 1.14,
           "b": 5,
-          "updated_at": "2026-09-12T23:18:19.424Z",
-          "age_min": 412.52915
+          "updated_at": "2026-09-13T06:37:00.571Z",
+          "age_min": 9.7016
         },
         {
           "book": "Eurobet IT",
           "a": 1.13,
           "b": 4.8,
           "updated_at": "2026-09-12T22:14:51.043Z",
-          "age_min": 476.00216666666665
+          "age_min": 511.8604
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -772,16 +711,16 @@
       "odds_a": 1.13,
       "odds_b": 5,
       "updated_a": "2026-09-12T22:14:51.043Z",
-      "updated_b": "2026-09-12T23:18:19.424Z",
+      "updated_b": "2026-09-13T06:37:00.571Z",
       "buffered_roi": -0.0809,
       "safety_buffer": 0.0025,
-      "timestamp_spread_min": 63.473016666666666,
+      "timestamp_spread_min": 502.1588,
       "expires_at": "2026-09-12T22:24:51.043Z",
       "execution_window_sec": 0,
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
+      "detected_at": "2026-09-13T06:46:42.667Z",
       "stake_100": {
         "stake_a": 81.56,
         "stake_b": 18.44,
@@ -808,17 +747,17 @@
       "quotes": [
         {
           "book": "Bet365",
-          "a": 1.12,
-          "b": 5.5,
-          "updated_at": "2026-09-13T00:16:43.053Z",
-          "age_min": 354.13533333333334
+          "a": 1.14,
+          "b": 5,
+          "updated_at": "2026-09-13T06:45:12.8Z",
+          "age_min": 1.4977833333333332
         },
         {
           "book": "Eurobet IT",
-          "a": 1.07,
-          "b": 5.2,
-          "updated_at": "2026-09-12T16:28:28.417Z",
-          "age_min": 822.3792666666667
+          "a": 1.1,
+          "b": 4.8,
+          "updated_at": "2026-09-13T06:02:34.375Z",
+          "age_min": 44.1382
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -829,32 +768,32 @@
         "BUFFER_NON_SUPERATO",
         "FINESTRA_ESECUZIONE_TROPPO_CORTA"
       ],
-      "raw_roi": -0.07848101265822782,
+      "raw_roi": -0.07878787878787874,
       "book_a": "Bet365",
       "book_b": "Eurobet IT",
-      "odds_a": 1.12,
-      "odds_b": 5.2,
-      "updated_a": "2026-09-13T00:16:43.053Z",
-      "updated_b": "2026-09-12T16:28:28.417Z",
-      "buffered_roi": -0.0811,
+      "odds_a": 1.14,
+      "odds_b": 4.8,
+      "updated_a": "2026-09-13T06:45:12.8Z",
+      "updated_b": "2026-09-13T06:02:34.375Z",
+      "buffered_roi": -0.0814,
       "safety_buffer": 0.0025,
-      "timestamp_spread_min": 468.24393333333336,
-      "expires_at": "2026-09-12T16:38:28.417Z",
+      "timestamp_spread_min": 42.64041666666667,
+      "expires_at": "2026-09-13T06:12:34.375Z",
       "execution_window_sec": 0,
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
+      "detected_at": "2026-09-13T06:46:42.667Z",
       "stake_100": {
-        "stake_a": 82.27,
-        "stake_b": 17.73,
-        "return_if_a": 92.14,
-        "return_if_b": 92.19,
-        "worst_return": 92.14,
-        "profit": -7.86,
-        "roi": -0.0786
+        "stake_a": 80.8,
+        "stake_b": 19.2,
+        "return_if_a": 92.11,
+        "return_if_b": 92.16,
+        "worst_return": 92.11,
+        "profit": -7.89,
+        "roi": -0.0789
       },
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "14108994128",
@@ -873,15 +812,15 @@
           "book": "Bet365",
           "a": 3,
           "b": 1.36,
-          "updated_at": "2026-09-13T01:23:17.428Z",
-          "age_min": 287.56241666666665
+          "updated_at": "2026-09-13T06:42:28.578Z",
+          "age_min": 4.234816666666666
         },
         {
           "book": "Eurobet IT",
           "a": 2.85,
           "b": 1.3,
           "updated_at": "2026-09-13T01:13:46.279Z",
-          "age_min": 297.0815666666667
+          "age_min": 332.9398
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -898,16 +837,16 @@
       "odds_a": 2.85,
       "odds_b": 1.36,
       "updated_a": "2026-09-13T01:13:46.279Z",
-      "updated_b": "2026-09-13T01:23:17.428Z",
+      "updated_b": "2026-09-13T06:42:28.578Z",
       "buffered_roi": -0.082,
       "safety_buffer": 0.0025,
-      "timestamp_spread_min": 9.51915,
+      "timestamp_spread_min": 328.70498333333336,
       "expires_at": "2026-09-13T01:23:46.279Z",
       "execution_window_sec": 0,
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
+      "detected_at": "2026-09-13T06:46:42.667Z",
       "stake_100": {
         "stake_a": 32.3,
         "stake_b": 67.7,
@@ -936,15 +875,15 @@
           "book": "Bet365",
           "a": 1.36,
           "b": 3,
-          "updated_at": "2026-09-13T01:25:04.684Z",
-          "age_min": 285.77481666666665
+          "updated_at": "2026-09-13T06:19:58.156Z",
+          "age_min": 26.74185
         },
         {
           "book": "Eurobet IT",
           "a": 1.3,
           "b": 2.85,
-          "updated_at": "2026-09-12T19:23:14.412Z",
-          "age_min": 647.6126833333333
+          "updated_at": "2026-09-13T05:18:23.474Z",
+          "age_min": 88.31988333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -960,17 +899,17 @@
       "book_b": "Eurobet IT",
       "odds_a": 1.36,
       "odds_b": 2.85,
-      "updated_a": "2026-09-13T01:25:04.684Z",
-      "updated_b": "2026-09-12T19:23:14.412Z",
+      "updated_a": "2026-09-13T06:19:58.156Z",
+      "updated_b": "2026-09-13T05:18:23.474Z",
       "buffered_roi": -0.082,
       "safety_buffer": 0.0025,
-      "timestamp_spread_min": 361.8378666666667,
-      "expires_at": "2026-09-12T19:33:14.412Z",
+      "timestamp_spread_min": 61.57803333333333,
+      "expires_at": "2026-09-13T05:28:23.474Z",
       "execution_window_sec": 0,
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
+      "detected_at": "2026-09-13T06:46:42.667Z",
       "stake_100": {
         "stake_a": 67.69,
         "stake_b": 32.31,
@@ -999,15 +938,15 @@
           "book": "Bet365",
           "a": 3,
           "b": 1.36,
-          "updated_at": "2026-09-13T00:15:42.569Z",
-          "age_min": 355.1434
+          "updated_at": "2026-09-13T06:28:12.93Z",
+          "age_min": 18.495616666666667
         },
         {
           "book": "Eurobet IT",
           "a": 2.85,
           "b": 1.3,
-          "updated_at": "2026-09-12T19:59:30.732Z",
-          "age_min": 611.3406833333333
+          "updated_at": "2026-09-13T05:18:23.474Z",
+          "age_min": 88.31988333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1023,17 +962,17 @@
       "book_b": "Bet365",
       "odds_a": 2.85,
       "odds_b": 1.36,
-      "updated_a": "2026-09-12T19:59:30.732Z",
-      "updated_b": "2026-09-13T00:15:42.569Z",
+      "updated_a": "2026-09-13T05:18:23.474Z",
+      "updated_b": "2026-09-13T06:28:12.93Z",
       "buffered_roi": -0.082,
       "safety_buffer": 0.0025,
-      "timestamp_spread_min": 256.19728333333336,
-      "expires_at": "2026-09-12T20:09:30.732Z",
+      "timestamp_spread_min": 69.82426666666667,
+      "expires_at": "2026-09-13T05:28:23.474Z",
       "execution_window_sec": 0,
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
+      "detected_at": "2026-09-13T06:46:42.667Z",
       "stake_100": {
         "stake_a": 32.3,
         "stake_b": 67.7,
@@ -1042,132 +981,6 @@
         "worst_return": 92.05,
         "profit": -7.95,
         "roi": -0.0795
-      },
-      "source": "quant"
-    },
-    {
-      "event_id": "74626394",
-      "start_at": "2026-09-13T06:30:00Z",
-      "player_a": "Agafonov, Egor",
-      "player_b": "Yamanaka, Taiyo",
-      "tournament": "Challenger - Phan Thiet 4, Vietnam, Qualifying",
-      "market": "MATCH_WINNER_2WAY",
-      "line": null,
-      "market_key": "MATCH_WINNER_2WAY|",
-      "selection_a": "Agafonov, Egor",
-      "selection_b": "Yamanaka, Taiyo",
-      "market_depth": 2,
-      "quotes": [
-        {
-          "book": "Bet365",
-          "a": 1.83,
-          "b": 1.83,
-          "updated_at": "2026-09-13T01:21:15.295Z",
-          "age_min": 289.59796666666665
-        },
-        {
-          "book": "Eurobet IT",
-          "a": 1.82,
-          "b": 1.85,
-          "updated_at": "2026-09-12T22:56:05.889Z",
-          "age_min": 434.7547333333333
-        }
-      ],
-      "status": "NON_CERTIFICATA",
-      "reasons": [
-        "MARGINE_TROPPO_BASSO",
-        "QUOTA_NON_FRESCA",
-        "QUOTE_NON_SINCRONE",
-        "BUFFER_NON_SUPERATO",
-        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
-      ],
-      "raw_roi": -0.08002717391304348,
-      "book_a": "Bet365",
-      "book_b": "Eurobet IT",
-      "odds_a": 1.83,
-      "odds_b": 1.85,
-      "updated_a": "2026-09-13T01:21:15.295Z",
-      "updated_b": "2026-09-12T22:56:05.889Z",
-      "buffered_roi": -0.0826,
-      "safety_buffer": 0.0025,
-      "timestamp_spread_min": 145.15676666666667,
-      "expires_at": "2026-09-12T23:06:05.889Z",
-      "execution_window_sec": 0,
-      "same_market_verified": true,
-      "settlement_rules_verified": false,
-      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
-      "stake_100": {
-        "stake_a": 50.27,
-        "stake_b": 49.73,
-        "return_if_a": 91.99,
-        "return_if_b": 92,
-        "worst_return": 91.99,
-        "profit": -8.01,
-        "roi": -0.0801
-      },
-      "source": "surebet"
-    },
-    {
-      "event_id": "15732883125",
-      "start_at": "2026-09-13T09:00:00Z",
-      "player_a": "Lilian Marmousez",
-      "player_b": "Mate Valkusz",
-      "tournament": "Tennis - ITF Men Budapest - Final",
-      "market": "MATCH_WINNER_2WAY",
-      "line": null,
-      "market_key": "MATCH_WINNER_2WAY|",
-      "selection_a": "Lilian Marmousez",
-      "selection_b": "Mate Valkusz",
-      "market_depth": 2,
-      "quotes": [
-        {
-          "book": "Bet365",
-          "a": 1.61,
-          "b": 2.2,
-          "updated_at": "2026-09-13T01:10:15.678Z",
-          "age_min": 300.59158333333335
-        },
-        {
-          "book": "Eurobet IT",
-          "a": 1.55,
-          "b": 2.1,
-          "updated_at": "2026-09-12T23:17:13.511Z",
-          "age_min": 413.6277
-        }
-      ],
-      "status": "NON_CERTIFICATA",
-      "reasons": [
-        "MARGINE_TROPPO_BASSO",
-        "QUOTA_NON_FRESCA",
-        "QUOTE_NON_SINCRONE",
-        "BUFFER_NON_SUPERATO",
-        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
-      ],
-      "raw_roi": -0.08867924528301885,
-      "book_a": "Bet365",
-      "book_b": "Eurobet IT",
-      "odds_a": 1.61,
-      "odds_b": 2.1,
-      "updated_a": "2026-09-13T01:10:15.678Z",
-      "updated_b": "2026-09-12T23:17:13.511Z",
-      "buffered_roi": -0.0913,
-      "safety_buffer": 0.0025,
-      "timestamp_spread_min": 113.03611666666667,
-      "expires_at": "2026-09-12T23:27:13.511Z",
-      "execution_window_sec": 0,
-      "same_market_verified": true,
-      "settlement_rules_verified": false,
-      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
-      "stake_100": {
-        "stake_a": 56.6,
-        "stake_b": 43.4,
-        "return_if_a": 91.12,
-        "return_if_b": 91.14,
-        "worst_return": 91.12,
-        "profit": -8.88,
-        "roi": -0.0888
       },
       "source": "surebet"
     },
@@ -1186,17 +999,17 @@
       "quotes": [
         {
           "book": "Bet365",
-          "a": 2.25,
-          "b": 1.57,
-          "updated_at": "2026-09-13T00:16:43.053Z",
-          "age_min": 354.13533333333334
+          "a": 2.37,
+          "b": 1.53,
+          "updated_at": "2026-09-13T06:16:42.669Z",
+          "age_min": 29.999966666666666
         },
         {
           "book": "Eurobet IT",
-          "a": 2.15,
-          "b": 1.52,
-          "updated_at": "2026-09-12T16:55:00.738Z",
-          "age_min": 795.8405833333334
+          "a": 2.3,
+          "b": 1.47,
+          "updated_at": "2026-09-13T06:02:34.375Z",
+          "age_min": 44.1382
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1207,32 +1020,95 @@
         "BUFFER_NON_SUPERATO",
         "FINESTRA_ESECUZIONE_TROPPO_CORTA"
       ],
-      "raw_roi": -0.09260752688172047,
+      "raw_roi": -0.08120104438642306,
       "book_a": "Eurobet IT",
       "book_b": "Bet365",
-      "odds_a": 2.15,
-      "odds_b": 1.57,
-      "updated_a": "2026-09-12T16:55:00.738Z",
-      "updated_b": "2026-09-13T00:16:43.053Z",
-      "buffered_roi": -0.09519999999999999,
+      "odds_a": 2.3,
+      "odds_b": 1.53,
+      "updated_a": "2026-09-13T06:02:34.375Z",
+      "updated_b": "2026-09-13T06:16:42.669Z",
+      "buffered_roi": -0.08380000000000001,
       "safety_buffer": 0.0025,
-      "timestamp_spread_min": 441.70525,
-      "expires_at": "2026-09-12T17:05:00.738Z",
+      "timestamp_spread_min": 14.138233333333334,
+      "expires_at": "2026-09-13T06:12:34.375Z",
       "execution_window_sec": 0,
       "same_market_verified": true,
       "settlement_rules_verified": false,
       "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
-      "detected_at": "2026-09-13T06:10:51.173Z",
+      "detected_at": "2026-09-13T06:46:42.667Z",
       "stake_100": {
-        "stake_a": 42.2,
-        "stake_b": 57.8,
+        "stake_a": 39.95,
+        "stake_b": 60.05,
+        "return_if_a": 91.88,
+        "return_if_b": 91.87,
+        "worst_return": 91.87,
+        "profit": -8.13,
+        "roi": -0.08130000000000001
+      },
+      "source": "surebet"
+    },
+    {
+      "event_id": "15732883125",
+      "start_at": "2026-09-13T09:00:00Z",
+      "player_a": "Lilian Marmousez",
+      "player_b": "Mate Valkusz",
+      "tournament": "Tennis - ITF Men Budapest - Final",
+      "market": "MATCH_WINNER_2WAY",
+      "line": null,
+      "market_key": "MATCH_WINNER_2WAY|",
+      "selection_a": "Lilian Marmousez",
+      "selection_b": "Mate Valkusz",
+      "market_depth": 2,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.83,
+          "b": 1.83,
+          "updated_at": "2026-09-13T06:45:58.163Z",
+          "age_min": 0.7417333333333334
+        },
+        {
+          "book": "Eurobet IT",
+          "a": 1.8,
+          "b": 1.8,
+          "updated_at": "2026-09-13T06:13:07.149Z",
+          "age_min": 33.591966666666664
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "MARGINE_TROPPO_BASSO",
+        "QUOTA_NON_FRESCA",
+        "QUOTE_NON_SINCRONE",
+        "BUFFER_NON_SUPERATO",
+        "FINESTRA_ESECUZIONE_TROPPO_CORTA"
+      ],
+      "raw_roi": -0.09256198347107436,
+      "book_a": "Bet365",
+      "book_b": "Eurobet IT",
+      "odds_a": 1.83,
+      "odds_b": 1.8,
+      "updated_a": "2026-09-13T06:45:58.163Z",
+      "updated_b": "2026-09-13T06:13:07.149Z",
+      "buffered_roi": -0.09519999999999999,
+      "safety_buffer": 0.0025,
+      "timestamp_spread_min": 32.850233333333335,
+      "expires_at": "2026-09-13T06:23:07.149Z",
+      "execution_window_sec": 0,
+      "same_market_verified": true,
+      "settlement_rules_verified": false,
+      "certainty_scope": "MATHEMATICAL_ODDS_ONLY",
+      "detected_at": "2026-09-13T06:46:42.667Z",
+      "stake_100": {
+        "stake_a": 49.58,
+        "stake_b": 50.42,
         "return_if_a": 90.73,
-        "return_if_b": 90.74,
+        "return_if_b": 90.75,
         "worst_return": 90.73,
         "profit": -9.27,
         "roi": -0.09269999999999999
       },
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "74609192",
@@ -1252,7 +1128,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T14:51:17.309Z",
-          "age_min": 919.5644
+          "age_min": 955.4226333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1260,7 +1136,7 @@
         "COPERTURA_INSUFFICIENTE"
       ],
       "raw_roi": null,
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "74609192",
@@ -1280,7 +1156,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T14:51:17.309Z",
-          "age_min": 919.5644
+          "age_min": 955.4226333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1288,7 +1164,7 @@
         "COPERTURA_INSUFFICIENTE"
       ],
       "raw_roi": null,
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "74609198",
@@ -1308,7 +1184,7 @@
           "a": 1.9,
           "b": 1.8,
           "updated_at": "2026-09-12T14:55:56.663Z",
-          "age_min": 914.9085
+          "age_min": 950.7667333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1336,7 +1212,7 @@
           "a": 2,
           "b": 1.72,
           "updated_at": "2026-09-12T14:55:56.663Z",
-          "age_min": 914.9085
+          "age_min": 950.7667333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1364,7 +1240,7 @@
           "a": 1.72,
           "b": 2,
           "updated_at": "2026-09-12T22:13:25.843Z",
-          "age_min": 477.42216666666667
+          "age_min": 513.2804
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1372,7 +1248,7 @@
         "COPERTURA_INSUFFICIENTE"
       ],
       "raw_roi": null,
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "74609190",
@@ -1392,7 +1268,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T21:47:37.722Z",
-          "age_min": 503.2241833333333
+          "age_min": 539.0824166666666
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1400,7 +1276,7 @@
         "COPERTURA_INSUFFICIENTE"
       ],
       "raw_roi": null,
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "74609200",
@@ -1420,7 +1296,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T14:53:42.294Z",
-          "age_min": 917.1479833333333
+          "age_min": 953.0062166666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1448,7 +1324,7 @@
           "a": 2,
           "b": 1.72,
           "updated_at": "2026-09-12T14:53:42.294Z",
-          "age_min": 917.1479833333333
+          "age_min": 953.0062166666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1475,8 +1351,8 @@
           "book": "Bet365",
           "a": 1.83,
           "b": 1.83,
-          "updated_at": "2026-09-13T05:41:18.398Z",
-          "age_min": 29.54625
+          "updated_at": "2026-09-13T06:44:28.413Z",
+          "age_min": 2.2375666666666665
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1484,7 +1360,7 @@
         "COPERTURA_INSUFFICIENTE"
       ],
       "raw_roi": null,
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "73992442",
@@ -1504,7 +1380,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T06:19:33.525Z",
-          "age_min": 1431.2941333333333
+          "age_min": 1467.1523666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1512,7 +1388,7 @@
         "COPERTURA_INSUFFICIENTE"
       ],
       "raw_roi": null,
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "74625528",
@@ -1532,7 +1408,7 @@
           "a": 2,
           "b": 1.72,
           "updated_at": "2026-09-12T20:47:35.889Z",
-          "age_min": 563.2547333333333
+          "age_min": 599.1129666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1560,7 +1436,7 @@
           "a": 1.01,
           "b": 13,
           "updated_at": "2026-09-12T20:49:05.529Z",
-          "age_min": 561.7607333333333
+          "age_min": 597.6189666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1588,7 +1464,7 @@
           "a": 3,
           "b": 1.36,
           "updated_at": "2026-09-12T20:45:49.804Z",
-          "age_min": 565.0228166666667
+          "age_min": 600.88105
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1616,7 +1492,7 @@
           "a": 1.05,
           "b": 8.5,
           "updated_at": "2026-09-12T20:11:35.168Z",
-          "age_min": 599.26675
+          "age_min": 635.1249833333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1644,7 +1520,7 @@
           "a": 4.5,
           "b": 1.16,
           "updated_at": "2026-09-12T20:39:36.003Z",
-          "age_min": 571.2528333333333
+          "age_min": 607.1110666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1672,7 +1548,7 @@
           "a": 1.36,
           "b": 3,
           "updated_at": "2026-09-12T20:47:05.247Z",
-          "age_min": 563.7654333333334
+          "age_min": 599.6236666666666
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1700,7 +1576,7 @@
           "a": 1.14,
           "b": 5,
           "updated_at": "2026-09-12T20:28:35.5Z",
-          "age_min": 582.2612166666667
+          "age_min": 618.11945
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1728,7 +1604,7 @@
           "a": 1.57,
           "b": 2.25,
           "updated_at": "2026-09-12T20:46:05.582Z",
-          "age_min": 564.75985
+          "age_min": 600.6180833333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1756,7 +1632,7 @@
           "a": 1.28,
           "b": 3.5,
           "updated_at": "2026-09-12T20:36:51.887Z",
-          "age_min": 573.9881
+          "age_min": 609.8463333333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1784,7 +1660,7 @@
           "a": 2.75,
           "b": 1.4,
           "updated_at": "2026-09-12T20:46:20.575Z",
-          "age_min": 564.5099666666666
+          "age_min": 600.3682
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1812,7 +1688,7 @@
           "a": 1.28,
           "b": 3.5,
           "updated_at": "2026-09-12T20:50:35.477Z",
-          "age_min": 560.2616
+          "age_min": 596.1198333333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1840,7 +1716,7 @@
           "a": 1.25,
           "b": 3.75,
           "updated_at": "2026-09-12T20:03:19.153Z",
-          "age_min": 607.5336666666667
+          "age_min": 643.3919
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1868,7 +1744,7 @@
           "a": 1.5,
           "b": 2.5,
           "updated_at": "2026-09-12T20:48:49.794Z",
-          "age_min": 562.0229833333333
+          "age_min": 597.8812166666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1896,7 +1772,7 @@
           "a": 1.28,
           "b": 3.5,
           "updated_at": "2026-09-12T20:35:20.773Z",
-          "age_min": 575.5066666666667
+          "age_min": 611.3649
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1924,7 +1800,7 @@
           "a": 8,
           "b": 1.06,
           "updated_at": "2026-09-12T20:48:20.183Z",
-          "age_min": 562.5165
+          "age_min": 598.3747333333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1952,7 +1828,7 @@
           "a": 1.61,
           "b": 2.2,
           "updated_at": "2026-09-12T19:36:04.871Z",
-          "age_min": 634.7717
+          "age_min": 670.6299333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -1980,7 +1856,7 @@
           "a": 7.5,
           "b": 1.07,
           "updated_at": "2026-09-12T20:50:05.115Z",
-          "age_min": 560.7676333333334
+          "age_min": 596.6258666666666
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2008,7 +1884,7 @@
           "a": 6.5,
           "b": 1.1,
           "updated_at": "2026-09-13T04:44:24.289Z",
-          "age_min": 86.44806666666666
+          "age_min": 122.3063
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2036,7 +1912,7 @@
           "a": 1.22,
           "b": 4,
           "updated_at": "2026-09-13T04:56:24.069Z",
-          "age_min": 74.45173333333334
+          "age_min": 110.30996666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2064,7 +1940,7 @@
           "a": 3,
           "b": 1.36,
           "updated_at": "2026-09-13T04:58:39.301Z",
-          "age_min": 72.19786666666667
+          "age_min": 108.0561
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2092,7 +1968,7 @@
           "a": 2,
           "b": 1.72,
           "updated_at": "2026-09-13T03:52:19.753Z",
-          "age_min": 138.52366666666666
+          "age_min": 174.3819
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2120,7 +1996,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-13T04:19:09.267Z",
-          "age_min": 111.69843333333333
+          "age_min": 147.55666666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2148,7 +2024,7 @@
           "a": 2.1,
           "b": 1.66,
           "updated_at": "2026-09-13T04:56:54.049Z",
-          "age_min": 73.95206666666667
+          "age_min": 109.8103
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2176,7 +2052,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T20:53:49.911Z",
-          "age_min": 557.0210333333333
+          "age_min": 592.8792666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2204,7 +2080,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T20:53:49.911Z",
-          "age_min": 557.0210333333333
+          "age_min": 592.8792666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2232,7 +2108,7 @@
           "a": 3.75,
           "b": 1.25,
           "updated_at": "2026-09-13T04:52:39.161Z",
-          "age_min": 78.2002
+          "age_min": 114.05843333333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2260,7 +2136,7 @@
           "a": 1.8,
           "b": 1.9,
           "updated_at": "2026-09-12T21:56:52.946Z",
-          "age_min": 493.97045
+          "age_min": 529.8286833333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2288,7 +2164,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T21:56:52.946Z",
-          "age_min": 493.97045
+          "age_min": 529.8286833333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2316,7 +2192,7 @@
           "a": 3.5,
           "b": 1.28,
           "updated_at": "2026-09-13T04:57:09.333Z",
-          "age_min": 73.69733333333333
+          "age_min": 109.55556666666666
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2344,7 +2220,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-13T04:10:54.149Z",
-          "age_min": 119.9504
+          "age_min": 155.80863333333335
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2372,7 +2248,7 @@
           "a": 1.8,
           "b": 1.9,
           "updated_at": "2026-09-13T04:10:54.149Z",
-          "age_min": 119.9504
+          "age_min": 155.80863333333335
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2400,7 +2276,7 @@
           "a": 6,
           "b": 1.12,
           "updated_at": "2026-09-13T04:58:54.352Z",
-          "age_min": 71.94701666666667
+          "age_min": 107.80525
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2428,7 +2304,7 @@
           "a": 2,
           "b": 1.72,
           "updated_at": "2026-09-12T20:17:19.877Z",
-          "age_min": 593.5216
+          "age_min": 629.3798333333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2456,7 +2332,7 @@
           "a": 1.66,
           "b": 2.1,
           "updated_at": "2026-09-12T20:17:19.877Z",
-          "age_min": 593.5216
+          "age_min": 629.3798333333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2484,7 +2360,7 @@
           "a": 2.5,
           "b": 1.5,
           "updated_at": "2026-09-13T04:45:09.907Z",
-          "age_min": 85.68776666666666
+          "age_min": 121.546
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2512,7 +2388,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T20:14:50.084Z",
-          "age_min": 596.01815
+          "age_min": 631.8763833333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2540,7 +2416,7 @@
           "a": 2,
           "b": 1.72,
           "updated_at": "2026-09-12T20:14:50.084Z",
-          "age_min": 596.01815
+          "age_min": 631.8763833333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2568,7 +2444,7 @@
           "a": 1.36,
           "b": 3,
           "updated_at": "2026-09-13T04:57:54.739Z",
-          "age_min": 72.94056666666667
+          "age_min": 108.7988
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2596,7 +2472,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T18:06:27.667Z",
-          "age_min": 724.3917666666666
+          "age_min": 760.25
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2624,7 +2500,7 @@
           "a": 1.8,
           "b": 1.9,
           "updated_at": "2026-09-12T18:06:27.667Z",
-          "age_min": 724.3917666666666
+          "age_min": 760.25
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2652,7 +2528,7 @@
           "a": 3.25,
           "b": 1.33,
           "updated_at": "2026-09-13T04:51:39.36Z",
-          "age_min": 79.19688333333333
+          "age_min": 115.05511666666666
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2680,7 +2556,7 @@
           "a": 1.9,
           "b": 1.8,
           "updated_at": "2026-09-12T15:58:02.582Z",
-          "age_min": 852.80985
+          "age_min": 888.6680833333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2708,7 +2584,7 @@
           "a": 1.8,
           "b": 1.9,
           "updated_at": "2026-09-12T15:58:02.582Z",
-          "age_min": 852.80985
+          "age_min": 888.6680833333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2736,7 +2612,7 @@
           "a": 1.8,
           "b": 1.9,
           "updated_at": "2026-09-13T04:57:39.604Z",
-          "age_min": 73.19281666666667
+          "age_min": 109.05105
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2764,7 +2640,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T17:54:30.833Z",
-          "age_min": 736.339
+          "age_min": 772.1972333333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2792,7 +2668,7 @@
           "a": 1.9,
           "b": 1.8,
           "updated_at": "2026-09-12T17:54:30.833Z",
-          "age_min": 736.339
+          "age_min": 772.1972333333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2819,8 +2695,8 @@
           "book": "Bet365",
           "a": 4.33,
           "b": 1.2,
-          "updated_at": "2026-09-13T04:57:39.604Z",
-          "age_min": 73.19281666666667
+          "updated_at": "2026-09-13T06:41:12.839Z",
+          "age_min": 5.497133333333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2828,35 +2704,7 @@
         "COPERTURA_INSUFFICIENTE"
       ],
       "raw_roi": null,
-      "source": "quant"
-    },
-    {
-      "event_id": "74625620",
-      "start_at": "2026-09-14T08:00:00Z",
-      "player_a": "Uchida, Kaichi",
-      "player_b": "Noguchi, Rio",
-      "tournament": "Challenger - Guangzhou, China",
-      "market": "GAME_HANDICAP_2WAY",
-      "line": 5.5,
-      "market_key": "GAME_HANDICAP_2WAY|5.5",
-      "selection_a": "Uchida, Kaichi +5.5",
-      "selection_b": "Noguchi, Rio -5.5",
-      "market_depth": 1,
-      "quotes": [
-        {
-          "book": "Bet365",
-          "a": 1.8,
-          "b": 1.9,
-          "updated_at": "2026-09-12T23:14:04.359Z",
-          "age_min": 416.78023333333334
-        }
-      ],
-      "status": "NON_CERTIFICATA",
-      "reasons": [
-        "COPERTURA_INSUFFICIENTE"
-      ],
-      "raw_roi": null,
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "74625620",
@@ -2876,7 +2724,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T23:14:04.359Z",
-          "age_min": 416.78023333333334
+          "age_min": 452.63846666666666
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2884,7 +2732,35 @@
         "COPERTURA_INSUFFICIENTE"
       ],
       "raw_roi": null,
-      "source": "quant"
+      "source": "surebet"
+    },
+    {
+      "event_id": "74625620",
+      "start_at": "2026-09-14T08:00:00Z",
+      "player_a": "Uchida, Kaichi",
+      "player_b": "Noguchi, Rio",
+      "tournament": "Challenger - Guangzhou, China",
+      "market": "GAME_HANDICAP_2WAY",
+      "line": 5.5,
+      "market_key": "GAME_HANDICAP_2WAY|5.5",
+      "selection_a": "Uchida, Kaichi +5.5",
+      "selection_b": "Noguchi, Rio -5.5",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.8,
+          "b": 1.9,
+          "updated_at": "2026-09-12T23:14:04.359Z",
+          "age_min": 452.63846666666666
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "surebet"
     },
     {
       "event_id": "74625622",
@@ -2903,8 +2779,8 @@
           "book": "Bet365",
           "a": 1.66,
           "b": 2.1,
-          "updated_at": "2026-09-13T04:57:09.333Z",
-          "age_min": 73.69733333333333
+          "updated_at": "2026-09-13T06:46:28.677Z",
+          "age_min": 0.23316666666666666
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2912,7 +2788,7 @@
         "COPERTURA_INSUFFICIENTE"
       ],
       "raw_roi": null,
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "74625622",
@@ -2932,7 +2808,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T16:07:22.545Z",
-          "age_min": 843.4771333333333
+          "age_min": 879.3353666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2940,7 +2816,7 @@
         "COPERTURA_INSUFFICIENTE"
       ],
       "raw_roi": null,
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "74625622",
@@ -2960,7 +2836,7 @@
           "a": 1.8,
           "b": 1.9,
           "updated_at": "2026-09-12T16:07:22.545Z",
-          "age_min": 843.4771333333333
+          "age_min": 879.3353666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2968,7 +2844,7 @@
         "COPERTURA_INSUFFICIENTE"
       ],
       "raw_roi": null,
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "74625624",
@@ -2987,8 +2863,8 @@
           "book": "Bet365",
           "a": 3.25,
           "b": 1.33,
-          "updated_at": "2026-09-13T04:55:09.376Z",
-          "age_min": 75.69661666666667
+          "updated_at": "2026-09-13T06:43:13.392Z",
+          "age_min": 3.4879166666666666
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -2996,35 +2872,7 @@
         "COPERTURA_INSUFFICIENTE"
       ],
       "raw_roi": null,
-      "source": "quant"
-    },
-    {
-      "event_id": "74625624",
-      "start_at": "2026-09-14T08:00:00Z",
-      "player_a": "Zeng, Yaojie",
-      "player_b": "Santillan, Akira",
-      "tournament": "Challenger - Guangzhou, China",
-      "market": "GAME_HANDICAP_2WAY",
-      "line": 3.5,
-      "market_key": "GAME_HANDICAP_2WAY|3.5",
-      "selection_a": "Zeng, Yaojie +3.5",
-      "selection_b": "Santillan, Akira -3.5",
-      "market_depth": 1,
-      "quotes": [
-        {
-          "book": "Bet365",
-          "a": 2,
-          "b": 1.72,
-          "updated_at": "2026-09-12T17:26:26.529Z",
-          "age_min": 764.4107333333334
-        }
-      ],
-      "status": "NON_CERTIFICATA",
-      "reasons": [
-        "COPERTURA_INSUFFICIENTE"
-      ],
-      "raw_roi": null,
-      "source": "quant"
+      "source": "surebet"
     },
     {
       "event_id": "74625624",
@@ -3044,7 +2892,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T17:26:26.529Z",
-          "age_min": 764.4107333333334
+          "age_min": 800.2689666666666
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3052,7 +2900,35 @@
         "COPERTURA_INSUFFICIENTE"
       ],
       "raw_roi": null,
-      "source": "quant"
+      "source": "surebet"
+    },
+    {
+      "event_id": "74625624",
+      "start_at": "2026-09-14T08:00:00Z",
+      "player_a": "Zeng, Yaojie",
+      "player_b": "Santillan, Akira",
+      "tournament": "Challenger - Guangzhou, China",
+      "market": "GAME_HANDICAP_2WAY",
+      "line": 3.5,
+      "market_key": "GAME_HANDICAP_2WAY|3.5",
+      "selection_a": "Zeng, Yaojie +3.5",
+      "selection_b": "Santillan, Akira -3.5",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 2,
+          "b": 1.72,
+          "updated_at": "2026-09-12T17:26:26.529Z",
+          "age_min": 800.2689666666666
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "surebet"
     },
     {
       "event_id": "74628428",
@@ -3071,8 +2947,36 @@
           "book": "Bet365",
           "a": 5.5,
           "b": 1.14,
-          "updated_at": "2026-09-12T23:13:04.499Z",
-          "age_min": 417.7779
+          "updated_at": "2026-09-13T06:42:42.798Z",
+          "age_min": 3.9978166666666666
+        }
+      ],
+      "status": "NON_CERTIFICATA",
+      "reasons": [
+        "COPERTURA_INSUFFICIENTE"
+      ],
+      "raw_roi": null,
+      "source": "surebet"
+    },
+    {
+      "event_id": "74628428",
+      "start_at": "2026-09-14T08:00:00Z",
+      "player_a": "Ribecai, Michele",
+      "player_b": "Droguet, Titouan",
+      "tournament": "Challenger - Rennes, France",
+      "market": "TOTAL_GAMES_2WAY",
+      "line": 19.5,
+      "market_key": "TOTAL_GAMES_2WAY|19.5",
+      "selection_a": "Over 19.5",
+      "selection_b": "Under 19.5",
+      "market_depth": 1,
+      "quotes": [
+        {
+          "book": "Bet365",
+          "a": 1.8,
+          "b": 1.9,
+          "updated_at": "2026-09-12T21:06:38.229Z",
+          "age_min": 580.0739666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3100,35 +3004,7 @@
           "a": 1.66,
           "b": 2.1,
           "updated_at": "2026-09-12T21:06:38.229Z",
-          "age_min": 544.2157333333333
-        }
-      ],
-      "status": "NON_CERTIFICATA",
-      "reasons": [
-        "COPERTURA_INSUFFICIENTE"
-      ],
-      "raw_roi": null,
-      "source": "surebet"
-    },
-    {
-      "event_id": "74628428",
-      "start_at": "2026-09-14T08:00:00Z",
-      "player_a": "Ribecai, Michele",
-      "player_b": "Droguet, Titouan",
-      "tournament": "Challenger - Rennes, France",
-      "market": "TOTAL_GAMES_2WAY",
-      "line": 19.5,
-      "market_key": "TOTAL_GAMES_2WAY|19.5",
-      "selection_a": "Over 19.5",
-      "selection_b": "Under 19.5",
-      "market_depth": 1,
-      "quotes": [
-        {
-          "book": "Bet365",
-          "a": 1.8,
-          "b": 1.9,
-          "updated_at": "2026-09-12T21:06:38.229Z",
-          "age_min": 544.2157333333333
+          "age_min": 580.0739666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3155,8 +3031,8 @@
           "book": "Bet365",
           "a": 2.25,
           "b": 1.57,
-          "updated_at": "2026-09-12T23:19:49.378Z",
-          "age_min": 411.0299166666667
+          "updated_at": "2026-09-13T06:41:29.866Z",
+          "age_min": 5.21335
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3183,8 +3059,8 @@
           "book": "Bet365",
           "a": 1.83,
           "b": 1.83,
-          "updated_at": "2026-09-12T22:59:10.422Z",
-          "age_min": 431.67918333333336
+          "updated_at": "2026-09-12T23:43:49.617Z",
+          "age_min": 422.88416666666666
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3212,7 +3088,7 @@
           "a": 1.9,
           "b": 1.8,
           "updated_at": "2026-09-12T20:51:35.245Z",
-          "age_min": 559.2654666666666
+          "age_min": 595.1237
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3240,7 +3116,7 @@
           "a": 1.33,
           "b": 3.25,
           "updated_at": "2026-09-12T23:21:04.776Z",
-          "age_min": 409.7732833333333
+          "age_min": 445.63151666666664
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3268,7 +3144,7 @@
           "a": 1.72,
           "b": 2,
           "updated_at": "2026-09-12T21:59:07.859Z",
-          "age_min": 491.7219
+          "age_min": 527.5801333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3296,7 +3172,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T21:59:07.859Z",
-          "age_min": 491.7219
+          "age_min": 527.5801333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3324,7 +3200,7 @@
           "a": 1.66,
           "b": 2.1,
           "updated_at": "2026-09-12T23:19:49.378Z",
-          "age_min": 411.0299166666667
+          "age_min": 446.88815
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3352,7 +3228,7 @@
           "a": 1.8,
           "b": 1.9,
           "updated_at": "2026-09-12T22:58:54.513Z",
-          "age_min": 431.94433333333336
+          "age_min": 467.8025666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3380,7 +3256,7 @@
           "a": 1.8,
           "b": 1.9,
           "updated_at": "2026-09-12T22:58:54.513Z",
-          "age_min": 431.94433333333336
+          "age_min": 467.8025666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3408,7 +3284,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T21:23:07.862Z",
-          "age_min": 527.72185
+          "age_min": 563.5800833333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3436,7 +3312,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T20:44:05.057Z",
-          "age_min": 566.7686
+          "age_min": 602.6268333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3464,7 +3340,7 @@
           "a": 1.9,
           "b": 1.8,
           "updated_at": "2026-09-12T20:44:05.057Z",
-          "age_min": 566.7686
+          "age_min": 602.6268333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3492,7 +3368,7 @@
           "a": 1.61,
           "b": 2.2,
           "updated_at": "2026-09-12T21:18:38.141Z",
-          "age_min": 532.2172
+          "age_min": 568.0754333333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3520,7 +3396,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T21:18:38.141Z",
-          "age_min": 532.2172
+          "age_min": 568.0754333333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3548,7 +3424,7 @@
           "a": 1.9,
           "b": 1.8,
           "updated_at": "2026-09-12T21:18:38.141Z",
-          "age_min": 532.2172
+          "age_min": 568.0754333333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3576,7 +3452,7 @@
           "a": 1.4,
           "b": 2.75,
           "updated_at": "2026-09-12T20:57:05.241Z",
-          "age_min": 553.7655333333333
+          "age_min": 589.6237666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3604,7 +3480,7 @@
           "a": 1.9,
           "b": 1.8,
           "updated_at": "2026-09-12T20:57:05.241Z",
-          "age_min": 553.7655333333333
+          "age_min": 589.6237666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3632,7 +3508,7 @@
           "a": 1.72,
           "b": 2,
           "updated_at": "2026-09-12T20:57:05.241Z",
-          "age_min": 553.7655333333333
+          "age_min": 589.6237666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3660,7 +3536,7 @@
           "a": 1.44,
           "b": 2.62,
           "updated_at": "2026-09-12T22:31:25.059Z",
-          "age_min": 459.4352333333333
+          "age_min": 495.2934666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3688,7 +3564,7 @@
           "a": 1.66,
           "b": 2.1,
           "updated_at": "2026-09-12T22:35:53.575Z",
-          "age_min": 454.9599666666667
+          "age_min": 490.8182
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3716,7 +3592,7 @@
           "a": 1.2,
           "b": 4.33,
           "updated_at": "2026-09-12T22:19:25.469Z",
-          "age_min": 471.4284
+          "age_min": 507.2866333333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3744,7 +3620,7 @@
           "a": 1.72,
           "b": 2,
           "updated_at": "2026-09-12T22:30:25.133Z",
-          "age_min": 460.434
+          "age_min": 496.29223333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3772,7 +3648,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T22:35:53.575Z",
-          "age_min": 454.9599666666667
+          "age_min": 490.8182
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3800,7 +3676,7 @@
           "a": 2.75,
           "b": 1.4,
           "updated_at": "2026-09-12T22:37:38.48Z",
-          "age_min": 453.21155
+          "age_min": 489.0697833333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3828,7 +3704,7 @@
           "a": 1.01,
           "b": 11,
           "updated_at": "2026-09-12T22:20:09.647Z",
-          "age_min": 470.6921
+          "age_min": 506.55033333333336
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3856,7 +3732,7 @@
           "a": 4.33,
           "b": 1.2,
           "updated_at": "2026-09-12T22:34:26.596Z",
-          "age_min": 456.4096166666667
+          "age_min": 492.26785
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3884,7 +3760,7 @@
           "a": 4.5,
           "b": 1.16,
           "updated_at": "2026-09-12T22:32:39.389Z",
-          "age_min": 458.1964
+          "age_min": 494.05463333333336
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3912,7 +3788,7 @@
           "a": 2.2,
           "b": 1.61,
           "updated_at": "2026-09-12T22:31:25.059Z",
-          "age_min": 459.4352333333333
+          "age_min": 495.2934666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3940,7 +3816,7 @@
           "a": 1.01,
           "b": 11,
           "updated_at": "2026-09-12T21:13:44.978Z",
-          "age_min": 537.10325
+          "age_min": 572.9614833333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3968,7 +3844,7 @@
           "a": 1.72,
           "b": 2,
           "updated_at": "2026-09-12T17:53:01.091Z",
-          "age_min": 737.8347
+          "age_min": 773.6929333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -3996,7 +3872,7 @@
           "a": 1.9,
           "b": 1.8,
           "updated_at": "2026-09-12T17:53:01.091Z",
-          "age_min": 737.8347
+          "age_min": 773.6929333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -4013,18 +3889,18 @@
       "player_b": "Mate Valkusz",
       "tournament": "Tennis - ITF Men Budapest - Final",
       "market": "GAME_HANDICAP_2WAY",
-      "line": -1.5,
-      "market_key": "GAME_HANDICAP_2WAY|-1.5",
-      "selection_a": "Lilian Marmousez -1.5",
-      "selection_b": "Mate Valkusz +1.5",
+      "line": -0.5,
+      "market_key": "GAME_HANDICAP_2WAY|-0.5",
+      "selection_a": "Lilian Marmousez -0.5",
+      "selection_b": "Mate Valkusz +0.5",
       "market_depth": 1,
       "quotes": [
         {
           "book": "Bet365",
           "a": 1.83,
           "b": 1.83,
-          "updated_at": "2026-09-13T01:08:29.413Z",
-          "age_min": 302.36266666666666
+          "updated_at": "2026-09-13T05:32:04.827Z",
+          "age_min": 74.63066666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -4049,10 +3925,10 @@
       "quotes": [
         {
           "book": "Bet365",
-          "a": 1.83,
-          "b": 1.83,
-          "updated_at": "2026-09-13T01:08:29.413Z",
-          "age_min": 302.36266666666666
+          "a": 1.9,
+          "b": 1.8,
+          "updated_at": "2026-09-13T05:32:04.827Z",
+          "age_min": 74.63066666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -4080,7 +3956,7 @@
           "a": 1.28,
           "b": 3.5,
           "updated_at": "2026-09-13T00:16:30.395Z",
-          "age_min": 354.3463
+          "age_min": 390.20453333333336
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -4108,7 +3984,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-13T00:03:42.917Z",
-          "age_min": 367.1376
+          "age_min": 402.99583333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -4136,7 +4012,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-13T00:03:42.917Z",
-          "age_min": 367.1376
+          "age_min": 402.99583333333334
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -4164,7 +4040,7 @@
           "a": 1.25,
           "b": 3.75,
           "updated_at": "2026-09-13T00:05:13.221Z",
-          "age_min": 365.63253333333336
+          "age_min": 401.4907666666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -4192,7 +4068,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T19:28:49.446Z",
-          "age_min": 642.0287833333333
+          "age_min": 677.8870166666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -4220,7 +4096,7 @@
           "a": 1.83,
           "b": 1.83,
           "updated_at": "2026-09-12T19:28:49.446Z",
-          "age_min": 642.0287833333333
+          "age_min": 677.8870166666667
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -4248,7 +4124,7 @@
           "a": 1.53,
           "b": 2.37,
           "updated_at": "2026-09-13T00:17:06.502Z",
-          "age_min": 353.74451666666664
+          "age_min": 389.60275
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -4276,7 +4152,7 @@
           "a": 1.8,
           "b": 1.9,
           "updated_at": "2026-09-12T16:39:50.348Z",
-          "age_min": 811.01375
+          "age_min": 846.8719833333333
         }
       ],
       "status": "NON_CERTIFICATA",
@@ -4304,7 +4180,7 @@
           "a": 1.9,
           "b": 1.8,
           "updated_at": "2026-09-12T16:39:50.348Z",
-          "age_min": 811.01375
+          "age_min": 846.8719833333333
         }
       ],
       "status": "NON_CERTIFICATA",
