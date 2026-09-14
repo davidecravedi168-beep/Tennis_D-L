@@ -38,6 +38,7 @@ function selfTest(){
   const ok={brier:.20,logloss:.58,ece:.09},bad={brier:.24,logloss:.67,ece:.14};
   if(state(bad,ok).state!=='WATCH')throw new Error('WATCH_TEST');
   if(state(ok,ok).state!=='OK')throw new Error('OK_TEST');
+  const sp=segmentPolicy([]);if(!sp['3.00+']||sp['3.00+'].status!=='NORMAL')throw new Error('SEGMENT_POLICY_TEST');
   console.log(JSON.stringify({ok:true,tests:['raw_vs_calibrated','watch_threshold','defensive_policy']}));
 }
 if(process.argv.includes('--self-test')){selfTest();process.exit(0)}
@@ -45,7 +46,22 @@ if(process.argv.includes('--self-test')){selfTest();process.exit(0)}
 const ledger=JSON.parse(await fs.readFile(LEDGER,'utf8'));
 const rows=(ledger.records||[]).filter(eligible).sort((a,b)=>new Date(a.lifecycle?.settled_at||0)-new Date(b.lifecycle?.settled_at||0));
 const recent=rows.slice(-50),base=rows.slice(0,-50);
-let out={schema:'TEP-DRIFT-CONTROLLER-V6',generated_at:new Date().toISOString(),sample:{total:rows.length,recent:recent.length,baseline:base.length},active_calibration:activeCalibration(),mode:'OBSERVE',decision_policy:{min_calibrated_ev:0.02,pause_accepts:false,wta_extra_core:false},raw:null,calibrated:null,interpretation:'INSUFFICIENT_SAMPLE'};
+const oddsBand=o=>o>=3?'3.00+':o>=2.2?'2.20-2.99':o>=1.8?'1.80-2.19':o>=1.5?'1.50-1.79':'<1.50';
+const segmentPolicy=(all)=>{
+  const bands=['<1.50','1.50-1.79','1.80-2.19','2.20-2.99','3.00+'];
+  const out={};
+  for(const band of bands){
+    const xs=all.filter(r=>oddsBand(num(r.immutable?.candidate_odds))===band);
+    const last=xs.slice(-60);
+    const roi=last.length?mean(last.map(r=>won(r)?num(r.immutable?.candidate_odds)-1:-1)):null;
+    let status='NORMAL',ev_add=0;
+    if(last.length>=30&&roi<-.12){status='QUARANTINE';ev_add=.04}
+    else if(last.length>=25&&roi<-.05){status='TIGHTEN';ev_add=.02}
+    out[band]={n:last.length,roi,status,min_ev_add:ev_add};
+  }
+  return out;
+};
+let out={schema:'TEP-DRIFT-CONTROLLER-V6',generated_at:new Date().toISOString(),sample:{total:rows.length,recent:recent.length,baseline:base.length},active_calibration:activeCalibration(),mode:'OBSERVE',decision_policy:{min_calibrated_ev:0.02,pause_accepts:false,wta_extra_core:false,segment_policy:segmentPolicy(rows)},raw:null,calibrated:null,interpretation:'INSUFFICIENT_SAMPLE'};
 if(base.length>=30&&recent.length>=30){
   const rr=metrics(recent,false),rb=metrics(base,false),cr=metrics(recent,true),cb=metrics(base,true);
   const raw=state(rr,rb),cal=state(cr,cb);
@@ -56,11 +72,11 @@ if(base.length>=30&&recent.length>=30){
     out.interpretation='Raw probabilities drifted, but active calibration absorbs the deterioration. Do not retune the base model from this signal alone.';
   }else if(cal.state==='WATCH'){
     out.mode='DEFENSIVE';
-    out.decision_policy={min_calibrated_ev:0.04,pause_accepts:false,wta_extra_core:true};
+    out.decision_policy={min_calibrated_ev:0.04,pause_accepts:false,wta_extra_core:true,segment_policy:segmentPolicy(rows)};
     out.interpretation='Active calibrated probabilities are drifting. Tighten Challenger acceptance until metrics normalize.';
   }else if(cal.state==='ALERT'){
     out.mode='PAUSE';
-    out.decision_policy={min_calibrated_ev:0.06,pause_accepts:true,wta_extra_core:true};
+    out.decision_policy={min_calibrated_ev:0.06,pause_accepts:true,wta_extra_core:true,segment_policy:segmentPolicy(rows)};
     out.interpretation='Material calibrated drift. Pause new Challenger accepts; keep collecting shadow data.';
   }else{
     out.mode='NORMAL';
