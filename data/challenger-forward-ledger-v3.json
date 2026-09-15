@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-11T14:48:57.056Z",
-  "updated_at": "2026-09-15T19:52:52.668Z",
+  "updated_at": "2026-09-15T22:28:06.624Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -6348,11 +6348,11 @@
       },
       "immutable_sha256": "30a8309e1fef5c55e56fb0cc89341ddcece82ad757f43b4f34f4ed45f0c22c42",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-15T21:44:08.627Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -6408,23 +6408,318 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "4C111C1191F1D8E3467B8168",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "D9D6CAADD879139D1125",
+        "source_immutable_sha256": "49b1d6aaee6bb50919e6c016d53c97ca89911b9c4cc74373e6ba2fb3f467033e",
+        "event_id": "74628464",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-15T21:44:08.627Z",
+        "start_at": "2026-09-15T23:10:00Z",
+        "first_observed_at": "2026-09-15T21:44:19.438Z",
+        "player_a": "Lamens, Suzan",
+        "player_b": "Alves, Carolina",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "B",
+        "candidate_name": "Alves, Carolina",
+        "candidate_odds": 5.2,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.473553,
+        "calibrated_prob": 0.1923076923076923,
+        "calibrated_ev": 0,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 1,
+        "negative_core": 2,
+        "observed_core": 3,
+        "hard_reject": [
+          "ODDS_3_PLUS",
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "7a4b30f7eedfc4bf67bd336c3c79fd8e4d3d76b40576ae3c2eecc0b7aead964a",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "challenger_id": "3AC5CDA6D8613B5661CAA154",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "DE90859DEDBC1C59830B",
+        "source_immutable_sha256": "2241125483cccc0553463122b32bd95bdecfe8bb3692573b98ddf1060ffc8a21",
+        "event_id": "74705912",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-15T21:44:08.627Z",
+        "start_at": "2026-09-16T00:20:00Z",
+        "first_observed_at": "2026-09-15T21:44:19.438Z",
+        "player_a": "Mikulskyte, Justina",
+        "player_b": "Badosa, Paula",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Mikulskyte, Justina",
+        "candidate_odds": 15,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -2,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.361303,
+        "calibrated_prob": 0.06666666666666667,
+        "calibrated_ev": 0,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "POSITIVE",
+          "SERVE/RETURN": "NEGATIVE"
+        },
+        "positive_core": 1,
+        "negative_core": 3,
+        "observed_core": 4,
+        "hard_reject": [
+          "ODDS_3_PLUS",
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "e5fe10e8709370b2901b8def3de40f17a5247fe39bb633bf160bb1b86536f7fc",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "challenger_id": "1F397F583FC0E028D7DC5B3C",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "69D57554A9D3A8677D6F",
+        "source_immutable_sha256": "e32fc44db15d00a5fa744b00aa677b8de71c579329c6ce83ff64c76d17b33cc8",
+        "event_id": "74574210",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-15T21:44:08.627Z",
+        "start_at": "2026-09-16T10:20:00Z",
+        "first_observed_at": "2026-09-15T21:44:19.438Z",
+        "player_a": "Bulgaru, Miriam Bianca",
+        "player_b": "Ristic, Mia",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Bulgaru, Miriam Bianca",
+        "candidate_odds": 3.75,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 0,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.507143,
+        "calibrated_prob": 0.26666666666666666,
+        "calibrated_ev": 0,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 1,
+        "negative_core": 1,
+        "observed_core": 2,
+        "hard_reject": [
+          "ODDS_3_PLUS",
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "9c01642f4fb53b65163b6d31ea907c03ee8f52fda24be48e5ace907dcc7b3d7b",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "challenger_id": "265C305FA4638EB6486FF42A",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "86710BF9F014412A952E",
+        "source_immutable_sha256": "05fba25f228ff6b6519d0d05b783d3060f6430e2c7b0b1ed093f791c05cd6949",
+        "event_id": "74656030",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-15T21:44:08.627Z",
+        "start_at": "2026-09-16T10:30:00Z",
+        "first_observed_at": "2026-09-15T21:44:19.438Z",
+        "player_a": "Trevisan, Martina",
+        "player_b": "Burel, Clara",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Trevisan, Martina",
+        "candidate_odds": 2.7,
+        "decision": "REJECT",
+        "pass": false,
+        "score": -2,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.455541,
+        "calibrated_prob": 0.33906573808220447,
+        "calibrated_ev": -0.08452250717804788,
+        "core_votes": {
+          "ELO": "NEGATIVE",
+          "SURFACE": "NEGATIVE",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 0,
+        "negative_core": 2,
+        "observed_core": 2,
+        "hard_reject": [
+          "TWO_CORE_NEGATIVES",
+          "INSUFFICIENT_CORE_SUPPORT",
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "a4ae810ca9ef6b7e27c25e98057124f5f1c18bd5827b1be8e994d5548f9d8409",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
+    },
+    {
+      "challenger_id": "4835265EC0D5427D445F6157",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "9DC23E7565C43A13503E",
+        "source_immutable_sha256": "6c17d8ecb92dd7f228dd89536c4d7386d88c9fb27ae679d877cc01845375d9b7",
+        "event_id": "74574526",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-15T21:44:08.627Z",
+        "start_at": "2026-09-17T09:00:00Z",
+        "first_observed_at": "2026-09-15T21:44:19.438Z",
+        "player_a": "Jorge, Francisca",
+        "player_b": "Jimenez Kasintseva, Victoria",
+        "tour": "wta",
+        "surface": "Hard",
+        "candidate_side": "A",
+        "candidate_name": "Jorge, Francisca",
+        "candidate_odds": 1.83,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 3,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.514755,
+        "calibrated_prob": 0.4227622437364169,
+        "calibrated_ev": -0.22634509396235702,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "POSITIVE",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "POSITIVE"
+        },
+        "positive_core": 3,
+        "negative_core": 0,
+        "observed_core": 3,
+        "hard_reject": [
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "WTA_NEEDS_4_CORE_POSITIVE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
+        "penalties": [
+          "WTA_STRICT_MODE"
+        ]
+      },
+      "immutable_sha256": "1dff3cc3b327e1eaf4aec73d6ce851f0750ffea494444412ea95347776e29c9b",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 114,
+    "total_decisions": 119,
     "accepted": 2,
-    "rejected": 112,
-    "open": 23,
-    "settled": 91
+    "rejected": 117,
+    "open": 27,
+    "settled": 92
   },
   "evidence": {
     "state": "COLD_START",
     "champion": {
-      "n": 91,
+      "n": 92,
       "wins": 43,
-      "hit_rate": 0.4725274725274725,
-      "profit_units": 1.4000000000000012,
-      "roi": 0.015384615384615398,
+      "hit_rate": 0.4673913043478261,
+      "profit_units": 0.40000000000000124,
+      "roi": 0.004347826086956536,
       "max_drawdown_units": 12.85
     },
     "challenger": {
@@ -6435,7 +6730,7 @@
       "roi": -0.17000000000000004,
       "max_drawdown_units": 1
     },
-    "delta_roi": -0.18538461538461543,
+    "delta_roi": -0.17434782608695656,
     "review_eligible": false
   }
 }
