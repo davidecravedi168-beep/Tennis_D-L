@@ -72,6 +72,26 @@ html,body{width:100%;max-width:100%;overflow-x:clip}.app,.topbar,.hero,.heroGrid
 
 /* TEP-SUREBET-NAV-1 */
 .bottomNav{grid-template-columns:repeat(6,1fr)}.nav.sureLink{text-decoration:none}.nav.sureLink span{pointer-events:none}
+
+/* V15 PREMIUM MINIMAL MOBILE LAYER */
+:root{--v15-touch:56px;--v15-radius:20px}
+@media(max-width:620px){
+ body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent}
+ .wrap{padding-left:14px!important;padding-right:14px!important}
+ .bottomNav{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+ .bottomNav .nav{min-height:var(--v15-touch);font-size:10px;letter-spacing:.04em}
+ .card,.panel,.matchCard{border-radius:var(--v15-radius)}
+ button,.chip,.nav{touch-action:manipulation}
+ .section{min-width:0}.section>*{min-width:0;max-width:100%}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* V15 SIMPLE MODEL STATUS */
+.tp-simple-status{display:flex;align-items:center;gap:10px;margin:10px 0;padding:10px 12px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.035);text-align:left}
+.tp-simple-status>span{width:9px;height:9px;border-radius:50%;background:currentColor;box-shadow:0 0 0 5px color-mix(in srgb,currentColor 12%,transparent);flex:0 0 auto}
+.tp-simple-status div{min-width:0;display:grid;gap:2px}.tp-simple-status strong{font-size:12px}.tp-simple-status small{font-size:10px;opacity:.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tp-simple-status.strong,.tp-simple-status.good{color:#b9f36b}.tp-simple-status.caution{color:#ffd166}.tp-simple-status.limited{color:#ffb86b}.tp-simple-status.neutral{color:#aab3c5}
+@media(max-width:620px){.tp-match-player-copy,.tp-player-copy{min-width:0}.tp-match-player-copy strong,.tp-player-copy strong{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tp-simple-status{margin:8px 0}.tp-simple-status small{max-width:72vw}}
 </style>
 </head>
 <body>
