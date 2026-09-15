@@ -3,7 +3,7 @@
   "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
   "activated_at": "2026-09-05T09:00:00.000Z",
   "created_at": "2026-09-11T14:48:57.056Z",
-  "updated_at": "2026-09-15T16:52:41.298Z",
+  "updated_at": "2026-09-15T19:52:52.668Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -6122,11 +6122,11 @@
       },
       "immutable_sha256": "fec972096b2eeb6974dd673a37bae32741eef2f1c65989e5d3f221e726bbdd7e",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-15T17:00:03.756Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -6177,11 +6177,11 @@
       },
       "immutable_sha256": "8f9a5420f6ce63157be2b59c4e646c7d39a9b54743053904df3655289be16d40",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-15T18:39:00.405Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -6292,11 +6292,11 @@
       },
       "immutable_sha256": "fc4544af4e9747c38ec53332b49f6b70756619f9506ffebb434290aae56ecf6c",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-15T17:00:03.756Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -6354,23 +6354,77 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "challenger_id": "8D5EC93143E3C7D2581CF106",
+      "immutable": {
+        "ruleset": "CHALLENGER_V3_FROZEN_2026-09-05",
+        "source_ledger_id": "09B95625E29E150C429E",
+        "source_immutable_sha256": "9c0c5080fc1a819346a75818058584472759cca218fee6f5a81e1d42da116939",
+        "event_id": "74532866",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-15T17:00:03.756Z",
+        "start_at": "2026-09-16T11:00:00Z",
+        "first_observed_at": "2026-09-15T17:00:32.713Z",
+        "player_a": "Sachko, Vitaliy",
+        "player_b": "Monteiro, Thiago",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "A",
+        "candidate_name": "Sachko, Vitaliy",
+        "candidate_odds": 2.2,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 1,
+        "drift_policy": {
+          "min_calibrated_ev": 0.06,
+          "pause_accepts": true,
+          "wta_extra_core": true
+        },
+        "calibration_policy": "TEP_ADAPTIVE_CALIBRATION_V5",
+        "raw_prob": 0.538777,
+        "calibrated_prob": 0.43367570275871176,
+        "calibrated_ev": -0.045913453930834014,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 1,
+        "negative_core": 0,
+        "observed_core": 1,
+        "hard_reject": [
+          "CALIBRATED_EV_BELOW_ACTIVE_GATE",
+          "CALIBRATED_DRIFT_PAUSE"
+        ],
+        "penalties": []
+      },
+      "immutable_sha256": "20b7351935e8821d309b8b49c17355b7c98178246982f76726b72dd48075fa7e",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 113,
+    "total_decisions": 114,
     "accepted": 2,
-    "rejected": 111,
-    "open": 25,
-    "settled": 88
+    "rejected": 112,
+    "open": 23,
+    "settled": 91
   },
   "evidence": {
     "state": "COLD_START",
     "champion": {
-      "n": 88,
-      "wins": 42,
-      "hit_rate": 0.4772727272727273,
-      "profit_units": 2.1500000000000012,
-      "roi": 0.024431818181818197,
+      "n": 91,
+      "wins": 43,
+      "hit_rate": 0.4725274725274725,
+      "profit_units": 1.4000000000000012,
+      "roi": 0.015384615384615398,
       "max_drawdown_units": 12.85
     },
     "challenger": {
@@ -6381,7 +6435,7 @@
       "roi": -0.17000000000000004,
       "max_drawdown_units": 1
     },
-    "delta_roi": -0.19443181818181823,
+    "delta_roi": -0.18538461538461543,
     "review_eligible": false
   }
 }

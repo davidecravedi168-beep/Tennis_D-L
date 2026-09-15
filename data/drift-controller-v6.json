@@ -1,10 +1,10 @@
 {
   "schema": "TEP-DRIFT-CONTROLLER-V6",
-  "generated_at": "2026-09-15T16:52:41.388Z",
+  "generated_at": "2026-09-15T19:52:52.735Z",
   "sample": {
-    "total": 305,
+    "total": 308,
     "recent": 50,
-    "baseline": 255
+    "baseline": 258
   },
   "active_calibration": {
     "policy": "TEP_ADAPTIVE_CALIBRATION_V5",
@@ -54,36 +54,38 @@
   "raw": {
     "recent": {
       "n": 50,
-      "brier": 0.22315807939097998,
-      "logloss": 0.6351796929401088,
-      "ece": 0.10237138000000007
+      "brier": 0.22998330261707992,
+      "logloss": 0.6501439746774955,
+      "ece": 0.09717980000000004
     },
     "baseline": {
-      "n": 255,
-      "brier": 0.19788614360581955,
-      "logloss": 0.5788623663388888,
-      "ece": 0.11096559215686276
+      "n": 258,
+      "brier": 0.19729591648985265,
+      "logloss": 0.5775536165130172,
+      "ece": 0.11042122480620155
     },
-    "state": "OK",
-    "reasons": [],
+    "state": "WATCH",
+    "reasons": [
+      "BRIER_WORSE"
+    ],
     "delta": {
-      "brier": 0.025271935785160432,
-      "logloss": 0.05631732660122002,
-      "ece": -0.008594212156862693
+      "brier": 0.03268738612722727,
+      "logloss": 0.07259035816447834,
+      "ece": -0.01324142480620151
     }
   },
   "calibrated": {
     "recent": {
       "n": 50,
-      "brier": 0.22025168230451886,
-      "logloss": 0.6278852318517425,
-      "ece": 0.12983153510322853
+      "brier": 0.2271185769779164,
+      "logloss": 0.6443543377593802,
+      "ece": 0.14018832879863952
     },
     "baseline": {
-      "n": 255,
-      "brier": 0.18153612599166008,
-      "logloss": 0.5372571443449969,
-      "ece": 0.02142125954839175
+      "n": 258,
+      "brier": 0.18093908936574912,
+      "logloss": 0.5357023267112325,
+      "ece": 0.018035637763241436
     },
     "state": "ALERT",
     "reasons": [
@@ -93,9 +95,9 @@
       "MATERIAL_PROBABILITY_DRIFT"
     ],
     "delta": {
-      "brier": 0.03871555631285878,
-      "logloss": 0.09062808750674556,
-      "ece": 0.10841027555483679
+      "brier": 0.04617948761216728,
+      "logloss": 0.1086520110481477,
+      "ece": 0.12215269103539808
     }
   },
   "interpretation": "Material calibrated drift. Pause new Challenger accepts; keep collecting shadow data."
