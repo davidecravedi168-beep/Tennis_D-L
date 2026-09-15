@@ -1,0 +1,2 @@
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs');const s=fs.readFileSync('premium-shell-v1.js','utf8');
+test('Trust Center exposes evidence without crowding primary nav',()=>{for(const x of ['Trust Center','Flight Recorder','Model Passport','Why Not?','Brier · LogLoss · ECE · CLV · hash'])assert.ok(s.includes(x),x);assert.match(s,/data-route="trust"/);const nav=(s.match(/<nav class="tp-nav"[\s\S]*?<\/nav>/)||[''])[0];assert.equal((nav.match(/data-route=/g)||[]).length,4,'Trust Center must stay out of primary nav')});
