@@ -1,0 +1,8 @@
+import fs from'node:fs/promises';import crypto from'node:crypto';
+const read=async p=>JSON.parse(await fs.readFile(p,'utf8'));const p=await read('data/paper-funnel.json'),c=await read('data/calibration-audit-v4.json');
+const clamp=(x,a=0,b=100)=>Math.max(a,Math.min(b,x));const q=Number(p.coverage?.avg_data_quality),conf=Number(p.coverage?.avg_confidence),ece=Number(c.forward?.calibrated?.ece);
+const calibration=Number.isFinite(ece)?clamp(100*(1-ece/0.2)):null;const quality=Number.isFinite(q)?clamp(q):null;const confidence=Number.isFinite(conf)?clamp(conf):null;
+const available=[quality,confidence,calibration].filter(Number.isFinite);const score=available.length?Math.round(available.reduce((a,b)=>a+b,0)/available.length):null;
+const whyNot=(p.rejection_reasons||[]).filter(x=>/NON_POSITIVO|INCERTEZZA|DISACCORDO|DRIFT|QUALIT|FRESCA|TROPPO_BASSO/.test(x.reason)).slice(0,8);
+const x={schema:'TEP-EDGE-TRANSPARENCY-V1',generated_at:new Date().toISOString(),edge_score:{value:score,state:score===null?'UNAVAILABLE':score>=80?'STRONG':score>=65?'GOOD':score>=50?'WATCH':'CAUTION',components:{data_quality:quality,confidence,calibration},note:'Transparency score only. It does not authorize a bet and is not a claimed probability of success.'},why_not:whyNot,model_health:{calibration_state:c.forward?.state||'UNKNOWN',paper_status:p.status||'UNKNOWN',anomalies:p.anomalies||[]},evidence:{paper_generated_at:p.generated_at||null,calibration_generated_at:c.generated_at||null}};
+x.evidence_sha256=crypto.createHash('sha256').update(JSON.stringify(x)).digest('hex');await fs.writeFile('data/edge-transparency-v1.json',JSON.stringify(x,null,2)+'\n');console.log(JSON.stringify({score:x.edge_score.value,state:x.edge_score.state,why_not:x.why_not.length}));
