@@ -3,7 +3,7 @@
   "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
   "activated_at": "2026-09-03T09:51:00.000Z",
   "created_at": "2026-09-03T09:51:00.000Z",
-  "updated_at": "2026-09-15T15:05:21.333Z",
+  "updated_at": "2026-09-15T17:00:32.892Z",
   "policy": {
     "forward_only": true,
     "retroactive_backfill": false,
@@ -6373,11 +6373,11 @@
       },
       "immutable_sha256": "ed61f045d32ea7b3487cae9796f84f4d0fe8459e332ca4f13b3a4dcb8f9e34b8",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "B",
+        "settled_at": "2026-09-15T17:00:03.756Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -6514,11 +6514,11 @@
       },
       "immutable_sha256": "6f5f7c392f845d45a507ece39f5e2981eb23793de88eca7c77db6d62a15045d3",
       "lifecycle": {
-        "status": "OPEN",
-        "actual_side": null,
-        "settled_at": null,
+        "status": "SETTLED",
+        "actual_side": "A",
+        "settled_at": "2026-09-15T17:00:03.756Z",
         "won": null,
-        "profit_units": null
+        "profit_units": 0
       }
     },
     {
@@ -6566,23 +6566,68 @@
         "won": null,
         "profit_units": null
       }
+    },
+    {
+      "shadow_id": "71AB655D52BB10118D60A7C9",
+      "immutable": {
+        "ruleset": "SHADOW_FILTER_V2_FROZEN_2026-09-03",
+        "source_ledger_id": "09B95625E29E150C429E",
+        "source_immutable_sha256": "9c0c5080fc1a819346a75818058584472759cca218fee6f5a81e1d42da116939",
+        "event_id": "74532866",
+        "model_version": "TENNIS-EDGE-QUANT-12.5-AUTOPILOT",
+        "predicted_at": "2026-09-15T17:00:03.756Z",
+        "start_at": "2026-09-16T11:00:00Z",
+        "first_observed_at": "2026-09-15T17:00:32.713Z",
+        "player_a": "Sachko, Vitaliy",
+        "player_b": "Monteiro, Thiago",
+        "tour": "atp",
+        "surface": "Grass",
+        "candidate_side": "A",
+        "candidate_name": "Sachko, Vitaliy",
+        "candidate_odds": 2.2,
+        "candidate_prob": 0.538777,
+        "decision": "REJECT",
+        "pass": false,
+        "score": 0,
+        "core_votes": {
+          "ELO": "POSITIVE",
+          "SURFACE": "UNOBSERVED",
+          "FORM": "UNOBSERVED",
+          "SERVE/RETURN": "UNOBSERVED"
+        },
+        "positive_core": 1,
+        "negative_core": 0,
+        "observed_core": 1,
+        "hard_reject": [],
+        "penalties": [
+          "LOW_CALIBRATION_BAND"
+        ]
+      },
+      "immutable_sha256": "dc0db86b2e4555c6ec077f28b65d5ff26b92a137f62c8cd7ddc0eab269018ce9",
+      "lifecycle": {
+        "status": "OPEN",
+        "actual_side": null,
+        "settled_at": null,
+        "won": null,
+        "profit_units": null
+      }
     }
   ],
   "stats": {
-    "total_decisions": 142,
+    "total_decisions": 143,
     "accepted": 47,
-    "rejected": 95,
-    "open": 26,
-    "settled": 116
+    "rejected": 96,
+    "open": 25,
+    "settled": 118
   },
   "evidence": {
     "state": "MIXED_FORWARD",
     "champion": {
-      "n": 116,
-      "wins": 51,
-      "hit_rate": 0.4396551724137931,
-      "profit_units": -2.4799999999999978,
-      "roi": -0.021379310344827568,
+      "n": 118,
+      "wins": 52,
+      "hit_rate": 0.4406779661016949,
+      "profit_units": -2.2299999999999978,
+      "roi": -0.018898305084745742,
       "max_drawdown_units": 19.97
     },
     "shadow": {
@@ -6593,7 +6638,7 @@
       "roi": -0.11116279069767439,
       "max_drawdown_units": 9.09
     },
-    "delta_roi": -0.08978348035284682,
+    "delta_roi": -0.09226448561292865,
     "review_eligible": false
   }
 }
