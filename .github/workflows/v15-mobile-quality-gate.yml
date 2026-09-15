@@ -27,6 +27,8 @@ jobs:
       - run: node --test tests/v17-freeze-challengers.test.cjs
       - run: node scripts/v17-forward-scoreboard.mjs
       - run: node --test tests/v17-forward-scoreboard.test.cjs
+      - run: node scripts/clv-tracker-v3.mjs --self-test
+      - run: node --test tests/v17-clv-capture.test.cjs
       - run: node --test tests/prediction-flight-recorder-v1.test.cjs
       - run: node --test tests/edge-transparency-v1.test.cjs
       - run: node --test tests/public-track-record-v1.test.cjs
