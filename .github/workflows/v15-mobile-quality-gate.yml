@@ -14,6 +14,8 @@ jobs:
       - run: node scripts/public-track-record-v1.mjs
       - run: node scripts/edge-transparency-v1.mjs
       - run: node scripts/prediction-flight-recorder-v1.mjs
+      - run: node scripts/model-passport-v1.mjs
+      - run: node --test tests/model-passport-v1.test.cjs
       - run: node --test tests/prediction-flight-recorder-v1.test.cjs
       - run: node --test tests/edge-transparency-v1.test.cjs
       - run: node --test tests/public-track-record-v1.test.cjs
