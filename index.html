@@ -72,6 +72,19 @@ html,body{width:100%;max-width:100%;overflow-x:clip}.app,.topbar,.hero,.heroGrid
 
 /* TEP-SUREBET-NAV-1 */
 .bottomNav{grid-template-columns:repeat(6,1fr)}.nav.sureLink{text-decoration:none}.nav.sureLink span{pointer-events:none}
+
+/* V15 PREMIUM MINIMAL MOBILE LAYER */
+:root{--v15-touch:56px;--v15-radius:20px}
+@media(max-width:620px){
+ body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent}
+ .wrap{padding-left:14px!important;padding-right:14px!important}
+ .bottomNav{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+ .bottomNav .nav{min-height:var(--v15-touch);font-size:10px;letter-spacing:.04em}
+ .card,.panel,.matchCard{border-radius:var(--v15-radius)}
+ button,.chip,.nav{touch-action:manipulation}
+ .section{min-width:0}.section>*{min-width:0;max-width:100%}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
