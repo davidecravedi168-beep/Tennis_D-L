@@ -6,7 +6,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/paper-funnel-audit.mjs'
-      - 'scripts/tennis-model-diagnostics.mjs'
+      - 'scripts/tennis-model-diagnostics-v2.mjs'
       - 'scripts/tennis-shadow-filter-v2.mjs'
       - 'scripts/clv-evidence-v4.mjs'
       - 'scripts/clv-tracker-v3.mjs'
@@ -39,11 +39,11 @@ jobs:
           node scripts/paper-funnel-audit.mjs --validate
       - name: Build model diagnostics
         run: |
-          node scripts/tennis-model-diagnostics.mjs --self-test
-          node scripts/tennis-model-diagnostics.mjs
-          node scripts/tennis-model-diagnostics.mjs --validate
-          node scripts/tennis-model-diagnostics.mjs --self-test
-          node scripts/tennis-model-diagnostics.mjs --validate
+          node scripts/tennis-model-diagnostics-v2.mjs --self-test
+          node scripts/tennis-model-diagnostics-v2.mjs
+          node scripts/tennis-model-diagnostics-v2.mjs --validate
+          node scripts/tennis-model-diagnostics-v2.mjs --self-test
+          node scripts/tennis-model-diagnostics-v2.mjs --validate
       - name: Build governed shadow filter v2
         run: |
           node scripts/tennis-shadow-filter-v2.mjs --self-test
@@ -56,7 +56,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git add data/paper-funnel.json data/tennis-model-diagnostics.json data/tennis-shadow-filter-v2.json
+          git add data/paper-funnel.json data/tennis-model-diagnostics-v2.json data/tennis-shadow-filter-v2.json
           if git diff --cached --quiet; then
             echo 'No tennis audit changes'
             exit 0
@@ -84,9 +84,9 @@ jobs:
           for (const x of (report.threshold_shadow||[])) console.log(`- Shadow floor ${x.floor_odds.toFixed(2)}: ${x.settled_candidates} settled · qualified ${x.qualified_count} · ROI ${Number.isFinite(x.all_candidates?.roi)?(x.all_candidates.roi*100).toFixed(1)+'%':'—'} · CLV ${x.all_candidates?.clv_sample??0}`);
           NODE
           fi
-          if [ -f data/tennis-model-diagnostics.json ]; then
+          if [ -f data/tennis-model-diagnostics-v2.json ]; then
             node - <<'NODE' >> "$GITHUB_STEP_SUMMARY"
-          const x=require('./data/tennis-model-diagnostics.json');
+          const x=require('./data/tennis-model-diagnostics-v2.json');
           console.log(`### Model diagnostics`);
           console.log(`- Settled candidates: ${x.overall?.n??0}`);
           console.log(`- Paper ROI: ${Number.isFinite(x.overall?.roi)?(x.overall.roi*100).toFixed(1)+'%':'—'}`);
