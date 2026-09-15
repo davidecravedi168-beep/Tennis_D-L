@@ -12,6 +12,8 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - run: node scripts/public-track-record-v1.mjs
+      - run: node scripts/edge-transparency-v1.mjs
+      - run: node --test tests/edge-transparency-v1.test.cjs
       - run: node --test tests/public-track-record-v1.test.cjs
       - run: node --test tests/mobile-contract-v15.test.cjs
       - run: node --test tests/*.test.cjs
